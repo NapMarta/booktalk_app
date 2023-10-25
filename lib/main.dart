@@ -27,7 +27,7 @@ class BookTalkHomePage extends StatelessWidget {
       ),
       body: Center(
         child: Text('Benvenuto su BookTalk!',
-                  style: TextStyle(fontSize: 24.0), // Imposta la grandezza del font a 24.0
+                  style: TextStyle(fontSize: 24.0),
                   ),
       ),
     );
