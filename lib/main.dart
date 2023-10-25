@@ -1,34 +1,76 @@
 import 'package:flutter/material.dart';
+import 'registrazione.dart';
+import 'login.dart';
 
 void main() {
-  runApp(BookTalkApp());
+  runApp(MaterialApp(
+    home: BookTalkApp(),
+  ));
 }
 
-//HEADER
+
 class BookTalkApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'BookTalk',
-      theme: ThemeData(
-        primaryColor: Colors.blue,
-      ),
-      home: BookTalkHomePage(),
-    );
-  }
-}
+      home: Scaffold(
 
-class BookTalkHomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('BookTalk'),
-      ),
-      body: Center(
-        child: Text('Benvenuto su BookTalk!',
-                  style: TextStyle(fontSize: 24.0),
-                  ),
+        // ------ HEADER ------
+        appBar: AppBar(
+          title: Image.asset('assets/BookTalk-scritta.png', width: 150),
+          backgroundColor: Color(0xFFbee2ee),
+          elevation: 0.1,
+        ),
+
+
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+
+              // ------ LOGO ------
+              Image.asset('assets/BookTalk-noSfondo.png', width: 200, height: 200),
+              SizedBox(height: 40), 
+
+              // ------ Pulsante "Registrati" ------
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => RegistrationPage(),
+                    ),
+                  );
+                },
+                style: ButtonStyle(
+                  fixedSize: MaterialStateProperty.all(Size(200, 50)),
+                  backgroundColor: MaterialStateProperty.all(Color(0xFF0099b5)),
+                  textStyle: MaterialStateProperty.all(TextStyle(fontSize: 16, fontWeight: FontWeight.bold,)),
+                ),
+                child: Text('Registrati'),
+              ),
+
+              SizedBox(height: 20), // Spazio tra i pulsanti
+
+              // ------ Pulsante "Accedi" ------
+              ElevatedButton(
+                onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => LoginPage(),
+                      ),
+                  ); 
+                },
+                style: ButtonStyle(
+                  fixedSize: MaterialStateProperty.all(Size(200, 50)),
+                  backgroundColor: MaterialStateProperty.all(Color.fromARGB(255, 8, 201, 111)),
+                  textStyle: MaterialStateProperty.all(TextStyle(fontSize: 16, fontWeight: FontWeight.bold,)),
+                ),
+                child: Text('Accedi'),
+              ),
+
+            ],
+          ),
+        ),
       ),
     );
   }
