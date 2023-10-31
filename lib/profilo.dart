@@ -40,12 +40,21 @@ class ProfilePage extends StatelessWidget {
 
           // ------ LIBRERIA ------
           Container(
-            padding: EdgeInsets.only(bottom: 20),
-            child: Center(
-              child: Text(
-                'Libreria',
-                style: TextStyle(fontSize: 25, color: Color(0xFF0099b5)),
-              ),
+            padding: EdgeInsets.only(bottom: 20, left: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  'Libreria',
+                  style: TextStyle(fontSize: 25, color: Color(0xFF0099b5)),
+                ),
+                IconButton(
+                  icon: Icon(Icons.add, color: Color(0xFF0099b5), size: 30),
+                  onPressed: () {
+                    // Azione da eseguire per aggiungere un libro
+                  },
+                ),
+              ],
             ),
           ),
           Expanded(
