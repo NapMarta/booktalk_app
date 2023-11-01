@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'profilo.dart';
+import 'homepage.dart';
 
 class RegistrationPage extends StatelessWidget {
   @override

@@ -29,7 +29,7 @@ class BookTalkApp extends StatelessWidget {
             children: <Widget>[
 
               // ------ LOGO ------
-              Image.asset('assets/BookTalk-noSfondo.png', width: 200, height: 200),
+              Image.asset('assets/BookTalk-logo-noSfondo.png', width: 200, height: 200),
               SizedBox(height: 40), 
 
               // ------ Pulsante "Registrati" ------

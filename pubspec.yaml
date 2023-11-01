@@ -65,15 +65,15 @@ flutter:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
   assets: 
-    - assets/BookTalk-noSfondo.png
-    - assets/BookTalk-rotondo.PNG
+    - assets/BookTalk-logo-noSfondo.png
     - assets/BookTalk-scritta.png
-    - assets/BookTalk.png
+    - assets/BookTalk-logo.png
     - assets/person-icon.png
     - assets/icona-1.png
     - assets/icona-2.png
     - assets/icona-3.png
     - assets/library_background.jpg
+    - assets/copertina.jpg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

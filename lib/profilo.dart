@@ -1,6 +1,45 @@
 import 'package:flutter/material.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfileManagementPage extends StatefulWidget {
+  @override
+  _ProfileManagementPageState createState() => _ProfileManagementPageState();
+}
+
+class _ProfileManagementPageState extends State<ProfileManagementPage> {
+  String firstName = 'John';
+  String lastName = 'Doe';
+  String email = 'johndoe@example.com';
+  String password = '********';
+
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    firstNameController.text = firstName;
+    lastNameController.text = lastName;
+    emailController.text = email;
+    passwordController.text = password;
+    super.initState();
+  }
+
+  void saveChanges() {
+    setState(() {
+      firstName = firstNameController.text;
+      lastName = lastNameController.text;
+      email = emailController.text;
+      password = passwordController.text;
+    });
+
+    // Salva i dati aggiornati nel tuo database o esegui altre azioni necessarie
+  }
+
+  void logout() {
+    // Esegui l'operazione di logout, ad esempio, pulendo le informazioni di autenticazione.
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -8,105 +47,91 @@ class ProfilePage extends StatelessWidget {
       // ------ HEADER ------
       appBar: AppBar(
         leading: BackButton(color: Color(0xFF0099b5)), // freccia indietro
-        title: Image.asset('assets/BookTalk-scritta.png', width: 150),
+        title: Text('Profilo', style: TextStyle(color: Color(0xFF0099b5))),
         backgroundColor: Color(0xFFbee2ee),
         elevation: 0.1,
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.exit_to_app, color: Color(0xFF0099b5), size: 30,),
+            icon: Icon(Icons.exit_to_app, color: Color(0xFF0099b5)), //MODIFICARE ICONA
             onPressed: () {
-              // Eseguire il logout
+              logout();
+              Navigator.of(context).pop(); // Torna alla schermata precedente
             },
           ),
         ],
       ),
 
 
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-
-          // ------ SALUTO ------
-          Container(
-            padding: EdgeInsets.only(top: 100.0, bottom: 100),
-            child: Center(
-              child: Text(
-                'Ciao Nome e Cognome',
-                style: TextStyle(fontSize: 30, color: Color(0xFF0099b5)),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              'Nome:',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            TextField(
+              controller: firstNameController,
+              decoration: InputDecoration(
+                hintText: 'Inserisci il tuo nome',
               ),
             ),
-          ),
-
-
-          // ------ LIBRERIA ------
-          Container(
-            padding: EdgeInsets.only(bottom: 20, left: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  'Libreria',
-                  style: TextStyle(fontSize: 25, color: Color(0xFF0099b5)),
-                ),
-                IconButton(
-                  icon: Icon(Icons.add, color: Color(0xFF0099b5), size: 30),
-                  onPressed: () {
-                    // Azione da eseguire per aggiungere un libro
-                  },
-                ),
-              ],
+            SizedBox(height: 16.0),
+            Text(
+              'Cognome:',
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
-          ),
-          Expanded(
-            child: ListView(
-              children: <Widget>[
-                ListTile(title: Text('Libro 1')),
-                ListTile(title: Text('Libro 2')),
-                // Aggiungi qui gli altri elementi della lista
-              ],
+            TextField(
+              controller: lastNameController,
+              decoration: InputDecoration(
+                hintText: 'Inserisci il tuo cognome',
+              ),
             ),
-          ),
-
-
-          // ------ FOOTER ------
-          Container(
-            color: Color(0xFFbee2ee),
-            padding: EdgeInsets.all(16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-
-                // ------ FUNZIONALITA' 1 ------
-                GestureDetector(
-                  onTap: () {
-                    // Azione da eseguire quando si fa clic sull'icona 1
-                  },
-                  child: Image.asset("assets/icona-1.png", width: 50, height: 50,),
-                ),
-
-                // ------ FUNZIONALITA' 2 ------
-                GestureDetector(
-                  onTap: () {
-                    // Azione da eseguire quando si fa clic sull'icona 2
-                  },
-                  child: Image.asset("assets/icona-2.png", width: 50, height: 50,),
-                ),
-
-                // ------ FUNZIONALITA' 3 ------
-                GestureDetector(
-                  onTap: () {
-                    // Azione da eseguire quando si fa clic sull'icona 3
-                  },
-                  child: Image.asset("assets/icona-3.png", width: 50, height: 50,),
-                ),
-
-
-              ],
+            SizedBox(height: 16.0),
+            Text(
+              'Email:',
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
-          ),
+            TextField(
+              controller: emailController,
+              decoration: InputDecoration(
+                hintText: 'Inserisci la tua email',
+              ),
+            ),
+            SizedBox(height: 16.0),
+            Text(
+              'Password:',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            TextField(
+              controller: passwordController,
+              decoration: InputDecoration(
+                hintText: 'Inserisci la tua password',
+              ),
+            ),
 
-        ],
+
+            SizedBox(height: 32.0),
+            ElevatedButton(
+              onPressed: () {
+                saveChanges();
+                // Puoi aggiungere qui una funzione per salvare le modifiche nel tuo database o backend.
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Color(0xFF0099b5),
+              ),
+              child: Text('Salva'),
+            ),
+          ],
+        ),
       ),
     );
   }
+}
+
+void main() {
+  runApp(MaterialApp(
+    home: ProfileManagementPage(),
+  ));
 }
