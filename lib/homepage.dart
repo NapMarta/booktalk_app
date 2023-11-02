@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'profilo.dart';
 
-class ProfilePage extends StatefulWidget {
+class Homepage extends StatefulWidget {
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  _HomepageState createState() => _HomepageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _HomepageState extends State<Homepage> {
 
   List<bool> showActions = List.generate(20, (index) => false);
 

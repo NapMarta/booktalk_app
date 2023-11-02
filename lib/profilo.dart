@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'homepage.dart';
 
 class ProfileManagementPage extends StatefulWidget {
   @override
@@ -6,10 +7,10 @@ class ProfileManagementPage extends StatefulWidget {
 }
 
 class _ProfileManagementPageState extends State<ProfileManagementPage> {
-  String firstName = 'John';
-  String lastName = 'Doe';
-  String email = 'johndoe@example.com';
-  String password = '********';
+  String firstName = 'Maria';
+  String lastName = 'Rossi';
+  String email = 'email@example.com';
+  String password = 'password';
 
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
@@ -33,11 +34,11 @@ class _ProfileManagementPageState extends State<ProfileManagementPage> {
       password = passwordController.text;
     });
 
-    // Salva i dati aggiornati nel tuo database o esegui altre azioni necessarie
+    // Salvare i dati aggiornati nel db
   }
 
   void logout() {
-    // Esegui l'operazione di logout, ad esempio, pulendo le informazioni di autenticazione.
+    // Eseguire l'operazione di logout.
   }
 
   @override
@@ -46,85 +47,147 @@ class _ProfileManagementPageState extends State<ProfileManagementPage> {
 
       // ------ HEADER ------
       appBar: AppBar(
-        leading: BackButton(color: Color(0xFF0099b5)), // freccia indietro
-        title: Text('Profilo', style: TextStyle(color: Color(0xFF0099b5))),
+        leading: IconButton(
+              icon: Icon(Icons.home, color: Color(0xFF0099b5)),
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => Homepage(),
+                    ),
+                ); 
+              },
+            ),  
+        title: Text('Profilo', style: TextStyle(color: Color(0xFF0099b5), fontWeight: FontWeight.bold)),
         backgroundColor: Color(0xFFbee2ee),
         elevation: 0.1,
         actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.exit_to_app, color: Color(0xFF0099b5)), //MODIFICARE ICONA
+          TextButton(
             onPressed: () {
               logout();
-              Navigator.of(context).pop(); // Torna alla schermata precedente
             },
-          ),
+            child: Row(
+              children: [
+                Text('Logout', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Color(0xFF0099b5))),
+                Icon(Icons.logout)  
+              ],
+            ),
+          )
         ],
       ),
 
 
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              'Nome:',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            TextField(
-              controller: firstNameController,
-              decoration: InputDecoration(
-                hintText: 'Inserisci il tuo nome',
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.only(right: 16.0, left: 16.0, top: 60.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Center(
+                child: Column(
+                  children: [
+                    Image.asset('assets/person-icon.png', width: 150, height: 150),
+                    SizedBox(height: 20),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 16.0),
-            Text(
-              'Cognome:',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            TextField(
-              controller: lastNameController,
-              decoration: InputDecoration(
-                hintText: 'Inserisci il tuo cognome',
+              
+              // ------ NOME ------
+              Text(
+                'Nome:',
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
-            ),
-            SizedBox(height: 16.0),
-            Text(
-              'Email:',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            TextField(
-              controller: emailController,
-              decoration: InputDecoration(
-                hintText: 'Inserisci la tua email',
+              TextField(
+                controller: firstNameController,
+                decoration: InputDecoration(
+                  hintText: 'Inserisci il tuo nome',
+                  border: OutlineInputBorder(), 
+                  prefixIcon: Icon(Icons.person)
+                ),
               ),
-            ),
-            SizedBox(height: 16.0),
-            Text(
-              'Password:',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            TextField(
-              controller: passwordController,
-              decoration: InputDecoration(
-                hintText: 'Inserisci la tua password',
-              ),
-            ),
+              SizedBox(height: 16.0),
 
-
-            SizedBox(height: 32.0),
-            ElevatedButton(
-              onPressed: () {
-                saveChanges();
-                // Puoi aggiungere qui una funzione per salvare le modifiche nel tuo database o backend.
-              },
-              style: ElevatedButton.styleFrom(
-                primary: Color(0xFF0099b5),
+              // ------ COGNOME ------
+              Text(
+                'Cognome:',
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              child: Text('Salva'),
-            ),
-          ],
-        ),
+              TextField(
+                controller: lastNameController,
+                decoration: InputDecoration(
+                  hintText: 'Inserisci il tuo cognome',
+                  border: OutlineInputBorder(), 
+                  prefixIcon: Icon(Icons.person)
+                ),
+              ),
+
+              // ------ EMAIL ------
+              SizedBox(height: 16.0),
+              Text(
+                'Email:',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              TextField(
+                controller: emailController,
+                decoration: InputDecoration(
+                  hintText: 'Inserisci la tua email',
+                  border: OutlineInputBorder(), 
+                  prefixIcon: Icon(Icons.email)
+                ),
+              ),
+              SizedBox(height: 16.0),
+
+              // ------ PASSWORD ------
+              Text(
+                'Password:',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              TextField(
+                controller: passwordController,
+                decoration: InputDecoration(hintText: 'Password', border: OutlineInputBorder(), prefixIcon: Icon(Icons.lock)),
+                obscureText: true, // Per nascondere la password
+              ),
+              SizedBox(height: 10),
+
+              Center(
+                child: Column(
+                  children: [
+                    SizedBox(height: 32.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center, // Centra i bottoni orizzontalmente
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            saveChanges();
+                            // Salvare le modifiche nel database
+                          },
+                          style: ButtonStyle(
+                            fixedSize: MaterialStateProperty.all(Size(150, 50)),
+                            backgroundColor: MaterialStateProperty.all(Color.fromARGB(255, 8, 201, 111)),
+                            textStyle: MaterialStateProperty.all(TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                          ),
+                          child: Text('Salva'),
+                        ),
+                        SizedBox(width: 30.0),
+                        ElevatedButton(
+                          onPressed: () {
+                            // Ripristinare
+                          },
+                          style: ButtonStyle(
+                            fixedSize: MaterialStateProperty.all(Size(150, 50)),
+                            backgroundColor: MaterialStateProperty.all(Color(0xFF0099b5)),
+                            textStyle: MaterialStateProperty.all(TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                          ),
+                          child: Text('Ripristina'),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              )
+
+            ],
+          ),
+        ), 
       ),
     );
   }
