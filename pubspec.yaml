@@ -74,6 +74,10 @@ flutter:
     - assets/icona-3.png
     - assets/library_background.jpg
     - assets/copertina.jpg
+    - assets/risolvi-espressioni.png
+    - assets/analisi-del-testo.png
+    - assets/studia-argomento.png
+    - assets/prova.jpg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
