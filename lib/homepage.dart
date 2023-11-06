@@ -9,6 +9,10 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
 
   List<bool> showActions = List.generate(15, (index) => false);
+  int selectedBookIndex= -1;
+  bool isBookSelected(int index) => selectedBookIndex == index;
+  double selectedBookFontSize = 20.0; // grandezza font al click sull'item Libro
+
 
   @override
   Widget build(BuildContext context) {
@@ -114,61 +118,73 @@ class _HomepageState extends State<Homepage> {
               ),
             ),
           ),
-
+          
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
                 return Padding(
-                  padding: EdgeInsets.only(bottom: 20.0), // Imposta il margine inferiore desiderato
-                  child: Container(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage("assets/prova.jpg"),
-                        fit: BoxFit.cover,
+                  padding: EdgeInsets.only(bottom: 10.0),
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            if (isBookSelected(index)) {
+                              selectedBookIndex = -1;
+                            } else {
+                              selectedBookIndex = index;
+                            }
+                          });
+                        },
+                        child: Container(
+                          child: AnimatedOpacity(
+                            duration: Duration(milliseconds: 500),
+                            opacity: isBookSelected(index) ? 1.0 : 0.6,
+                            child: ListTile(
+                              leading: Hero(
+                                tag: "book_cover_$index",
+                                child: Image.asset("assets/copertina.jpg", height: isBookSelected(index) ? 150 : 80, width: isBookSelected(index) ? 70: 50,),
+                              ),
+                              title: Text(
+                                'Libro $index',
+                                style: TextStyle(fontSize: isBookSelected(index) ? selectedBookFontSize : 16.0, 
+                                ),
+                              ),
+                              subtitle: isBookSelected(index)
+                                  ? Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        SizedBox(height: 150.0,),
+                                        GestureDetector(
+                                          onTap: () {
+                                            // Azione da eseguire quando si fa clic su icona-2
+                                          },
+                                          child: Image.asset("assets/icona-2.png", width: 80),
+                                        ),
+                                        SizedBox(width: 50.0),
+                                        GestureDetector(
+                                          onTap: () {
+                                            // Azione da eseguire quando si fa clic su icona-3
+                                          },
+                                          child: Image.asset("assets/icona-3.png", width: 80),
+                                        ),
+                                      ],
+                                    )
+                                  : null,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                    child: Column(
-                      children: [
-                        ListTile(
-                          leading: Image.asset("assets/copertina.jpg", width: 80, height: 80),
-                          title: Text('Libro $index'),
-                          onTap: () {
-                            setState(() {
-                              showActions[index] = !showActions[index];
-                            });
-                          },
-                          subtitle: showActions[index]
-                              ? Padding(
-                                  padding: EdgeInsets.only(top: 10.0), // Aggiungi il margine desiderato
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: <Widget>[
-                                      GestureDetector(
-                                        onTap: () {
-                                          // Azione da eseguire quando si fa clic sull'icona-2
-                                        },
-                                        child: Image.asset("assets/analisi-del-testo.png", width: 139),
-                                      ),
-                                      SizedBox(width: 5.0),
-                                      GestureDetector(
-                                        onTap: () {
-                                          // Azione da eseguire quando si fa clic sull'icona-3
-                                        },
-                                        child: Image.asset("assets/studia-argomento.png", width: 139),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              : null,
-                        )
-                      ],
-                    ),
+                    ],
                   ),
                 );
               },
-              childCount: 15, // Sostituisci con la tua lista di libri
+              childCount: 15, // da sostituire con la lista di libri
             ),
           ),
+
+
         ],
       ),
 
