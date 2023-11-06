@@ -1,5 +1,7 @@
+import 'package:booktalk_app/main.dart';
+import 'package:booktalk_app/profilo.dart';
 import 'package:flutter/material.dart';
-import 'profilo.dart';
+import 'modifica-profilo.dart';
 import 'libreria.dart';
 
 class Homepage extends StatefulWidget {
@@ -18,6 +20,7 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: CustomScrollView(
         slivers: <Widget>[
 
@@ -30,7 +33,7 @@ class _HomepageState extends State<Homepage> {
             title: Image.asset('assets/BookTalk-scritta.png', width: 150),
             automaticallyImplyLeading: false, // per rimuovere la freccia indietro
 
-            // ------ Pulsante Profilo ------
+            /*// ------ Pulsante Profilo ------
             actions: <Widget>[
               TextButton(
                 onPressed: () {
@@ -43,7 +46,56 @@ class _HomepageState extends State<Homepage> {
                 child: Image.asset('assets/person-icon.png', width: 35, height: 35),
               ),
             ],
-          ),
+          ),*/
+
+          // ------ Menù a cascata per il Profilo ------
+          actions: <Widget>[
+            PopupMenuButton<String>(
+              icon: Icon(
+                Icons.more_vert,  // Icona dei 3 puntini
+                color: Color(0xFF0099b5),
+              ),
+              onSelected: (value) {
+                if (value == 'modificaProfilo') {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => ProfileManagementPage(),
+                    ),
+                  );
+                } else if (value == 'visualizzaProfilo') {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => ProfilePage(),
+                    ),
+                  );
+                } else if (value == 'logout') {
+                  // Azione per Logout
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => BookTalkApp(),
+                    ),
+                  );
+                }
+              },
+              itemBuilder: (BuildContext context) {
+                return [
+                  PopupMenuItem<String>(
+                    value: 'modificaProfilo',
+                    child: Text('Modifica Profilo'),
+                  ),
+                  PopupMenuItem<String>(
+                    value: 'visualizzaProfilo',
+                    child: Text('Visualizza Profilo'),
+                  ),
+                  PopupMenuItem<String>(
+                    value: 'logout',
+                    child: Text('Logout'),
+                  ),
+                ];
+              },
+            ),
+          ],
+        ),
 
           // ------ SALUTO ------
           SliverToBoxAdapter(

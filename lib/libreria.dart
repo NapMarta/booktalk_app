@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'profilo.dart';
+import 'modifica-profilo.dart';
 
 class Libreria extends StatefulWidget {
   @override
@@ -17,6 +17,7 @@ class _LibreriaState extends State<Libreria> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: CustomScrollView(
         slivers: <Widget>[
 

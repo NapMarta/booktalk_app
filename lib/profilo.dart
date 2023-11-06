@@ -1,228 +1,119 @@
-import 'package:booktalk_app/main.dart';
+import 'package:booktalk_app/modifica-profilo.dart';
 import 'package:flutter/material.dart';
-import 'homepage.dart';
 
-class ProfileManagementPage extends StatefulWidget {
+class ProfilePage extends StatefulWidget {
   @override
-  _ProfileManagementPageState createState() => _ProfileManagementPageState();
+  _ProfilePageState createState() => _ProfilePageState();
 }
 
-class _ProfileManagementPageState extends State<ProfileManagementPage> {
-  String firstName = 'Maria';
-  String lastName = 'Rossi';
-  String email = 'email@example.com';
-  String password = 'password';
-
-  TextEditingController firstNameController = TextEditingController();
-  TextEditingController lastNameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-
-  @override
-  void initState() {
-    firstNameController.text = firstName;
-    lastNameController.text = lastName;
-    emailController.text = email;
-    passwordController.text = password;
-    super.initState();
-  }
-
-  void saveChanges() {
-    setState(() {
-      firstName = firstNameController.text;
-      lastName = lastNameController.text;
-      email = emailController.text;
-      password = passwordController.text;
-    });
-
-    // Salvare i dati aggiornati nel db
-  }
-
-  void logout() {
-    // Eseguire l'operazione di logout.
-    Navigator.of(context).push(
-      MaterialPageRoute(
-      builder: (context) => BookTalkApp(),
-      ),
-    ); 
-  }
+class _ProfilePageState extends State<ProfilePage> {
+  bool isEditing = false;
+  String name = 'Maria';
+  String surname = 'Rossi';
+  String email = 'maria@email.com';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
+    
+      backgroundColor: Colors.white,
+      
       // ------ HEADER ------
       appBar: AppBar(
-        leading: IconButton(
-              icon: Icon(Icons.home, color: Color(0xFF0099b5)),
-              onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => Homepage(),
-                    ),
-                ); 
-              },
-            ),  
-        title: Text('Modifica profilo', style: TextStyle(color: Color(0xFF0099b5), fontWeight: FontWeight.bold)),
         backgroundColor: Color(0xFFbee2ee),
-        elevation: 0.1,
-        actions: <Widget>[
-          TextButton(
+        title: Text('Profilo', style: TextStyle(color: Color(0xFF0099b5), fontWeight: FontWeight.bold,),),
+        leading: BackButton(color: Color(0xFF0099b5)), // freccia indietro
+        actions: [
+          IconButton(
+            icon: Icon(Icons.edit), // Icona di modifica
+            color: Color(0xFF0099b5),
+
             onPressed: () {
-              logout();
+              // Azione quando viene premuto il pulsante di modifica
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => ProfileManagementPage(),
+                ),
+              );
             },
-            child: Row(
-              children: [
-                Text('Logout', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Color(0xFF0099b5))),
-                Icon(Icons.logout)  
-              ],
-            ),
-          )
+          ),
         ],
       ),
 
 
-      body: SingleChildScrollView(
+      body: Center(
         child: Padding(
-          padding: EdgeInsets.only(right: 16.0, left: 16.0, top: 60.0, bottom: 30.0),
+          padding: const EdgeInsets.all(20.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Center(
+
+              Text(
+                'I tuoi dati',
+                  style: TextStyle(fontSize: 30, color: Color(0xFF048A8F), fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 10.0),
+              SizedBox(height: 20.0),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(width: 2.0, color: Colors.blue),
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+
+                
                 child: Column(
-                  children: [
-                    Image.asset('assets/person-icon.png', width: 150, height: 150),
-                    SizedBox(height: 20),
-                  ],
-                ),
-              ),
-              
-              // ------ NOME ------
-              Text(
-                'Nome:',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              TextField(
-                controller: firstNameController,
-                decoration: InputDecoration(
-                  hintText: 'Inserisci il tuo nome',
-                  border: OutlineInputBorder(), 
-                  prefixIcon: Icon(Icons.person)
-                ),
-              ),
-              SizedBox(height: 16.0),
-
-              // ------ COGNOME ------
-              Text(
-                'Cognome:',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              TextField(
-                controller: lastNameController,
-                decoration: InputDecoration(
-                  hintText: 'Inserisci il tuo cognome',
-                  border: OutlineInputBorder(), 
-                  prefixIcon: Icon(Icons.person)
-                ),
-              ),
-
-              // ------ EMAIL ------
-              SizedBox(height: 16.0),
-              Text(
-                'Email:',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              TextField(
-                controller: emailController,
-                decoration: InputDecoration(
-                  hintText: 'Inserisci la tua email',
-                  border: OutlineInputBorder(), 
-                  prefixIcon: Icon(Icons.email)
-                ),
-              ),
-              SizedBox(height: 16.0),
-
-              // ------ PASSWORD ATTUALE ------
-              Text(
-                'Password attuale:',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              TextField(
-                controller: passwordController,
-                decoration: InputDecoration(hintText: 'Password', border: OutlineInputBorder(), prefixIcon: Icon(Icons.lock)),
-                obscureText: true, // Per nascondere la password
-              ),
-              SizedBox(height: 10),
-
-              // ------ PASSWORD NUOVA ------
-              Text(
-                'Nuova password:',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              TextField(
-                decoration: InputDecoration(hintText: 'Password', border: OutlineInputBorder(), prefixIcon: Icon(Icons.lock)),
-                obscureText: true, // Per nascondere la password
-              ),
-              SizedBox(height: 10),
-
-              // ------ CONFERMA PASSWORD ------
-              Text(
-                'Conferma password:',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              TextField(
-                decoration: InputDecoration(hintText: 'Password', border: OutlineInputBorder(), prefixIcon: Icon(Icons.lock)),
-                obscureText: true, // Per nascondere la password
-              ),
-              SizedBox(height: 10),
-
-              Center(
-                child: Column(
-                  children: [
-                    SizedBox(height: 32.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center, // Centra i bottoni orizzontalmente
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            saveChanges();
-                            // Salvare le modifiche nel database
-                          },
-                          style: ButtonStyle(
-                            fixedSize: MaterialStateProperty.all(Size(150, 50)),
-                            backgroundColor: MaterialStateProperty.all(Color(0xFF0099b5)),
-                            textStyle: MaterialStateProperty.all(TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                          ),
-                          child: Text('Ripristina'),
-                        ),
-                        SizedBox(width: 30.0),
-                        ElevatedButton(
-                          onPressed: () {
-                            // Ripristinare
-                          },
-                          style: ButtonStyle(
-                            fixedSize: MaterialStateProperty.all(Size(150, 50)),
-                            backgroundColor: MaterialStateProperty.all(Color(0xFF087B69)),
-                            textStyle: MaterialStateProperty.all(TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                          ),
-                          child: Text('Salva'),
-                        ),
-                      ],
+                  children: <Widget>[
+                    TextFormField(
+                      enabled: isEditing,
+                      decoration: InputDecoration(
+                        labelText: 'Nome',
+                        labelStyle: TextStyle(color: Colors.black), // Colore del testo del label
+                      ),
+                      initialValue: name,
+                      onChanged: (value) {
+                        setState(() {
+                          name = value;
+                        });
+                      },
+                      style: TextStyle(color: Colors.black), // Colore del testo
+                    ),
+                    SizedBox(height: 10.0),
+                    TextFormField(
+                      enabled: isEditing,
+                      decoration: InputDecoration(
+                        labelText: 'Cognome',
+                        labelStyle: TextStyle(color: Colors.black), // Colore del testo del label
+                      ),
+                      initialValue: surname,
+                      onChanged: (value) {
+                        setState(() {
+                          surname = value;
+                        });
+                      },
+                      style: TextStyle(color: Colors.black), // Colore del testo
+                    ),
+                    SizedBox(height: 10.0),
+                    TextFormField(
+                      enabled: isEditing,
+                      decoration: InputDecoration(
+                        labelText: 'Email',
+                        labelStyle: TextStyle(color: Colors.black), // Colore del testo del label
+                      ),
+                      initialValue: email,
+                      onChanged: (value) {
+                        setState(() {
+                          email = value;
+                        });
+                      },
+                      style: TextStyle(color: Colors.black), // Colore del testo
                     ),
                   ],
                 ),
-              )
-
+              ),
             ],
           ),
-        ), 
+        ),
       ),
     );
   }
-}
-
-void main() {
-  runApp(MaterialApp(
-    home: ProfileManagementPage(),
-  ));
 }

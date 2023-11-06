@@ -14,6 +14,7 @@ class BookTalkApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+      backgroundColor: Colors.white,
 
         // ------ HEADER ------
         appBar: AppBar(
