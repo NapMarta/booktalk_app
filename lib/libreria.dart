@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'profilo.dart';
-import 'libreria.dart';
 
-class Homepage extends StatefulWidget {
+class Libreria extends StatefulWidget {
   @override
-  _HomepageState createState() => _HomepageState();
+  _LibreriaState createState() => _LibreriaState();
 }
 
-class _HomepageState extends State<Homepage> {
+class _LibreriaState extends State<Libreria> {
 
   List<bool> showActions = List.generate(15, (index) => false);
   int selectedBookIndex= -1;
@@ -28,7 +27,8 @@ class _HomepageState extends State<Homepage> {
             pinned: false,
             backgroundColor: Color(0xFFbee2ee),
             title: Image.asset('assets/BookTalk-scritta.png', width: 150),
-            automaticallyImplyLeading: false, // per rimuovere la freccia indietro
+            leading: BackButton(color: Color(0xFF0099b5)), // freccia indietro
+
 
             // ------ Pulsante Profilo ------
             actions: <Widget>[
@@ -44,83 +44,7 @@ class _HomepageState extends State<Homepage> {
               ),
             ],
           ),
-
-          // ------ SALUTO ------
-          SliverToBoxAdapter(
-            child: Container(
-              padding: EdgeInsets.all(20),
-              child: Center(
-                child: Text(
-                  'Ciao Maria',
-                  style: TextStyle(fontSize: 30, color: Color(0xFF048A8F)),
-                ),
-              ),
-            ),
-          ),
           
-          // ------ Pulsanti funzionalita' ------
-          SliverToBoxAdapter(
-            child: Container(
-              padding: EdgeInsets.all(20),
-              child: Center(
-                child: Text(
-                  'Studia con BookTalk',
-                  style: TextStyle(fontSize: 30, color: Color(0xFF048A8F), fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-          ),
-
-          SliverToBoxAdapter(
-            child: Container(
-              padding: EdgeInsets.all(10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  GestureDetector(
-                    onTap: () {
-                      // Azione da eseguire quando si fa clic sull'icona-1
-                    },
-                    child:
-                    Column(children: [Image.asset("assets/risolvi-espressioni.png"), SizedBox(height: 40.0),],) 
-                  ),
-
-                  GestureDetector(
-                    onTap: () {
-                      // Azione da eseguire quando si fa clic sull'icona-2
-                    },
-                    child:
-                    Column(children: [Image.asset("assets/analisi-del-testo.png"), SizedBox(height: 40.0),],) 
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      // Azione da eseguire quando si fa clic sull'icona-3
-                    },
-                    child: Image.asset("assets/studia-argomento.png"),
-                  ),
-
-                  SizedBox(height: 50.0),
-                 
-                  // ------ LIBRERIA ------
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                        builder: (context) => Libreria(),
-                      ),
-                  ); 
-                    },
-                    child: Image.asset("assets/library.gif", width: 250),
-                  ),
-
-                  SizedBox(height: 10.0),
-
-                ],
-              ),
-            ),
-          )
-
-          /*
           // ------ LIBRERIA ------
           SliverToBoxAdapter(
             child: Container(
@@ -159,7 +83,7 @@ class _HomepageState extends State<Homepage> {
                             child: ListTile(
                               leading: Hero(
                                 tag: "book_cover_$index",
-                                child: Image.asset("assets/copertina.jpg", height: isBookSelected(index) ? 150 : 80, width: isBookSelected(index) ? 70: 50,),
+                                child: Image.asset("assets/copertina.jpg", height: isBookSelected(index) ? 120 : 80, width: isBookSelected(index) ? 70: 50,),
                               ),
                               title: Text(
                                 'Libro $index',
@@ -175,14 +99,14 @@ class _HomepageState extends State<Homepage> {
                                           onTap: () {
                                             // Azione da eseguire quando si fa clic su icona-2
                                           },
-                                          child: Image.asset("assets/icona-2.png", width: 80),
+                                          child: Image.asset("assets/icona-2.png", height: 70),
                                         ),
-                                        SizedBox(width: 50.0),
+                                        SizedBox(width: 80.0),
                                         GestureDetector(
                                           onTap: () {
                                             // Azione da eseguire quando si fa clic su icona-3
                                           },
-                                          child: Image.asset("assets/icona-3.png", width: 80),
+                                          child: Image.asset("assets/icona-3.png", height: 70),
                                         ),
                                       ],
                                     )
@@ -197,7 +121,7 @@ class _HomepageState extends State<Homepage> {
               },
               childCount: 15, // da sostituire con la lista di libri
             ),
-          ),*/
+          ),
 
 
         ],
@@ -205,7 +129,7 @@ class _HomepageState extends State<Homepage> {
 
 
 
-      /*
+      
       // ------ Pulsante "Aggiungi libro" ------
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
@@ -215,7 +139,6 @@ class _HomepageState extends State<Homepage> {
         label: Text('Aggiungi libro'),
         backgroundColor: Color(0xFF048A8F),
       ),
-    */
     );
   }
 }

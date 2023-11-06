@@ -49,7 +49,7 @@ class LoginPage extends StatelessWidget {
                   );              },
               style: ButtonStyle(
                 fixedSize: MaterialStateProperty.all(Size(200, 50)),
-                backgroundColor: MaterialStateProperty.all(Color(0xFF0099b5)),
+                backgroundColor: MaterialStateProperty.all(Color(0xFF087B69)),
                 textStyle: MaterialStateProperty.all(TextStyle(fontSize: 16, fontWeight: FontWeight.bold,)),
               ),
               child: Text('Accedi'),

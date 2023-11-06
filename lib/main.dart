@@ -62,7 +62,7 @@ class BookTalkApp extends StatelessWidget {
                 },
                 style: ButtonStyle(
                   fixedSize: MaterialStateProperty.all(Size(200, 50)),
-                  backgroundColor: MaterialStateProperty.all(Color.fromARGB(255, 8, 201, 111)),
+                  backgroundColor: MaterialStateProperty.all(Color(0xFF087B69)),
                   textStyle: MaterialStateProperty.all(TextStyle(fontSize: 16, fontWeight: FontWeight.bold,)),
                 ),
                 child: Text('Accedi'),

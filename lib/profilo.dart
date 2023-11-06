@@ -1,3 +1,4 @@
+import 'package:booktalk_app/main.dart';
 import 'package:flutter/material.dart';
 import 'homepage.dart';
 
@@ -39,6 +40,11 @@ class _ProfileManagementPageState extends State<ProfileManagementPage> {
 
   void logout() {
     // Eseguire l'operazione di logout.
+    Navigator.of(context).push(
+      MaterialPageRoute(
+      builder: (context) => BookTalkApp(),
+      ),
+    ); 
   }
 
   @override
@@ -57,7 +63,7 @@ class _ProfileManagementPageState extends State<ProfileManagementPage> {
                 ); 
               },
             ),  
-        title: Text('Profilo', style: TextStyle(color: Color(0xFF0099b5), fontWeight: FontWeight.bold)),
+        title: Text('Modifica profilo', style: TextStyle(color: Color(0xFF0099b5), fontWeight: FontWeight.bold)),
         backgroundColor: Color(0xFFbee2ee),
         elevation: 0.1,
         actions: <Widget>[
@@ -78,7 +84,7 @@ class _ProfileManagementPageState extends State<ProfileManagementPage> {
 
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.only(right: 16.0, left: 16.0, top: 60.0),
+          padding: EdgeInsets.only(right: 16.0, left: 16.0, top: 60.0, bottom: 30.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -136,13 +142,35 @@ class _ProfileManagementPageState extends State<ProfileManagementPage> {
               ),
               SizedBox(height: 16.0),
 
-              // ------ PASSWORD ------
+              // ------ PASSWORD ATTUALE ------
               Text(
-                'Password:',
+                'Password attuale:',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               TextField(
                 controller: passwordController,
+                decoration: InputDecoration(hintText: 'Password', border: OutlineInputBorder(), prefixIcon: Icon(Icons.lock)),
+                obscureText: true, // Per nascondere la password
+              ),
+              SizedBox(height: 10),
+
+              // ------ PASSWORD NUOVA ------
+              Text(
+                'Nuova password:',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              TextField(
+                decoration: InputDecoration(hintText: 'Password', border: OutlineInputBorder(), prefixIcon: Icon(Icons.lock)),
+                obscureText: true, // Per nascondere la password
+              ),
+              SizedBox(height: 10),
+
+              // ------ CONFERMA PASSWORD ------
+              Text(
+                'Conferma password:',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              TextField(
                 decoration: InputDecoration(hintText: 'Password', border: OutlineInputBorder(), prefixIcon: Icon(Icons.lock)),
                 obscureText: true, // Per nascondere la password
               ),
@@ -162,10 +190,10 @@ class _ProfileManagementPageState extends State<ProfileManagementPage> {
                           },
                           style: ButtonStyle(
                             fixedSize: MaterialStateProperty.all(Size(150, 50)),
-                            backgroundColor: MaterialStateProperty.all(Color.fromARGB(255, 8, 201, 111)),
+                            backgroundColor: MaterialStateProperty.all(Color(0xFF0099b5)),
                             textStyle: MaterialStateProperty.all(TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                           ),
-                          child: Text('Salva'),
+                          child: Text('Ripristina'),
                         ),
                         SizedBox(width: 30.0),
                         ElevatedButton(
@@ -174,10 +202,10 @@ class _ProfileManagementPageState extends State<ProfileManagementPage> {
                           },
                           style: ButtonStyle(
                             fixedSize: MaterialStateProperty.all(Size(150, 50)),
-                            backgroundColor: MaterialStateProperty.all(Color(0xFF0099b5)),
+                            backgroundColor: MaterialStateProperty.all(Color(0xFF087B69)),
                             textStyle: MaterialStateProperty.all(TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                           ),
-                          child: Text('Ripristina'),
+                          child: Text('Salva'),
                         ),
                       ],
                     ),
