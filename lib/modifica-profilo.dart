@@ -54,16 +54,8 @@ class _ProfileManagementPageState extends State<ProfileManagementPage> {
 
       // ------ HEADER ------
       appBar: AppBar(
-        leading: IconButton(
-              icon: Icon(Icons.home, color: Color(0xFF0099b5)),
-              onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => Homepage(),
-                    ),
-                ); 
-              },
-            ),  
+        leading: BackButton(color: Color(0xFF0099b5)), // freccia indietro
+
         title: Text('Modifica profilo', style: TextStyle(color: Color(0xFF0099b5), fontWeight: FontWeight.bold)),
         backgroundColor: Color(0xFFbee2ee),
         elevation: 0.1,
