@@ -100,14 +100,14 @@ class _LibreriaState extends State<Libreria> {
                                           onTap: () {
                                             // Azione da eseguire quando si fa clic su icona-2
                                           },
-                                          child: Image.asset("assets/icona-2.png", height: 70),
+                                          child: Image.asset("assets/2.png", height: 70),
                                         ),
                                         SizedBox(width: 80.0),
                                         GestureDetector(
                                           onTap: () {
                                             // Azione da eseguire quando si fa clic su icona-3
                                           },
-                                          child: Image.asset("assets/icona-3.png", height: 70),
+                                          child: Image.asset("assets/3.png", height: 70),
                                         ),
                                       ],
                                     )

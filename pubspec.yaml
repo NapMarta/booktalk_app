@@ -69,15 +69,13 @@ flutter:
     - assets/BookTalk-scritta.png
     - assets/BookTalk-logo.png
     - assets/person-icon.png
-    - assets/icona-1.png
-    - assets/icona-2.png
-    - assets/icona-3.png
-    - assets/library_background.jpg
+    - assets/1.png
+    - assets/2.png
+    - assets/3.png
     - assets/copertina.jpg
-    - assets/risolvi-espressioni.png
-    - assets/analisi-del-testo.png
-    - assets/studia-argomento.png
     - assets/library.gif
+    - assets/sfondo.JPEG
+    - assets/icona-studia-argomento.GIF
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
