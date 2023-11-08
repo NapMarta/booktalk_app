@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'profilo.dart';
+import 'homepage.dart';
 
 class RegistrationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
 
       // ------ HEADER ------
       appBar: AppBar(
@@ -60,7 +61,7 @@ class RegistrationPage extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => ProfilePage(),
+                      builder: (context) => Homepage(),
                     ),
                   );     
               },

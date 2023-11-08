@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'registrazione.dart';
-import 'profilo.dart';
+import 'homepage.dart';
 
 
 class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
+
 
       // ------ HEADER ------
       appBar: AppBar(
@@ -44,12 +46,12 @@ class LoginPage extends StatelessWidget {
               onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => ProfilePage(),
+                      builder: (context) => Homepage(),
                     ),
                   );              },
               style: ButtonStyle(
                 fixedSize: MaterialStateProperty.all(Size(200, 50)),
-                backgroundColor: MaterialStateProperty.all(Color(0xFF0099b5)),
+                backgroundColor: MaterialStateProperty.all(Color(0xFF087B69)),
                 textStyle: MaterialStateProperty.all(TextStyle(fontSize: 16, fontWeight: FontWeight.bold,)),
               ),
               child: Text('Accedi'),

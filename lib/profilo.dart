@@ -1,111 +1,118 @@
+import 'package:booktalk_app/modifica-profilo.dart';
 import 'package:flutter/material.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
+  @override
+  _ProfilePageState createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  bool isEditing = false;
+  String name = 'Maria';
+  String surname = 'Rossi';
+  String email = 'maria@email.com';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
+    
+      backgroundColor: Colors.white,
+      
       // ------ HEADER ------
       appBar: AppBar(
-        leading: BackButton(color: Color(0xFF0099b5)), // freccia indietro
-        title: Image.asset('assets/BookTalk-scritta.png', width: 150),
         backgroundColor: Color(0xFFbee2ee),
-        elevation: 0.1,
-        actions: <Widget>[
+        title: Text('Profilo', style: TextStyle(color: Color(0xFF0099b5), fontWeight: FontWeight.bold,),),
+        leading: BackButton(color: Color(0xFF0099b5)), // freccia indietro
+        actions: [
           IconButton(
-            icon: Icon(Icons.exit_to_app, color: Color(0xFF0099b5), size: 30,),
+            icon: Icon(Icons.edit), // Icona di modifica
+            color: Color(0xFF0099b5),
+
             onPressed: () {
-              // Eseguire il logout
+              // Azione quando viene premuto il pulsante di modifica
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => ProfileManagementPage(),
+                ),
+              );
             },
           ),
         ],
       ),
 
 
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
 
-          // ------ SALUTO ------
-          Container(
-            padding: EdgeInsets.only(top: 100.0, bottom: 100),
-            child: Center(
-              child: Text(
-                'Ciao Nome e Cognome',
-                style: TextStyle(fontSize: 30, color: Color(0xFF0099b5)),
+              Text(
+                'I tuoi dati',
+                  style: TextStyle(fontSize: 30, color: Color(0xFF048A8F), fontWeight: FontWeight.bold),
               ),
-            ),
+              SizedBox(height: 10.0),
+              SizedBox(height: 20.0),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(width: 2.0, color: Colors.blue),
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+
+                
+                child: Column(
+                  children: <Widget>[
+                    TextFormField(
+                      enabled: isEditing,
+                      decoration: InputDecoration(
+                        labelText: 'Nome',
+                        labelStyle: TextStyle(color: Colors.black), // Colore del testo del label
+                      ),
+                      initialValue: name,
+                      onChanged: (value) {
+                        setState(() {
+                          name = value;
+                        });
+                      },
+                      style: TextStyle(color: Colors.black), // Colore del testo
+                    ),
+                    SizedBox(height: 10.0),
+                    TextFormField(
+                      enabled: isEditing,
+                      decoration: InputDecoration(
+                        labelText: 'Cognome',
+                        labelStyle: TextStyle(color: Colors.black), // Colore del testo del label
+                      ),
+                      initialValue: surname,
+                      onChanged: (value) {
+                        setState(() {
+                          surname = value;
+                        });
+                      },
+                      style: TextStyle(color: Colors.black), // Colore del testo
+                    ),
+                    SizedBox(height: 10.0),
+                    TextFormField(
+                      enabled: isEditing,
+                      decoration: InputDecoration(
+                        labelText: 'Email',
+                        labelStyle: TextStyle(color: Colors.black), // Colore del testo del label
+                      ),
+                      initialValue: email,
+                      onChanged: (value) {
+                        setState(() {
+                          email = value;
+                        });
+                      },
+                      style: TextStyle(color: Colors.black), // Colore del testo
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-
-
-          // ------ LIBRERIA ------
-          Container(
-            padding: EdgeInsets.only(bottom: 20, left: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  'Libreria',
-                  style: TextStyle(fontSize: 25, color: Color(0xFF0099b5)),
-                ),
-                IconButton(
-                  icon: Icon(Icons.add, color: Color(0xFF0099b5), size: 30),
-                  onPressed: () {
-                    // Azione da eseguire per aggiungere un libro
-                  },
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: ListView(
-              children: <Widget>[
-                ListTile(title: Text('Libro 1')),
-                ListTile(title: Text('Libro 2')),
-                // Aggiungi qui gli altri elementi della lista
-              ],
-            ),
-          ),
-
-
-          // ------ FOOTER ------
-          Container(
-            color: Color(0xFFbee2ee),
-            padding: EdgeInsets.all(16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-
-                // ------ FUNZIONALITA' 1 ------
-                GestureDetector(
-                  onTap: () {
-                    // Azione da eseguire quando si fa clic sull'icona 1
-                  },
-                  child: Image.asset("assets/icona-1.png", width: 50, height: 50,),
-                ),
-
-                // ------ FUNZIONALITA' 2 ------
-                GestureDetector(
-                  onTap: () {
-                    // Azione da eseguire quando si fa clic sull'icona 2
-                  },
-                  child: Image.asset("assets/icona-2.png", width: 50, height: 50,),
-                ),
-
-                // ------ FUNZIONALITA' 3 ------
-                GestureDetector(
-                  onTap: () {
-                    // Azione da eseguire quando si fa clic sull'icona 3
-                  },
-                  child: Image.asset("assets/icona-3.png", width: 50, height: 50,),
-                ),
-
-
-              ],
-            ),
-          ),
-
-        ],
+        ),
       ),
     );
   }

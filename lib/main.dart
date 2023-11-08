@@ -14,6 +14,7 @@ class BookTalkApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+      backgroundColor: Colors.white,
 
         // ------ HEADER ------
         appBar: AppBar(
@@ -29,7 +30,7 @@ class BookTalkApp extends StatelessWidget {
             children: <Widget>[
 
               // ------ LOGO ------
-              Image.asset('assets/BookTalk-noSfondo.png', width: 200, height: 200),
+              Image.asset('assets/BookTalk-logo-noSfondo.png', width: 200, height: 200),
               SizedBox(height: 40), 
 
               // ------ Pulsante "Registrati" ------
@@ -62,7 +63,7 @@ class BookTalkApp extends StatelessWidget {
                 },
                 style: ButtonStyle(
                   fixedSize: MaterialStateProperty.all(Size(200, 50)),
-                  backgroundColor: MaterialStateProperty.all(Color.fromARGB(255, 8, 201, 111)),
+                  backgroundColor: MaterialStateProperty.all(Color(0xFF087B69)),
                   textStyle: MaterialStateProperty.all(TextStyle(fontSize: 16, fontWeight: FontWeight.bold,)),
                 ),
                 child: Text('Accedi'),
