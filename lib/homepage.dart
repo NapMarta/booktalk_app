@@ -104,7 +104,7 @@ class _HomepageState extends State<Homepage> {
                   () {
                     // Azioni per il secondo riquadro
                   },
-                  Color(0xFF86d7e5), // Colore del pulsante
+                  Color(0xFF05a8ba), // Colore del pulsante
                   "Inizia"
                 ),
                 SizedBox(height: 10),
@@ -115,7 +115,7 @@ class _HomepageState extends State<Homepage> {
                   () {
                     // Azioni per il terzo riquadro
                   },
-                  Colors.red, // Colore del pulsante
+                  Color(0xFFff3a2a), // Colore del pulsante
                   "Esplora"
                 ),
                 SizedBox(height: 10),
