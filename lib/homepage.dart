@@ -1,5 +1,9 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:booktalk_app/libreria.dart';
 import 'package:flutter/material.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
+
 
 class Homepage extends StatefulWidget {
   @override
@@ -7,7 +11,7 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
-
+  final panelController = PanelController();
   
   @override
   Widget build(BuildContext context) {
@@ -16,7 +20,7 @@ class _HomepageState extends State<Homepage> {
         body: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("assets/sfondo.png"), 
+              image: AssetImage("assets/sfondo-2.jpg"), 
               fit: BoxFit.cover,
             ),
             /*gradient: LinearGradient(
@@ -73,7 +77,7 @@ class _HomepageState extends State<Homepage> {
                   ),
                 ),
                 SizedBox(height: 20),
-
+                
                 Text(
                   'BookTalk',
                   style: TextStyle(fontFamily: 'Roboto', fontSize: 45, fontWeight: FontWeight.bold, color: Colors.white, shadows: [
@@ -82,21 +86,24 @@ class _HomepageState extends State<Homepage> {
                     color: Color.fromARGB(255, 112, 112, 112),
                     offset: Offset(2, 2),
                   ),
-                ],),
+                ],
+                ),
                 ),
                 SizedBox(height: 20),
-
+                
+                
                 _buildFeatureCard(
-                  "assets/1.png",
-                  "Risoluzione di Espressioni Matematiche",
-                  "Scansiona o inserisci l’espressione matematica e BookTalk ti aiuterà nella risoluzione.",
-                  () {
-                    // Azioni per il primo riquadro
-                  },
-                  Color(0xFFf0bc5e), // Colore del pulsante
-                  "Esegui"
+                    "assets/1.png",
+                    "Espressioni Matematiche",
+                    "Scansiona o inserisci l'espressione matematica e BookTalk ti aiuterà nella risoluzione.",
+                    () {
+                      // Azioni per il primo riquadro
+                    },
+                    Color(0xFFf0bc5e), // Colore del pulsante
+                    "Esegui"
                 ),
-                SizedBox(height: 10),
+                
+                SizedBox(height: 20),
                 _buildFeatureCard(
                   "assets/2.jpeg",
                   "Opere Letterarie e Analisi",
@@ -107,9 +114,10 @@ class _HomepageState extends State<Homepage> {
                   Color(0xFF86d7e5), // Colore del pulsante
                   "Inizia"
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 20),
+                
                 _buildFeatureCard(
-                  "assets/3.jpeg",
+                  "assets/funzionalità3.jpg",
                   "Supporto al learning",
                   "Specifica la parte di libro da studiare e BookTalk ti ascolterà durante la ripetizione dell’argomento.",
                   () {
@@ -118,22 +126,177 @@ class _HomepageState extends State<Homepage> {
                   Colors.red, // Colore del pulsante
                   "Esplora"
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 20),
+                
+                
+                /*
+                SlidingUpPanel(
+                  minHeight: 50.0, // Altezza minima iniziale del pannello
+                  maxHeight: 200.0, // Altezza massima del pannello quando è completamente aperto
+                  panel: Center(
+                    child: Text('Contenuto del pannello scorrevole'),
+                  ),
+                  backdropEnabled: true,
+                  slideDirection: SlideDirection.UP,
+                  collapsed: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.blueGrey,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(24.0),
+                        topRight: Radius.circular(24.0),
+                      ),
+                    ),
+                    
+                  ),
+
+                  body: Center(
+                    child: Text("This is the Widget behind the sliding panel"),
+                  ),
+
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(24.0),
+                    topRight: Radius.circular(24.0),
+                  ),
+                ),*/
+              ],
+              ),
                 /*InkWell(
                   onTap: () {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => Libreria()));
                   },
                   child: Image.asset('assets/library.gif', width: 200),
                 ),*/
-              ],
-            ),
+          
           ),
+          
+          
+          ),
+
+        ),
+
+      );
+
+  }
+
+
+  Widget _buildPanelContent() {
+    return Container(
+      color: Colors.blueGrey,
+      child: Center(
+        child: Text(
+          'Panel Content',
+          style: TextStyle(color: Colors.white, fontSize: 20),
         ),
       ),
     );
   }
 
-  Widget _buildFeatureCard(String iconPath, String title, String description, Function onPressed, Color buttonColor, String buttonText) {
+  Widget _buildMainContent() {
+    return Container(
+      color: Colors.white,
+      child: Center(
+        child: Text(
+          'Main Content',
+          style: TextStyle(fontSize: 20),
+        ),
+      ),
+    );
+  }
+
+
+
+ Widget _buildFeatureCard(String iconPath, String title, String description, Function onPressed, Color buttonColor, String buttonText) {
+  return Container(
+    width: 350,
+    height: 180,
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(20),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.grey,
+          offset: Offset(0, 2),
+          blurRadius: 6,
+          spreadRadius: 0,
+        ),
+      ],
+    ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        // Immagine a sinistra del testo
+        Padding(
+          padding: const EdgeInsets.all(10), // Aggiunge spazio attorno all'immagine
+          child: Image.asset(
+            iconPath,
+            height: 50,
+          ),
+        ),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Align(
+                  alignment: Alignment.center, // Centro il pulsante
+                  child: Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  description,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Color.fromARGB(255, 112, 112, 112),
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 10),
+                Container(
+                  height: 1.0,
+                  width: 280.0,
+                  color: Color.fromARGB(255, 112, 112, 112),
+                ),
+                SizedBox(height: 10),
+                Align(
+                  alignment: Alignment.center, // Centro il pulsante
+                  child: ElevatedButton(
+                    onPressed: () {
+                      onPressed();
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(buttonColor),
+                      textStyle: MaterialStateProperty.all(
+                        TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    child: Text(buttonText),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+}
+/*
+  Widget _buildFeatureCard(
+    String iconPath,
+    String title,
+    String description,
+    Function onPressed,
+    Color buttonColor,
+    String buttonText,
+  ){
     return Container(
       width: 350,
       height: 200,
@@ -195,5 +358,8 @@ class _HomepageState extends State<Homepage> {
         ],
       ),
     );
+
   }
+
 }
+*/
