@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'modifica-profilo.dart';
 
 class Libreria extends StatefulWidget {
@@ -8,12 +9,28 @@ class Libreria extends StatefulWidget {
 
 class _LibreriaState extends State<Libreria> {
 
-  List<bool> showActions = List.generate(15, (index) => false);
+  List<String> showActions = [
+    'Elemento 1',
+    'Elemento 2',
+    'Elemento 3',
+    'Elemento 4',
+    'Elemento 5',
+    'Elemento 6',
+    'Elemento 7',
+    'Elemento 8',
+    'Elemento 9'];
+
+  
   int selectedBookIndex= -1;
   bool isBookSelected(int index) => selectedBookIndex == index;
   double selectedBookFontSize = 20.0; // grandezza font al click sull'item Libro
+  ScrollController _controller = ScrollController();
+  bool isFabTextVisible = true;
+  FloatingActionButtonLocation _floatingActionButtonLocation = FloatingActionButtonLocation.endFloat;
 
 
+
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +63,7 @@ class _LibreriaState extends State<Libreria> {
             ],
           ),
           
-          // ------ LIBRERIA ------
+          // ------ LIBR;ERIA ------
           SliverToBoxAdapter(
             child: Container(
               padding: EdgeInsets.all(20),
@@ -58,8 +75,25 @@ class _LibreriaState extends State<Libreria> {
               ),
               ),
             ),
-          
-          SliverList(
+          /*
+          GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3, // Numero di colonne per riga
+          ),
+          itemCount: showActions.length,
+          itemBuilder: (context, index) {
+            return Card(
+              child: Center(
+                child: Text(showActions[index]),
+              ),
+            );
+          },
+        )*/
+
+          SliverGrid(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3, // Numero di colonne per riga
+            ),
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
                 return Padding(
@@ -81,7 +115,19 @@ class _LibreriaState extends State<Libreria> {
                           child: AnimatedOpacity(
                             duration: Duration(milliseconds: 500),
                             opacity: isBookSelected(index) ? 1.0 : 0.6,
-                            child: ListTile(
+                            child: Column(
+                              children: [
+                                Hero(
+                                  tag: "book_cover_$index",
+                                  child: Image.asset("assets/copertina.jpg", height: isBookSelected(index) ? 120 : 80, width: isBookSelected(index) ? 70: 50),
+                                ),
+                                SizedBox(height: 8.0), // Spazio tra l'immagine e il testo
+                                Text(
+                                  'Libro $index',
+                                  style: TextStyle(fontSize: isBookSelected(index) ? selectedBookFontSize : 16.0),
+                                ),
+                              ],
+                              /*
                               leading: Hero(
                                 tag: "book_cover_$index",
                                 child: Image.asset("assets/copertina.jpg", height: isBookSelected(index) ? 120 : 80, width: isBookSelected(index) ? 70: 50,),
@@ -112,6 +158,7 @@ class _LibreriaState extends State<Libreria> {
                                       ],
                                     )
                                   : null,
+                                  */
                             ),
                           ),
                         ),
@@ -127,8 +174,8 @@ class _LibreriaState extends State<Libreria> {
 
         ],
       ),
-
-
+          
+      
 
       
       // ------ Pulsante "Aggiungi libro" ------
@@ -137,9 +184,13 @@ class _LibreriaState extends State<Libreria> {
           // Azione da eseguire per aggiungere un nuovo libro
         },
         icon: Icon(Icons.add),
-        label: Text('Aggiungi libro'),
+        label: isFabTextVisible ? Text('Aggiungi libro') : Container(),
         backgroundColor: Color(0xFF048A8F),
       ),
     );
+      
+    
   }
+
+
 }
