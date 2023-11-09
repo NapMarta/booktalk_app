@@ -1,7 +1,5 @@
-import 'package:booktalk_app/ExpandableFloatingActionButton.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'modifica-profilo.dart';
+import 'package:booktalk_app/ExpandableFloatingActionButton.dart';
 
 class Libreria extends StatefulWidget {
   @override
@@ -18,56 +16,56 @@ class _LibreriaState extends State<Libreria> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Container(
-        child: Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SearchAnchor(
-                builder: (BuildContext context, SearchController controller) {
-                  return SearchBar(
-                    controller: controller,
-                    padding: const MaterialStatePropertyAll<EdgeInsets>(
-                        EdgeInsets.symmetric(horizontal: 16.0)),
+      body: Column(
+        children: [
+          SizedBox(height: 30,),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SearchAnchor(
+              builder: (BuildContext context, SearchController controller) {
+                return SearchBar(
+                  controller: controller,
+                  padding: const MaterialStatePropertyAll<EdgeInsets>(
+                      EdgeInsets.symmetric(horizontal: 16.0)),
+                  onTap: () {
+                    controller.openView();
+                  },
+                  onChanged: (_) {
+                    controller.openView();
+                  },
+                  leading: const Icon(Icons.search),
+                  trailing: <Widget>[
+                    Tooltip(
+                      message: 'Change brightness mode',
+                      child: IconButton(
+                        onPressed: () {
+                          // Aggiungi l'azione da eseguire al clic sull'icona del sole
+                        },
+                        icon: const Icon(Icons.wb_sunny_outlined),
+                        selectedIcon: const Icon(Icons.brightness_2_outlined),
+                      ),
+                    )
+                  ],
+                );
+              },
+              suggestionsBuilder:
+                  (BuildContext context, SearchController controller) {
+                return List<ListTile>.generate(5, (int index) {
+                  final String item = 'Libro $index';
+                  return ListTile(
+                    title: Text(item),
                     onTap: () {
-                      controller.openView();
+                      setState(() {
+                        controller.closeView(item);
+                      });
                     },
-                    onChanged: (_) {
-                      controller.openView();
-                    },
-                    leading: const Icon(Icons.search),
-                    trailing: <Widget>[
-                      Tooltip(
-                        message: 'Change brightness mode',
-                        child: IconButton(
-                          onPressed: () {
-                            // Aggiungi l'azione da eseguire al clic sull'icona del sole
-                          },
-                          icon: const Icon(Icons.wb_sunny_outlined),
-                          selectedIcon: const Icon(Icons.brightness_2_outlined),
-                        ),
-                      )
-                    ],
                   );
-                },
-                suggestionsBuilder:
-                    (BuildContext context, SearchController controller) {
-                  return List<ListTile>.generate(5, (int index) {
-                    final String item = 'item $index';
-                    return ListTile(
-                      title: Text(item),
-                      onTap: () {
-                        setState(() {
-                          controller.closeView(item);
-                        });
-                      },
-                    );
-                  });
-                },
-              ),
+                });
+              },
             ),
-            Expanded(
-              child: CustomScrollView(
+          ),
+          Expanded(
+            child: CustomScrollView(
               controller: _scrollController,
               slivers: <Widget>[
                 SliverGrid(
@@ -123,9 +121,8 @@ class _LibreriaState extends State<Libreria> {
                 ),
               ],
             ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
       floatingActionButton: ExpandableFloatingActionButton(
         icon: Icons.add,
