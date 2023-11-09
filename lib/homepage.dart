@@ -1,4 +1,5 @@
 // ignore_for_file: prefer_const_constructors
+import 'package:booktalk_app/profilo.dart';
 import 'package:flutter/material.dart';
 import 'libreria.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -55,7 +56,11 @@ class _HomepageState extends State<Homepage> {
                             ),
                           GestureDetector(
                             onTap: () {
-                              // Azioni da eseguire quando viene premuto il bottone
+                              Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => ProfilePage(),
+                                  ),
+                              ); 
                             },
                             child: Padding(
                               padding: const EdgeInsets.only(left: 190.0, top: 0),
