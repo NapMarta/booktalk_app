@@ -128,8 +128,15 @@ class _HomepageState extends State<Homepage> {
                 ),
                 SizedBox(height: 20),
                 
-                
                 /*
+                InkWell(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Libreria()));
+                  },
+                  child: Image.asset('assets/library.gif', width: 200),
+                ),*/
+                
+                
                 SlidingUpPanel(
                   minHeight: 50.0, // Altezza minima iniziale del pannello
                   maxHeight: 200.0, // Altezza massima del pannello quando è completamente aperto
@@ -157,15 +164,10 @@ class _HomepageState extends State<Homepage> {
                     topLeft: Radius.circular(24.0),
                     topRight: Radius.circular(24.0),
                   ),
-                ),*/
+                ),
               ],
               ),
-                /*InkWell(
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => Libreria()));
-                  },
-                  child: Image.asset('assets/library.gif', width: 200),
-                ),*/
+              
           
           ),
           
