@@ -19,10 +19,11 @@ class _HomepageState extends State<Homepage> {
           children: [
             Container(
               decoration: BoxDecoration(
-                image: DecorationImage(
+                /*image: DecorationImage(
                   image: AssetImage("assets/sfondo.png"),
                   fit: BoxFit.cover,
-                ),
+                ),*/
+                color: Colors.white,
               ),
               child: Center(
                 child: SingleChildScrollView(
@@ -39,14 +40,14 @@ class _HomepageState extends State<Homepage> {
                                   fontFamily: 'Roboto',
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                  shadows: [
+                                  color: Color(0xFF0099b5),
+                                  /*shadows: [
                                     Shadow(
                                       blurRadius: 4,
                                       color: Color.fromARGB(255, 112, 112, 112),
                                       offset: Offset(2, 2),
                                     ),
-                                  ],
+                                  ],*/
                                 ),
                               ),
                             ),
