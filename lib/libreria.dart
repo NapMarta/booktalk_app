@@ -1,43 +1,28 @@
+import 'package:booktalk_app/ExpandableFloatingActionButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'modifica-profilo.dart';
 
 class Libreria extends StatefulWidget {
+
   @override
   _LibreriaState createState() => _LibreriaState();
 }
 
 class _LibreriaState extends State<Libreria> {
-
-  List<String> showActions = [
-    'Elemento 1',
-    'Elemento 2',
-    'Elemento 3',
-    'Elemento 4',
-    'Elemento 5',
-    'Elemento 6',
-    'Elemento 7',
-    'Elemento 8',
-    'Elemento 9'];
-
   
   int selectedBookIndex= -1;
   bool isBookSelected(int index) => selectedBookIndex == index;
   double selectedBookFontSize = 20.0; // grandezza font al click sull'item Libro
-  ScrollController _controller = ScrollController();
-  bool isFabTextVisible = true;
-  FloatingActionButtonLocation _floatingActionButtonLocation = FloatingActionButtonLocation.endFloat;
-
-
-
+  final ScrollController _scrollController = ScrollController();
   
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: CustomScrollView(
+        controller: _scrollController,
         slivers: <Widget>[
-
           // ------ HEADER ------
           SliverAppBar(
             expandedHeight: 20.0,
@@ -92,7 +77,7 @@ class _LibreriaState extends State<Libreria> {
 
           SliverGrid(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3, // Numero di colonne per riga
+              crossAxisCount: 2, // Numero di colonne per riga
             ),
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
@@ -174,23 +159,32 @@ class _LibreriaState extends State<Libreria> {
 
         ],
       ),
-          
-      
+    
 
       
+      
       // ------ Pulsante "Aggiungi libro" ------
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: ExpandableFloatingActionButton(
+        icon: Icons.add,
+        label: 'Aggiungi Libro',
+        scrollController: _scrollController,
         onPressed: () {
-          // Azione da eseguire per aggiungere un nuovo libro
+          // Define the action to be taken when the FAB is pressed
+          // For example, you can add a new item to the list.
+          // In this case, we will scroll to the top of the list when the FAB is pressed.
+          _scrollController.animateTo(0, duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
         },
-        icon: Icon(Icons.add),
-        label: isFabTextVisible ? Text('Aggiungi libro') : Container(),
-        backgroundColor: Color(0xFF048A8F),
       ),
     );
+    
       
     
   }
 
 
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 }
