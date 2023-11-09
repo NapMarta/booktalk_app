@@ -69,7 +69,7 @@ class _ProfileManagementPageState extends State<ProfileManagementPage> {
                   },
                   child: Row(
                     children: [
-                      Icon(Icons.arrow_back, color: Colors.white), // Icona della freccia
+                      Icon(Icons.arrow_back_rounded, color: Colors.black), // Icona della freccia
                       SizedBox(width: 20,),
                       Text(
                         "Modifica Profilo",
@@ -77,11 +77,11 @@ class _ProfileManagementPageState extends State<ProfileManagementPage> {
                           fontFamily: 'Roboto',
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: Colors.black,
                           shadows: [
                             Shadow(
-                              blurRadius: 4,
-                              color: Color.fromARGB(255, 112, 112, 112),
+                              blurRadius: 8,
+                              color: Colors.white,
                               offset: Offset(2, 2),
                             ),
                           ],

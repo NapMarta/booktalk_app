@@ -79,18 +79,18 @@ class _ProfilePageState extends State<ProfilePage> {
                               child: Text(
                                 'Bentornata Maria!',
                                 style: TextStyle(
-                                  fontFamily: 'Roboto',
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                  shadows: [
-                                    Shadow(
-                                      blurRadius: 4,
-                                      color: Color.fromARGB(255, 112, 112, 112),
-                                      offset: Offset(2, 2),
-                                    ),
-                                  ],
-                                ),
+                          fontFamily: 'Roboto',
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          shadows: [
+                            Shadow(
+                              blurRadius: 8,
+                              color: Colors.white,
+                              offset: Offset(2, 2),
+                            ),
+                          ],
+                        ),
                               ),
                             ),
                           GestureDetector(

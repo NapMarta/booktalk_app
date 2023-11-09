@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:booktalk_app/profilo.dart';
+import 'package:booktalk_app/supporto-al-learning.dart';
 import 'package:flutter/material.dart';
 import 'libreria.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -40,18 +41,18 @@ class _HomepageState extends State<Homepage> {
                               child: Text(
                                 'Bentornata Maria!',
                                 style: TextStyle(
-                                  fontFamily: 'Roboto',
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                  shadows: [
-                                    Shadow(
-                                      blurRadius: 4,
-                                      color: Color.fromARGB(255, 112, 112, 112),
-                                      offset: Offset(2, 2),
-                                    ),
-                                  ],
-                                ),
+                          fontFamily: 'Roboto',
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          shadows: [
+                            Shadow(
+                              blurRadius: 8,
+                              color: Colors.white,
+                              offset: Offset(2, 2),
+                            ),
+                          ],
+                        ),
                               ),
                             ),
                           GestureDetector(
@@ -150,7 +151,11 @@ class _HomepageState extends State<Homepage> {
                         "Supporto al learning",
                         "Specifica la parte di libro da studiare e BookTalk ti ascolterà durante la ripetizione dell’argomento.",
                         () {
-                          // Azioni per il terzo riquadro
+                          Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => SupportoAlLearningScreen(),
+                              ),
+                          ); 
                         },
                         Color(0xFFff3a2a),
                         "Esplora",
