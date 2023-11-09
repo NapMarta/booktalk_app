@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
+import 'libreria.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class Homepage extends StatefulWidget {
@@ -8,6 +9,7 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
+  final Libreria _libreriaPage = Libreria();
   final panelController = PanelController();
 
   @override
@@ -19,11 +21,11 @@ class _HomepageState extends State<Homepage> {
           children: [
             Container(
               decoration: BoxDecoration(
-                /*image: DecorationImage(
+                image: DecorationImage(
                   image: AssetImage("assets/sfondo.png"),
                   fit: BoxFit.cover,
-                ),*/
-                color: Colors.white,
+                ),
+                //color: Colors.white,
               ),
               child: Center(
                 child: SingleChildScrollView(
@@ -40,14 +42,14 @@ class _HomepageState extends State<Homepage> {
                                   fontFamily: 'Roboto',
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
-                                  color: Color(0xFF0099b5),
-                                  /*shadows: [
+                                  color: Colors.white,
+                                  shadows: [
                                     Shadow(
                                       blurRadius: 4,
                                       color: Color.fromARGB(255, 112, 112, 112),
                                       offset: Offset(2, 2),
                                     ),
-                                  ],*/
+                                  ],
                                 ),
                               ),
                             ),
@@ -157,9 +159,7 @@ class _HomepageState extends State<Homepage> {
             SlidingUpPanel(
               minHeight: 65.0,
               maxHeight: 800.0,
-              panel: Center(
-                child: Text('Contenuto del pannello scorrevole'),
-              ),
+              panel: _libreriaPage,
               backdropEnabled: true,
               slideDirection: SlideDirection.UP,
               collapsed: Container(

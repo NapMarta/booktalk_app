@@ -71,7 +71,7 @@ class BookTalkApp extends StatelessWidget {
               ),
 
 
-              ElevatedButton(
+              /*ElevatedButton(
                 onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
@@ -85,7 +85,7 @@ class BookTalkApp extends StatelessWidget {
                   textStyle: MaterialStateProperty.all(TextStyle(fontSize: 16, fontWeight: FontWeight.bold,)),
                 ),
                 child: Text('Libreria'),
-              ),
+              ),*/
 
             ],
           ),

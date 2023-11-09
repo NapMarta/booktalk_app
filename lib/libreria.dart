@@ -18,9 +18,8 @@ class _LibreriaState extends State<Libreria> {
       backgroundColor: Colors.white,
       body: Column(
         children: [
-          SizedBox(height: 30,),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.only(top: 35.0, bottom: 20.0, left: 8.0, right: 8.0),
             child: SearchAnchor(
               builder: (BuildContext context, SearchController controller) {
                 return SearchBar(
@@ -34,18 +33,7 @@ class _LibreriaState extends State<Libreria> {
                     controller.openView();
                   },
                   leading: const Icon(Icons.search),
-                  trailing: <Widget>[
-                    Tooltip(
-                      message: 'Change brightness mode',
-                      child: IconButton(
-                        onPressed: () {
-                          // Aggiungi l'azione da eseguire al clic sull'icona del sole
-                        },
-                        icon: const Icon(Icons.wb_sunny_outlined),
-                        selectedIcon: const Icon(Icons.brightness_2_outlined),
-                      ),
-                    )
-                  ],
+                  // L'azione relativa all'icona del sole è stata rimossa qui
                 );
               },
               suggestionsBuilder:
