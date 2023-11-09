@@ -159,7 +159,7 @@ class _HomepageState extends State<Homepage> {
             SlidingUpPanel(
               minHeight: 65.0,
               maxHeight: 800.0,
-              panel: _libreriaPage,
+              panel: Center(child: _libreriaPage),
               backdropEnabled: true,
               slideDirection: SlideDirection.UP,
               collapsed: Container(
