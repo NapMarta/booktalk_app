@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:booktalk_app/libreria.dart';
+import 'package:booktalk_app/camera-exp.dart';
 import 'package:flutter/material.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
@@ -97,7 +97,7 @@ class _HomepageState extends State<Homepage> {
                     "Espressioni Matematiche",
                     "Scansiona o inserisci l'espressione matematica e BookTalk ti aiuterà nella risoluzione.",
                     () {
-                      // Azioni per il primo riquadro
+                      //Navigator.push(context, MaterialPageRoute(builder: (context) => CameraExp()));
                     },
                     Color(0xFFf0bc5e), // Colore del pulsante
                     "Esegui"

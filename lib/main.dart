@@ -1,8 +1,15 @@
+//import 'package:camera/camera.dart'
 import 'package:flutter/material.dart';
 import 'registrazione.dart';
 import 'login.dart';
 
-void main() {
+//late List<CameraDescription> _cameras;
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  //_cameras = await availableCameras();
+  //final firstCamera = _cameras.first;
+
   runApp(MaterialApp(
     home: BookTalkApp(),
   ));
@@ -10,6 +17,7 @@ void main() {
 
 
 class BookTalkApp extends StatelessWidget {
+ 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
