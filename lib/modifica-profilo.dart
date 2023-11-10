@@ -50,42 +50,52 @@ class _ProfileManagementPageState extends State<ProfileManagementPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-
-      // ------ HEADER ------
-      appBar: AppBar(
-        leading: BackButton(color: Color(0xFF0099b5)), // freccia indietro
-
-        title: Text('Modifica profilo', style: TextStyle(color: Color(0xFF0099b5), fontWeight: FontWeight.bold)),
-        backgroundColor: Color(0xFFbee2ee),
-        elevation: 0.1,
-        actions: <Widget>[
-          TextButton(
-            onPressed: () {
-              logout();
-            },
-            child: Row(
-              children: [
-                Text('Logout', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Color(0xFF0099b5))),
-                Icon(Icons.logout)  
-              ],
-            ),
-          )
-        ],
-      ),
-
-
       body: SingleChildScrollView(
+        child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/sfondo.png"),
+              fit: BoxFit.cover,
+            ),
+          ),
         child: Padding(
-          padding: EdgeInsets.only(right: 16.0, left: 16.0, top: 60.0, bottom: 30.0),
+          padding: EdgeInsets.only(right: 16.0, left: 16.0, top: 40.0, bottom: 30.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pop(); // Torna alla pagina precedente
+                  },
+                  child: Row(
+                    children: [
+                      Icon(Icons.arrow_back_rounded, color: Colors.black), // Icona della freccia
+                      SizedBox(width: 20,),
+                      Text(
+                        "Modifica Profilo",
+                        style: TextStyle(
+                          fontFamily: 'Roboto',
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          shadows: [
+                            Shadow(
+                              blurRadius: 8,
+                              color: Colors.white,
+                              offset: Offset(2, 2),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               Center(
                 child: Column(
                   children: [
-                    Image.asset('assets/person-icon.png', width: 150, height: 150),
-                    SizedBox(height: 20),
+                    SizedBox(height: 40,),
+                    Image.asset('assets/person-icon.png', width: 120),
+                    SizedBox(height: 10),
                   ],
                 ),
               ),
@@ -100,7 +110,9 @@ class _ProfileManagementPageState extends State<ProfileManagementPage> {
                 decoration: InputDecoration(
                   hintText: 'Inserisci il tuo nome',
                   border: OutlineInputBorder(), 
-                  prefixIcon: Icon(Icons.person)
+                  prefixIcon: Icon(Icons.person),
+                  filled: true,
+                  fillColor: Colors.white.withOpacity(0.8),
                 ),
               ),
               SizedBox(height: 16.0),
@@ -115,7 +127,9 @@ class _ProfileManagementPageState extends State<ProfileManagementPage> {
                 decoration: InputDecoration(
                   hintText: 'Inserisci il tuo cognome',
                   border: OutlineInputBorder(), 
-                  prefixIcon: Icon(Icons.person)
+                  prefixIcon: Icon(Icons.person),
+                  filled: true,
+                  fillColor: Colors.white.withOpacity(0.8)
                 ),
               ),
 
@@ -130,7 +144,9 @@ class _ProfileManagementPageState extends State<ProfileManagementPage> {
                 decoration: InputDecoration(
                   hintText: 'Inserisci la tua email',
                   border: OutlineInputBorder(), 
-                  prefixIcon: Icon(Icons.email)
+                  prefixIcon: Icon(Icons.email),
+                  filled: true,
+                  fillColor: Colors.white.withOpacity(0.8)
                 ),
               ),
               SizedBox(height: 16.0),
@@ -142,8 +158,10 @@ class _ProfileManagementPageState extends State<ProfileManagementPage> {
               ),
               TextField(
                 controller: passwordController,
-                decoration: InputDecoration(hintText: 'Password', border: OutlineInputBorder(), prefixIcon: Icon(Icons.lock)),
+                decoration: InputDecoration(hintText: 'Password', border: OutlineInputBorder(), prefixIcon: Icon(Icons.lock), filled: true,
+                  fillColor: Colors.white.withOpacity(0.8)),
                 obscureText: true, // Per nascondere la password
+                
               ),
               SizedBox(height: 10),
 
@@ -153,7 +171,8 @@ class _ProfileManagementPageState extends State<ProfileManagementPage> {
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               TextField(
-                decoration: InputDecoration(hintText: 'Password', border: OutlineInputBorder(), prefixIcon: Icon(Icons.lock)),
+                decoration: InputDecoration(hintText: 'Password', border: OutlineInputBorder(), prefixIcon: Icon(Icons.lock), filled: true,
+                  fillColor: Colors.white.withOpacity(0.8)),
                 obscureText: true, // Per nascondere la password
               ),
               SizedBox(height: 10),
@@ -164,7 +183,8 @@ class _ProfileManagementPageState extends State<ProfileManagementPage> {
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               TextField(
-                decoration: InputDecoration(hintText: 'Password', border: OutlineInputBorder(), prefixIcon: Icon(Icons.lock)),
+                decoration: InputDecoration(hintText: 'Password', border: OutlineInputBorder(), prefixIcon: Icon(Icons.lock), filled: true,
+                  fillColor: Colors.white.withOpacity(0.8)),
                 obscureText: true, // Per nascondere la password
               ),
               SizedBox(height: 10),
@@ -209,6 +229,7 @@ class _ProfileManagementPageState extends State<ProfileManagementPage> {
             ],
           ),
         ), 
+      ),
       ),
     );
   }

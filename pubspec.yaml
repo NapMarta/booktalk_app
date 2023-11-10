@@ -40,6 +40,7 @@ dependencies:
   # per la posizione dinamica
   
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -84,6 +85,8 @@ flutter:
     - assets/sfondo.png
     - assets/icona-studia-argomento.GIF
     - assets/linea.png
+    - assets/grafico1.png
+    - assets/grafico2.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

@@ -1,7 +1,10 @@
 // ignore_for_file: prefer_const_constructors
+import 'package:booktalk_app/libreria-secondafunz.dart';
 import 'package:booktalk_app/profilo.dart';
+import 'package:booktalk_app/supporto-al-learning.dart';
 import 'package:flutter/material.dart';
 import 'libreria.dart';
+import 'espressioni-matematiche.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class Homepage extends StatefulWidget {
@@ -40,18 +43,18 @@ class _HomepageState extends State<Homepage> {
                               child: Text(
                                 'Bentornata Maria!',
                                 style: TextStyle(
-                                  fontFamily: 'Roboto',
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                  shadows: [
-                                    Shadow(
-                                      blurRadius: 4,
-                                      color: Color.fromARGB(255, 112, 112, 112),
-                                      offset: Offset(2, 2),
-                                    ),
-                                  ],
-                                ),
+                          fontFamily: 'Roboto',
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          shadows: [
+                            Shadow(
+                              blurRadius: 8,
+                              color: Colors.white,
+                              offset: Offset(2, 2),
+                            ),
+                          ],
+                        ),
                               ),
                             ),
                           GestureDetector(
@@ -128,7 +131,11 @@ class _HomepageState extends State<Homepage> {
                         "Espressioni Matematiche",
                         "Scansiona o inserisci l'espressione matematica e BookTalk ti aiuterà nella risoluzione.",
                         () {
-                          // Azioni per il primo riquadro
+                          /*Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => RisolviEspressioni(),
+                              ),
+                          );*/
                         },
                         Color(0xFFf0bc5e),
                         "Esegui",
@@ -139,7 +146,11 @@ class _HomepageState extends State<Homepage> {
                         "Opere Letterarie e Analisi",
                         "Seleziona un libro dalla tua libreria, poi scansiona il testo di interesse per ricevere analisi approfondite.",
                         () {
-                          // Azioni per il secondo riquadro
+                          Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => LibreriaFunzionzlita(),
+                              ),
+                          );
                         },
                         Color(0xFF05a8ba),
                         "Inizia",
@@ -150,7 +161,11 @@ class _HomepageState extends State<Homepage> {
                         "Supporto al learning",
                         "Specifica la parte di libro da studiare e BookTalk ti ascolterà durante la ripetizione dell’argomento.",
                         () {
-                          // Azioni per il terzo riquadro
+                          Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => SupportoAlLearningScreen(),
+                              ),
+                          ); 
                         },
                         Color(0xFFff3a2a),
                         "Esplora",
