@@ -1,8 +1,10 @@
 // ignore_for_file: prefer_const_constructors
+import 'package:booktalk_app/espressioni-matematiche.dart';
 import 'package:booktalk_app/profilo.dart';
 import 'package:booktalk_app/supporto-al-learning.dart';
 import 'package:flutter/material.dart';
 import 'libreria.dart';
+import 'espressioni-matematiche.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class Homepage extends StatefulWidget {
@@ -129,7 +131,11 @@ class _HomepageState extends State<Homepage> {
                         "Espressioni Matematiche",
                         "Scansiona o inserisci l'espressione matematica e BookTalk ti aiuterà nella risoluzione.",
                         () {
-                          // Azioni per il primo riquadro
+                          /*Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => RisolviEspressioni(),
+                              ),
+                          );*/
                         },
                         Color(0xFFf0bc5e),
                         "Esegui",
