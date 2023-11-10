@@ -1,4 +1,5 @@
 //import 'package:camera/camera.dart'
+import 'package:booktalk_app/libreria.dart';
 import 'package:flutter/material.dart';
 import 'registrazione.dart';
 import 'login.dart';
@@ -76,6 +77,23 @@ class BookTalkApp extends StatelessWidget {
                 ),
                 child: Text('Accedi'),
               ),
+
+
+              /*ElevatedButton(
+                onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => Libreria(),
+                      ),
+                  ); 
+                },
+                style: ButtonStyle(
+                  fixedSize: MaterialStateProperty.all(Size(200, 50)),
+                  backgroundColor: MaterialStateProperty.all(Color(0xFF087B69)),
+                  textStyle: MaterialStateProperty.all(TextStyle(fontSize: 16, fontWeight: FontWeight.bold,)),
+                ),
+                child: Text('Libreria'),
+              ),*/
 
             ],
           ),

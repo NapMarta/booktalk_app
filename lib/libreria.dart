@@ -1,244 +1,277 @@
-import 'package:booktalk_app/ExpandableFloatingActionButton.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'modifica-profilo.dart';
+import 'package:booktalk_app/ExpandableFloatingActionButton.dart';
+
+import 'dart:ui';
 
 class Libreria extends StatefulWidget {
-
   @override
   _LibreriaState createState() => _LibreriaState();
 }
 
 class _LibreriaState extends State<Libreria> {
   
-  int selectedBookIndex= -1;
-  bool isBookSelected(int index) => selectedBookIndex == index;
-  double selectedBookFontSize = 20.0; // grandezza font al click sull'item Libro
+  bool isBlurActive = false;
+  double selectedBookFontSize = 20.0;
   final ScrollController _scrollController = ScrollController();
-  
+  bool isButtonVisible = false;
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Container(
-        child: Row(
+      backgroundColor: Colors.transparent,
+      body: Column(
+        /*decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(24.0),
+            topRight: Radius.circular(24.0),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey,
+              offset: Offset(0, 2),
+              blurRadius: 6,
+              spreadRadius: 0,
+            ),
+          ],
+        ),*/
+          // ----------- BARRA DI RICERCA -----------
           children: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.only(
+                  top: 35.0, bottom: 20.0, left: 8.0, right: 8.0),
               child: SearchAnchor(
-                  builder: (BuildContext context, SearchController controller) {
-                return SearchBar(
-                  controller: controller,
-                  padding: const MaterialStatePropertyAll<EdgeInsets>(
-                      EdgeInsets.symmetric(horizontal: 16.0)),
-                  onTap: () {
-                    controller.openView();
-                  },
-                  onChanged: (_) {
-                    controller.openView();
-                  },
-                  leading: const Icon(Icons.search),
-                  trailing: <Widget>[
-                    Tooltip(
-                      message: 'Change brightness mode',
-                      child: IconButton(
-                        onPressed: () {
-                          
-                        },
-                        icon: const Icon(Icons.wb_sunny_outlined),
-                        selectedIcon: const Icon(Icons.brightness_2_outlined),
-                      ),
-                    )
-                  ],
-                );
-              }, suggestionsBuilder:
-                      (BuildContext context, SearchController controller) {
-                return List<ListTile>.generate(5, (int index) {
-                  final String item = 'item $index';
-                  return ListTile(
-                    title: Text(item),
+                builder: (BuildContext context, SearchController controller) {
+                  return SearchBar(
+                    controller: controller,
+                    padding: const MaterialStatePropertyAll<EdgeInsets>(
+                        EdgeInsets.symmetric(horizontal: 16.0)),
                     onTap: () {
-                      setState(() {
-                        controller.closeView(item);
-                      });
+                      controller.openView();
                     },
+                    onChanged: (_) {
+                      controller.openView();
+                    },
+                    leading: const Icon(Icons.search),
                   );
-                });
-              }),
-            ),
-          
-              
-          
-              CustomScrollView(
-                controller: _scrollController,
-                slivers: <Widget>[
-                  /*
-                  // ------ HEADER ------
-                  SliverAppBar(
-                    expandedHeight: 20.0,
-                    floating: true,
-                    pinned: false,
-                    backgroundColor: Color(0xFFbee2ee),
-                    title: Image.asset('assets/BookTalk-scritta.png', width: 150),
-                    leading: BackButton(color: Color(0xFF0099b5)), // freccia indietro
-
-
-                    // ------ Pulsante Profilo ------
-                    actions: <Widget>[
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => ProfileManagementPage(),
-                            ),
-                          );
-                        },
-                        child: Image.asset('assets/person-icon.png', width: 35, height: 35),
-                      ),
-                    ],
-                  ),
-                  */
-                  
-              
-
-
-                  // ------ LIBRERIA ------
-                  /*
-                  SliverToBoxAdapter(
-                    child: Container(
-                      padding: EdgeInsets.all(20),
-                      child: Center(
-                        child: Text(
-                          'I tuoi libri',
-                          style: TextStyle(fontSize: 30, color: Color(0xFF048A8F), fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      ),
-                    ),
-                  
-                  GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3, // Numero di colonne per riga
-                  ),
-                  itemCount: showActions.length,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      child: Center(
-                        child: Text(showActions[index]),
-                      ),
+                },
+                suggestionsBuilder:
+                    (BuildContext context, SearchController controller) {
+                  return List<ListTile>.generate(5, (int index) {
+                    final String item = 'Libro $index';
+                    return ListTile(
+                      title: Text(item),
+                      onTap: () {
+                        setState(() {
+                          controller.closeView(item);
+                        });
+                      },
                     );
-                  },
-                )*/
+                  });
+                },
+              ),
+            ),
 
+            // ----------- LISTA A GRIGLIA -----------
+            
+
+            Expanded(
+            child:  CustomScrollView(
+              controller: _scrollController,
+              slivers: <Widget>[
+
+                SliverPadding(
+                  padding: EdgeInsets.only(bottom: 50.0), // Aggiungi lo spazio desiderato qui
+                  sliver: 
                 SliverGrid(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3, // Numero di colonne per riga
+                    crossAxisCount: 3,
                   ),
                   delegate: SliverChildBuilderDelegate(
                     (BuildContext context, int index) {
+
                       return Padding(
-                        padding: EdgeInsets.only(bottom: 10.0),
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  if (isBookSelected(index)) {
-                                    selectedBookIndex = -1;
-                                  } else {
-                                    selectedBookIndex = index;
-                                  }
-                                });
-                              },
-                              child: Container(
-                                child: AnimatedOpacity(
-                                  duration: Duration(milliseconds: 500),
-                                  opacity: isBookSelected(index) ? 1.0 : 0.6,
-                                  child: Column(
-                                    children: [
-                                      Hero(
-                                        tag: "book_cover_$index",
-                                        child: Image.asset("assets/copertina.jpg", height: isBookSelected(index) ? 120 : 80, width: isBookSelected(index) ? 70: 50),
-                                      ),
-                                      SizedBox(height: 8.0), // Spazio tra l'immagine e il testo
-                                      Text(
-                                        'Libro $index',
-                                        style: TextStyle(fontSize: isBookSelected(index) ? selectedBookFontSize : 16.0),
-                                      ),
-                                    ],
-                                    /*
-                                    leading: Hero(
-                                      tag: "book_cover_$index",
-                                      child: Image.asset("assets/copertina.jpg", height: isBookSelected(index) ? 120 : 80, width: isBookSelected(index) ? 70: 50,),
-                                    ),
-                                    title: Text(
-                                      'Libro $index',
-                                      style: TextStyle(fontSize: isBookSelected(index) ? selectedBookFontSize : 16.0, 
-                                      ),
-                                    ),
-                                    subtitle: isBookSelected(index)
-                                        ? Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: <Widget>[
-                                              SizedBox(height: 150.0,),
-                                              GestureDetector(
-                                                onTap: () {
-                                                  // Azione da eseguire quando si fa clic su icona-2
-                                                },
-                                                child: Image.asset("assets/2.png", height: 70),
-                                              ),
-                                              SizedBox(width: 80.0),
-                                              GestureDetector(
-                                                onTap: () {
-                                                  // Azione da eseguire quando si fa clic su icona-3
-                                                },
-                                                child: Image.asset("assets/3.png", height: 70),
-                                              ),
-                                            ],
-                                          )
-                                        : null,
-                                        */
+                        padding: EdgeInsets.only(bottom: 0.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            _showDialog(context, 'Libro $index');
+                          },
+                          child: Container(
+                            //----------- DEFINIZIONE DELL'ELEMENTO -----------
+                            child: Column(
+                              children: [
+                                Hero(
+                                  tag: "book_cover_$index",
+                                  child: Image.asset(
+                                    "assets/copertina.jpg",
+                                    height: 80,
+                                    width: 50,
                                   ),
                                 ),
-                              ),
+                                SizedBox(height: 8.0),
+                                Text(
+                                  'Libro $index',
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
                       );
                     },
-                    childCount: 30, // da sostituire con la lista di libri
-                  ),
+                    childCount: 30,
+                  ),                  
                 ),
-                ],
-              ),
-            ],
-          ),    
-        ),
-      
-      
-      // ------ Pulsante "Aggiungi libro" ------
+                ),
+              ],
+            ),
+          ),
+          
+        ],
+      ),
+    
+
+      // ----------- PUSANTE AGGIUNGI LIBRO -----------
       floatingActionButton: ExpandableFloatingActionButton(
         icon: Icons.add,
         label: 'Aggiungi Libro',
         scrollController: _scrollController,
         onPressed: () {
-          // Define the action to be taken when the FAB is pressed
-          // For example, you can add a new item to the list.
-          // In this case, we will scroll to the top of the list when the FAB is pressed.
-          _scrollController.animateTo(0, duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
+          _scrollController.animateTo(0,
+              duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
         },
       ),
     );
-    
-      
-    
+  }
+  //----------- FINE -----------
+
+
+
+
+
+
+void _showDialog(BuildContext context, String bookTitle) {
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+          child: AlertDialog(
+            backgroundColor: Colors.transparent,
+            content: Container(
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 255, 255, 255),
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              
+              width: 200.0, // Imposta la larghezza desiderata
+              height: 250.0,
+              alignment: Alignment.center,
+            
+              child: Column(
+              children: [
+                Row(
+                  children: [
+                      Hero(
+                        tag: "book_cover_$bookTitle",
+                        child: Padding(padding: const EdgeInsets.all(15), // Aggiunge spazio attorno all'immagine
+                            child: Image.asset(
+                            "assets/copertina.jpg",
+                            height: 80,
+                            width: 50,
+                          ),
+                        ),
+                      ),
+
+                      Text(
+                        '$bookTitle',
+                        style: TextStyle(fontSize: 16.0,  fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                      ),
+                  ],
+                ),
+                
+                SizedBox(height: 8.0),
+                Text(
+                  'Dettagli del libro',
+                  style: TextStyle(fontSize: 16.0),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 25.0),
+                Center(
+                child:Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        // collegamento alla funzionalità 2
+                      },
+                      style: ElevatedButton.styleFrom(
+                        elevation: 5, // Add elevation for boxShadow
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0), // Adjust border radius as needed
+                        ),
+                        shadowColor: Colors.grey, // Set shadow color
+                        primary: Colors.white, // Set background color to white
+                        padding: EdgeInsets.all(0.0),  // Adjust padding as needed
+                      ),
+                      
+                      child: Image.asset(
+                        "assets/2.jpeg",
+                        height: 50,
+                      ),
+                      
+                    ),
+
+                    SizedBox(width: 20,),
+                    ElevatedButton(
+                      onPressed: () {
+                        // collegamento alla funzionalità 3                        
+                      },
+                      style: ElevatedButton.styleFrom(
+                        elevation: 5, // Add elevation for boxShadow
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0), // Adjust border radius as needed
+                        ),
+                        shadowColor: Colors.grey, // Set shadow color
+                        primary: Colors.white, // Set background color to white
+                        padding: EdgeInsets.all(0.0), // Adjust padding as needed
+                      ),
+                      child: Image.asset(
+                        "assets/funzionalità3.jpg",
+                        height: 50,
+                      ),
+                      
+                    ),
+
+                  ],
+                ),
+                ),
+            
+                ],
+                ),                  
+                
+              ),
+              ),
+          );
+          
+      },
+    );
   }
 
 
+  
+             
   @override
   void dispose() {
     _scrollController.dispose();
     super.dispose();
-  }
+  }           
 }
+
+  
+
