@@ -1,4 +1,3 @@
-/*
 
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
@@ -57,4 +56,3 @@ class _CameraExpState extends State<CameraExp> {
   }
 }
 
-*/
