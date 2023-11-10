@@ -1,6 +1,7 @@
 // Importa i pacchetti necessari
 import 'package:booktalk_app/libreria-secondafunz.dart';
 import 'package:booktalk_app/libreria.dart';
+import 'package:booktalk_app/profilo.dart';
 import 'package:flutter/material.dart';
 
 // Funzione principale dell'app Flutter
@@ -42,36 +43,54 @@ class SupportoAlLearningScreenState extends State<SupportoAlLearningScreen> {
         ),
         child: Column(
           children: <Widget>[
+            SizedBox(height: 30,),
             // Barra superiore con freccia indietro e titolo
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).pop(); // Torna alla pagina precedente
-              },
-              child: Row(
-                children: [
-                  SizedBox(height: 100,),
-                  SizedBox(width: 10,),
-                  Icon(Icons.arrow_back_rounded, color: Colors.black), // Icona della freccia
-                  SizedBox(width: 20,),
-                  Text(
-                    "Supporto al Learning",
-                    style: TextStyle(
-                      fontFamily: 'Roboto',
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                      shadows: [
-                        Shadow(
-                          blurRadius: 8,
-                          color: Colors.white,
-                          offset: Offset(2, 2),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pop(); // Torna alla pagina precedente
+                    },
+                    child: Row(
+                      children: [
+                        Icon(Icons.arrow_back_ios_new_rounded, color: Colors.black), // Icona della freccia
+                        SizedBox(width: 20,),
+                        Text(
+                          "Supporto al learning",
+                          style: TextStyle(
+                            fontFamily: 'Roboto',
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                            shadows: [
+                              Shadow(
+                                blurRadius: 8,
+                                color: Colors.white,
+                                offset: Offset(2, 2),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
                   ),
+
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => ProfilePage(),
+                        ),
+                      ); 
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 20, top: 0),
+                      child: Image.asset("assets/person-icon.png", width: 32),
+                    ),
+                  ),
                 ],
               ),
-            ),
 
             // Area di chat
             Expanded(

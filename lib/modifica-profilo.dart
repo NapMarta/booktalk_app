@@ -69,7 +69,7 @@ class _ProfileManagementPageState extends State<ProfileManagementPage> {
                   },
                   child: Row(
                     children: [
-                      Icon(Icons.arrow_back_rounded, color: Colors.black), // Icona della freccia
+                      Icon(Icons.arrow_back_ios_new_rounded, color: Colors.black), // Icona della freccia
                       SizedBox(width: 20,),
                       Text(
                         "Modifica Profilo",

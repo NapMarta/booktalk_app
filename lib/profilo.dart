@@ -71,76 +71,56 @@ class _ProfilePageState extends State<ProfilePage> {
               child: Column(
                 children: [Column(
                     mainAxisAlignment: MainAxisAlignment.center,
+                    
                     children: [
+                      SizedBox(height: 20,),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Padding(
-                              padding: const EdgeInsets.only(left: 10.0, top: 45),
-                              child: Text(
-                                'Bentornata Maria!',
-                                style: TextStyle(
-                          fontFamily: 'Roboto',
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                          shadows: [
-                            Shadow(
-                              blurRadius: 8,
-                              color: Colors.white,
-                              offset: Offset(2, 2),
+                          IconButton(icon: Icon(Icons.arrow_back_ios_new_rounded), color: Colors.black,
+                          onPressed: () {
+                             Navigator.pop(context);
+                          },), // Icona della freccia
+                          Text(
+                            "Bentornata Maria!",
+                            style: TextStyle(
+                              fontFamily: 'Roboto',
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                              shadows: [
+                                Shadow(
+                                  blurRadius: 8,
+                                  color: Colors.white,
+                                  offset: Offset(2, 2),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+
+                           GestureDetector(
+                            onTap: () {
+                              // Aggiungi qui la logica per il logout
+                              // Per esempio, puoi chiamare una funzione che gestisce il logout
+                              // o navigare verso la schermata di login.
+                              // Esempio: logoutFunction();
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 20),
+                              child: Container(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    // Aggiungi qui la logica per il logout
+                                    // Esempio: logoutFunction();
+                                  },
+                                  child: Icon(
+                                    Icons.exit_to_app,
+                                    color: Color(0xFF0099b5),
+                                  ),
+                                ),
                               ),
                             ),
-                          GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => ProfilePage(),
-                      ),
-                    );
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 165.0, top: 45),
-                    child: Container(
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => Homepage(),
-                          ));
-                        },
-                        child: Icon(
-                          Icons.home,
-                          color: Color(0xFF0099b5),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    // Aggiungi qui la logica per il logout
-                    // Per esempio, puoi chiamare una funzione che gestisce il logout
-                    // o navigare verso la schermata di login.
-                    // Esempio: logoutFunction();
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 10.0, top: 45),
-                    child: Container(
-                      child: GestureDetector(
-                        onTap: () {
-                          // Aggiungi qui la logica per il logout
-                          // Esempio: logoutFunction();
-                        },
-                        child: Icon(
-                          Icons.exit_to_app,
-                          color: Color(0xFF0099b5),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                          ),  
                         ],
                       ),
                       Padding(
