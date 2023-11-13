@@ -139,7 +139,7 @@ class _HomepageState extends State<Homepage> {
                           );
                         },
                         Color(0xFFf0bc5e),
-                        "Esegui",
+                        //"Esegui",
                       ),
                       SizedBox(height: 20),
                       _buildFeatureCard(
@@ -154,7 +154,7 @@ class _HomepageState extends State<Homepage> {
                           );
                         },
                         Color(0xFF05a8ba),
-                        "Inizia",
+                        //"Inizia",
                       ),
                       SizedBox(height: 20),
                       _buildFeatureCard(
@@ -168,8 +168,8 @@ class _HomepageState extends State<Homepage> {
                               ),
                           ); 
                         },
-                        Color(0xFFff3a2a),
-                        "Esplora",
+                       Color(0xFFff3a2a),
+                       //"Esplora",
                       ),
                       SizedBox(height: 40),
                     ],
@@ -229,85 +229,73 @@ class _HomepageState extends State<Homepage> {
 
 
 
- Widget _buildFeatureCard(String iconPath, String title, String description, Function onPressed, Color buttonColor, String buttonText) {
-  return Container(
-    width: 350,
-    height: 168,
-    decoration: BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(20),
-      boxShadow: [
-        BoxShadow(
-          color: Colors.grey,
-          offset: Offset(0, 2),
-          blurRadius: 6,
-          spreadRadius: 0,
-        ),
-      ],
-    ),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        // Immagine a sinistra del testo
-        Padding(
-          padding: const EdgeInsets.all(10), // Aggiunge spazio attorno all'immagine
-          child: Image.asset(
-            iconPath,
-            height: 50,
+ Widget _buildFeatureCard(String iconPath, String title, String description, VoidCallback onPressed, Color titleColor) {
+  return GestureDetector(
+    onTap: onPressed,
+    child: Container(
+      width: 350,
+      height: 110,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey,
+            offset: Offset(0, 2),
+            blurRadius: 6,
+            spreadRadius: 0,
           ),
-        ),
-        Expanded(
-          child: Padding(
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Padding(
             padding: const EdgeInsets.all(10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Align(
-                  alignment: Alignment.center, // Centro il pulsante
-                  child: Text(
-                    title,
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  description,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Color.fromARGB(255, 112, 112, 112),
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: 10),
-                Container(
-                  height: 1.0,
-                  width: 280.0,
-                  color: Color.fromARGB(255, 112, 112, 112),
-                ),
-                SizedBox(height: 10),
-                Align(
-                  alignment: Alignment.center, // Centro il pulsante
-                  child: ElevatedButton(
-                    onPressed: () {
-                      onPressed();
-                    },
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(buttonColor),
-                      textStyle: MaterialStateProperty.all(
-                        TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    child: Text(buttonText),
-                  ),
-                ),
-              ],
+            child: Image.asset(
+              iconPath,
+              height: 50,
             ),
           ),
-        ),
-      ],
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: titleColor,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    description,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Color.fromARGB(255, 112, 112, 112),
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 10),
+                  /*Container(
+                    height: 1.0,
+                    width: 280.0,
+                    color: Color.fromARGB(255, 112, 112, 112),
+                  ),
+                  SizedBox(height: 10),*/
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     ),
   );
 }
