@@ -44,7 +44,7 @@ class _HomepageState extends State<Homepage> {
                           Padding(
                               padding: const EdgeInsets.only(left: 10.0, top: 0),
                               child: Text(
-                                'Bentornata Maria!',
+                                'Ciao Maria!',
                                 style: TextStyle(
                           fontFamily: 'Roboto',
                           fontSize: 20,

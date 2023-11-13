@@ -51,7 +51,7 @@ class _ExpandableFloatingActionButtonState
     return FloatingActionButton.extended(
       extendedIconLabelSpacing: _extended ? 10 : 0,
       extendedPadding:
-          _extended ? null : const EdgeInsets.symmetric(horizontal: 16),
+          _extended ? null : const EdgeInsets.symmetric(horizontal: 12),
       onPressed: widget.onPressed,
       icon: Icon(widget.icon),
       label: AnimatedSize(
