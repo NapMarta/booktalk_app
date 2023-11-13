@@ -50,6 +50,36 @@ class _ProfileManagementPageState extends State<ProfileManagementPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
+
+      // ------ HEADER ------
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_new_rounded, color: Color(0xFF0099b5),), // Icona personalizzata
+            onPressed: () {
+              Navigator.of(context).pop(); // Torna indietro alla schermata precedente
+            },
+          ),          
+          title: Text(
+            'Modifica profilo',
+            style: TextStyle(
+              fontFamily: 'Roboto',
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+              shadows: [
+                Shadow(
+                  blurRadius: 8,
+                  color: Colors.white,
+                  offset: Offset(2, 2),
+                ),
+              ],
+            ),
+          ),
+          backgroundColor: Color.fromARGB(0, 255, 255, 255),
+          elevation: 0,
+        ),
+
       body: SingleChildScrollView(
         child: Container(
           decoration: BoxDecoration(
@@ -69,7 +99,7 @@ class _ProfileManagementPageState extends State<ProfileManagementPage> {
                   },
                   child: Row(
                     children: [
-                      Icon(Icons.arrow_back_ios_new_rounded, color: Colors.black), // Icona della freccia
+                      /*Icon(Icons.arrow_back_ios_new_rounded, color: Colors.black), // Icona della freccia
                       SizedBox(width: 20,),
                       Text(
                         "Modifica Profilo",
@@ -86,7 +116,7 @@ class _ProfileManagementPageState extends State<ProfileManagementPage> {
                             ),
                           ],
                         ),
-                      ),
+                      ),*/
                     ],
                   ),
                 ),
