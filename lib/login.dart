@@ -11,12 +11,40 @@ class LoginPage extends StatelessWidget {
 
 
       // ------ HEADER ------
-      appBar: AppBar(
+      /*appBar: AppBar(
         leading: BackButton(color: Color(0xFF0099b5)), // freccia indietro
         title: Text('Login', style: TextStyle(color: Color(0xFF0099b5), fontWeight: FontWeight.bold,),),
         backgroundColor: Color(0xFFbee2ee),
         elevation: 0.1,
-      ),
+      ),*/
+
+      // ------ HEADER ------
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_new_rounded, color: Color(0xFF0099b5),), // Icona personalizzata
+            onPressed: () {
+              Navigator.of(context).pop(); // Torna indietro alla schermata precedente
+            },
+          ),          
+          title: Text(
+            'Login',
+            style: TextStyle(
+              fontFamily: 'Roboto',
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+              shadows: [
+                Shadow(
+                  blurRadius: 8,
+                  color: Colors.white,
+                  offset: Offset(2, 2),
+                ),
+              ],
+            ),
+          ),
+          backgroundColor: Color.fromARGB(0, 255, 255, 255),
+          elevation: 0,
+        ),
 
       body: SingleChildScrollView(
         padding: const EdgeInsets.only(top: 180, right: 20, left: 20),

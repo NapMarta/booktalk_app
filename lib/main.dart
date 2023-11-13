@@ -26,10 +26,17 @@ class BookTalkApp extends StatelessWidget {
       backgroundColor: Colors.white,
 
         // ------ HEADER ------
-        appBar: AppBar(
+        /*appBar: AppBar(
           title: Image.asset('assets/BookTalk-scritta.png', width: 150),
           backgroundColor: Color(0xFFbee2ee),
           elevation: 0.1,
+        ),*/
+
+        // ------ HEADER ------
+        appBar: AppBar(
+          title: Image.asset('assets/BookTalk-scritta.png', width: 150),
+          backgroundColor: Color.fromARGB(0, 255, 255, 255),
+          elevation: 0,
         ),
 
 
