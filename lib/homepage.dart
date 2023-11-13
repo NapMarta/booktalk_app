@@ -21,6 +21,44 @@ class _HomepageState extends State<Homepage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+
+        // ------ HEADER ------
+        appBar: AppBar(
+          title: Text(
+            'Ciao Maria!',
+            style: TextStyle(
+              fontFamily: 'Roboto',
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+              shadows: [
+                Shadow(
+                  blurRadius: 8,
+                  color: Colors.white,
+                  offset: Offset(2, 2),
+                ),
+              ],
+            ),
+          ),
+          backgroundColor: Color.fromARGB(0, 255, 255, 255),
+          actions: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(right: 16),
+              child: IconButton(
+                icon: Image.asset('assets/person-icon.png'),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                    builder: (context) => ProfilePage(),
+                    ),
+                  ); 
+                },
+              ),
+            ),
+          ],
+          elevation: 0,
+        ),
+
         extendBodyBehindAppBar: true,
         body: Stack(
           children: [
@@ -37,42 +75,6 @@ class _HomepageState extends State<Homepage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Row(
-                        children: [
-                          Padding(
-                              padding: const EdgeInsets.only(left: 10.0, top: 0),
-                              child: Text(
-                                'Ciao Maria!',
-                                style: TextStyle(
-                          fontFamily: 'Roboto',
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                          shadows: [
-                            Shadow(
-                              blurRadius: 8,
-                              color: Colors.white,
-                              offset: Offset(2, 2),
-                            ),
-                          ],
-                        ),
-                              ),
-                            ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => ProfilePage(),
-                                  ),
-                              ); 
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 190.0, top: 0),
-                              child: Image.asset("assets/person-icon.png", width: 32),
-                            ),
-                          ),
-                        ],
-                      ),
                       Container(
                         width: 120,
                         height: 120,
