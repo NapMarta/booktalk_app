@@ -123,7 +123,7 @@ class _ProfileManagementPageState extends State<ProfileManagementPage> {
               Center(
                 child: Column(
                   children: [
-                    SizedBox(height: 40,),
+                    SizedBox(height: 60,),
                     Image.asset('assets/person-icon.png', width: 120),
                     SizedBox(height: 10),
                   ],

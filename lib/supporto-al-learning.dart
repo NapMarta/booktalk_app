@@ -34,6 +34,51 @@ class SupportoAlLearningScreenState extends State<SupportoAlLearningScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+       // ------ HEADER ------
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_new_rounded, color: Color(0xFF0099b5),), // Icona personalizzata
+            onPressed: () {
+              Navigator.of(context).pop(); // Torna indietro alla schermata precedente
+            },
+          ),  
+
+          title: Text(
+            'Supporto al Learning',
+            style: TextStyle(
+              fontFamily: 'Roboto',
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+              shadows: [
+                Shadow(
+                  blurRadius: 8,
+                  color: Colors.white,
+                  offset: Offset(2, 2),
+                ),
+              ],
+            ),
+          ),
+          backgroundColor: Color.fromARGB(0, 255, 255, 255),
+          elevation: 0,
+          actions: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(right: 16),
+              child: IconButton(
+                icon: Image.asset('assets/person-icon.png'),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                    builder: (context) => ProfilePage(),
+                    ),
+                  ); 
+                },
+              ),
+            ),
+          ],
+        ),
+        extendBodyBehindAppBar: true,
+
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -46,7 +91,7 @@ class SupportoAlLearningScreenState extends State<SupportoAlLearningScreen> {
             SizedBox(height: 30,),
             // Barra superiore con freccia indietro e titolo
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              /*mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 GestureDetector(
                     onTap: () {
@@ -89,7 +134,7 @@ class SupportoAlLearningScreenState extends State<SupportoAlLearningScreen> {
                       child: Image.asset("assets/person-icon.png", width: 32),
                     ),
                   ),
-                ],
+                ],*/
               ),
 
             // Area di chat
