@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="booktalk_app"
+        android:label="BookTalk"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/booktalk">
         <activity
             android:name=".MainActivity"
             android:exported="true"
