@@ -1,14 +1,12 @@
 // ignore_for_file: prefer_const_constructors
-import 'package:booktalk_app/camera-exp.dart';
 import 'package:booktalk_app/camera.dart';
 import 'package:booktalk_app/libreria-secondafunz.dart';
 import 'package:booktalk_app/profilo.dart';
 import 'package:booktalk_app/supporto-al-learning.dart';
-import 'package:booktalk_app/takephoto_page.dart';
 import 'package:flutter/material.dart';
 import 'libreria.dart';
-import 'espressioni-matematiche.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+
 
 class Homepage extends StatefulWidget {
   @override
@@ -180,14 +178,16 @@ class _HomepageState extends State<Homepage> {
               ),
             ),
             SlidingUpPanel(
-              minHeight: 65.0,
+              minHeight: 80.0,
               maxHeight: 800.0,
               panel: Center(child: _libreriaPage),
               backdropEnabled: true,
               slideDirection: SlideDirection.UP,
+              //color: Colors.transparent,
+              
               collapsed: Container(
                 decoration: BoxDecoration(
-                  color: Color(0xFF0099b5),
+                  color: Colors.transparent,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(24.0),
                     topRight: Radius.circular(24.0),
@@ -213,6 +213,8 @@ class _HomepageState extends State<Homepage> {
                   ],
                 ),
               ),
+
+              
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(24.0),
                 topRight: Radius.circular(24.0),

@@ -20,7 +20,38 @@ class _LibreriaState extends State<Libreria> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
+      appBar: AppBar(
+        // Use the same header widget here
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            color:  Color(0xFF0099b5),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(24.0),
+              topRight: Radius.circular(24.0),
+            ),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset("assets/linea.png", width: 70,),
+              SizedBox(height: 15),
+              Text(
+                'Libreria',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 22,
+                ),
+              ),
+              SizedBox(height: 10),
+            ],
+          ),
+        ),
+        backgroundColor: Colors.transparent,
+      ),
+      //backgroundColor: Colors.white,
       body: Column(
+
         /*decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
@@ -36,6 +67,8 @@ class _LibreriaState extends State<Libreria> {
             ),
           ],
         ),*/
+
+        
           // ----------- BARRA DI RICERCA -----------
           children: [
             Padding(

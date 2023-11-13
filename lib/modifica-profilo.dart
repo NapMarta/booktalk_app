@@ -196,18 +196,6 @@ class _ProfileManagementPageState extends State<ProfileManagementPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center, // Centra i bottoni orizzontalmente
                       children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            saveChanges();
-                            // Salvare le modifiche nel database
-                          },
-                          style: ButtonStyle(
-                            fixedSize: MaterialStateProperty.all(Size(150, 50)),
-                            backgroundColor: MaterialStateProperty.all(Color(0xFF0099b5)),
-                            textStyle: MaterialStateProperty.all(TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                          ),
-                          child: Text('Ripristina'),
-                        ),
                         SizedBox(width: 30.0),
                         ElevatedButton(
                           onPressed: () {
