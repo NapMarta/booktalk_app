@@ -123,12 +123,42 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),  
                         ],
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(top:30, bottom: 50),
-                        child: Image.asset(
-                          "assets/person-icon.png",
-                          width: 150,),
-                      ),                      
+                      Stack(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(top: 30, bottom: 50),
+                            child: InkWell(
+                              onTap: () {
+                                // Azione da eseguire quando l'immagine viene premuta
+                              },
+                              child: Image.asset(
+                                "assets/person-icon.png",
+                                width: 150,
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            bottom: 25,
+                            right: 15,
+                            child: InkWell(
+                              onTap: () {
+                                // Azione da eseguire quando l'icona della fotocamera viene premuta
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white, // Puoi impostare il colore desiderato
+                                ),
+                                child: Icon(
+                                  Icons.camera_alt,
+                                  color: Color(0xFF0099b5), // Puoi impostare il colore desiderato
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                       Positioned(
                         top: 200, // Regola la posizione verticale del riquadro
                         left: 20, // Regola la posizione orizzontale del riquadro
