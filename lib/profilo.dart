@@ -1,4 +1,4 @@
-import 'package:booktalk_app/homepage.dart';
+import 'package:booktalk_app/main.dart';
 import 'package:booktalk_app/modifica-profilo.dart';
 import 'package:flutter/material.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -56,8 +56,73 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      
       home: Scaffold(
-        //extendBodyBehindAppBar: true,
+        // ------ HEADER ------
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_new_rounded, color: Color(0xFF0099b5),), // Icona personalizzata
+            onPressed: () {
+              Navigator.of(context).pop(); // Torna indietro alla schermata precedente
+            },
+          ),  
+
+          title: Text(
+            'Ciao Maria!',
+            style: TextStyle(
+              fontFamily: 'Roboto',
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+              shadows: [
+                Shadow(
+                  blurRadius: 8,
+                  color: Colors.white,
+                  offset: Offset(2, 2),
+                ),
+              ],
+            ),
+          ),
+          backgroundColor: Color.fromARGB(0, 255, 255, 255),
+          elevation: 0,
+          actions: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(right: 16),
+              child: Row(
+                children: [
+                  GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => BookTalkApp(),
+                      ),
+                    ); 
+                  },
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.exit_to_app,
+                        color: Color(0xFF0099b5),
+                        size: 30,
+                      ),
+                      SizedBox(width: 3), // Spazio tra l'icona e il testo
+                      Text(
+                        'Logout',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Color(0xFF0099b5),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        extendBodyBehindAppBar: true,
+
         body: Stack(
           children: [
             Container(
@@ -73,11 +138,11 @@ class _ProfilePageState extends State<ProfilePage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     
                     children: [
-                      SizedBox(height: 20,),
+                      SizedBox(height: 60,),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          IconButton(icon: Icon(Icons.arrow_back_ios_new_rounded), color: Colors.black,
+                          /*IconButton(icon: Icon(Icons.arrow_back_ios_new_rounded), color: Colors.black,
                           onPressed: () {
                              Navigator.pop(context);
                           },), // Icona della freccia
@@ -120,7 +185,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                               ),
                             ),
-                          ),  
+                          ),*/  
                         ],
                       ),
                       Stack(
