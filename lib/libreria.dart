@@ -21,18 +21,18 @@ class _LibreriaState extends State<Libreria> {
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: AppBar(
-        // Use the same header widget here
         flexibleSpace: Container(
+          height: 80, // Imposta l'altezza desiderata per l'AppBar
           decoration: BoxDecoration(
-            color:  Color(0xFF0099b5),
+            color: Color(0xFF0099b5),
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(24.0),
               topRight: Radius.circular(24.0),
             ),
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              SizedBox(height: 11),
               Image.asset("assets/linea.png", width: 70,),
               SizedBox(height: 15),
               Text(
@@ -43,12 +43,13 @@ class _LibreriaState extends State<Libreria> {
                   fontSize: 22,
                 ),
               ),
-              SizedBox(height: 10),
             ],
           ),
         ),
+        elevation: 0,
         backgroundColor: Colors.transparent,
       ),
+
       //backgroundColor: Colors.white,
       body: Column(
 
@@ -73,7 +74,7 @@ class _LibreriaState extends State<Libreria> {
           children: [
             Padding(
               padding: const EdgeInsets.only(
-                  top: 35.0, bottom: 20.0, left: 8.0, right: 8.0),
+                  top: 0, bottom: 20.0, left: 8.0, right: 8.0),
               child: SearchAnchor(
                 builder: (BuildContext context, SearchController controller) {
                   return SearchBar(
