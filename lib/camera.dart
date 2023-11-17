@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:booktalk_app/profilo.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:path/path.dart';
@@ -42,8 +43,9 @@ class _CameraState extends State<Camera> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Camera App')),
+    return MaterialApp(
+
+      /*appBar: AppBar(title: Text('Camera App')),
       body: FutureBuilder<void>(
         future: _initializeControllerFuture,
         builder: (context, snapshot) {
@@ -55,8 +57,73 @@ class _CameraState extends State<Camera> {
             return Center(child: CircularProgressIndicator());
           }
         },
+      ),*/
+
+      // ------ HEADER ------
+      home: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_new_rounded, color: Color(0xFF0097b2),), // Icona personalizzata
+            onPressed: () {
+              Navigator.of(context).pop(); // Torna indietro alla schermata precedente
+            },
+          ),  
+
+          title: Text(
+            'Risoluzione espressione',
+            style: TextStyle(
+              fontFamily: 'Roboto',
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+              shadows: [
+                Shadow(
+                  blurRadius: 8,
+                  color: Colors.white,
+                  offset: Offset(2, 2),
+                ),
+              ],
+            ),
+          ),
+          backgroundColor: Color.fromARGB(0, 255, 255, 255),
+          elevation: 0,
+          actions: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(right: 16),
+              child: IconButton(
+                icon: Image.asset('assets/person-icon.png'),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                    builder: (context) => ProfilePage(),
+                    ),
+                  ); 
+                },
+              ),
+            ),
+          ],
+        ),
+        extendBodyBehindAppBar: true,
+
+      body: Column(
+      children: [
+        SizedBox(height: 120,),
+        FutureBuilder<void>(
+        future: _initializeControllerFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            // If initialization is complete, show the camera preview
+            return CameraPreview(_controller);
+          } else {
+            // Otherwise, display a loading indicator
+            return Center(child: CircularProgressIndicator());
+          }
+        },
       ),
-      floatingActionButton: FloatingActionButton(
+      SizedBox(height: 20,),
+      Container(
+          //alignment: Alignment.bottomRight,
+        child: FloatingActionButton(
         child: Icon(Icons.camera),
         onPressed: () async {
           try {
@@ -91,6 +158,10 @@ class _CameraState extends State<Camera> {
             print("Error taking a photo: $e");
           }
         },
+      ),
+      ),
+      ],
+      ),
       ),
     );
   }

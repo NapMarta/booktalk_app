@@ -55,7 +55,7 @@ class _ProfileManagementPageState extends State<ProfileManagementPage> {
       // ------ HEADER ------
         appBar: AppBar(
           leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios_new_rounded, color: Color(0xFF0099b5),), // Icona personalizzata
+            icon: Icon(Icons.arrow_back_ios_new_rounded, color: Color(0xFF0097b2),), // Icona personalizzata
             onPressed: () {
               Navigator.of(context).pop(); // Torna indietro alla schermata precedente
             },
@@ -120,7 +120,10 @@ class _ProfileManagementPageState extends State<ProfileManagementPage> {
                     ],
                   ),
                 ),
-              Center(
+              
+              SizedBox(height: 120,),
+
+              /*Center(
                 child: Column(
                   children: [
                     SizedBox(height: 60,),
@@ -128,7 +131,7 @@ class _ProfileManagementPageState extends State<ProfileManagementPage> {
                     SizedBox(height: 10),
                   ],
                 ),
-              ),
+              ),*/
               
               // ------ NOME ------
               Text(
@@ -145,7 +148,7 @@ class _ProfileManagementPageState extends State<ProfileManagementPage> {
                   fillColor: Colors.white.withOpacity(0.8),
                 ),
               ),
-              SizedBox(height: 16.0),
+              SizedBox(height: 30.0),
 
               // ------ COGNOME ------
               Text(
@@ -164,7 +167,7 @@ class _ProfileManagementPageState extends State<ProfileManagementPage> {
               ),
 
               // ------ EMAIL ------
-              SizedBox(height: 16.0),
+              SizedBox(height: 30.0),
               Text(
                 'Email:',
                 style: TextStyle(fontWeight: FontWeight.bold),
@@ -179,7 +182,7 @@ class _ProfileManagementPageState extends State<ProfileManagementPage> {
                   fillColor: Colors.white.withOpacity(0.8)
                 ),
               ),
-              SizedBox(height: 16.0),
+              SizedBox(height: 30.0),
 
               // ------ PASSWORD ATTUALE ------
               Text(
@@ -193,7 +196,7 @@ class _ProfileManagementPageState extends State<ProfileManagementPage> {
                 obscureText: true, // Per nascondere la password
                 
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 30.0),
 
               // ------ PASSWORD NUOVA ------
               Text(
@@ -205,7 +208,7 @@ class _ProfileManagementPageState extends State<ProfileManagementPage> {
                   fillColor: Colors.white.withOpacity(0.8)),
                 obscureText: true, // Per nascondere la password
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 30.0),
 
               // ------ CONFERMA PASSWORD ------
               Text(
@@ -217,7 +220,7 @@ class _ProfileManagementPageState extends State<ProfileManagementPage> {
                   fillColor: Colors.white.withOpacity(0.8)),
                 obscureText: true, // Per nascondere la password
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 30.0),
 
               Center(
                 child: Column(
@@ -233,7 +236,7 @@ class _ProfileManagementPageState extends State<ProfileManagementPage> {
                           },
                           style: ButtonStyle(
                             fixedSize: MaterialStateProperty.all(Size(150, 50)),
-                            backgroundColor: MaterialStateProperty.all(Color(0xFF087B69)),
+                            backgroundColor: MaterialStateProperty.all(Color(0xFF0097B2)),
                             textStyle: MaterialStateProperty.all(TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                           ),
                           child: Text('Salva'),

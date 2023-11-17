@@ -20,11 +20,13 @@ class _LibreriaState extends State<Libreria> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      appBar: AppBar(
-        flexibleSpace: Container(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(80.0),
+
+        child: Container(
           height: 80, // Imposta l'altezza desiderata per l'AppBar
           decoration: BoxDecoration(
-            color: Color(0xFF0099b5),
+            color: Color(0xFF0097b2),
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(24.0),
               topRight: Radius.circular(24.0),
@@ -46,8 +48,6 @@ class _LibreriaState extends State<Libreria> {
             ],
           ),
         ),
-        elevation: 0,
-        backgroundColor: Colors.transparent,
       ),
 
       //backgroundColor: Colors.white,
@@ -74,7 +74,7 @@ class _LibreriaState extends State<Libreria> {
           children: [
             Padding(
               padding: const EdgeInsets.only(
-                  top: 0, bottom: 20.0, left: 8.0, right: 8.0),
+                  top: 10, bottom: 20.0, left: 8.0, right: 8.0),
               child: SearchAnchor(
                 builder: (BuildContext context, SearchController controller) {
                   return SearchBar(
@@ -180,8 +180,6 @@ class _LibreriaState extends State<Libreria> {
       ),
     );
   }
-  //----------- FINE -----------
-
 
 
 

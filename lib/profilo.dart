@@ -61,7 +61,7 @@ class _ProfilePageState extends State<ProfilePage> {
         // ------ HEADER ------
         appBar: AppBar(
           leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios_new_rounded, color: Color(0xFF0099b5),), // Icona personalizzata
+            icon: Icon(Icons.arrow_back_ios_new_rounded, color: Color(0xFF0097b2),), // Icona personalizzata
             onPressed: () {
               Navigator.of(context).pop(); // Torna indietro alla schermata precedente
             },
@@ -102,7 +102,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     children: [
                       Icon(
                         Icons.exit_to_app,
-                        color: Color(0xFF0099b5),
+                        color: Color(0xFF0097b2),
                         size: 30,
                       ),
                       SizedBox(width: 3), // Spazio tra l'icona e il testo
@@ -110,7 +110,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         'Logout',
                         style: TextStyle(
                           fontSize: 18,
-                          color: Color(0xFF0099b5),
+                          color: Color(0xFF0097b2),
                         ),
                       ),
                     ],
@@ -180,7 +180,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   },
                                   child: Icon(
                                     Icons.exit_to_app,
-                                    color: Color(0xFF0099b5),
+                                    color: Color(0xFF0097b2),
                                   ),
                                 ),
                               ),
@@ -217,7 +217,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                                 child: Icon(
                                   Icons.camera_alt,
-                                  color: Color(0xFF0099b5), // Puoi impostare il colore desiderato
+                                  color: Color(0xFF0097b2), // Puoi impostare il colore desiderato
                                 ),
                               ),
                             ),
@@ -248,7 +248,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               children: [
                                 Row(
                                 children: [
-                                  Text("I tuoi dati", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF0099b5)),),
+                                  Text("I tuoi dati", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF0097b2)),),
                                   SizedBox(width: 170,),
                                   Align(
                                   alignment: Alignment.topRight,
@@ -271,11 +271,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                     },
                                     icon: Icon(
                                       Icons.edit,
-                                      color: Color(0xFF0099b5),
+                                      color: Color(0xFF0097b2),
                                     ),
                                     iconSize: 30,
                                     padding: EdgeInsets.all(12),
-                                    color: Color(0xFF0099b5),
+                                    color: Color(0xFF0097b2),
                                   ),
                                 ),
                                 ],
@@ -300,7 +300,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     },
                                     style: ButtonStyle(
                                       backgroundColor: MaterialStateProperty.all(
-                                          Color(0xFF0099b5)),
+                                          Color(0xFF0097b2)),
                                       textStyle: MaterialStateProperty.all(
                                         TextStyle(
                                             fontSize: 16,
@@ -353,7 +353,7 @@ class _ProfilePageState extends State<ProfilePage> {
               slideDirection: SlideDirection.UP,
               collapsed: Container(
                 decoration: BoxDecoration(
-                  color: Color(0xFF0099b5),
+                  color: Color(0xFF0097b2),
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(24.0),
                     topRight: Radius.circular(24.0),

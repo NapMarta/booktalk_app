@@ -16,6 +16,17 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   final Libreria _libreriaPage = Libreria();
   final panelController = PanelController();
+  bool isFirstTime = true; // Aggiungi questa variabile di stato
+
+  @override
+  void initState (){
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+        panelController.open();
+        double newPosition = 80 * (800.0 - 80.0)*0.58; // Aggiusta qui secondo necessità
+        panelController.animatePanelToPosition(newPosition, duration: Duration(milliseconds: 0), curve: Curves.linear);
+        isFirstTime=false;
+      });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +86,7 @@ class _HomepageState extends State<Homepage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
+                      /*§Container(
                         width: 120,
                         height: 120,
                         decoration: BoxDecoration(
@@ -93,12 +104,13 @@ class _HomepageState extends State<Homepage> {
                               spreadRadius: 0,
                             ),
                           ],*/
+                        ),*/
+                        //child: 
+                        Image.asset(
+                          "assets/logo_noSfondo.png",
+                          width: 150,
                         ),
-                        child: Image.asset(
-                          "assets/BookTalk-noScritta.png",
-                          width: 120,
-                        ),
-                      ),
+                      //),
                       /*Text(
                         'Bentornata Maria!',
                         style: TextStyle(
@@ -127,7 +139,7 @@ class _HomepageState extends State<Homepage> {
                             ),
                           ],
                         ),
-                        child: Image.asset("assets/BookTalk-scritta.png", width: 220),
+                        //child: Image.asset("assets/BookTalk-scritta.png", width: 220),
                       ),                      SizedBox(height: 20),
                       _buildFeatureCard(
                         "assets/1.png",
@@ -173,7 +185,7 @@ class _HomepageState extends State<Homepage> {
                        Color(0xFFff3a2a),
                        //"Esplora",
                       ),
-                      SizedBox(height: 40),
+                      SizedBox(height: 80),
                     ],
                   ),
                 ),
@@ -182,8 +194,19 @@ class _HomepageState extends State<Homepage> {
             SlidingUpPanel(
               minHeight: 80.0,
               maxHeight: 800.0,
+              controller: panelController,
+              onPanelSlide: (double pos) {
+              if(isFirstTime){
+                double newPosition = pos * (800.0 - 80.0) * 0.58;
+                panelController.animatePanelToPosition(newPosition, duration: Duration(milliseconds: 0), curve: Curves.linear);
+                isFirstTime=false;
+              }
+              else if (pos<=65.0){
+                double newPosition = 80.0 * (800.0 - 80.0) * 0.58;
+                panelController.animatePanelToPosition(newPosition, duration: Duration(milliseconds: 0), curve: Curves.linear);
+              }},
               panel: Center(child: _libreriaPage),
-              backdropEnabled: true,
+              backdropEnabled: false,
               slideDirection: SlideDirection.UP,
               //color: Colors.transparent,
               

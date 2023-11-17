@@ -21,7 +21,7 @@ class LoginPage extends StatelessWidget {
       // ------ HEADER ------
         appBar: AppBar(
           leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios_new_rounded, color: Color(0xFF0099b5),), // Icona personalizzata
+            icon: Icon(Icons.arrow_back_ios_new_rounded, color: Color(0xFF0097b2),), // Icona personalizzata
             onPressed: () {
               Navigator.of(context).pop(); // Torna indietro alla schermata precedente
             },
@@ -79,7 +79,7 @@ class LoginPage extends StatelessWidget {
                   );              },
               style: ButtonStyle(
                 fixedSize: MaterialStateProperty.all(Size(200, 50)),
-                backgroundColor: MaterialStateProperty.all(Color(0xFF087B69)),
+                backgroundColor: MaterialStateProperty.all(Color(0xFF0097B2)),
                 textStyle: MaterialStateProperty.all(TextStyle(fontSize: 16, fontWeight: FontWeight.bold,)),
               ),
               child: Text('Accedi'),
@@ -102,7 +102,7 @@ class LoginPage extends StatelessWidget {
                       TextSpan(
                         text: 'Registrati ora',
                         style: TextStyle(
-                          color: Color(0xFF0099b5),
+                          color: Color(0xFF0097b2),
                           decoration: TextDecoration.underline,
                         ),
                       ),

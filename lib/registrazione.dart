@@ -18,7 +18,7 @@ class RegistrationPage extends StatelessWidget {
       // ------ HEADER ------
         appBar: AppBar(
           leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios_new_rounded, color: Color(0xFF0099b5),), // Icona personalizzata
+            icon: Icon(Icons.arrow_back_ios_new_rounded, color: Color(0xFF0097b2),), // Icona personalizzata
             onPressed: () {
               Navigator.of(context).pop(); // Torna indietro alla schermata precedente
             },
@@ -95,7 +95,7 @@ class RegistrationPage extends StatelessWidget {
               },
               style: ButtonStyle(
                 fixedSize: MaterialStateProperty.all(Size(200, 50)),
-                backgroundColor: MaterialStateProperty.all(Color(0xFF0099b5)),
+                backgroundColor: MaterialStateProperty.all(Color(0xFF1B536E)),
                 textStyle: MaterialStateProperty.all(TextStyle(fontSize: 16, fontWeight: FontWeight.bold,)),
               ),
               child: Text('Registrati'),

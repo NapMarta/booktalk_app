@@ -33,11 +33,11 @@ class BookTalkApp extends StatelessWidget {
         ),*/
 
         // ------ HEADER ------
-        appBar: AppBar(
-          title: Image.asset('assets/BookTalk-scritta.png', width: 150),
+        /*appBar: AppBar(
+          title: Image.asset('assets/scritta_noSfondo.png', width: 150),
           backgroundColor: Color.fromARGB(0, 255, 255, 255),
           elevation: 0,
-        ),
+        ),*/
 
 
         body: Center(
@@ -46,7 +46,7 @@ class BookTalkApp extends StatelessWidget {
             children: <Widget>[
 
               // ------ LOGO ------
-              Image.asset('assets/BookTalk-logo-noSfondo.png', width: 200, height: 200),
+              Image.asset('assets/logo_noSfondo.png', width: 200, height: 200),
               SizedBox(height: 40), 
 
               // ------ Pulsante "Registrati" ------
@@ -60,7 +60,7 @@ class BookTalkApp extends StatelessWidget {
                 },
                 style: ButtonStyle(
                   fixedSize: MaterialStateProperty.all(Size(200, 50)),
-                  backgroundColor: MaterialStateProperty.all(Color(0xFF0099b5)),
+                  backgroundColor: MaterialStateProperty.all(Color(0xFF1B536E)),
                   textStyle: MaterialStateProperty.all(TextStyle(fontSize: 16, fontWeight: FontWeight.bold,)),
                 ),
                 child: Text('Registrati'),
@@ -79,7 +79,7 @@ class BookTalkApp extends StatelessWidget {
                 },
                 style: ButtonStyle(
                   fixedSize: MaterialStateProperty.all(Size(200, 50)),
-                  backgroundColor: MaterialStateProperty.all(Color(0xFF087B69)),
+                  backgroundColor: MaterialStateProperty.all(Color(0xFF0097B2)),
                   textStyle: MaterialStateProperty.all(TextStyle(fontSize: 16, fontWeight: FontWeight.bold,)),
                 ),
                 child: Text('Accedi'),

@@ -76,6 +76,7 @@ flutter:
     - assets/BookTalk-scritta.png
     - assets/BookTalk-noScritta.png
     - assets/BookTalk-logo.png
+    - assets/logo_noSfondo.png
     - assets/person-icon.png
     - assets/1.png
     - assets/2.jpeg
@@ -89,6 +90,7 @@ flutter:
     - assets/linea.png
     - assets/grafico1.png
     - assets/grafico2.png
+    - assets/scritta_noSfondo.png
     
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

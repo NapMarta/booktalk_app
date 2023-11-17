@@ -37,7 +37,7 @@ class SupportoAlLearningScreenState extends State<SupportoAlLearningScreen> {
        // ------ HEADER ------
         appBar: AppBar(
           leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios_new_rounded, color: Color(0xFF0099b5),), // Icona personalizzata
+            icon: Icon(Icons.arrow_back_ios_new_rounded, color: Color(0xFF0097b2),), // Icona personalizzata
             onPressed: () {
               Navigator.of(context).pop(); // Torna indietro alla schermata precedente
             },
@@ -168,7 +168,7 @@ class SupportoAlLearningScreenState extends State<SupportoAlLearningScreen> {
                     width: 60.0,
                     height: 60.0,
                     decoration: BoxDecoration(
-                      color: Color(0xFF0099b5),
+                      color: Color(0xFF0097b2),
                       shape: BoxShape.circle,
                     ),
                     child: IconButton(
@@ -220,7 +220,7 @@ class SupportoAlLearningScreenState extends State<SupportoAlLearningScreen> {
                       width: 60.0,
                       height: 60.0,
                       decoration: BoxDecoration(
-                        color: Color(0xFF0099b5),
+                        color: Color(0xFF0097b2),
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
@@ -271,7 +271,7 @@ class ChatMessage extends StatelessWidget {
       alignment: isSentByMe ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
         decoration: BoxDecoration(
-          color: isSentByMe ? Color(0xFF0099b5) : Colors.white,
+          color: isSentByMe ? Color(0xFF0097b2) : Colors.white,
           borderRadius: BorderRadius.circular(8.0),
         ),
         padding: EdgeInsets.all(10.0),
