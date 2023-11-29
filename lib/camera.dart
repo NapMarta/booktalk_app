@@ -105,62 +105,81 @@ class _CameraState extends State<Camera> {
         ),
         extendBodyBehindAppBar: true,
 
-      body: Column(
-      children: [
-        SizedBox(height: 120,),
-        FutureBuilder<void>(
-        future: _initializeControllerFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            // If initialization is complete, show the camera preview
-            return CameraPreview(_controller);
-          } else {
-            // Otherwise, display a loading indicator
-            return Center(child: CircularProgressIndicator());
-          }
-        },
-      ),
-      SizedBox(height: 20,),
-      Container(
+      body: Expanded(
+        child:Center(
+          child:Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [ 
+              SizedBox(height: 60,),
+              Center(
+              child: FutureBuilder<void>(
+              future: _initializeControllerFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  // If initialization is complete, show the camera preview
+                  return Container(
+                    margin:  EdgeInsets.symmetric(horizontal: 8.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15.0), // Imposta il raggio degli angoli
+                      // Altri stili o decorazioni se necessario
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(15.0),
+                      child: CameraPreview(_controller),
+                    ),
+                  );
+                } else {
+                  // Otherwise, display a loading indicator
+                  return Center(child: CircularProgressIndicator());
+                }
+              },
+            ),
+          ), 
+
+          SizedBox(height: 15),
           //alignment: Alignment.bottomRight,
-        child: FloatingActionButton(
-        child: Icon(Icons.camera),
-        onPressed: () async {
-          try {
-            // Wait for the controller to be initialized before taking a photo
-            await _initializeControllerFuture;
+          FloatingActionButton(
+            backgroundColor: Color(0xFF0097b2),
+            child: Icon(Icons.circle, size: 56, color: Colors.white),
+            onPressed: () async {
+              try {
+                // Wait for the controller to be initialized before taking a photo
+                await _initializeControllerFuture;
 
-            // Take a photo and get the XFile of the saved image
-            XFile imageFile = await _controller.takePicture();
+                // Take a photo and get the XFile of the saved image
+                XFile imageFile = await _controller.takePicture();
 
-            // Display the taken picture
-            setState(() {
-              _imageFile = imageFile;
-            });
+                // Display the taken picture
+                setState(() {
+                  _imageFile = imageFile;
+                });
 
-            // Open the review screen
-            final result = await Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ReviewPictureScreen(imageFile: _imageFile),
-              ),
-            );
+                // Open the review screen
+                final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ReviewPictureScreen(imageFile: _imageFile),
+                  ),
+                );
 
-            // Handle the result from the review screen
-            if (result != null && result) {
-              // User accepted the picture, add your logic here
-              print('Picture accepted');
-            } else {
-              // User rejected the picture, add your logic here
-              print('Picture rejected');
-            }
-          } catch (e) {
-            print("Error taking a photo: $e");
-          }
-        },
-      ),
-      ),
+                // Handle the result from the review screen
+                if (result != null && result) {
+                  // User accepted the picture, add your logic here
+                  print('Picture accepted');
+                } else {
+                  // User rejected the picture, add your logic here
+                  print('Picture rejected');
+                }
+              } catch (e) {
+                print("Error taking a photo: $e");
+              }
+          },
+        ),
+      
       ],
+      ),
+      ),
       ),
       ),
     );
