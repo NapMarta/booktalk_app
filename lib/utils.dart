@@ -34,3 +34,11 @@ iconSize(var width, var height, var per){
       return height * per; 
     }
 }
+
+logoSize(var width, var height, var per){
+  if (width > 600 && height > 600) {
+    per = per + 0.10;
+  }
+  
+  return height * per; 
+}

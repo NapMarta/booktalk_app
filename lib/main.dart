@@ -3,13 +3,10 @@ import 'package:booktalk_app/libreria.dart';
 import 'package:flutter/material.dart';
 import 'registrazione.dart';
 import 'login.dart';
-
-//late List<CameraDescription> _cameras;
+import 'utils.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  //_cameras = await availableCameras();
-  //final firstCamera = _cameras.first;
 
   runApp(MaterialApp(
     home: BookTalkApp(),
@@ -21,24 +18,11 @@ class BookTalkApp extends StatelessWidget {
  
   @override
   Widget build(BuildContext context) {
+    var mediaQueryData = MediaQuery.of(context);
+
     return MaterialApp(
       home: Scaffold(
       backgroundColor: Colors.white,
-
-        // ------ HEADER ------
-        /*appBar: AppBar(
-          title: Image.asset('assets/BookTalk-scritta.png', width: 150),
-          backgroundColor: Color(0xFFbee2ee),
-          elevation: 0.1,
-        ),*/
-
-        // ------ HEADER ------
-        /*appBar: AppBar(
-          title: Image.asset('assets/scritta_noSfondo.png', width: 150),
-          backgroundColor: Color.fromARGB(0, 255, 255, 255),
-          elevation: 0,
-        ),*/
-
 
         body: Center(
           child: Column(
@@ -46,7 +30,7 @@ class BookTalkApp extends StatelessWidget {
             children: <Widget>[
 
               // ------ LOGO ------
-              Image.asset('assets/logo_noSfondo.png', width: 200, height: 200),
+              Image.asset('assets/logo_noSfondo.png', height: logoSize(mediaQueryData.size.width, mediaQueryData.size.height, 0.2)),
               SizedBox(height: 40), 
 
               // ------ Pulsante "Registrati" ------
@@ -58,15 +42,21 @@ class BookTalkApp extends StatelessWidget {
                     ),
                   );
                 },
+                
                 style: ButtonStyle(
-                  fixedSize: MaterialStateProperty.all(Size(200, 50)),
+                  fixedSize: MaterialStateProperty.all(Size(mediaQueryData.size.width * 0.45, mediaQueryData.size.height * 0.07)),
                   backgroundColor: MaterialStateProperty.all(Color(0xFF1B536E)),
-                  textStyle: MaterialStateProperty.all(TextStyle(fontSize: 16, fontWeight: FontWeight.bold,)),
+                  textStyle: MaterialStateProperty.all(TextStyle(fontSize: textSize(mediaQueryData.size.width, mediaQueryData.size.height, 0.025), fontWeight: FontWeight.bold,)),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(mediaQueryData.size.width * 0.02), // Adjust the value as needed
+                    ),
+                  ),
                 ),
                 child: Text('Registrati'),
               ),
 
-              SizedBox(height: 20), // Spazio tra i pulsanti
+              SizedBox(height: mediaQueryData.size.height * 0.02), // Spazio tra i pulsanti
 
               // ------ Pulsante "Accedi" ------
               ElevatedButton(
@@ -78,29 +68,17 @@ class BookTalkApp extends StatelessWidget {
                   ); 
                 },
                 style: ButtonStyle(
-                  fixedSize: MaterialStateProperty.all(Size(200, 50)),
+                  fixedSize: MaterialStateProperty.all(Size(mediaQueryData.size.width * 0.45, mediaQueryData.size.height * 0.07)),
                   backgroundColor: MaterialStateProperty.all(Color(0xFF0097B2)),
-                  textStyle: MaterialStateProperty.all(TextStyle(fontSize: 16, fontWeight: FontWeight.bold,)),
+                  textStyle: MaterialStateProperty.all(TextStyle(fontSize: textSize(mediaQueryData.size.width, mediaQueryData.size.height, 0.025), fontWeight: FontWeight.bold,)),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(mediaQueryData.size.width * 0.02), // Adjust the value as needed
+                    ),
+                  ),
                 ),
                 child: Text('Accedi'),
               ),
-
-
-              /*ElevatedButton(
-                onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => Libreria(),
-                      ),
-                  ); 
-                },
-                style: ButtonStyle(
-                  fixedSize: MaterialStateProperty.all(Size(200, 50)),
-                  backgroundColor: MaterialStateProperty.all(Color(0xFF087B69)),
-                  textStyle: MaterialStateProperty.all(TextStyle(fontSize: 16, fontWeight: FontWeight.bold,)),
-                ),
-                child: Text('Libreria'),
-              ),*/
 
             ],
           ),
