@@ -28,20 +28,12 @@ class _ExpandableFloatingActionButtonState
     widget.scrollController.addListener(_scrollListener);
   }
 
-  /*
-  @override
-  void dispose() {
-    widget.scrollController.removeListener(_scrollListener);
-    super.dispose();
-  }*/
 
   void _scrollListener() {
     bool maxScrollReached = widget.scrollController.position.maxScrollExtent ==
         widget.scrollController.position.pixels;
     bool scrollUp = widget.scrollController.position.userScrollDirection ==
         ScrollDirection.forward;
-    bool scrollIdle = widget.scrollController.position.userScrollDirection ==
-        ScrollDirection.idle;
 
     setState(() => _extended = maxScrollReached || scrollUp);
   }

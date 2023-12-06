@@ -32,9 +32,11 @@ class _HomepageState extends State<Homepage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        
 
         // ------ HEADER ------
         appBar: AppBar(
+          
           title: Text(
             'Ciao Maria!',
             style: TextStyle(
@@ -71,181 +73,149 @@ class _HomepageState extends State<Homepage> {
         ),
 
         extendBodyBehindAppBar: true,
-        body: Stack(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/sfondo.png"),
-                  fit: BoxFit.cover,
+        body: Expanded(
+          child:Center(
+            child: Stack(
+            children: [
+              Container(
+                // margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top + kToolbarHeight),
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("assets/sfondo.png"),
+                    fit: BoxFit.cover,
+                  ),
+                  //color: Colors.white,
                 ),
-                //color: Colors.white,
+                child: Align(
+                  //alignment: Alignment.topLeft,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      // mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        
+                          Image.asset(
+                            "assets/logo_noSfondo.png",
+                            width: 150,
+                          ),
+                        Container(
+                          width: 220,
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.white, // Colore dell'ombra (bianco in questo caso)
+                                spreadRadius: 3, // Estensione dell'ombra
+                                blurRadius: 25, // Intensità dell'ombra
+                                offset: Offset(0, 0), // Spostamento dell'ombra in orizzontale e verticale
+                              ),
+                            ],
+                          ),
+                          
+                        ),                      SizedBox(height: 20),
+                        _buildFeatureCard(
+                          "assets/1.png",
+                          "Espressioni Matematiche",
+                          "Scansiona o inserisci l'espressione matematica e BookTalk ti aiuterà nella risoluzione.",
+                          () {
+                            Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => Camera(),
+                                ),
+                            );
+                          },
+                          Color(0xFFf0bc5e),
+                        ),
+                        SizedBox(height: 20),
+                        _buildFeatureCard(
+                          "assets/2.jpeg",
+                          "Opere Letterarie e Analisi",
+                          "Seleziona un libro dalla tua libreria, poi scansiona il testo di interesse per ricevere analisi approfondite.",
+                          () {
+                            Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => LibreriaFunzionzlita(),
+                                ),
+                            );
+                          },
+                          Color(0xFF05a8ba),
+                        ),
+                        SizedBox(height: 20),
+                        _buildFeatureCard(
+                          "assets/funzionalità3.jpg",
+                          "Supporto al learning",
+                          "Specifica la parte di libro da studiare e BookTalk ti ascolterà durante la ripetizione dell’argomento.",
+                          () {
+                            Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => SupportoAlLearningScreen(),
+                                ),
+                            ); 
+                          },
+                        Color(0xFFff3a2a),
+                        ),
+                        SizedBox(height: 80),
+                      ],
+                    ),
+                  ),
+                ),
               ),
-              child: Center(
-                child: SingleChildScrollView(
+              SlidingUpPanel(
+                minHeight: 80.0,
+                maxHeight: 800.0,
+                controller: panelController,
+                onPanelSlide: (double pos) {
+                if(isFirstTime){
+                  double newPosition = pos * (800.0 - 80.0) * 0.58;
+                  panelController.animatePanelToPosition(newPosition, duration: Duration(milliseconds: 0), curve: Curves.linear);
+                  isFirstTime=false;
+                }
+                else if (pos<=65.0){
+                  double newPosition = 80.0 * (800.0 - 80.0) * 0.58;
+                  panelController.animatePanelToPosition(newPosition, duration: Duration(milliseconds: 0), curve: Curves.linear);
+                }},
+                panel: Center(child: _libreriaPage),
+                backdropEnabled: false,
+                slideDirection: SlideDirection.UP,
+                //color: Colors.transparent,
+                
+                collapsed: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(24.0),
+                      topRight: Radius.circular(24.0),
+                    ),
+                  ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      /*§Container(
-                        width: 120,
-                        height: 120,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: Colors.transparent,
-                            width: 2.0,
-                          ),
-                          color: Colors.transparent,
-                          /*boxShadow: [
-                            BoxShadow(
-                              color: Color.fromARGB(255, 112, 112, 112),
-                              offset: Offset(0, 2),
-                              blurRadius: 6,
-                              spreadRadius: 0,
-                            ),
-                          ],*/
-                        ),*/
-                        //child: 
-                        Image.asset(
-                          "assets/logo_noSfondo.png",
-                          width: 150,
-                        ),
-                      //),
-                      /*Text(
-                        'Bentornata Maria!',
+                      Image.asset("assets/linea.png", width: 70,),
+                      //Text("^", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 30)),
+                      SizedBox(height: 15),
+                      //Image.asset("assets/library.gif", width: 70,),
+                      Text(
+                        'Libreria',
                         style: TextStyle(
-                          fontFamily: 'Roboto',
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
                           color: Colors.white,
-                          shadows: [
-                            Shadow(
-                              blurRadius: 4,
-                              color: Color.fromARGB(255, 112, 112, 112),
-                              offset: Offset(2, 2),
-                            ),
-                          ],
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22
                         ),
-                      ),*/
-                      Container(
-                        width: 220,
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.white, // Colore dell'ombra (bianco in questo caso)
-                              spreadRadius: 3, // Estensione dell'ombra
-                              blurRadius: 25, // Intensità dell'ombra
-                              offset: Offset(0, 0), // Spostamento dell'ombra in orizzontale e verticale
-                            ),
-                          ],
-                        ),
-                        //child: Image.asset("assets/BookTalk-scritta.png", width: 220),
-                      ),                      SizedBox(height: 20),
-                      _buildFeatureCard(
-                        "assets/1.png",
-                        "Espressioni Matematiche",
-                        "Scansiona o inserisci l'espressione matematica e BookTalk ti aiuterà nella risoluzione.",
-                        () {
-                          Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => Camera(),
-                              ),
-                          );
-                        },
-                        Color(0xFFf0bc5e),
-                        //"Esegui",
                       ),
-                      SizedBox(height: 20),
-                      _buildFeatureCard(
-                        "assets/2.jpeg",
-                        "Opere Letterarie e Analisi",
-                        "Seleziona un libro dalla tua libreria, poi scansiona il testo di interesse per ricevere analisi approfondite.",
-                        () {
-                          Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => LibreriaFunzionzlita(),
-                              ),
-                          );
-                        },
-                        Color(0xFF05a8ba),
-                        //"Inizia",
-                      ),
-                      SizedBox(height: 20),
-                      _buildFeatureCard(
-                        "assets/funzionalità3.jpg",
-                        "Supporto al learning",
-                        "Specifica la parte di libro da studiare e BookTalk ti ascolterà durante la ripetizione dell’argomento.",
-                        () {
-                          Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => SupportoAlLearningScreen(),
-                              ),
-                          ); 
-                        },
-                       Color(0xFFff3a2a),
-                       //"Esplora",
-                      ),
-                      SizedBox(height: 80),
+                      SizedBox(height: 10),
+
                     ],
                   ),
                 ),
-              ),
-            ),
-            SlidingUpPanel(
-              minHeight: 80.0,
-              maxHeight: 800.0,
-              controller: panelController,
-              onPanelSlide: (double pos) {
-              if(isFirstTime){
-                double newPosition = pos * (800.0 - 80.0) * 0.58;
-                panelController.animatePanelToPosition(newPosition, duration: Duration(milliseconds: 0), curve: Curves.linear);
-                isFirstTime=false;
-              }
-              else if (pos<=65.0){
-                double newPosition = 80.0 * (800.0 - 80.0) * 0.58;
-                panelController.animatePanelToPosition(newPosition, duration: Duration(milliseconds: 0), curve: Curves.linear);
-              }},
-              panel: Center(child: _libreriaPage),
-              backdropEnabled: false,
-              slideDirection: SlideDirection.UP,
-              //color: Colors.transparent,
-              
-              collapsed: Container(
-                decoration: BoxDecoration(
-                  color: Colors.transparent,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(24.0),
-                    topRight: Radius.circular(24.0),
-                  ),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset("assets/linea.png", width: 70,),
-                    //Text("^", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 30)),
-                    SizedBox(height: 15),
-                    //Image.asset("assets/library.gif", width: 70,),
-                    Text(
-                      'Libreria',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 22
-                      ),
-                    ),
-                    SizedBox(height: 10),
 
-                  ],
+                
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(24.0),
+                  topRight: Radius.circular(24.0),
                 ),
               ),
-
-              
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(24.0),
-                topRight: Radius.circular(24.0),
-              ),
-            ),
-          ],
+            ],
+          ),
+        ),
         ),
       ),
     );

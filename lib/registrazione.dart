@@ -1,3 +1,4 @@
+import 'package:booktalk_app/homepageResponsitive.dart';
 import 'package:flutter/material.dart';
 import 'homepage.dart';
 
@@ -89,7 +90,7 @@ class RegistrationPage extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => Homepage(),
+                      builder: (context) => HomepageResponsitive(),
                     ),
                   );     
               },

@@ -33,6 +33,7 @@ class _ProfilePageState extends State<ProfilePage> {
     });
   }
 
+
   Widget _buildProfileCard(
       TextEditingController controller, String label, IconData iconData) {
     return Row(
@@ -51,7 +52,7 @@ class _ProfilePageState extends State<ProfilePage> {
       ],
     );
   }
-  
+
 
   @override
   Widget build(BuildContext context) {
@@ -67,22 +68,6 @@ class _ProfilePageState extends State<ProfilePage> {
             },
           ),  
 
-          title: Text(
-            'Ciao Maria!',
-            style: TextStyle(
-              fontFamily: 'Roboto',
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-              shadows: [
-                Shadow(
-                  blurRadius: 8,
-                  color: Colors.white,
-                  offset: Offset(2, 2),
-                ),
-              ],
-            ),
-          ),
           backgroundColor: Color.fromARGB(0, 255, 255, 255),
           elevation: 0,
           actions: <Widget>[
@@ -100,19 +85,11 @@ class _ProfilePageState extends State<ProfilePage> {
                   },
                   child: Row(
                     children: [
-                      Icon(
-                        Icons.exit_to_app,
-                        color: Color(0xFF0097b2),
-                        size: 30,
+                      Image.asset(
+                        "assets/logout.png",
+                        width: 30,
                       ),
                       SizedBox(width: 3), // Spazio tra l'icona e il testo
-                      Text(
-                        'Logout',
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Color(0xFF0097b2),
-                        ),
-                      ),
                     ],
                   ),
                 ),
@@ -242,16 +219,18 @@ class _ProfilePageState extends State<ProfilePage> {
                             ],
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.all(20),
+                            padding: const EdgeInsets.only(bottom: 15, left: 20, right: 20, top: 12),
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
                                 children: [
-                                  Text("I tuoi dati", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF0097b2)),),
-                                  SizedBox(width: 170,),
                                   Align(
-                                  alignment: Alignment.topRight,
+                                    alignment: Alignment.center,
+                                    child: Text("I tuoi dati" ,style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF0097b2)),),
+                                  ),                                  
+                                  //SizedBox(width: 170,),
+                                  Align(
+                                  alignment: Alignment.centerRight,
                                   child: IconButton(
                                     onPressed: () {
                                       Navigator.of(context).push(
@@ -273,8 +252,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                       Icons.edit,
                                       color: Color(0xFF0097b2),
                                     ),
-                                    iconSize: 30,
-                                    padding: EdgeInsets.all(12),
+                                    iconSize: 25,
+                                    padding: EdgeInsets.all(0),
                                     color: Color(0xFF0097b2),
                                   ),
                                 ),
