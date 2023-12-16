@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:booktalk_app/profilo.dart';
 import 'package:flutter/material.dart';
 import 'utils.dart';
@@ -39,7 +40,7 @@ class _HeaderState extends State<Header> {
         widget.text,
         style: TextStyle(
           fontFamily: 'Roboto',
-          fontSize: textSize(mediaQueryData.size.width, mediaQueryData.size.height, 0.023),
+          fontSize: size(mediaQueryData.size.width, mediaQueryData.size.height, 18),
           fontWeight: FontWeight.bold,
           color: Colors.black,
           shadows: [

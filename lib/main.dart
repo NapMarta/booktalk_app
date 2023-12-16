@@ -1,13 +1,28 @@
 //import 'package:camera/camera.dart'
-import 'package:booktalk_app/libreria.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'registrazione.dart';
 import 'login.dart';
 import 'utils.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  // final view = WidgetsBinding.instance.platformDispatcher.views.first;
+  /*
+  // --- Settaggio Orientamento per smartphone e tablet
+  if(view.physicalSize.width < 700 && view.physicalSize.height < 700){
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
+  }else{
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.portraitDown
+    ]);
+  }*/
+  
   runApp(MaterialApp(
     home: BookTalkApp(),
   ));
@@ -19,7 +34,7 @@ class BookTalkApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var mediaQueryData = MediaQuery.of(context);
-
+    // print(mediaQueryData.size);
     return MaterialApp(
       home: Scaffold(
       backgroundColor: Colors.white,
@@ -46,10 +61,10 @@ class BookTalkApp extends StatelessWidget {
                 style: ButtonStyle(
                   fixedSize: MaterialStateProperty.all(Size(mediaQueryData.size.width * 0.45, mediaQueryData.size.height * 0.07)),
                   backgroundColor: MaterialStateProperty.all(Color(0xFF1B536E)),
-                  textStyle: MaterialStateProperty.all(TextStyle(fontSize: textSize(mediaQueryData.size.width, mediaQueryData.size.height, 0.025), fontWeight: FontWeight.bold,)),
+                  textStyle: MaterialStateProperty.all(TextStyle(fontSize: size(mediaQueryData.size.width, mediaQueryData.size.height, 16), fontWeight: FontWeight.bold,)),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(mediaQueryData.size.width * 0.02), // Adjust the value as needed
+                      borderRadius: BorderRadius.circular(20), // Adjust the value as needed
                     ),
                   ),
                 ),
@@ -70,10 +85,10 @@ class BookTalkApp extends StatelessWidget {
                 style: ButtonStyle(
                   fixedSize: MaterialStateProperty.all(Size(mediaQueryData.size.width * 0.45, mediaQueryData.size.height * 0.07)),
                   backgroundColor: MaterialStateProperty.all(Color(0xFF0097B2)),
-                  textStyle: MaterialStateProperty.all(TextStyle(fontSize: textSize(mediaQueryData.size.width, mediaQueryData.size.height, 0.025), fontWeight: FontWeight.bold,)),
+                  textStyle: MaterialStateProperty.all(TextStyle(fontSize: size(mediaQueryData.size.width, mediaQueryData.size.height, 16), fontWeight: FontWeight.bold,)),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(mediaQueryData.size.width * 0.02), // Adjust the value as needed
+                      borderRadius: BorderRadius.circular(20), // Adjust the value as needed
                     ),
                   ),
                 ),

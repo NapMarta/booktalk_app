@@ -16,6 +16,13 @@ textSize(var width, var height, var per){
     }
 }
 
+size(var width, var height, double size){
+  if (width > 600 && height > 600){
+    return (size + 6).toDouble();
+  }else{
+    return size.toDouble();
+  }
+}
 
 iconSize(var width, var height, var per){
   if (width > 600 && height > 600){

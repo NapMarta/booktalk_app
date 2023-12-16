@@ -1,3 +1,4 @@
+import 'package:booktalk_app/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:booktalk_app/ExpandableFloatingActionButton.dart';
 
@@ -18,13 +19,14 @@ class _LibreriaState extends State<Libreria> {
 
   @override
   Widget build(BuildContext context) {
+    var mediaQueryData = MediaQuery.of(context);
+
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(80.0),
+        preferredSize: Size.fromHeight(mediaQueryData.size.height * 0.065),
 
         child: Container(
-          height: 80, // Imposta l'altezza desiderata per l'AppBar
           decoration: BoxDecoration(
             color: Color(0xFF0097b2),
             borderRadius: BorderRadius.only(
@@ -34,17 +36,18 @@ class _LibreriaState extends State<Libreria> {
           ),
           child: Column(
             children: [
-              SizedBox(height: 11),
-              Image.asset("assets/linea.png", width: 70,),
-              SizedBox(height: 15),
+              SizedBox(height: mediaQueryData.size.height * 0.005),
+              Image.asset("assets/linea.png", width: mediaQueryData.size.width * 0.1,),
+              SizedBox(height: mediaQueryData.size.height * 0.015),
               Text(
                 'Libreria',
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: 22,
+                  fontSize: size(mediaQueryData.size.width, mediaQueryData.size.height, 16),
                 ),
               ),
+              //SizedBox(height: 2),
             ],
           ),
         ),
