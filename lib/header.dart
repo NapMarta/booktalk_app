@@ -1,5 +1,5 @@
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:booktalk_app/profilo.dart';
+import 'package:booktalk_app/main.dart';
+import 'package:booktalk_app/profiloResponsitive.dart';
 import 'package:flutter/material.dart';
 import 'utils.dart';
     
@@ -7,11 +7,12 @@ class Header extends StatefulWidget {
   const Header({Key? key, 
   required this.text, 
   required this.iconProfile,
-  required this.isHomePage}) : super(key: key);
+  required this.isHomePage,
+  required this.isProfilo}) : super(key: key);
 
   final String text;
   final Image iconProfile;  // passsare la foto del profilo dell'utente
-  final bool isHomePage;
+  final bool isHomePage, isProfilo;
 
 
   @override
@@ -33,6 +34,8 @@ class _HeaderState extends State<Header> {
           onPressed: () {
             Navigator.of(context).pop(); // Torna indietro alla schermata precedente
           },
+          iconSize: 25,
+          // iconSize: iconSize(mediaQueryData.size.width, mediaQueryData.size.height, 0.005),
         ),
 
       automaticallyImplyLeading: !widget.isHomePage, // toglie lo spazio occupoato dall'elemento
@@ -56,17 +59,30 @@ class _HeaderState extends State<Header> {
       actions: <Widget>[
         Padding(
           padding: EdgeInsets.only(right: 10),
-          child: IconButton(
-            icon: widget.iconProfile,
-            iconSize: iconSize(mediaQueryData.size.width, mediaQueryData.size.height, 0.005),
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                builder: (context) => ProfilePage(),
-                ),
-              ); 
-            },
-          ),
+          child:
+            widget.isProfilo
+            ? IconButton(
+                onPressed: () { 
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => BookTalkApp(),
+                    ),
+                  );
+                },
+                icon: Image.asset("assets/logout.png"),
+                iconSize: 25,
+              )
+            : IconButton(
+              icon: widget.iconProfile,
+              iconSize: 25,
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                  builder: (context) => ProfiloResponsitive(),
+                  ),
+                ); 
+              },
+            ),
         ),
       ],
       elevation: 0,

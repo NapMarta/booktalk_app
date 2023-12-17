@@ -24,7 +24,7 @@ class _LibreriaState extends State<Libreria> {
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(mediaQueryData.size.height * 0.065),
+        preferredSize: Size.fromHeight(mediaQueryData.size.height * 0.07),
 
         child: Container(
           decoration: BoxDecoration(

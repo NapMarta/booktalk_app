@@ -54,6 +54,7 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
                       iconProfile: Image.asset('assets/person-icon.png'), 
                       text: "Ciao Maria!",
                       isHomePage: true,
+                      isProfilo: false,
                     ),
                   ),
                   
@@ -215,7 +216,7 @@ Widget _buildFeatureCard(String iconPath, String title, String description, Void
                         ),
                     ),
                   ),
-                  SizedBox(height: height * 0.02),
+                  SizedBox(height: height * 0.01),
                   AutoSizeText(
                     description,
                     style: TextStyle(
