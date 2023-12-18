@@ -46,6 +46,7 @@ class _ExpandableFloatingActionButtonState
           _extended ? null : const EdgeInsets.symmetric(horizontal: 12),
       onPressed: widget.onPressed,
       icon: Icon(widget.icon),
+      backgroundColor: Color(0xFF0097b2),
       label: AnimatedSize(
         duration: const Duration(milliseconds: 200),
         child: _extended ? Text(widget.label) : Container(),

@@ -1,5 +1,5 @@
 import 'package:booktalk_app/main.dart';
-import 'package:booktalk_app/profiloResponsitive.dart';
+import 'package:booktalk_app/profiloResponsive.dart';
 import 'package:flutter/material.dart';
 import 'utils.dart';
     

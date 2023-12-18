@@ -1,31 +1,32 @@
-import 'package:booktalk_app/utils.dart';
-import 'package:flutter/material.dart';
-import 'package:booktalk_app/ExpandableFloatingActionButton.dart';
-
+import 'dart:math';
 import 'dart:ui';
 
-class Libreria extends StatefulWidget {
+import 'package:booktalk_app/ExpandableFloatingActionButton.dart';
+import 'package:booktalk_app/utils.dart';
+import 'package:flutter/material.dart';
+import 'package:responsive_grid/responsive_grid.dart';
+    
+class LibreriaResponsive extends StatefulWidget {
+  const LibreriaResponsive({Key? key}) : super(key: key);
+
   @override
-  _LibreriaState createState() => _LibreriaState();
+  _LibreriaResponsiveState createState() => _LibreriaResponsiveState();
 }
 
-class _LibreriaState extends State<Libreria> {
-  
-  bool isBlurActive = false;
-  double selectedBookFontSize = 20.0;
-  final ScrollController _scrollController = ScrollController();
-  bool isButtonVisible = false;
-
-
+class _LibreriaResponsiveState extends State<LibreriaResponsive> {
   @override
   Widget build(BuildContext context) {
     var mediaQueryData = MediaQuery.of(context);
+    final ScrollController _scrollController = ScrollController();
+    final minCount = 4;
+    final currentCount = (mediaQueryData.size.width / 250).toInt();
 
     return Scaffold(
       backgroundColor: Colors.transparent,
+
+      // HEADER
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(mediaQueryData.size.height * 0.07),
-
         child: Container(
           decoration: BoxDecoration(
             color: Color(0xFF0097b2),
@@ -53,123 +54,102 @@ class _LibreriaState extends State<Libreria> {
         ),
       ),
 
-      //backgroundColor: Colors.white,
       body: Column(
-
-        /*decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(24.0),
-            topRight: Radius.circular(24.0),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey,
-              offset: Offset(0, 2),
-              blurRadius: 6,
-              spreadRadius: 0,
-            ),
-          ],
-        ),*/
-
-        
+        children: [
           // ----------- BARRA DI RICERCA -----------
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(
-                  top: 10, bottom: 20.0, left: 8.0, right: 8.0),
-              child: SearchAnchor(
-                builder: (BuildContext context, SearchController controller) {
-                  return SearchBar(
-                    controller: controller,
-                    padding: const MaterialStatePropertyAll<EdgeInsets>(
-                        EdgeInsets.symmetric(horizontal: 16.0)),
+          Padding(
+            padding: const EdgeInsets.only(top: 10, bottom: 20.0, left: 8.0, right: 8.0),
+            child: SearchAnchor(
+              builder: (BuildContext context, SearchController controller) {
+                return SearchBar(
+                  controller: controller,
+                  padding: const MaterialStatePropertyAll<EdgeInsets>(
+                      EdgeInsets.symmetric(horizontal: 16.0)),
+                  onTap: () {
+                    controller.openView();
+                  },
+                  onChanged: (_) {
+                    controller.openView();
+                  },
+                  leading: const Icon(Icons.search),
+                );
+              },
+              
+              // Per i suggerimenti
+              suggestionsBuilder:
+                  (BuildContext context, SearchController controller) {
+                return List<ListTile>.generate(5, (int index) {
+                  final String item = 'Libro $index';
+                  return ListTile(
+                    title: Text(item),
                     onTap: () {
-                      controller.openView();
+                      setState(() {
+                        controller.closeView(item);
+                      });
                     },
-                    onChanged: (_) {
-                      controller.openView();
-                    },
-                    leading: const Icon(Icons.search),
                   );
-                },
-                suggestionsBuilder:
-                    (BuildContext context, SearchController controller) {
-                  return List<ListTile>.generate(5, (int index) {
-                    final String item = 'Libro $index';
-                    return ListTile(
-                      title: Text(item),
-                      onTap: () {
-                        setState(() {
-                          controller.closeView(item);
-                        });
-                      },
-                    );
-                  });
-                },
-              ),
+                });
+              },              
             ),
+          ),
 
-            // ----------- LISTA A GRIGLIA -----------
-            
+          SizedBox(height: mediaQueryData.size.height * 0.03,),
 
-            Expanded(
+          // ----------- LISTA A GRIGLIA -----------
+          Expanded(
             child:  CustomScrollView(
               controller: _scrollController,
               slivers: <Widget>[
 
                 SliverPadding(
-                  padding: EdgeInsets.only(bottom: 50.0), // Aggiungi lo spazio desiderato qui
-                  sliver: 
-                SliverGrid(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                  ),
-                  delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) {
-
-                      return Padding(
-                        padding: EdgeInsets.only(bottom: 0.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            _showDialog(context, 'Libro $index');
-                          },
-                          child: Container(
-                            //----------- DEFINIZIONE DELL'ELEMENTO -----------
-                            child: Column(
-                              children: [
-                                Hero(
-                                  tag: "book_cover_$index",
-                                  child: Image.asset(
-                                    "assets/copertina.jpg",
-                                    height: 80,
-                                    width: 50,
+                  padding: EdgeInsets.only(bottom: 50.0), 
+                  sliver: SliverGrid(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: max(3, (getMinor(mediaQueryData.size.width, mediaQueryData.size.height)/200).toInt()),
+                    ),
+                    delegate: SliverChildBuilderDelegate(
+                      (BuildContext context, int index) {
+                        return Padding(
+                          padding: EdgeInsets.only(bottom: 10.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              _showDialog(context, 'Libro $index');
+                            },
+                            child: Container(
+                              margin: EdgeInsets.fromLTRB( 7, 0, 7, 20),
+                              //----------- DEFINIZIONE DELL'ELEMENTO -----------
+                              child: Column(
+                                children: [
+                                  Hero(
+                                    tag: "book_cover_$index",
+                                    child: Image.asset(
+                                      "assets/copertina.jpg",
+                                      width: getMinor(mediaQueryData.size.width, mediaQueryData.size.height) > 600 ? 100 : 60,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(height: 8.0),
-                                Text(
-                                  'Libro $index',
-                                  style: TextStyle(
-                                    fontSize: 16.0,
+                                  
+                                  SizedBox(height: mediaQueryData.size.height * 0.01),
+                                  Text(
+                                    'Libro $index',
+                                    style: TextStyle(
+                                      fontSize: size(mediaQueryData.size.width, mediaQueryData.size.height, 12.0),
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      );
-                    },
-                    childCount: 30,
-                  ),                  
-                ),
+                        );
+                      },
+                      childCount: 30,
+                    ),                  
+                  ),
                 ),
               ],
             ),
           ),
-          
         ],
       ),
-    
 
       // ----------- PUSANTE AGGIUNGI LIBRO -----------
       floatingActionButton: ExpandableFloatingActionButton(
@@ -183,6 +163,8 @@ class _LibreriaState extends State<Libreria> {
       ),
     );
   }
+}
+
 
 
 
@@ -297,16 +279,3 @@ void _showDialog(BuildContext context, String bookTitle) {
       },
     );
   }
-
-
-  /*
-             
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }           */
-}
-
-  
-

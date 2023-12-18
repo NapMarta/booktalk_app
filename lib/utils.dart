@@ -49,3 +49,12 @@ logoSize(var width, var height, var per){
   
   return height * per; 
 }
+
+
+getMinor(var width, var height){
+  if(width < height){
+    return width;
+  }else{
+    return height;
+  }
+}

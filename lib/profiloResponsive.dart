@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:booktalk_app/header.dart';
 import 'package:booktalk_app/modifica-profilo.dart';
 import 'package:booktalk_app/statistiche.dart';

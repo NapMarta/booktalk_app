@@ -1,6 +1,6 @@
-import 'package:booktalk_app/homepageResponsitive.dart';
+import 'package:booktalk_app/homepageResponsive.dart';
 import 'package:flutter/material.dart';
-import 'homepage.dart';
+
 
 class RegistrationPage extends StatelessWidget {
   @override
