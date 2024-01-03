@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:booktalk_app/header.dart';
 import 'package:booktalk_app/modifica-profilo.dart';
 import 'package:booktalk_app/statistiche.dart';
 import 'package:booktalk_app/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
     
 class ProfiloResponsitive extends StatefulWidget {
@@ -13,6 +16,8 @@ class ProfiloResponsitive extends StatefulWidget {
 }
 
 class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
+  File ? _selectedImage;
+
   @override
   Widget build(BuildContext context) {
     // variabile che indica le informazioni correnti del dispositivo
@@ -37,7 +42,7 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
           ),
           child: Stack(
             children: [
-              // Header
+              // ----- Header -----
               PreferredSize(
                 preferredSize: Size.fromHeight(kToolbarHeight),
                 child: Header(
@@ -47,24 +52,44 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
                   isProfilo: true,
                 ),
               ),
-              // SizedBox(height: mediaQueryData.size.height * 0.5,),
-              // foto profilo con fotocamera per la modifica
+              
+              // ----- foto profilo con fotocamera per la modifica -----
               Align(
                 alignment: Alignment.topCenter,
                 child: Stack(
                   children: [
+                    // --- FOTO PROFILO ---
                     Padding(
                       padding: EdgeInsets.only(top: mediaQueryData.size.height * 0.07, bottom: 40),
                       child: InkWell(
                         onTap: () {
                           // Azione da eseguire quando la foto profilo viene premuta
                         },
-                        child: Image.asset(
-                          "assets/person-icon.png",
-                          height: mediaQueryData.size.height * 0.20,
-                        ),
+                        child: _selectedImage != null 
+                        ? // se l'immagine è stata selezionata
+                          // Crea un contenitore con lo sfondo nero e adatta la foto in altezza
+                          Container(                            
+                            height: mediaQueryData.size.height * 0.20,
+                            decoration:  BoxDecoration(
+                              color: Colors.black,
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                fit: BoxFit.fitHeight,
+                                image: FileImage(
+                                  _selectedImage!,
+                                ),
+                                )
+                              )
+                          )
+                        : // se l'immagine non è stata selezionata
+                          Image.asset(
+                            "assets/person-icon.png",
+                            height: mediaQueryData.size.height * 0.20,
+                          ),
                       ),
                     ),
+
+                    // --- Modifica Foto ---
                     Positioned(
                       bottom: mediaQueryData.size.height * 0.04,
                       right: 0,
@@ -72,13 +97,14 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
                       child: InkWell(
                         onTap: () {
                           // Azione da eseguire quando l'icona della fotocamera viene premuta
+                          getImageFromGallery();
                         },
                         child: Container(
                           //width: mediaQueryData.size. * 0.04,
-                          padding: EdgeInsets.all(10),
+                          padding: EdgeInsets.all(5),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: Colors.white, // Puoi impostare il colore desiderato
+                            color: Colors.white,
                           ),
                           child: Icon(
                             Icons.camera_alt,
@@ -90,8 +116,8 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
                   ],
                 ),
               ),
-              //SizedBox(height: mediaQueryData.size.height * 0.0,),
-              // Visualizzazione dati dell'utente
+
+              // ----- Visualizzazione dati dell'utente -----
               Positioned(
                 top: mediaQueryData.size.height * 0.32, // Regola la posizione verticale del riquadro
                 // left: mediaQueryData.size.width , // Regola la posizione orizzontale del riquadro
@@ -203,6 +229,16 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
         ),
       ),
     );
+  }
+
+  // Funzione che apre la galleria e restituisce l'immagine
+  Future getImageFromGallery() async {
+    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    if(image == null) return;
+    setState(() {
+      _selectedImage = File(image!.path);
+    });
   }
 }
 
