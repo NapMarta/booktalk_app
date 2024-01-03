@@ -14,7 +14,8 @@ class PasswordField extends StatefulWidget {
     this.focusNode,
     this.textInputAction,
     this.height,
-    this.width
+    this.width,
+    this.text
   });
 
   final String? restorationId;
@@ -28,6 +29,7 @@ class PasswordField extends StatefulWidget {
   final FocusNode? focusNode;
   final TextInputAction? textInputAction;
   final double? width, height;
+  final String? text;
 
   @override
   State<PasswordField> createState() => _PasswordFieldState();
@@ -63,7 +65,7 @@ class _PasswordFieldState extends State<PasswordField> with RestorationMixin {
 
         fillColor: Colors.white,
         // focusColor: Color(0xFF0097b2),
-        labelText: 'Password', 
+        labelText: widget.text, 
         labelStyle: TextStyle(fontSize: size(widget.width, widget.height, 16),
                               color: Colors.grey),
         enabledBorder: OutlineInputBorder(
@@ -89,7 +91,6 @@ class _PasswordFieldState extends State<PasswordField> with RestorationMixin {
       key: widget.fieldKey,
       restorationId: widget.restorationId,
       obscureText: _obscureText.value,
-      maxLength: 12,
       onSaved: widget.onSaved,
       validator: widget.validator,
       onFieldSubmitted: widget.onFieldSubmitted,

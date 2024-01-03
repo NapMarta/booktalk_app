@@ -57,7 +57,8 @@ class _LoginResponsiveState extends State<LoginResponsive> {
       body: SingleChildScrollView(
         padding: EdgeInsets.only(left: textFieldPadding(mediaQueryData.size.width, mediaQueryData.size.height), 
                                 right: textFieldPadding(mediaQueryData.size.width, mediaQueryData.size.height),
-                                top: mediaQueryData.size.height * 0.10,),
+                                top: mediaQueryData.size.height * 0.10,
+                                bottom: mediaQueryData.size.height * 0.05),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -109,7 +110,10 @@ class _LoginResponsiveState extends State<LoginResponsive> {
               focusNode: FocusNode(),
               width: mediaQueryData.size.width,
               height: mediaQueryData.size.height,
+              text: "Password",
             ),
+
+            SizedBox(height: 20,),
 
             // ----- ACCEDI -----
             ElevatedButton(

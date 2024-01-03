@@ -56,14 +56,87 @@ class _RegistrazioneResponsiveState extends State<RegistrazioneResponsive> {
       body: SingleChildScrollView(
         padding: EdgeInsets.only(left: textFieldPadding(mediaQueryData.size.width, mediaQueryData.size.height), 
                                 right: textFieldPadding(mediaQueryData.size.width, mediaQueryData.size.height),
-                                top: mediaQueryData.size.height * 0.10,),
+                                top: mediaQueryData.size.height * 0.02,
+                                bottom: mediaQueryData.size.height * 0.05,),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
 
             // ----- LOGO -----
             Image.asset('assets/logo_noSfondo.png', height: logoSize(mediaQueryData.size.width, mediaQueryData.size.height, 0.2)),
-            SizedBox(height: 40),
+            SizedBox(height: 30),
+
+            // ----- NOME -----
+            TextFormField(
+              restorationId: 'nome_field',
+              textInputAction: TextInputAction.next,
+              focusNode: FocusNode(),
+              decoration: InputDecoration(
+                fillColor: Colors.white,
+                // focusColor: Color(0xFF0097b2),
+                labelText: 'Nome', 
+                labelStyle: TextStyle(fontSize: size(mediaQueryData.size.width, mediaQueryData.size.height, 16), 
+                                      color: Colors.grey),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                  borderSide: BorderSide(
+                    color: Colors.grey,
+                    width: 1.5,
+                  )
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                  borderSide: BorderSide(
+                    color: Colors.grey,
+                    width: 1.5,
+                  ),
+                ),
+                filled: true,
+                prefixIcon: Icon(Icons.person, color: Colors.grey,),
+                /* hintText: localizations.demoTextFieldYourEmailAddress,
+                labelText: localizations.demoTextFieldEmail, */
+              ),
+              keyboardType: TextInputType.name,
+              
+            ),
+
+            SizedBox(height: 20,),
+
+            // ----- COGNOME -----
+            TextFormField(
+              restorationId: 'cognome_field',
+              textInputAction: TextInputAction.next,
+              focusNode: FocusNode(),
+              decoration: InputDecoration(
+                fillColor: Colors.white,
+                // focusColor: Color(0xFF0097b2),
+                labelText: 'Cognome', 
+                labelStyle: TextStyle(fontSize: size(mediaQueryData.size.width, mediaQueryData.size.height, 16), 
+                                      color: Colors.grey),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                  borderSide: BorderSide(
+                    color: Colors.grey,
+                    width: 1.5,
+                  )
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                  borderSide: BorderSide(
+                    color: Colors.grey,
+                    width: 1.5,
+                  ),
+                ),
+                filled: true,
+                prefixIcon: Icon(Icons.person, color: Colors.grey,),
+                /* hintText: localizations.demoTextFieldYourEmailAddress,
+                labelText: localizations.demoTextFieldEmail, */
+              ),
+              keyboardType: TextInputType.name,
+              
+            ),
+
+            SizedBox(height: 20,),
 
             // ----- EMAIL -----
             TextFormField(
@@ -108,20 +181,36 @@ class _RegistrazioneResponsiveState extends State<RegistrazioneResponsive> {
               focusNode: FocusNode(),
               width: mediaQueryData.size.width,
               height: mediaQueryData.size.height,
+              text: "Password",
             ),
 
-            // ----- ACCEDI -----
+            SizedBox(height: 20,),
+
+            // ----- RIPETI PASSWORD ----- 
+            PasswordField(
+              restorationId: 'ripeti_password_field',
+              textInputAction: TextInputAction.next,
+              focusNode: FocusNode(),
+              width: mediaQueryData.size.width,
+              height: mediaQueryData.size.height,
+              text: "Conferma Password"
+            ),
+
+            SizedBox(height: 20,),
+
+            // ----- REGISTRATI -----
             ElevatedButton(
                 onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => HomepageResponsitive(),
-                      ),
-                  ); 
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => HomepageResponsitive(),
+                    ),
+                  );
                 },
+                
                 style: ButtonStyle(
                   fixedSize: MaterialStateProperty.all(Size(buttonWidth(mediaQueryData.size.width, mediaQueryData.size.height), 55)),
-                  backgroundColor: MaterialStateProperty.all(Color(0xFF0097B2)),
+                  backgroundColor: MaterialStateProperty.all(Color(0xFF1B536E)),
                   textStyle: MaterialStateProperty.all(TextStyle(fontSize: size(mediaQueryData.size.width, mediaQueryData.size.height, 16), fontWeight: FontWeight.bold,)),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
@@ -129,8 +218,8 @@ class _RegistrazioneResponsiveState extends State<RegistrazioneResponsive> {
                     ),
                   ),
                 ),
-                child: Text('Accedi'),
-              ),            
+                child: Text('Registrati'),
+              ),           
 
           ]
         ),
