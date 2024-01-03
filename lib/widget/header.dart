@@ -35,7 +35,6 @@ class _HeaderState extends State<Header> {
     
     return AppBar(
       forceMaterialTransparency: true,
-      
       // Pulsante Indietro
       leading: widget.isHomePage 
       ? null 

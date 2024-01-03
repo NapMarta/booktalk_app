@@ -63,7 +63,7 @@ class _PasswordFieldState extends State<PasswordField> with RestorationMixin {
           ),
         ),
 
-        fillColor: Colors.white,
+        fillColor: const Color.fromARGB(123, 255, 255, 255),
         // focusColor: Color(0xFF0097b2),
         labelText: widget.text, 
         labelStyle: TextStyle(fontSize: size(widget.width, widget.height, 16),

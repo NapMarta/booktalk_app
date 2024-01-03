@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:booktalk_app/modificaProfiloResponsive.dart';
 import 'package:booktalk_app/widget/header.dart';
 import 'package:booktalk_app/modifica-profilo.dart';
 import 'package:booktalk_app/statistiche.dart';
@@ -157,7 +158,7 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
                                 onPressed: () {
                                   Navigator.of(context).push(
                                       MaterialPageRoute(
-                                        builder: (context) => ProfileManagementPage(),
+                                        builder: (context) => ModificaProfiloResponsive(),
                                       ),
                                   ); 
                                 },
