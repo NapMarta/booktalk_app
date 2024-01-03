@@ -1,8 +1,8 @@
 //import 'package:camera/camera.dart'
+import 'package:booktalk_app/loginResponsive.dart';
+import 'package:booktalk_app/registrazioneResponsive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'registrazione.dart';
-import 'login.dart';
 import 'utils.dart';
 
 Future<void> main() async {
@@ -53,13 +53,13 @@ class BookTalkApp extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => RegistrationPage(),
+                      builder: (context) => RegistrazioneResponsive(),
                     ),
                   );
                 },
                 
                 style: ButtonStyle(
-                  fixedSize: MaterialStateProperty.all(Size(mediaQueryData.size.width * 0.45, mediaQueryData.size.height * 0.07)),
+                  fixedSize: MaterialStateProperty.all(Size(buttonWidth(mediaQueryData.size.width, mediaQueryData.size.height), 55)),
                   backgroundColor: MaterialStateProperty.all(Color(0xFF1B536E)),
                   textStyle: MaterialStateProperty.all(TextStyle(fontSize: size(mediaQueryData.size.width, mediaQueryData.size.height, 16), fontWeight: FontWeight.bold,)),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -78,12 +78,12 @@ class BookTalkApp extends StatelessWidget {
                 onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => LoginPage(),
+                        builder: (context) => LoginResponsive(),
                       ),
                   ); 
                 },
                 style: ButtonStyle(
-                  fixedSize: MaterialStateProperty.all(Size(mediaQueryData.size.width * 0.45, mediaQueryData.size.height * 0.07)),
+                  fixedSize: MaterialStateProperty.all(Size(buttonWidth(mediaQueryData.size.width, mediaQueryData.size.height), 55)),
                   backgroundColor: MaterialStateProperty.all(Color(0xFF0097B2)),
                   textStyle: MaterialStateProperty.all(TextStyle(fontSize: size(mediaQueryData.size.width, mediaQueryData.size.height, 16), fontWeight: FontWeight.bold,)),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(

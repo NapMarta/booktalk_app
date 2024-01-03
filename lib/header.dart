@@ -10,6 +10,15 @@ class Header extends StatefulWidget {
   required this.isHomePage,
   required this.isProfilo}) : super(key: key);
 
+  /*
+    text - Corrisponde al testo da visuallizzare nell'Header
+    iconProfile - Corrisponde all'immage del profilo
+    isHomePage - settato a true solo nella homepage, per non visualizzare il pulsante indietro
+    isProfilo - settato a true solo nel profilo, per non visualizzare il pulsante profilo ma il logout
+
+    in tutti gli alti casi, entrambi sono true
+  */
+
   final String text;
   final Image iconProfile;  // passsare la foto del profilo dell'utente
   final bool isHomePage, isProfilo;
@@ -26,7 +35,8 @@ class _HeaderState extends State<Header> {
     
     return AppBar(
       forceMaterialTransparency: true,
-
+      
+      // Pulsante Indietro
       leading: widget.isHomePage 
       ? null 
       : IconButton(
@@ -38,6 +48,7 @@ class _HeaderState extends State<Header> {
           // iconSize: iconSize(mediaQueryData.size.width, mediaQueryData.size.height, 0.005),
         ),
 
+      // Testo
       automaticallyImplyLeading: !widget.isHomePage, // toglie lo spazio occupoato dall'elemento
       title: Text(
         widget.text,
@@ -55,7 +66,10 @@ class _HeaderState extends State<Header> {
           ],
         ),
       ),
+
       backgroundColor: Color.fromARGB(0, 255, 255, 255),
+      
+      // Pulsate Logout/Profilo
       actions: <Widget>[
         Padding(
           padding: EdgeInsets.only(right: 10),

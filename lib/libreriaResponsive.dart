@@ -4,7 +4,6 @@ import 'dart:ui';
 import 'package:booktalk_app/ExpandableFloatingActionButton.dart';
 import 'package:booktalk_app/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:responsive_grid/responsive_grid.dart';
     
 class LibreriaResponsive extends StatefulWidget {
   const LibreriaResponsive({Key? key}) : super(key: key);
@@ -18,8 +17,6 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
   Widget build(BuildContext context) {
     var mediaQueryData = MediaQuery.of(context);
     final ScrollController _scrollController = ScrollController();
-    final minCount = 4;
-    final currentCount = (mediaQueryData.size.width / 250).toInt();
 
     return Scaffold(
       backgroundColor: Colors.transparent,

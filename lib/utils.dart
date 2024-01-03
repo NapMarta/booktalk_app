@@ -1,3 +1,4 @@
+
 textSize(var width, var height, var per){
   if (width > 600 && height > 600){
     per = per - 0.004;
@@ -56,5 +57,22 @@ getMinor(var width, var height){
     return width;
   }else{
     return height;
+  }
+}
+
+
+textFieldPadding(var width, var height){
+  if(width > 600 && height > 600){
+    return width * 0.25;
+  }else{
+    return width * 0.1;
+  }
+}
+
+buttonWidth(var width, var height){
+  if(width > 600 && height > 600){
+    return width * 0.25;
+  }else{
+    return width * 0.45;
   }
 }

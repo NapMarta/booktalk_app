@@ -1,6 +1,5 @@
 import 'package:booktalk_app/camera.dart';
 import 'package:booktalk_app/header.dart';
-import 'package:booktalk_app/libreria.dart';
 import 'package:booktalk_app/libreriaResponsive.dart';
 import 'package:booktalk_app/supporto-al-learning.dart';
 import 'package:booktalk_app/utils.dart';
