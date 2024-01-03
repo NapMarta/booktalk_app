@@ -1,17 +1,16 @@
 import 'package:booktalk_app/widget/PasswordField.dart';
 import 'package:booktalk_app/homepageResponsive.dart';
-import 'package:booktalk_app/registrazioneResponsive.dart';
 import 'package:booktalk_app/utils.dart';
 import 'package:flutter/material.dart';
     
-class LoginResponsive extends StatefulWidget {
-  const LoginResponsive({Key? key}) : super(key: key);
+class RegistrazioneResponsive extends StatefulWidget {
+  const RegistrazioneResponsive({Key? key}) : super(key: key);
 
   @override
-  _LoginResponsiveState createState() => _LoginResponsiveState();
+  _RegistrazioneResponsiveState createState() => _RegistrazioneResponsiveState();
 }
 
-class _LoginResponsiveState extends State<LoginResponsive> {
+class _RegistrazioneResponsiveState extends State<RegistrazioneResponsive> {
   @override
   Widget build(BuildContext context) {
     var mediaQueryData = MediaQuery.of(context);
@@ -33,7 +32,7 @@ class _LoginResponsiveState extends State<LoginResponsive> {
         ),
 
         title: Text(
-          "Login",
+          "Registrazione",
           style: TextStyle(
             fontFamily: 'Roboto',
             fontSize: size(mediaQueryData.size.width, mediaQueryData.size.height, 18),
@@ -131,36 +130,7 @@ class _LoginResponsiveState extends State<LoginResponsive> {
                   ),
                 ),
                 child: Text('Accedi'),
-              ),
-
-            SizedBox(height: mediaQueryData.size.height * 0.05,),
-            
-            // ----- Registrati -----
-            Center(
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => RegistrazioneResponsive(),
-                  ));
-                },
-                child: RichText(
-                  text: TextSpan(
-                    text: 'Non sei ancora registrato? ',
-                    style: TextStyle(color: Colors.black,
-                                    fontSize: size(mediaQueryData.size.width, mediaQueryData.size.height, 14)),
-                    children: [
-                      TextSpan(
-                        text: 'Registrati ora',
-                        style: TextStyle(
-                          color: Color(0xFF0097b2),
-                          decoration: TextDecoration.underline,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
+              ),            
 
           ]
         ),

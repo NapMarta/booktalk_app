@@ -1,7 +1,7 @@
 import 'package:booktalk_app/main.dart';
 import 'package:booktalk_app/profiloResponsive.dart';
 import 'package:flutter/material.dart';
-import 'utils.dart';
+import '../utils.dart';
     
 class Header extends StatefulWidget {
   const Header({Key? key, 

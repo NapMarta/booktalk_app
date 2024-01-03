@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:booktalk_app/header.dart';
+import 'package:booktalk_app/widget/header.dart';
 import 'package:booktalk_app/modifica-profilo.dart';
 import 'package:booktalk_app/statistiche.dart';
 import 'package:booktalk_app/utils.dart';
