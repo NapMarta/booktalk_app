@@ -1,7 +1,5 @@
-import 'package:booktalk_app/camera.dart';
 import 'package:booktalk_app/widget/header.dart';
 import 'package:booktalk_app/libreriaResponsive.dart';
-import 'package:booktalk_app/supporto-al-learning.dart';
 import 'package:booktalk_app/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -76,11 +74,12 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
                     "Espressioni Matematiche",
                     "Scansiona o inserisci l'espressione matematica e BookTalk ti aiuterà nella risoluzione.",
                     () {
+                      /*
                       Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => Camera(),
                           ),
-                      );
+                      );*/
                     },
                     Color(0xFFf0bc5e),
                     mediaQueryData.size.height,
@@ -108,11 +107,12 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
                     "Supporto al learning",
                     "Specifica la parte di libro da studiare e BookTalk ti ascolterà durante la ripetizione dell’argomento.",
                     () {
+                      /*
                       Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => SupportoAlLearningScreen(),
                           ),
-                      ); 
+                      ); */
                     },
                     Color(0xFFff3a2a),
                     mediaQueryData.size.height,

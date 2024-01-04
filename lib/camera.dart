@@ -1,6 +1,6 @@
+/*
 import 'dart:io';
 
-import 'package:booktalk_app/profilo.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:path/path.dart';
@@ -222,3 +222,4 @@ class ReviewPictureScreen extends StatelessWidget {
     );
   }
 }
+*/

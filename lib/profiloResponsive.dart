@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:booktalk_app/modificaProfiloResponsive.dart';
 import 'package:booktalk_app/widget/header.dart';
-import 'package:booktalk_app/modifica-profilo.dart';
 import 'package:booktalk_app/statistiche.dart';
 import 'package:booktalk_app/utils.dart';
 import 'package:flutter/material.dart';

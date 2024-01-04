@@ -1,7 +1,6 @@
 // Importa i pacchetti necessari
+/*
 import 'package:booktalk_app/libreria-secondafunz.dart';
-import 'package:booktalk_app/libreria.dart';
-import 'package:booktalk_app/profilo.dart';
 import 'package:flutter/material.dart';
 
 // Funzione principale dell'app Flutter
@@ -286,3 +285,4 @@ class ChatMessage extends StatelessWidget {
     );
   }
 }
+*/
