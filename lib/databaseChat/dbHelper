@@ -1,0 +1,73 @@
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart';
+import 'dart:async';
+
+class DatabaseHelper {
+  static final DatabaseHelper _instance = DatabaseHelper._internal();
+
+  factory DatabaseHelper() => _instance;
+
+  DatabaseHelper._internal();
+
+  static Database? _database;
+
+  Future<Database> get database async {
+    if (_database != null) return _database!;
+
+    _database = await initDatabase();
+    return _database!;
+  }
+
+  Future<Database> initDatabase() async {
+    String path = join(await getDatabasesPath(), 'your_database.db');
+    return await openDatabase(
+      path,
+      version: 1,
+      onCreate: (db, version) async {
+        await db.execute('''
+          CREATE TABLE CHAT (
+            ID INTEGER PRIMARY KEY,
+            DATA_CREAZIONE INTEGER NOT NULL
+          )
+        ''');
+
+        await db.execute('''
+          CREATE TABLE MESSAGGIO (
+            DATA TEXT,
+            CHAT INTEGER,
+            TESTO TEXT,
+            IS_UTENTE INTEGER,
+            PRIMARY KEY (DATA, CHAT),
+            FOREIGN KEY (CHAT) REFERENCES CHAT(ID)
+          )
+        ''');
+      },
+    );
+  }
+
+  // Metodo per inserire una nuova chat nel database
+  Future<int> insertChat(Map<String, dynamic> chat) async {
+    Database db = await database;
+    // Aggiungi il timestamp corrente alla colonna DATA_CREAZIONE
+    chat['DATA_CREAZIONE'] = DateTime.now().millisecondsSinceEpoch;
+    return await db.insert('CHAT', chat);
+  }
+
+  // Metodo per ottenere tutte le chat presenti nel database
+  Future<List<Map<String, dynamic>>> getChats() async {
+    Database db = await database;
+    return await db.query('CHAT');
+  }
+
+  // Metodo per inserire un nuovo messaggio nel database
+  Future<int> insertMessage(Map<String, dynamic> message) async {
+    Database db = await database;
+    return await db.insert('MESSAGGIO', message);
+  }
+
+  // Metodo per ottenere tutti i messaggi di una specifica chat
+  Future<List<Map<String, dynamic>>> getMessagesForChat(int chatId) async {
+    Database db = await database;
+    return await db.query('MESSAGGIO', where: 'CHAT = ?', whereArgs: [chatId]);
+  }
+}

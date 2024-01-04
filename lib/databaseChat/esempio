@@ -1,0 +1,65 @@
+import 'package:flutter/material.dart';
+import 'dbHelper.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  final DatabaseHelper dbHelper = DatabaseHelper();
+
+  @override
+  void initState() {
+    super.initState();
+    _testDatabase();
+  }
+
+  void _testDatabase() async {
+    // Inserisci una nuova chat
+    int chatId = await dbHelper.insertChat({
+      'ID': 2,
+    });
+
+    // Inserisci un messaggio nella chat
+    await dbHelper.insertMessage({
+      'DATA': DateTime.now().toIso8601String(),
+      'CHAT': chatId,
+      'TESTO': 'Bene grazie!',
+      'IS_UTENTE': 0,
+    });
+
+    // Ottieni tutte le chat
+    List<Map<String, dynamic>> chats = await dbHelper.getChats();
+    print('Chats: $chats');
+
+    // Ottieni tutti i messaggi per una specifica chat
+    List<Map<String, dynamic>> messages = await dbHelper.getMessagesForChat(chatId);
+    print('Messages for Chat $chatId: $messages');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Test Database'),
+      ),
+      body: Center(
+        child: Text('Verifica la console per i risultati del test del database.'),
+      ),
+    );
+  }
+}

@@ -43,6 +43,8 @@ dependencies:
   auto_size_text: ^3.0.0
   # gridView Responsive
   responsive_grid: ^2.4.4
+  sqflite: ^2.0.0
+  path: ^1.8.0
 
 
 dev_dependencies:
