@@ -36,18 +36,22 @@ class _HeaderState extends State<Header> {
     return AppBar(
       forceMaterialTransparency: true,
       // Pulsante Indietro
-      leading: widget.isHomePage 
-      ? null 
-      : IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded, color: Color(0xFF0097b2),), // Icona personalizzata
-          onPressed: () {
-            Navigator.of(context).pop(); // Torna indietro alla schermata precedente
-          },
-          iconSize: 25,
-          // iconSize: iconSize(mediaQueryData.size.width, mediaQueryData.size.height, 0.005),
-        ),
-
+      leading:  widget.isHomePage 
+        ? null 
+        : Transform.scale(
+            scale: 0.8,
+            child:IconButton(
+              icon: Icon(Icons.arrow_back_ios_new_rounded, color: Color(0xFF0097b2),), // Icona personalizzata
+              onPressed: () {
+                Navigator.of(context).pop(); // Torna indietro alla schermata precedente
+              },
+              //iconSize: 25,
+              // iconSize: iconSize(mediaQueryData.size.width, mediaQueryData.size.height, 0.005),
+              
+            ),
+          ),
       // Testo
+      
       automaticallyImplyLeading: !widget.isHomePage, // toglie lo spazio occupoato dall'elemento
       title: Text(
         widget.text,
@@ -70,32 +74,35 @@ class _HeaderState extends State<Header> {
       
       // Pulsate Logout/Profilo
       actions: <Widget>[
-        Padding(
-          padding: EdgeInsets.only(right: 10),
-          child:
-            widget.isProfilo
-            ? IconButton(
-                onPressed: () { 
+        Transform.scale(
+          scale: 0.6,
+          child: Padding(
+            padding: EdgeInsets.only(right: 0),
+            child:
+              widget.isProfilo
+              ? IconButton(
+                  onPressed: () { 
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => BookTalkApp(),
+                      ),
+                    );
+                  },
+                  icon: Image.asset("assets/logout.png"),
+                  iconSize: 0,
+                )
+              : IconButton(
+                icon: widget.iconProfile,
+                iconSize: 2,
+                onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => BookTalkApp(),
+                    builder: (context) => ProfiloResponsitive(),
                     ),
-                  );
+                  ); 
                 },
-                icon: Image.asset("assets/logout.png"),
-                iconSize: 25,
-              )
-            : IconButton(
-              icon: widget.iconProfile,
-              iconSize: 25,
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                  builder: (context) => ProfiloResponsitive(),
-                  ),
-                ); 
-              },
-            ),
+              ),
+          ),
         ),
       ],
       elevation: 0,
