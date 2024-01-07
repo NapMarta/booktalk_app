@@ -54,3 +54,5 @@ windows/flutter/generated_plugin_registrant.h
 windows/flutter/generated_plugins.cmake
 linux/flutter/generated_plugin_registrant.cc
 .vscode/settings.json
+pubspec.lock
+macos/Flutter/GeneratedPluginRegistrant.swift

@@ -218,7 +218,7 @@ class _RegistrazioneResponsiveState extends State<RegistrazioneResponsive> {
                     ),
                   ),
                 ),
-                child: Text('Registrati'),
+                child: Text('Registrati', style: TextStyle(color: Colors.white)),
               ),           
 
           ]

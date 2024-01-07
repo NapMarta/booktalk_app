@@ -68,7 +68,7 @@ class BookTalkApp extends StatelessWidget {
                     ),
                   ),
                 ),
-                child: Text('Registrati'),
+                child: Text('Registrati', style: TextStyle(color: Colors.white)),
               ),
 
               SizedBox(height: mediaQueryData.size.height * 0.02), // Spazio tra i pulsanti
@@ -92,7 +92,7 @@ class BookTalkApp extends StatelessWidget {
                     ),
                   ),
                 ),
-                child: Text('Accedi'),
+                child: Text('Accedi', style: TextStyle(color: Colors.white)),
               ),
 
             ],

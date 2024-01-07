@@ -134,7 +134,7 @@ class _LoginResponsiveState extends State<LoginResponsive> {
                     ),
                   ),
                 ),
-                child: Text('Accedi'),
+                child: Text('Accedi', style: TextStyle(color: Colors.white)),
               ),
 
             SizedBox(height: mediaQueryData.size.height * 0.05,),
