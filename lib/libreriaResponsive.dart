@@ -1,9 +1,11 @@
+import 'dart:io';
 import 'dart:math';
 import 'dart:ui';
 
 import 'package:booktalk_app/widget/ExpandableFloatingActionButton.dart';
 import 'package:booktalk_app/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
     
 class LibreriaResponsive extends StatefulWidget {
   const LibreriaResponsive({Key? key}) : super(key: key);
@@ -13,6 +15,7 @@ class LibreriaResponsive extends StatefulWidget {
 }
 
 class _LibreriaResponsiveState extends State<LibreriaResponsive> {
+  File ? _selectedImage;
   @override
   Widget build(BuildContext context) {
     var mediaQueryData = MediaQuery.of(context);
@@ -93,6 +96,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
           SizedBox(height: mediaQueryData.size.height * 0.03,),
 
           // ----------- LISTA A GRIGLIA -----------
+          /*
           Expanded(
             child:  CustomScrollView(
               controller: _scrollController,
@@ -145,6 +149,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
               ],
             ),
           ),
+          */
         ],
       ),
 
@@ -156,9 +161,19 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
         onPressed: () {
           _scrollController.animateTo(0,
               duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
+          getImageFromCamera();
         },
       ),
     );
+  }
+
+  Future getImageFromCamera() async {
+    final image = await ImagePicker().pickImage(source: ImageSource.camera);
+
+    if(image == null) return;
+    setState(() {
+      _selectedImage = File(image!.path);
+    });
   }
 }
 
