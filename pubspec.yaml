@@ -43,8 +43,12 @@ dependencies:
   auto_size_text: ^3.0.0
   # gridView Responsive
   responsive_grid: ^2.4.4
+  # database locale
   sqflite: ^2.0.0
   path: ^1.8.0
+  # grafici
+  fl_chart: ^0.66.0
+
 
 
 dev_dependencies:
