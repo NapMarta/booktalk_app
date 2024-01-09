@@ -92,7 +92,7 @@ class BookTalkApp extends StatelessWidget {
                     ),
                   ),
                 ),
-                child: Text('Accedi', style: TextStyle(color: Colors.white)),
+                child: Text('Login', style: TextStyle(color: Colors.white)),
               ),
 
             ],

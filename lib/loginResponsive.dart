@@ -23,15 +23,18 @@ class _LoginResponsiveState extends State<LoginResponsive> {
       // ----- HEADER -----
       appBar: AppBar(
         
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded, color: Color(0xFF0097b2),), // Icona personalizzata
-          onPressed: () {
-            Navigator.of(context).pop(); // Torna indietro alla schermata precedente
-          },
-          iconSize: 25,
-          // iconSize: iconSize(mediaQueryData.size.width, mediaQueryData.size.height, 0.005),
+        leading: Transform.scale(
+          scale: 0.8,
+          child: IconButton(
+            icon: Icon(Icons.arrow_back_ios_new_rounded, color: Color(0xFF0097b2),), // Icona personalizzata
+            onPressed: () {
+              Navigator.of(context).pop(); // Torna indietro alla schermata precedente
+            },
+            //iconSize: 25,
+            // iconSize: iconSize(mediaQueryData.size.width, mediaQueryData.size.height, 0.005),
+          ),
         ),
-
+        
         title: Text(
           "Login",
           style: TextStyle(

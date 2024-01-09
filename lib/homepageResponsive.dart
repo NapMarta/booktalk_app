@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:booktalk_app/widget/header.dart';
 import 'package:booktalk_app/libreriaResponsive.dart';
 import 'package:booktalk_app/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
@@ -13,7 +16,8 @@ class HomepageResponsitive extends StatefulWidget {
 }
 
 class _HomepageResponsitiveState extends State<HomepageResponsitive> {
-  
+  File ? _selectedImage;
+
   @override
   Widget build(BuildContext context) {
     // variabile che indica le informazioni correnti del dispositivo
@@ -74,12 +78,7 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
                     "Espressioni Matematiche",
                     "Scansiona o inserisci l'espressione matematica e BookTalk ti aiuterà nella risoluzione.",
                     () {
-                      /*
-                      Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => Camera(),
-                          ),
-                      );*/
+                      getImageFromCamera();
                     },
                     Color(0xFFf0bc5e),
                     mediaQueryData.size.height,
@@ -163,6 +162,15 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
         ),
       ),
     );
+  }
+
+  Future getImageFromCamera() async {
+    final image = await ImagePicker().pickImage(source: ImageSource.camera);
+
+    if(image == null) return;
+    setState(() {
+      _selectedImage = File(image!.path);
+    });
   }
 }
 

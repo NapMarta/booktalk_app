@@ -3,7 +3,6 @@ import 'package:booktalk_app/utils.dart';
 import 'package:booktalk_app/widget/PasswordField.dart';
 import 'package:booktalk_app/widget/header.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
     
 class ModificaProfiloResponsive extends StatefulWidget {
   const ModificaProfiloResponsive({Key? key}) : super(key: key);
@@ -17,19 +16,16 @@ class _ModificaProfiloResponsiveState extends State<ModificaProfiloResponsive> {
   String firstName = 'Maria';
   String lastName = 'Rossi';
   String email = 'email@example.com';
-  String password = 'password';
 
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
 
   @override
   void initState() {
     firstNameController.text = firstName;
     lastNameController.text = lastName;
     emailController.text = email;
-    passwordController.text = password;
     super.initState();
   }
 
@@ -38,7 +34,6 @@ class _ModificaProfiloResponsiveState extends State<ModificaProfiloResponsive> {
       firstName = firstNameController.text;
       lastName = lastNameController.text;
       email = emailController.text;
-      password = passwordController.text;
     });
 
     // Salvare i dati aggiornati nel db
@@ -55,37 +50,37 @@ class _ModificaProfiloResponsiveState extends State<ModificaProfiloResponsive> {
       right: true,
       bottom: false,
       top: true,
-      child: Scaffold(
-        resizeToAvoidBottomInset: false, 
-        body: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/sfondo2.jpg"),
-              fit: BoxFit.cover,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/sfondo2.jpg"),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
-          child: Stack(
-            children: [
-              // ----- Header -----
-              PreferredSize(
-                preferredSize: Size.fromHeight(kToolbarHeight),
-                child: Header(
-                  iconProfile: Image.asset('assets/person-icon.png'), 
-                  text: "Modifica i tuoi dati",
-                  isHomePage: false,
-                  isProfilo: true,
-                ),
+          Scaffold(
+          // ----- HEADER -----
+            appBar: PreferredSize(
+              preferredSize: Size.fromHeight(kToolbarHeight),
+              child: Header(
+                iconProfile: Image.asset('assets/person-icon.png'), 
+                text: "Modifica i tuoi dati",
+                isHomePage: false,
+                isProfilo: false,
               ),
+            ),
+            backgroundColor: Colors.transparent,
+            body: SingleChildScrollView(
+              child: Container(
+              padding: EdgeInsets.only(left: textFieldPadding(mediaQueryData.size.width, mediaQueryData.size.height), 
+                                      right: textFieldPadding(mediaQueryData.size.width, mediaQueryData.size.height),
+                                      top: mediaQueryData.size.height * 0.02,
+                                      bottom: MediaQuery.of(context).viewInsets.bottom,),
               
-              // ----- Campi contenenti i dati -----
-              SingleChildScrollView(
-                child: Container(
-                padding: EdgeInsets.only(left: textFieldPadding(mediaQueryData.size.width, mediaQueryData.size.height), 
-                                        right: textFieldPadding(mediaQueryData.size.width, mediaQueryData.size.height),
-                                        top: mediaQueryData.size.height * 0.02,
-                                        bottom: MediaQuery.of(context).viewInsets.bottom,),
-                
-                child: Column(
+              child: Column(
                 children: <Widget>[
                   SizedBox(height: 80,),
                   // ----- NOME -----
@@ -243,15 +238,14 @@ class _ModificaProfiloResponsiveState extends State<ModificaProfiloResponsive> {
                           ),
                         ),
                       ),
-                      child: Text('Conferma'),
+                      child: Text('Conferma', style: TextStyle(color: Colors.white)),
                     ),
-                ],
-                ),
+                  ],
                 ),
               ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
