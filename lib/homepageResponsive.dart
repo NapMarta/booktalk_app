@@ -180,7 +180,7 @@ Widget _buildFeatureCard(String iconPath, String title, String description, Void
     onTap: onPressed,
     child: Container(
       width: width * 0.85,
-      height: height * 0.13,
+      height: height * 0.135,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
@@ -205,7 +205,7 @@ Widget _buildFeatureCard(String iconPath, String title, String description, Void
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.only(top: 8, left: 10, right: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -232,7 +232,7 @@ Widget _buildFeatureCard(String iconPath, String title, String description, Void
                       color: Color.fromARGB(255, 112, 112, 112),
                     ),
                     textAlign: TextAlign.center,
-                    minFontSize: 12,
+                    minFontSize: 8,
                     maxLines: 3,
                   ),
                 ],

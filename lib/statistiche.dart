@@ -53,7 +53,7 @@ class _StatisticheState extends State<Statistiche> {
           SizedBox(height: 10,),
           Text(
                 "Libro più utilizzato", 
-                style: TextStyle(fontSize: size(mediaQueryData.size.width, mediaQueryData.size.height, 18), fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: size(mediaQueryData.size.width, mediaQueryData.size.height, 20), fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
           SizedBox(height: 20,),
@@ -75,7 +75,7 @@ class _StatisticheState extends State<Statistiche> {
           SizedBox(height: 80,), 
           Text(
             "Percentuale di utilizzo delle funzionalità", 
-            style: TextStyle(fontSize: size(mediaQueryData.size.width, mediaQueryData.size.height, 18), fontWeight: FontWeight.bold,), 
+            style: TextStyle(fontSize: size(mediaQueryData.size.width, mediaQueryData.size.height, 20), fontWeight: FontWeight.bold,), 
             textAlign: TextAlign.center,
           ), 
           
