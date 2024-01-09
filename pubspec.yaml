@@ -79,11 +79,8 @@ flutter:
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
-  assets: 
-    - assets/BookTalk-logo-noSfondo.png
-    - assets/BookTalk-scritta.png
-    - assets/BookTalk-noScritta.png
-    - assets/BookTalk-logo.png
+  assets:
+    - assets/logo_Sfondo.jpg
     - assets/logo_noSfondo.png
     - assets/person-icon.png
     - assets/1.png
