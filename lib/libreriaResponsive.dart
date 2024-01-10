@@ -37,15 +37,19 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
           ),
           child: Column(
             children: [
-              SizedBox(height: mediaQueryData.size.height * 0.005),
-              Image.asset("assets/linea.png", width: mediaQueryData.size.width * 0.1,),
-              SizedBox(height: mediaQueryData.size.height * 0.015),
+              SizedBox(height: mediaQueryData.size.height * 0.006),
+              Image.asset(
+                "assets/linea.png",
+                width: 50,
+              ),
+              SizedBox(height: mediaQueryData.size.height * 0.013),
               Text(
                 'Libreria',
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: size(mediaQueryData.size.width, mediaQueryData.size.height, 16),
+                  fontSize: size(mediaQueryData.size.width,
+                      mediaQueryData.size.height, 16),
                 ),
               ),
               //SizedBox(height: 2),
