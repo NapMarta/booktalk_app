@@ -32,9 +32,9 @@ class _StatisticheState extends State<Statistiche> {
               SizedBox(height: mediaQueryData.size.height * 0.006),
               Image.asset(
                 "assets/linea.png",
-                width: mediaQueryData.size.width * 0.1,
+                width: 50,
               ),
-              SizedBox(height: mediaQueryData.size.height * 0.015),
+              SizedBox(height: mediaQueryData.size.height * 0.013),
               Text(
                 'Statistiche',
                 style: TextStyle(
@@ -54,36 +54,88 @@ class _StatisticheState extends State<Statistiche> {
       body: ListView(
         children: [
           SizedBox(
-            height: 10,
+            height: 20,
           ),
           Text(
-                "Libro più utilizzato", 
+                "Libri più utilizzati", 
                 style: TextStyle(fontSize: size(mediaQueryData.size.width, mediaQueryData.size.height, 20), fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
           SizedBox(height: 20,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "Titolo libro",
-                style: TextStyle(
-                    fontSize: size(mediaQueryData.size.width,
-                        mediaQueryData.size.height, 14),
-                    fontWeight: FontWeight.w400),
-                textAlign: TextAlign.center,
-              ),
+          Wrap(
+            direction: Axis.horizontal,
+            alignment: WrapAlignment.center,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: 10.0,
+            runSpacing: 20.0,
+            children: [ 
+
               SizedBox(
-                width: mediaQueryData.size.width * 0.1,
+                width: getMinor(mediaQueryData.size.width, mediaQueryData.size.height) > 600 ? 220: 180,
+                child: _NumberCardWidget(
+                  1,
+                  "assets/copertina.jpg",
+                  mediaQueryData.size.width,
+                  mediaQueryData.size.height
+                ),
               ),
-              Image.asset(
-                "assets/copertina.jpg",
-                width: getMinor(mediaQueryData.size.width,
-                            mediaQueryData.size.height) >
-                        600
-                    ? 100
-                    : 60,
+
+              SizedBox(
+                width: getMinor(mediaQueryData.size.width, mediaQueryData.size.height) > 600 ? 220: 180,
+                child: _NumberCardWidget(
+                  2,
+                  "assets/copertina.jpg",
+                  mediaQueryData.size.width,
+                  mediaQueryData.size.height
+                ),
               ),
+
+              SizedBox(
+                width: getMinor(mediaQueryData.size.width, mediaQueryData.size.height) > 600 ? 220: 180,
+                child: _NumberCardWidget(
+                  3,
+                  "assets/copertina.jpg",
+                  mediaQueryData.size.width,
+                  mediaQueryData.size.height
+                ),
+              ),
+            
+              /*
+              ClipRRect(
+                borderRadius: BorderRadius.circular(6.0),
+                child: Image.asset(
+                  "assets/copertina.jpg",
+                  width: getMinor(mediaQueryData.size.width,
+                              mediaQueryData.size.height) >
+                          600
+                      ? 140
+                      : 100,
+                ),
+              ),
+
+              ClipRRect(
+                borderRadius: BorderRadius.circular(6.0),
+                child: Image.asset(
+                  "assets/copertina.jpg",
+                  width: getMinor(mediaQueryData.size.width,
+                              mediaQueryData.size.height) >
+                          600
+                      ? 140
+                      : 100,
+                ),
+              ),
+
+              ClipRRect(
+                borderRadius: BorderRadius.circular(6.0),
+                child: Image.asset(
+                  "assets/copertina.jpg",
+                  width: getMinor(mediaQueryData.size.width,
+                              mediaQueryData.size.height) >
+                          600
+                      ? 140
+                      : 100,
+                ),
+              ),*/
             ],
           ),
           SizedBox(
@@ -246,4 +298,47 @@ List<PieChartSectionData> _pieChartData(
       badgePositionPercentageOffset: 1.1,
     ),
   ];
+}
+
+
+
+// --- ELEMENTO NELLA TOP 3 LIBRI ---
+Widget _NumberCardWidget(int index, String imageLibro, double width, double height) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 3.5),
+    child: Stack(
+      children: [
+        Positioned(
+            left: 13,
+            bottom: 0,
+            child: Center(
+              child: Image.asset(
+                "assets/top${index}.png",
+                width: 60,
+              ),
+            ),
+        ),
+        Row(
+          children: [
+            const SizedBox(
+              height: 40,
+              width: 60,
+            ),
+            ClipRRect(
+                borderRadius: BorderRadius.circular(6.0),
+                child: Image.asset(
+                  "assets/copertina.jpg",
+                  width: getMinor(width,
+                              height) >
+                          600
+                      ? 140
+                      : 100,
+                ),
+              ),
+          ],
+        ),
+        
+      ],
+    ),
+  );
 }

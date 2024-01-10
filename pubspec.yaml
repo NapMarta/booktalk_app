@@ -101,6 +101,9 @@ flutter:
     - assets/scritta_noSfondo.png
     - assets/logout.png
     - assets/sfondo2.jpg
+    - assets/top1.png
+    - assets/top2.png
+    - assets/top3.png
     
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
