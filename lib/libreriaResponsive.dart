@@ -61,7 +61,8 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
       body: Column(
         children: [
           // ----------- BARRA DI RICERCA -----------
-          Padding(
+          Container(
+            alignment: Alignment.center,
             padding: const EdgeInsets.only(top: 10, bottom: 20.0, left: 8.0, right: 8.0),
             child: SearchAnchor(
               builder: (BuildContext context, SearchController controller) {
@@ -70,10 +71,9 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
                   padding: const MaterialStatePropertyAll<EdgeInsets>(
                       EdgeInsets.symmetric(horizontal: 16.0)),
                   onTap: () {
-                    controller.openView();
+                    
                   },
                   onChanged: (_) {
-                    controller.openView();
                   },
                   leading: const Icon(Icons.search),
                 );
