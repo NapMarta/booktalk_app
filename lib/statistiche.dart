@@ -325,16 +325,16 @@ Widget _NumberCardWidget(int index, String imageLibro, double width, double heig
               width: 60,
             ),
             ClipRRect(
-                borderRadius: BorderRadius.circular(6.0),
-                child: Image.asset(
-                  "assets/copertina.jpg",
-                  width: getMinor(width,
-                              height) >
-                          600
-                      ? 140
-                      : 100,
-                ),
+              borderRadius: BorderRadius.circular(6.0),
+              child: Image.asset(
+                "assets/copertina.jpg",
+                width: getMinor(width,
+                            height) >
+                        600
+                    ? 140
+                    : 100,
               ),
+            ),
           ],
         ),
         

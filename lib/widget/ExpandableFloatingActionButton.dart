@@ -41,9 +41,12 @@ class _ExpandableFloatingActionButtonState
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton.extended(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(25.0), 
+      ),
       extendedIconLabelSpacing: _extended ? 10 : 0,
       extendedPadding:
-          _extended ? null : const EdgeInsets.symmetric(horizontal: 12),
+          _extended ? null : const EdgeInsets.symmetric(horizontal: 15),
       onPressed: widget.onPressed,
       icon: Icon(widget.icon, color: Colors.white,),
       backgroundColor: Color(0xFF0097b2),

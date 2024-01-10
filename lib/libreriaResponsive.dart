@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 import 'dart:ui';
 
 import 'package:booktalk_app/widget/ExpandableFloatingActionButton.dart';
@@ -97,54 +96,64 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
             ),
           ),
 
-          SizedBox(height: mediaQueryData.size.height * 0.03,),
+          SizedBox(height: mediaQueryData.size.height * 0.02,),
 
           // ----------- LISTA A GRIGLIA -----------
           /*
           Expanded(
+            child: GridView(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: getMinor(mediaQueryData.size.width, mediaQueryData.size.height) > 600 ? 5 : 3,
+                crossAxisSpacing: 20,
+                mainAxisSpacing: 50,
+                childAspectRatio: 3 / 4,
+              ),
+              itemBuilder: (BuildContext ctx, index) {
+                return Container(
+                  decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    border: Border.all(color: Colors.grey[500]!),
+                  ),
+                );
+              },
+            ),
+          )
+          */
+          Expanded(
             child:  CustomScrollView(
               controller: _scrollController,
               slivers: <Widget>[
-
                 SliverPadding(
-                  padding: EdgeInsets.only(bottom: 50.0), 
+                  padding: EdgeInsets.only(bottom: 60.0), 
                   sliver: SliverGrid(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: max(3, (getMinor(mediaQueryData.size.width, mediaQueryData.size.height)/200).toInt()),
+                      crossAxisCount: getMinor(mediaQueryData.size.width, mediaQueryData.size.height) > 600 ? 5 : 3,
+                      crossAxisSpacing: 20,
+                      mainAxisSpacing: 50,
+                      childAspectRatio: 3 / (mediaQueryData.orientation == Orientation.landscape ? 2 : 3),
                     ),
                     delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
-                        return Padding(
-                          padding: EdgeInsets.only(bottom: 10.0),
-                          child: GestureDetector(
-                            onTap: () {
-                              _showDialog(context, 'Libro $index');
-                            },
-                            child: Container(
-                              margin: EdgeInsets.fromLTRB( 7, 0, 7, 20),
-                              //----------- DEFINIZIONE DELL'ELEMENTO -----------
-                              child: Column(
-                                children: [
-                                  Hero(
-                                    tag: "book_cover_$index",
-                                    child: Image.asset(
-                                      "assets/copertina.jpg",
-                                      width: getMinor(mediaQueryData.size.width, mediaQueryData.size.height) > 600 ? 100 : 60,
-                                    ),
-                                  ),
-                                  
-                                  SizedBox(height: mediaQueryData.size.height * 0.01),
-                                  Text(
-                                    'Libro $index',
-                                    style: TextStyle(
-                                      fontSize: size(mediaQueryData.size.width, mediaQueryData.size.height, 12.0),
-                                    ),
-                                  ),
-                                ],
+                        
+                          return GestureDetector(
+                          onTap: () {
+                            _showDialog(context, 'Libro $index', mediaQueryData.size.width, mediaQueryData.size.height);
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              //border: Border.all(width: 1.0, color: Colors.grey), 
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Image.asset(
+                                "assets/copertina.jpg",
                               ),
                             ),
                           ),
+                          
                         );
+                        
                       },
                       childCount: 30,
                     ),                  
@@ -153,7 +162,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
               ],
             ),
           ),
-          */
+          
         ],
       ),
 
@@ -186,7 +195,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
 
 
 
-void _showDialog(BuildContext context, String bookTitle) {
+void _showDialog(BuildContext context, String bookTitle, double width, double height) {
 
     showDialog(
       context: context,
@@ -198,100 +207,90 @@ void _showDialog(BuildContext context, String bookTitle) {
             content: Container(
               decoration: BoxDecoration(
                 color: Color.fromARGB(255, 255, 255, 255),
-                borderRadius: BorderRadius.circular(8.0),
+                borderRadius: BorderRadius.circular(25.0),
               ),
-              
-              width: 200.0, // Imposta la larghezza desiderata
-              height: 250.0,
+              width: width*0.5,
+              height: height*0.40,
               alignment: Alignment.center,
             
               child: Column(
-              children: [
-                Row(
-                  children: [
-                      Hero(
-                        tag: "book_cover_$bookTitle",
-                        child: Padding(padding: const EdgeInsets.all(15), // Aggiunge spazio attorno all'immagine
-                            child: Image.asset(
-                            "assets/copertina.jpg",
-                            height: 80,
-                            width: 50,
-                          ),
-                        ),
+                children: [
+                  Hero(
+                    tag: "book_cover_$bookTitle",
+                    child: Padding(padding: const EdgeInsets.all(15), // Aggiunge spazio attorno all'immagine
+                        child: Image.asset(
+                        "assets/copertina.jpg",
+                        width: 120,
                       ),
-
-                      Text(
-                        '$bookTitle',
-                        style: TextStyle(fontSize: 16.0,  fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center,
-                      ),
-                  ],
-                ),
-                
-                SizedBox(height: 8.0),
-                Text(
-                  'Dettagli del libro',
-                  style: TextStyle(fontSize: 16.0),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: 25.0),
-                Center(
-                child:Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        // collegamento alla funzionalità 2
-                      },
-                      style: ElevatedButton.styleFrom(
-                        elevation: 5, // Add elevation for boxShadow
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0), // Adjust border radius as needed
-                        ),
-                        shadowColor: Colors.grey, // Set shadow color
-                        primary: Colors.white, // Set background color to white
-                        padding: EdgeInsets.all(0.0),  // Adjust padding as needed
-                      ),
-                      
-                      child: Image.asset(
-                        "assets/2.jpeg",
-                        height: 50,
-                      ),
-                      
                     ),
+                  ),
 
-                    SizedBox(width: 20,),
-                    ElevatedButton(
-                      onPressed: () {
-                        // collegamento alla funzionalità 3                        
-                      },
-                      style: ElevatedButton.styleFrom(
-                        elevation: 5, // Add elevation for boxShadow
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0), // Adjust border radius as needed
-                        ),
-                        shadowColor: Colors.grey, // Set shadow color
-                        primary: Colors.white, // Set background color to white
-                        padding: EdgeInsets.all(0.0), // Adjust padding as needed
+                  Text(
+                    '$bookTitle',
+                    style: TextStyle(fontSize: size(width, height, 20),  fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                  ),
+                    
+                  
+                  
+                  SizedBox(height: height*0.05),
+                  Text(
+                    'Dettagli del libro',
+                    style: TextStyle(fontSize: size(width, height, 12)),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 25.0),    
+
+                  Expanded(
+                    child: Align(
+                      alignment: FractionalOffset.bottomCenter,
+                      child: IntrinsicWidth(
+                        child: Row(
+                          children: <Widget>[
+                            SizedBox(
+                                  width : width*0.5/2,
+                                  child:Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(25)),
+                                      border: Border.all(width: 1.0, color: Colors.grey)
+                                    ),
+                                height: 80,
+                                child: Center(
+                                  child: Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Image.asset("assets/2.jpeg"),
+                                  ),
+                                ),
+                              ),
+                              ),
+                              SizedBox(
+                                  width : width*0.5/2,
+                                  child:Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.only(bottomRight: Radius.circular(25),),
+                                      border: Border.all(width: 1.0, color: Colors.grey),
+                                    ),
+                                    height: 80,
+                                    child: Center(
+                                      child: Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: Image.asset("assets/funzionalità3.jpg"),
+                                      ),
+                                    ),
+                                ),
+                              ),
+
+                          ],
+                        ),        
                       ),
-                      child: Image.asset(
-                        "assets/funzionalità3.jpg",
-                        height: 50,
-                      ),
-                      
                     ),
-
-                  ],
-                ),
-                ),
-            
+                  ),
                 ],
-                ),                  
-                
-              ),
-              ),
-          );
-          
+              ),                     
+            ),
+          ),
+        );  
       },
     );
   }

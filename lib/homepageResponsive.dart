@@ -17,6 +17,8 @@ class HomepageResponsitive extends StatefulWidget {
 
 class _HomepageResponsitiveState extends State<HomepageResponsitive> {
   File ? _selectedImage;
+  bool is2 = false;
+  bool is3 = false;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,6 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
     // varaiabile per lo slide-up
     final panelController = PanelController();
     //var slide = _WidgetSlideUpState(mediaQueryData.size.width, mediaQueryData.size.height, panelController);
-
 
     return SafeArea(
       // settaggio dei bordi da considerare del telefono
@@ -92,7 +93,11 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
                     "assets/2.jpeg",
                     "Opere Letterarie e Analisi",
                     "Seleziona un libro dalla tua libreria, poi scansiona il testo di interesse per ricevere analisi approfondite.",
-                    () => panelController.open(),
+                    () {
+                      is2 = true;
+                      is3= false;
+                      panelController.open();
+                    },
                     Color(0xFF05a8ba),
                     mediaQueryData.size.height,
                     mediaQueryData.size.width
@@ -106,12 +111,9 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
                     "Supporto al learning",
                     "Specifica la parte di libro da studiare e BookTalk ti ascolterà durante la ripetizione dell’argomento.",
                     () {
-                      /*
-                      Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => SupportoAlLearningScreen(),
-                          ),
-                      ); */
+                      is2 = false;
+                      is3= true;
+                      panelController.open();
                     },
                     Color(0xFFff3a2a),
                     mediaQueryData.size.height,
@@ -173,6 +175,7 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
     });
   }
 }
+
 
 
 Widget _buildFeatureCard(String iconPath, String title, String description, VoidCallback onPressed, Color titleColor, double height, double width) {
@@ -258,3 +261,4 @@ class WidgetSlideUp extends StatefulWidget {
   @override
   _WidgetSlideUpState createState() => _WidgetSlideUpState();
 }*/
+
