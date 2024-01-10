@@ -107,10 +107,6 @@ class UtenteDao {
     final usersResponse = await http.get(Uri.parse('$baseUrl/selectUtente'));
 
     if (usersResponse.statusCode == 200) {
-      Map<String, dynamic> usersData =
-          json.decode(usersResponse.body) as Map<String, dynamic>;
-      List<dynamic> usersList = usersData['result_set'] ?? [];
-
       // Hash the password before sending it
       String hashedPassword = hashPassword(utente.password);
 
