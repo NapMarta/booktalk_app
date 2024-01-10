@@ -48,6 +48,8 @@ dependencies:
   path: ^1.8.0
   # grafici
   fl_chart: ^0.66.0
+  crypto: ^3.0.1
+
 
 
 
