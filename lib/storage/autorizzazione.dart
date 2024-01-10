@@ -1,7 +1,7 @@
 class Autorizzazione {
   int? id;
-  DateTime? tempoUtilizzato;
-  DateTime dataScadenza;
+  String? tempoUtilizzato; // Cambiato il tipo in String
+  String dataScadenza; // Cambiato il tipo in String
   int? utente;
   String? libro;
 
@@ -16,10 +16,8 @@ class Autorizzazione {
   factory Autorizzazione.fromJson(Map<String, dynamic> json) {
     return Autorizzazione(
       id: json['ID'],
-      tempoUtilizzato: json['TEMPO_UTILIZZATO'] != null
-          ? DateTime.parse(json['TEMPO_UTILIZZATO'])
-          : null,
-      dataScadenza: DateTime.parse(json['DATA_SCADENZA']),
+      tempoUtilizzato: json['TEMPO_UTILIZZATO'],
+      dataScadenza: json['DATA_SCADENZA'],
       utente: json['UTENTE'],
       libro: json['LIBRO'],
     );
@@ -28,8 +26,8 @@ class Autorizzazione {
   Map<String, dynamic> toJson() {
     return {
       'ID': id,
-      'TEMPO_UTILIZZATO': tempoUtilizzato?.toIso8601String(),
-      'DATA_SCADENZA': dataScadenza.toIso8601String(),
+      'TEMPO_UTILIZZATO': tempoUtilizzato,
+      'DATA_SCADENZA': dataScadenza,
       'UTENTE': utente,
       'LIBRO': libro,
     };
