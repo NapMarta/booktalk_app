@@ -210,7 +210,7 @@ void _showDialog(BuildContext context, String bookTitle, double width, double he
                 borderRadius: BorderRadius.circular(25.0),
               ),
               width: width*0.5,
-              height: height*0.40,
+              height: height > 1000 ? height*0.35: height*0.5,
               alignment: Alignment.center,
               padding: EdgeInsets.all(0),
 
@@ -238,7 +238,7 @@ void _showDialog(BuildContext context, String bookTitle, double width, double he
                     
                   
                   
-                  SizedBox(height: height*0.05),
+                  SizedBox(height: height*0.03),
                   Text(
                     'Dettagli del libro',
                     style: TextStyle(fontSize: size(width, height, 12)),
