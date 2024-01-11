@@ -212,7 +212,8 @@ void _showDialog(BuildContext context, String bookTitle, double width, double he
               width: width*0.5,
               height: height*0.40,
               alignment: Alignment.center,
-            
+              padding: EdgeInsets.all(0),
+
               child: Column(
                 children: [
                   Hero(
@@ -220,7 +221,11 @@ void _showDialog(BuildContext context, String bookTitle, double width, double he
                     child: Padding(padding: const EdgeInsets.all(15), // Aggiunge spazio attorno all'immagine
                         child: Image.asset(
                         "assets/copertina.jpg",
-                        width: 120,
+                        width: getMinor(width,
+                            height) >
+                            600
+                        ? 120
+                        : 80,
                       ),
                     ),
                   ),
@@ -239,45 +244,47 @@ void _showDialog(BuildContext context, String bookTitle, double width, double he
                     style: TextStyle(fontSize: size(width, height, 12)),
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: 25.0),    
+                  //SizedBox(height: 25.0),    
 
                   Expanded(
                     child: Align(
                       alignment: FractionalOffset.bottomCenter,
                       child: IntrinsicWidth(
+                        stepWidth: (width*0.5)+30,
                         child: Row(
+                          mainAxisSize: MainAxisSize.max,
                           children: <Widget>[
-                            SizedBox(
-                                  width : width*0.5/2,
-                                  child:Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.only(
-                                          bottomLeft: Radius.circular(25)),
-                                      border: Border.all(width: 1.0, color: Colors.grey)
-                                    ),
-                                height: 80,
+                            Expanded(                              
+                              child: Container(
+                                //width: (width*0.5)/2,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.circular(25)),
+                                  border: Border.all(width: 1.0, color: Colors.grey)
+                                ),
+                                height: 50,
                                 child: Center(
                                   child: Padding(
-                                    padding: EdgeInsets.all(8.0),
+                                    padding: EdgeInsets.all(6.0),
                                     child: Image.asset("assets/2.jpeg"),
                                   ),
                                 ),
                               ),
                               ),
-                              SizedBox(
-                                  width : width*0.5/2,
-                                  child:Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.only(bottomRight: Radius.circular(25),),
-                                      border: Border.all(width: 1.0, color: Colors.grey),
+                              Expanded(
+                                child: Container(
+                                  //width: (width*0.5)/2,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(bottomRight: Radius.circular(25),),
+                                    border: Border.all(width: 1.0, color: Colors.grey),
+                                  ),
+                                  height: 50,
+                                  child: Center(
+                                    child: Padding(
+                                      padding: EdgeInsets.all(6.0),
+                                      child: Image.asset("assets/funzionalità3.jpg"),
                                     ),
-                                    height: 80,
-                                    child: Center(
-                                      child: Padding(
-                                        padding: EdgeInsets.all(8.0),
-                                        child: Image.asset("assets/funzionalità3.jpg"),
-                                      ),
-                                    ),
+                                  ),
                                 ),
                               ),
 
