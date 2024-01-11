@@ -98,8 +98,6 @@ class AutorizzazioneDao {
           'id': autorizzazione.id,
           'tempo_Utilizzato': autorizzazione.tempoUtilizzato,
           'data_Scadenza': autorizzazione.dataScadenza,
-          'utente': autorizzazione.utente,
-          'libro': autorizzazione.libro,
         }),
       );
 
