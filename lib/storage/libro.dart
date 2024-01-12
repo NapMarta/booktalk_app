@@ -4,6 +4,7 @@ class Libro {
   String autori;
   String materia;
   String edizione;
+  int? copertina;
   int numPagine;
 
   Libro({
@@ -12,6 +13,7 @@ class Libro {
     required this.autori,
     required this.materia,
     required this.edizione,
+    this.copertina,
     required this.numPagine,
   });
 
@@ -22,6 +24,7 @@ class Libro {
       autori: json['AUTORI'],
       materia: json['MATERIA'],
       edizione: json['EDIZIONE'],
+      copertina: json['COPERTINA'],
       numPagine: json['NUM_PAGINE'],
     );
   }
@@ -33,12 +36,13 @@ class Libro {
       'AUTORI': autori,
       'MATERIA': materia,
       'EDIZIONE': edizione,
+      'COPERTINA': copertina,
       'NUM_PAGINE': numPagine,
     };
   }
 
   @override
   String toString() {
-    return 'Libro{ISBN: $isbn, TITOLO: $titolo, AUTORI: $autori, MATERIA: $materia, EDIZIONE: $edizione, NUM_PAGINE: $numPagine}';
+    return 'Libro{ISBN: $isbn, TITOLO: $titolo, AUTORI: $autori, MATERIA: $materia, EDIZIONE: $edizione, COPERTINA: $copertina, NUM_PAGINE: $numPagine}';
   }
 }
