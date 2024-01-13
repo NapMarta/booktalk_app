@@ -51,9 +51,6 @@ dependencies:
   crypto: ^3.0.1
   http: ^0.13.3
   intl: ^0.17.0
-  shared_preferences: ^2.0.0
-  # schermo diviso in modo uguale
-  multi_split_view: ^2.4.0
 
 
 

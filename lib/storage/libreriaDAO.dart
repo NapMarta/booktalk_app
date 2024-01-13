@@ -1,82 +1,85 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'libreria.dart';
+import 'libro.dart';
 
-class LibreriaDao {
-  final String baseUrl;
+class LibroDao {
+  final String baseUrl; // URL di base per la chiamata API
 
-  LibreriaDao(this.baseUrl);
+  LibroDao(this.baseUrl);
 
-  Future<void> insertLibreria(Libreria libreria) async {
-    try {
-      final response = await http.post(
-        Uri.parse('$baseUrl/insertLibreria'),
-        headers: {'Content-Type': 'application/json'},
-        body: json.encode({
-          'utente': libreria.utente,
-          'numLibri': libreria.numLibri,
-          'materia1': libreria.materia1,
-          'materia2': libreria.materia2,
-          'materia3': libreria.materia3,
-        }),
-      );
-
-      if (response.statusCode == 200) {
-        print('Libreria inserita con successo');
-      } else {
-        print('Errore nella chiamata API: ${response.statusCode}');
-      }
-    } catch (e) {
-      print('Errore durante la chiamata API: $e');
-    }
-  }
-
-  Future<List<Libreria>> getLibreriaByUtente(int utenteId) async {
+  Future<List<Libro>> getAllLibri() async {
   try {
-    final response = await http.get(Uri.parse('$baseUrl/selectLibreria'));
+    final response = await http.get(Uri.parse('$baseUrl/selectLibro'));
 
     if (response.statusCode == 200) {
-      List<dynamic> resultList = json.decode(response.body) as List<dynamic>;
+      List<dynamic> resultList = json.decode(response.body) ?? [];
 
-      List<Libreria> libreriaList = [];
-      for (Map<String, dynamic> libreriaData in resultList) {
-        Libreria libreria = Libreria.fromJson(libreriaData);
-        if (libreria.utente == utenteId) {
-          libreriaList.add(libreria);
-        }
-      }
-      return libreriaList;
+      List<Libro> libriList =
+          resultList.map((libroData) => Libro.fromJson(libroData)).toList();
+      return libriList;
     } else {
-      print('Errore nella chiamata API: ${response.statusCode}');
+      print('Errore nella chiamata API select: ${response.statusCode}');
       return [];
     }
   } catch (e) {
-    print('Errore durante la chiamata API: $e');
+    print('Errore durante la chiamata API select: $e');
     return [];
   }
 }
 
-  Future<void> updateLibreria(Libreria libreria) async {
+
+  Future<Map<String, dynamic>> insertLibro(Libro libro) async {
     try {
-      final response = await http.put(
-        Uri.parse('$baseUrl/updateLibreria'),
+      final response = await http.post(
+        Uri.parse('$baseUrl/insertLibro'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
-          'utente': libreria.utente,
-          'numLibri': libreria.numLibri,
-          'materia1': libreria.materia1,
-          'materia2': libreria.materia2,
-          'materia3': libreria.materia3,
+          'isbn': libro.isbn,
+          'titolo': libro.titolo,
+          'autori': libro.autori,
+          'materia': libro.materia,
+          'edizione': libro.edizione,
+          'copertina': libro.copertina,
+          'num_Pagine': libro.numPagine,
         }),
       );
 
       if (response.statusCode == 200) {
-        print('Libreria aggiornata con successo');
+        return json.decode(response.body);
       } else {
         print('Errore nella chiamata API: ${response.statusCode}');
+        return {'error': 'Errore nella chiamata API'};
       }
     } catch (e) {
       print('Errore durante la chiamata API: $e');
+      return {'error': 'Errore durante la chiamata API'};
+    }
+  }
+
+  Future<Map<String, dynamic>> updateLibro(Libro libro) async {
+    try {
+      final response = await http.put(
+        Uri.parse('$baseUrl/updateLibro'),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({
+          'isbn': libro.isbn,
+          'titolo': libro.titolo,
+          'autori': libro.autori,
+          'materia': libro.materia,
+          'edizione': libro.edizione,
+          'num_Pagine': libro.numPagine,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        return json.decode(response.body);
+      } else {
+        print('Errore nella chiamata API: ${response.statusCode}');
+        return {'error': 'Errore nella chiamata API'};
+      }
+    } catch (e) {
+      print('Errore durante la chiamata API: $e');
+      return {'error': 'Errore durante la chiamata API'};
     }
   }
 }
