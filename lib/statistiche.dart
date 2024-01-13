@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:multi_split_view/multi_split_view.dart';
 
 import 'utils.dart';
 
@@ -51,125 +52,99 @@ class _StatisticheState extends State<Statistiche> {
       ),
 
       //backgroundColor: Colors.white,
-      body: ListView(
+      body: MultiSplitView(
+        axis: (mediaQueryData.orientation == Orientation.landscape) ? Axis.horizontal : Axis.vertical,
+        
         children: [
-          SizedBox(
-            height: 20,
-          ),
-          Text(
+          Padding(padding: EdgeInsets.fromLTRB(10, isTablet(mediaQueryData) ? 80 : 5, 10, 0),
+          child: 
+          Column(
+            children: [
+              Text(
                 "Libri più utilizzati", 
                 style: TextStyle(fontSize: size(mediaQueryData.size.width, mediaQueryData.size.height, 20), fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
-          SizedBox(height: 20,),
-          Wrap(
-            direction: Axis.horizontal,
-            alignment: WrapAlignment.center,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            spacing: 10.0,
-            runSpacing: 20.0,
-            children: [ 
+              SizedBox(height: 30,),
+              Wrap(
+                direction: Axis.horizontal,
+                alignment: WrapAlignment.center,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                spacing: 10.0,
+                runSpacing: 20.0,
+                children: [ 
 
-              SizedBox(
-                width: getMinor(mediaQueryData.size.width, mediaQueryData.size.height) > 600 ? 220: 180,
-                child: _NumberCardWidget(
-                  1,
-                  "assets/copertina.jpg",
-                  mediaQueryData.size.width,
-                  mediaQueryData.size.height
-                ),
-              ),
+                  SizedBox(
+                    width: getMinor(mediaQueryData.size.width, mediaQueryData.size.height) > 600 ? 220: 180,
+                    child: _NumberCardWidget(
+                      1,
+                      "assets/copertina.jpg",
+                      mediaQueryData.size.width,
+                      mediaQueryData.size.height
+                    ),
+                  ),
 
-              SizedBox(
-                width: getMinor(mediaQueryData.size.width, mediaQueryData.size.height) > 600 ? 220: 180,
-                child: _NumberCardWidget(
-                  2,
-                  "assets/copertina.jpg",
-                  mediaQueryData.size.width,
-                  mediaQueryData.size.height
-                ),
-              ),
+                  SizedBox(
+                    width: getMinor(mediaQueryData.size.width, mediaQueryData.size.height) > 600 ? 220: 180,
+                    child: _NumberCardWidget(
+                      2,
+                      "assets/copertina.jpg",
+                      mediaQueryData.size.width,
+                      mediaQueryData.size.height
+                    ),
+                  ),
 
-              SizedBox(
-                width: getMinor(mediaQueryData.size.width, mediaQueryData.size.height) > 600 ? 220: 180,
-                child: _NumberCardWidget(
-                  3,
-                  "assets/copertina.jpg",
-                  mediaQueryData.size.width,
-                  mediaQueryData.size.height
-                ),
+                  SizedBox(
+                    width: getMinor(mediaQueryData.size.width, mediaQueryData.size.height) > 600 ? 220: 180,
+                    child: _NumberCardWidget(
+                      3,
+                      "assets/copertina.jpg",
+                      mediaQueryData.size.width,
+                      mediaQueryData.size.height
+                    ),
+                  ),
+                ],
               ),
-            
-              /*
-              ClipRRect(
-                borderRadius: BorderRadius.circular(6.0),
-                child: Image.asset(
-                  "assets/copertina.jpg",
-                  width: getMinor(mediaQueryData.size.width,
-                              mediaQueryData.size.height) >
-                          600
-                      ? 140
-                      : 100,
-                ),
-              ),
-
-              ClipRRect(
-                borderRadius: BorderRadius.circular(6.0),
-                child: Image.asset(
-                  "assets/copertina.jpg",
-                  width: getMinor(mediaQueryData.size.width,
-                              mediaQueryData.size.height) >
-                          600
-                      ? 140
-                      : 100,
-                ),
-              ),
-
-              ClipRRect(
-                borderRadius: BorderRadius.circular(6.0),
-                child: Image.asset(
-                  "assets/copertina.jpg",
-                  width: getMinor(mediaQueryData.size.width,
-                              mediaQueryData.size.height) >
-                          600
-                      ? 140
-                      : 100,
-                ),
-              ),*/
             ],
           ),
-          SizedBox(
-            height: 80,
           ),
-          Text(
-            "Percentuale di utilizzo delle funzionalità", 
-            style: TextStyle(fontSize: size(mediaQueryData.size.width, mediaQueryData.size.height, 20), fontWeight: FontWeight.bold,), 
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Container(
-            width: 300,
-            height: 300,
-            child: PieChart(
-              PieChartData(
-                borderData: FlBorderData(
-                  show: false,
-                ),
-                centerSpaceRadius: 5,
-                sections: _pieChartData(
-                  30, // funzionalità 1
-                  18, // funzionalità 2
-                  62, // funzionalità 3
+
+          Padding(padding: EdgeInsets.fromLTRB(10, isTabletVertica(mediaQueryData) ? 0 : isTablet(mediaQueryData) ? 80 : 0, 10, 0),
+          child: 
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                "Percentuale di utilizzo delle funzionalità", 
+                style: TextStyle(fontSize: size(mediaQueryData.size.width, mediaQueryData.size.height, 20), fontWeight: FontWeight.bold,), 
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                width: 350,
+                height: 350,
+                color: Colors.black,
+                child: PieChart(
+                  PieChartData(
+
+                    borderData: FlBorderData(
+                      show: false,
+                    ),
+                    centerSpaceRadius: double.infinity,
+                    sections: _pieChartData(
+                      30, // funzionalità 1
+                      18, // funzionalità 2
+                      62, // funzionalità 3
+                    ),
+                  ),
+                  swapAnimationDuration: Duration(milliseconds: 150), // Optional
+                  swapAnimationCurve: Curves.linear, // Optional
                 ),
               ),
-              swapAnimationDuration: Duration(milliseconds: 150), // Optional
-              swapAnimationCurve: Curves.linear, // Optional
-            ),
+            ],
           ),
-          SizedBox(
-            height: 20,
           ),
         ],
       ),

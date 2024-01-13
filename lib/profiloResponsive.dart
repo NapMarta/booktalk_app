@@ -195,7 +195,7 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
                 renderPanelSheet: false,
                 controller: panelController,
                 minHeight: mediaQueryData.size.height * 0.25,
-                maxHeight: mediaQueryData.size.height * 0.955,
+                maxHeight: getMinor(mediaQueryData.size.width, mediaQueryData.size.height) > 600 ? mediaQueryData.size.height * 0.9 : mediaQueryData.size.height * 0.955,
                 // panel
                 panel: Container(
                   decoration: BoxDecoration(
