@@ -58,7 +58,7 @@ class _HeaderState extends State<Header> {
         widget.text,
         style: TextStyle(
           fontFamily: 'Roboto',
-          fontSize: size(mediaQueryData.size.width, mediaQueryData.size.height, 18),
+          fontSize: size(mediaQueryData.size.width, mediaQueryData.size.height, 16),
           fontWeight: FontWeight.bold,
           color: Colors.black,
           shadows: [

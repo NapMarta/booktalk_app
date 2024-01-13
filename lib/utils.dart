@@ -1,4 +1,6 @@
 
+import 'package:flutter/material.dart';
+
 textSize(var width, var height, var per){
   if (width > 600 && height > 600){
     per = per - 0.004;
@@ -78,3 +80,16 @@ buttonWidth(var width, var height){
 }
 
 
+isTabletVertica(MediaQueryData mediaQueryData){
+  if(getMinor(mediaQueryData.size.width, mediaQueryData.size.height) > 660 && mediaQueryData.orientation == Orientation.portrait){
+    return true;
+  }
+  return false;
+}
+
+isTablet(MediaQueryData mediaQueryData){
+  if(getMinor(mediaQueryData.size.width, mediaQueryData.size.height) > 660){
+    return true;
+  }
+  return false;
+}

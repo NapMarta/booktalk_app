@@ -43,7 +43,6 @@ class _ModificaProfiloResponsiveState extends State<ModificaProfiloResponsive> {
   @override
   Widget build(BuildContext context) {
     var mediaQueryData = MediaQuery.of(context);
-    FocusNode email = FocusNode();
 
     return SafeArea(
       left: true,
@@ -157,42 +156,7 @@ class _ModificaProfiloResponsiveState extends State<ModificaProfiloResponsive> {
 
                   SizedBox(height: 20,),
 
-                  // ----- EMAIL -----
-                  TextFormField(
-                    controller: emailController,
-                    restorationId: 'email_field',
-                    textInputAction: TextInputAction.next,
-                    focusNode: email,
-                    decoration: InputDecoration(
-                      fillColor: const Color.fromARGB(123, 255, 255, 255),
-                      // focusColor: Color(0xFF0097b2),
-                      labelText: 'Email', 
-                      labelStyle: TextStyle(fontSize: size(mediaQueryData.size.width, mediaQueryData.size.height, 16), 
-                                            color: Colors.grey),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                        borderSide: BorderSide(
-                          color: Colors.grey,
-                          width: 1.5,
-                        )
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                        borderSide: BorderSide(
-                          color: Colors.grey,
-                          width: 1.5,
-                        ),
-                      ),
-                      filled: true,
-                      prefixIcon: Icon(Icons.email, color: email.hasFocus ? Color(0xFF0097b2) : Colors.grey,),
-                      /* hintText: localizations.demoTextFieldYourEmailAddress,
-                      labelText: localizations.demoTextFieldEmail, */
-                    ),
-                    keyboardType: TextInputType.emailAddress,
-                    
-                  ),
-
-                  SizedBox(height: 20,),
+                  // --- L'EMAIL NON E' MODIFICABILE ---
 
                   // ----- PASSWORD ----- 
                   PasswordField(
