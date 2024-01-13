@@ -51,6 +51,9 @@ dependencies:
   crypto: ^3.0.1
   http: ^0.13.3
   intl: ^0.17.0
+  shared_preferences: ^2.0.0
+  # schermo diviso in modo uguale
+  multi_split_view: ^2.4.0
 
 
 
@@ -106,6 +109,13 @@ flutter:
     - assets/top1.png
     - assets/top2.png
     - assets/top3.png
+    - assets/libro1.JPG
+    - assets/libro2.jpg
+    - assets/libro3.jpg
+    - assets/libro4.jpg
+    - assets/libro5.jpeg
+    - assets/libro6.jpg
+    - assets/libro7.jpg
     
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
