@@ -34,6 +34,7 @@ class BookTalkApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var mediaQueryData = MediaQuery.of(context);
+    print(mediaQueryData.size);
     // print(mediaQueryData.size);
     return MaterialApp(
       home: Scaffold(
@@ -61,7 +62,7 @@ class BookTalkApp extends StatelessWidget {
                 style: ButtonStyle(
                   fixedSize: MaterialStateProperty.all(Size(buttonWidth(mediaQueryData.size.width, mediaQueryData.size.height), 55)),
                   backgroundColor: MaterialStateProperty.all(Color(0xFF1B536E)),
-                  textStyle: MaterialStateProperty.all(TextStyle(fontSize: size(mediaQueryData.size.width, mediaQueryData.size.height, 16), fontWeight: FontWeight.bold,)),
+                  textStyle: MaterialStateProperty.all(TextStyle(fontSize: 15, fontWeight: FontWeight.bold,)),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20), // Adjust the value as needed
@@ -85,7 +86,7 @@ class BookTalkApp extends StatelessWidget {
                 style: ButtonStyle(
                   fixedSize: MaterialStateProperty.all(Size(buttonWidth(mediaQueryData.size.width, mediaQueryData.size.height), 55)),
                   backgroundColor: MaterialStateProperty.all(Color(0xFF0097B2)),
-                  textStyle: MaterialStateProperty.all(TextStyle(fontSize: size(mediaQueryData.size.width, mediaQueryData.size.height, 16), fontWeight: FontWeight.bold,)),
+                  textStyle: MaterialStateProperty.all(TextStyle(fontSize: 15, fontWeight: FontWeight.bold,)),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20), // Adjust the value as needed

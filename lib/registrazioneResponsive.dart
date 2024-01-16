@@ -38,7 +38,7 @@ class _RegistrazioneResponsiveState extends State<RegistrazioneResponsive> {
           "Registrazione",
           style: TextStyle(
             fontFamily: 'Roboto',
-            fontSize: size(mediaQueryData.size.width, mediaQueryData.size.height, 18),
+            fontSize: 18,
             fontWeight: FontWeight.bold,
             color: Colors.black,
             shadows: [
@@ -78,7 +78,7 @@ class _RegistrazioneResponsiveState extends State<RegistrazioneResponsive> {
                 fillColor: Colors.white,
                 // focusColor: Color(0xFF0097b2),
                 labelText: 'Nome', 
-                labelStyle: TextStyle(fontSize: size(mediaQueryData.size.width, mediaQueryData.size.height, 16), 
+                labelStyle: TextStyle(fontSize: 16, 
                                       color: Colors.grey),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20.0),
@@ -114,7 +114,7 @@ class _RegistrazioneResponsiveState extends State<RegistrazioneResponsive> {
                 fillColor: Colors.white,
                 // focusColor: Color(0xFF0097b2),
                 labelText: 'Cognome', 
-                labelStyle: TextStyle(fontSize: size(mediaQueryData.size.width, mediaQueryData.size.height, 16), 
+                labelStyle: TextStyle(fontSize: 16, 
                                       color: Colors.grey),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20.0),
@@ -150,7 +150,7 @@ class _RegistrazioneResponsiveState extends State<RegistrazioneResponsive> {
                 fillColor: Colors.white,
                 // focusColor: Color(0xFF0097b2),
                 labelText: 'Email', 
-                labelStyle: TextStyle(fontSize: size(mediaQueryData.size.width, mediaQueryData.size.height, 16), 
+                labelStyle: TextStyle(fontSize: 16, 
                                       color: Colors.grey),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20.0),
@@ -214,7 +214,7 @@ class _RegistrazioneResponsiveState extends State<RegistrazioneResponsive> {
                 style: ButtonStyle(
                   fixedSize: MaterialStateProperty.all(Size(buttonWidth(mediaQueryData.size.width, mediaQueryData.size.height), 55)),
                   backgroundColor: MaterialStateProperty.all(Color(0xFF1B536E)),
-                  textStyle: MaterialStateProperty.all(TextStyle(fontSize: size(mediaQueryData.size.width, mediaQueryData.size.height, 16), fontWeight: FontWeight.bold,)),
+                  textStyle: MaterialStateProperty.all(TextStyle(fontSize: 15, fontWeight: FontWeight.bold,)),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20), // Adjust the value as needed

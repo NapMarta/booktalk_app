@@ -92,7 +92,7 @@ class _ModificaProfiloResponsiveState extends State<ModificaProfiloResponsive> {
                       fillColor: const Color.fromARGB(123, 255, 255, 255),
                       // focusColor: Color(0xFF0097b2),
                       labelText: 'Nome', 
-                      labelStyle: TextStyle(fontSize: size(mediaQueryData.size.width, mediaQueryData.size.height, 16), 
+                      labelStyle: TextStyle(fontSize: 16, 
                                             color: Colors.grey),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20.0),
@@ -129,7 +129,7 @@ class _ModificaProfiloResponsiveState extends State<ModificaProfiloResponsive> {
                       fillColor: const Color.fromARGB(123, 255, 255, 255),
                       // focusColor: Color(0xFF0097b2),
                       labelText: 'Cognome', 
-                      labelStyle: TextStyle(fontSize: size(mediaQueryData.size.width, mediaQueryData.size.height, 16), 
+                      labelStyle: TextStyle(fontSize: 16, 
                                             color: Colors.grey),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20.0),
@@ -195,7 +195,7 @@ class _ModificaProfiloResponsiveState extends State<ModificaProfiloResponsive> {
                       style: ButtonStyle(
                         fixedSize: MaterialStateProperty.all(Size(buttonWidth(mediaQueryData.size.width, mediaQueryData.size.height), 55)),
                         backgroundColor: MaterialStateProperty.all(Color(0xFF0097b2)),
-                        textStyle: MaterialStateProperty.all(TextStyle(fontSize: size(mediaQueryData.size.width, mediaQueryData.size.height, 16), fontWeight: FontWeight.bold,)),
+                        textStyle: MaterialStateProperty.all(TextStyle(fontSize: 15, fontWeight: FontWeight.bold,)),
                         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20), // Adjust the value as needed
@@ -204,6 +204,8 @@ class _ModificaProfiloResponsiveState extends State<ModificaProfiloResponsive> {
                       ),
                       child: Text('Conferma', style: TextStyle(color: Colors.white)),
                     ),
+
+                    SizedBox(height: 30,),
                   ],
                 ),
               ),
