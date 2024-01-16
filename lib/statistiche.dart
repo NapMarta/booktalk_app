@@ -56,17 +56,26 @@ class _StatisticheState extends State<Statistiche> {
         resizable: false, // non modifica la dimensione dell'elemento manualmenteqq
         children: [
           Padding(
-            padding: EdgeInsets.fromLTRB(10, isTablet(mediaQueryData) ? 0 : 8, 10, 0),
+            padding: EdgeInsets.fromLTRB(10, isTablet(mediaQueryData) ? 50 : 8, 10, 0),
             child: Column(
               mainAxisAlignment: isTabletVerticale(mediaQueryData) ? MainAxisAlignment.start : MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                SizedBox(height: isTabletVerticale(mediaQueryData) ? 10 : 0,),
                 Text(
                   "Libri più utilizzati", 
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 30,),
+                /*
+                (book1 == null && book2 == null && book3 == null) 
+                ? Text(
+                    "Non hai libri nella libreria", 
+                    style: TextStyle(fontSize: 14,), 
+                    textAlign: TextAlign.center,
+                  ),
+                */
                 Wrap(
                   direction: Axis.horizontal,
                   alignment: WrapAlignment.center,
@@ -74,11 +83,10 @@ class _StatisticheState extends State<Statistiche> {
                   spacing: 10.0,
                   runSpacing: 20.0,
                   children: [ 
-
                     SizedBox(
-                      width: getMinor(mediaQueryData.size.width, mediaQueryData.size.height) > 600 ? 220: 180,
+                      width: 180,
                       child: _NumberCardWidget(
-                        1,
+                        1, // TALE INDICE INDICA LA PRIMA FUNZIONALITA'
                         "assets/copertina.jpg",
                         mediaQueryData.size.width,
                         mediaQueryData.size.height
@@ -86,9 +94,9 @@ class _StatisticheState extends State<Statistiche> {
                     ),
 
                     SizedBox(
-                      width: getMinor(mediaQueryData.size.width, mediaQueryData.size.height) > 600 ? 220: 180,
+                      width: 180,
                       child: _NumberCardWidget(
-                        2,
+                        2, // TALE INDICE INDICA LA SECONDA FUNZIONALITA'
                         "assets/copertina.jpg",
                         mediaQueryData.size.width,
                         mediaQueryData.size.height
@@ -96,9 +104,9 @@ class _StatisticheState extends State<Statistiche> {
                     ),
 
                     SizedBox(
-                      width: getMinor(mediaQueryData.size.width, mediaQueryData.size.height) > 600 ? 220: 180,
+                      width: 180,
                       child: _NumberCardWidget(
-                        3,
+                        3, // TALE INDICE INDICA LA TERZA FUNZIONALITA'
                         "assets/copertina.jpg",
                         mediaQueryData.size.width,
                         mediaQueryData.size.height
@@ -111,7 +119,7 @@ class _StatisticheState extends State<Statistiche> {
           ),
 
           Padding(
-            padding: EdgeInsets.fromLTRB(10, isTabletVerticale(mediaQueryData) ? 0 : isTablet(mediaQueryData) ? 0 : 20, 10, 15),
+            padding: EdgeInsets.fromLTRB(10, isTablet(mediaQueryData) ? 0 : 20, 10, 15),
             child: Column(
               mainAxisAlignment: isTabletVerticale(mediaQueryData) ? MainAxisAlignment.start : MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -125,24 +133,32 @@ class _StatisticheState extends State<Statistiche> {
                   height: 50,
                 ),
                 Container(
-                  width: isTablet(mediaQueryData) ? 300 : 210,
-                  height: isTablet(mediaQueryData) ? 300 : 210,
-                  child: PieChart(
-                    PieChartData(
-
-                      borderData: FlBorderData(
-                        show: false,
+                  width: isTablet(mediaQueryData) ? 230 : 210,
+                  height: isTablet(mediaQueryData) ? 230 : 210,
+                  child: 
+                    /* 
+                    (funz1 == 0 && funz2 == 0 && funz3 == 0) 
+                    ? Text(
+                        "Non hai ancora utilizzato le funzionalità dell'app", 
+                        style: TextStyle(fontSize: 14,), 
+                        textAlign: TextAlign.center,
                       ),
-                      centerSpaceRadius: double.infinity,
-                      sections: _pieChartData(
-                        30, // funzionalità 1
-                        18, // funzionalità 2
-                        62, // funzionalità 3
+                    : */
+                    PieChart(
+                      PieChartData(
+                        borderData: FlBorderData(
+                          show: false,
+                        ),
+                        centerSpaceRadius: double.infinity,
+                        sections: _pieChartData(
+                          18.5, // funzionalità 1
+                          31.5, // funzionalità 2
+                          50, // funzionalità 3
+                        ),
                       ),
+                      swapAnimationDuration: Duration(milliseconds: 150), // Optional
+                      swapAnimationCurve: Curves.linear, // Optional
                     ),
-                    swapAnimationDuration: Duration(milliseconds: 150), // Optional
-                    swapAnimationCurve: Curves.linear, // Optional
-                  ),
                 ),
               ],
             ),
@@ -304,11 +320,7 @@ Widget _NumberCardWidget(int index, String imageLibro, double width, double heig
               borderRadius: BorderRadius.circular(6.0),
               child: Image.asset(
                 "assets/copertina.jpg",
-                width: getMinor(width,
-                            height) >
-                        600
-                    ? 140
-                    : 100,
+                width: 100,
               ),
             ),
           ],

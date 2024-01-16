@@ -122,10 +122,10 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
                 top: mediaQueryData.size.height * 0.32, // Regola la posizione verticale del riquadro
                 // left: mediaQueryData.size.width , // Regola la posizione orizzontale del riquadro
                 child: Container(
-                  width: mediaQueryData.size.width * 0.8,
+                  width: isTabletOrizzontale(mediaQueryData) ? mediaQueryData.size.width * 0.7 : mediaQueryData.size.width * 0.8,
                   //height: mediaQueryData.size.height * 0.,
                   alignment: Alignment.center,
-                  margin: EdgeInsets.fromLTRB(mediaQueryData.size.width * 0.10, 0.0, mediaQueryData.size.width * 0.10, 0.0),
+                  margin: EdgeInsets.fromLTRB(isTabletOrizzontale(mediaQueryData) ? mediaQueryData.size.width * 0.15 : mediaQueryData.size.width * 0.10, 0.0, isTabletOrizzontale(mediaQueryData) ? mediaQueryData.size.width * 0.15 : mediaQueryData.size.width * 0.10, 0.0),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20),
@@ -139,18 +139,18 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
                     ],
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.only(bottom: 10, left: 20, right: 20, top: 10),
+                    padding: const EdgeInsets.only(bottom: 10, left: 20, right: 20, top: 4),
                     child: Column(
                       children: [
+                        Padding(padding: const EdgeInsets.only(bottom: 0),
+                        child: 
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween, // aggiunge lo spazio tra gli elementi
                           children: [
                             Text(
                               "I tuoi dati" ,
-                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF0097b2)),
+                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF0097b2)),
                             ),
-                                          
-                            //SizedBox(width: 170,),
                             Align(
                               alignment: Alignment.topRight,
                               child: IconButton(
@@ -173,15 +173,16 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
                             ),
                           ],
                         ),
+                        ),
                         _buildProfileCard(
                             mediaQueryData.size.width, mediaQueryData.size.height, 'Nome', Icons.account_circle, 'Maria'),
-                        SizedBox(height: 10),
+                        SizedBox(height: isTabletOrizzontale(mediaQueryData) ? 0 : 8),
                         _buildProfileCard(
                             mediaQueryData.size.width, mediaQueryData.size.height, 'Cognome', Icons.account_circle, 'Rossi'),
-                        SizedBox(height: 10),
+                        SizedBox(height: isTabletOrizzontale(mediaQueryData) ? 0 : 8),
                         _buildProfileCard(
                             mediaQueryData.size.width, mediaQueryData.size.height, 'Email', Icons.email, 'mariarossi@email.com'),
-                        SizedBox(height: 10),
+                        SizedBox(height: isTabletOrizzontale(mediaQueryData) ? 0 : 8),
                       ],
                     ),
                   ),
@@ -194,8 +195,8 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
                 // not render outside
                 renderPanelSheet: false,
                 controller: panelController,
-                minHeight:  isTabletOrizzontale(mediaQueryData) ? mediaQueryData.size.height * 0.2 :  mediaQueryData.size.height * 0.25,
-                maxHeight: isTablet(mediaQueryData) ? mediaQueryData.size.height * 0.9 : mediaQueryData.size.height * 0.955,
+                minHeight: isTabletOrizzontale(mediaQueryData) ? mediaQueryData.size.height * 0.2 :  mediaQueryData.size.height * 0.25,
+                maxHeight: isTabletVerticale(mediaQueryData) ? mediaQueryData.size.height * 0.91 : mediaQueryData.size.height * 0.955,
                 // panel
                 panel: Container(
                   decoration: BoxDecoration(
