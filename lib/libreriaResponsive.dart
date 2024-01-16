@@ -15,6 +15,7 @@ class LibreriaResponsive extends StatefulWidget {
 
 class _LibreriaResponsiveState extends State<LibreriaResponsive> {
   File ? _selectedImage;
+
   @override
   Widget build(BuildContext context) {
     var mediaQueryData = MediaQuery.of(context);
@@ -59,6 +60,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
       body: Column(
         children: [
           // ----------- BARRA DI RICERCA -----------
+          /*
           Container(
             alignment: Alignment.center,
             padding: const EdgeInsets.only(top: 10, bottom: 20.0, left: 8.0, right: 8.0),
@@ -94,6 +96,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
               },              
             ),
           ),
+          */
 
           SizedBox(height: mediaQueryData.size.height * 0.02,),
 
@@ -126,17 +129,17 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
                   padding: EdgeInsets.only(bottom: 60.0), 
                   sliver: SliverGrid(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: getMinor(mediaQueryData.size.width, mediaQueryData.size.height) > 600 ? 5 : 3,
-                      crossAxisSpacing: 20,
+                      crossAxisCount: isTabletOrizzontale(mediaQueryData) ? 5 : isTabletVerticale(mediaQueryData) ? 4 : 3,
+                      crossAxisSpacing: isTabletOrizzontale(mediaQueryData) ? 23 : 20,
                       mainAxisSpacing: 50,
-                      childAspectRatio: 3 / (mediaQueryData.orientation == Orientation.landscape ? 2 : 3),
+                      childAspectRatio: 3 / (isTabletOrizzontale(mediaQueryData) ? 2 : 3),
                     ),
                     delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
                         
                           return GestureDetector(
                           onTap: () {
-                            _showDialog(context, 'Libro $index', mediaQueryData.size.width, mediaQueryData.size.height);
+                            _showDialog(context, 'Libro $index', "assets/libro${(index % 7)+1}.jpg", mediaQueryData);
                           },
                           child: Container(
                             decoration: BoxDecoration(
@@ -146,7 +149,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(8.0),
                               child: Image.asset(
-                                "assets/copertina.jpg",
+                                "assets/libro${(index % 7)+1}.jpg",
                               ),
                             ),
                           ),
@@ -194,7 +197,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
 
 
 
-void _showDialog(BuildContext context, String bookTitle, double width, double height) {
+void _showDialog(BuildContext context, String bookTitle, String copertina, var mediaQueryData) {
 
     showDialog(
       context: context,
@@ -208,8 +211,8 @@ void _showDialog(BuildContext context, String bookTitle, double width, double he
                 color: Color.fromARGB(255, 255, 255, 255),
                 borderRadius: BorderRadius.circular(25.0),
               ),
-              width: width*0.5,
-              height: height > 1000 ? height*0.35: height*0.5,
+              width: isTabletOrizzontale(mediaQueryData) ? mediaQueryData.size.width * 0.4 : mediaQueryData.size.width * 0.5,
+              height: isTabletOrizzontale(mediaQueryData) ? mediaQueryData.size.height * 0.55 : mediaQueryData.size.height * 0.35,
               alignment: Alignment.center,
               padding: EdgeInsets.all(0),
 
@@ -219,12 +222,8 @@ void _showDialog(BuildContext context, String bookTitle, double width, double he
                     tag: "book_cover_$bookTitle",
                     child: Padding(padding: const EdgeInsets.all(15), // Aggiunge spazio attorno all'immagine
                         child: Image.asset(
-                        "assets/copertina.jpg",
-                        width: getMinor(width,
-                            height) >
-                            600
-                        ? 120
-                        : 80,
+                        copertina,
+                        width: 80,
                       ),
                     ),
                   ),
@@ -237,7 +236,7 @@ void _showDialog(BuildContext context, String bookTitle, double width, double he
                     
                   
                   
-                  SizedBox(height: height*0.03),
+                  SizedBox(height: mediaQueryData.size.height*0.03),
                   Text(
                     'Dettagli del libro',
                     style: TextStyle(fontSize: 12),
@@ -249,7 +248,7 @@ void _showDialog(BuildContext context, String bookTitle, double width, double he
                     child: Align(
                       alignment: FractionalOffset.bottomCenter,
                       child: IntrinsicWidth(
-                        stepWidth: (width*0.5)+30,
+                        stepWidth: (mediaQueryData.size.width*0.5)+30,
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: <Widget>[
@@ -293,10 +292,10 @@ void _showDialog(BuildContext context, String bookTitle, double width, double he
                     ),
                   ),
                 ],
-              ),                     
+              ),
             ),
           ),
-        );  
+        );
       },
     );
   }

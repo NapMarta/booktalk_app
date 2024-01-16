@@ -94,7 +94,6 @@ flutter:
     - assets/2.jpeg
     - assets/3.jpeg
     - assets/funzionalità3.jpg
-    - assets/copertina.jpg
     - assets/library.gif
     - assets/sfondo-2.jpg
     - assets/sfondo.png
@@ -108,11 +107,11 @@ flutter:
     - assets/top1.png
     - assets/top2.png
     - assets/top3.png
-    - assets/libro1.JPG
+    - assets/libro1.jpg
     - assets/libro2.jpg
     - assets/libro3.jpg
     - assets/libro4.jpg
-    - assets/libro5.jpeg
+    - assets/libro5.jpg
     - assets/libro6.jpg
     - assets/libro7.jpg
     
