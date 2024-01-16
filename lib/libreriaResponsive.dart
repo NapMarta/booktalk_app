@@ -248,7 +248,7 @@ void _showDialog(BuildContext context, String bookTitle, String copertina, var m
                     child: Align(
                       alignment: FractionalOffset.bottomCenter,
                       child: IntrinsicWidth(
-                        stepWidth: (mediaQueryData.size.width*0.5)+30,
+                        stepWidth: isTablet(mediaQueryData) ? (mediaQueryData.size.width*0.5)+30 : (mediaQueryData.size.width*0.5)+35 ,
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: <Widget>[

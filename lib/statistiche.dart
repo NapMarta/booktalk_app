@@ -84,32 +84,29 @@ class _StatisticheState extends State<Statistiche> {
                   runSpacing: 20.0,
                   children: [ 
                     SizedBox(
-                      width: 180,
+                      width: isTablet(mediaQueryData) ? 180 : 160,
                       child: _NumberCardWidget(
                         1, // TALE INDICE INDICA LA PRIMA FUNZIONALITA'
                         "assets/copertina.jpg",
-                        mediaQueryData.size.width,
-                        mediaQueryData.size.height
+                        mediaQueryData
                       ),
                     ),
 
                     SizedBox(
-                      width: 180,
+                      width: isTablet(mediaQueryData) ? 180 : 160,
                       child: _NumberCardWidget(
                         2, // TALE INDICE INDICA LA SECONDA FUNZIONALITA'
                         "assets/copertina.jpg",
-                        mediaQueryData.size.width,
-                        mediaQueryData.size.height
+                        mediaQueryData
                       ),
                     ),
 
                     SizedBox(
-                      width: 180,
+                      width: isTablet(mediaQueryData) ? 180 : 160,
                       child: _NumberCardWidget(
                         3, // TALE INDICE INDICA LA TERZA FUNZIONALITA'
                         "assets/copertina.jpg",
-                        mediaQueryData.size.width,
-                        mediaQueryData.size.height
+                        mediaQueryData
                       ),
                     ),
                   ],
@@ -119,7 +116,7 @@ class _StatisticheState extends State<Statistiche> {
           ),
 
           Padding(
-            padding: EdgeInsets.fromLTRB(10, isTablet(mediaQueryData) ? 0 : 20, 10, 15),
+            padding: EdgeInsets.fromLTRB(10, isTablet(mediaQueryData) ? 0 : 0, 10, 15),
             child: Column(
               mainAxisAlignment: isTabletVerticale(mediaQueryData) ? MainAxisAlignment.start : MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -295,7 +292,7 @@ List<PieChartSectionData> _pieChartData(
 
 
 // --- ELEMENTO NELLA TOP 3 LIBRI ---
-Widget _NumberCardWidget(int index, String imageLibro, double width, double height) {
+Widget _NumberCardWidget(int index, String imageLibro, var mediaQueryData) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 3.5),
     child: Stack(
@@ -320,7 +317,7 @@ Widget _NumberCardWidget(int index, String imageLibro, double width, double heig
               borderRadius: BorderRadius.circular(6.0),
               child: Image.asset(
                 "assets/libro${index+1}.jpg",
-                width: 100,
+                width: isTablet(mediaQueryData) ? 100 : 80,
               ),
             ),
           ],
