@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 
+/*
 textSize(var width, var height, var per){
   if (width > 600 && height > 600){
     per = per - 0.004;
@@ -77,18 +78,61 @@ buttonWidth(var width, var height){
   }else{
     return width * 0.45;
   }
+}*/
+
+//-- ???? --
+getMinor(var width, var height){
+  if(width < height){
+    return width;
+  }else{
+    return height;
+  }
 }
 
 
-isTabletVertica(MediaQueryData mediaQueryData){
-  if(getMinor(mediaQueryData.size.width, mediaQueryData.size.height) > 660 && mediaQueryData.orientation == Orientation.portrait){
+textFieldPadding(var width, var height){
+  if(width > 500 && height > 500){
+    return width * 0.25;
+  }else{
+    return width * 0.1;
+  }
+}
+
+buttonWidth(var width, var height){
+  if(width > 500 && height > 500){
+    return width * 0.25;
+  }else{
+    return width * 0.45;
+  }
+}
+
+
+logoSize(var width, var height, var per){
+  if (width > 500 && height > 500) {
+    per = per + 0.05;
+  }
+  
+  return height * per; 
+}
+
+
+isTablet(MediaQueryData mediaQueryData){
+  if(mediaQueryData.size.width > 500 && mediaQueryData.size.height > 500){
     return true;
   }
   return false;
 }
 
-isTablet(MediaQueryData mediaQueryData){
-  if(getMinor(mediaQueryData.size.width, mediaQueryData.size.height) > 660){
+isTabletVerticale(MediaQueryData mediaQueryData){
+  if(isTablet(mediaQueryData) && mediaQueryData.orientation == Orientation.portrait){
+    return true;
+  }
+  return false;
+}
+
+
+isTabletOrizzontale(MediaQueryData mediaQueryData){
+  if(isTablet(mediaQueryData) && mediaQueryData.orientation == Orientation.landscape){
     return true;
   }
   return false;

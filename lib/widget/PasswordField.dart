@@ -49,7 +49,7 @@ class _PasswordFieldState extends State<PasswordField> with RestorationMixin {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-       decoration: InputDecoration(
+      decoration: InputDecoration(
         suffixIcon: IconButton(
           onPressed: () {
             setState(() {
@@ -66,7 +66,7 @@ class _PasswordFieldState extends State<PasswordField> with RestorationMixin {
         fillColor: const Color.fromARGB(123, 255, 255, 255),
         // focusColor: Color(0xFF0097b2),
         labelText: widget.text, 
-        labelStyle: TextStyle(fontSize: size(widget.width, widget.height, 16),
+        labelStyle: TextStyle(fontSize: 16,
                               color: Colors.grey),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20.0),
