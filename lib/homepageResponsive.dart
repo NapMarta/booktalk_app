@@ -128,7 +128,7 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
                 // not render outside
                 renderPanelSheet: false,
                 controller: panelController,
-                minHeight: mediaQueryData.size.height * 0.25,
+                minHeight: isTabletOrizzontale(mediaQueryData) ? mediaQueryData.size.height * 0.2 : mediaQueryData.size.height * 0.25,
                 maxHeight: mediaQueryData.size.height * 0.955,
                 // panel
                 panel: Container(
@@ -220,7 +220,7 @@ Widget _buildFeatureCard(String iconPath, String title, String description, Void
                         Text(
                           title,
                           style: TextStyle(
-                            fontSize: size(width, height, 16),
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
                             color: titleColor,
                           ),
@@ -231,7 +231,7 @@ Widget _buildFeatureCard(String iconPath, String title, String description, Void
                   AutoSizeText(
                     description,
                     style: TextStyle(
-                      fontSize: size(width, height, 13),
+                      fontSize: 13,
                       color: Color.fromARGB(255, 112, 112, 112),
                     ),
                     textAlign: TextAlign.center,

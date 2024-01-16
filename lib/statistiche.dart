@@ -19,7 +19,7 @@ class _StatisticheState extends State<Statistiche> {
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(mediaQueryData.size.height * 0.07),
+        preferredSize: Size.fromHeight(isTabletOrizzontale(mediaQueryData) ? mediaQueryData.size.height * 0.1 : mediaQueryData.size.height * 0.07),
         child: Container(
           decoration: BoxDecoration(
             color: Color(0xFF0097b2),
@@ -41,8 +41,7 @@ class _StatisticheState extends State<Statistiche> {
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: size(mediaQueryData.size.width,
-                      mediaQueryData.size.height, 16),
+                  fontSize: 16,
                 ),
               ),
               //SizedBox(height: 2),
@@ -54,97 +53,99 @@ class _StatisticheState extends State<Statistiche> {
       //backgroundColor: Colors.white,
       body: MultiSplitView(
         axis: (mediaQueryData.orientation == Orientation.landscape) ? Axis.horizontal : Axis.vertical,
-        
+        resizable: false, // non modifica la dimensione dell'elemento manualmenteqq
         children: [
-          Padding(padding: EdgeInsets.fromLTRB(10, isTablet(mediaQueryData) ? 80 : 5, 10, 0),
-          child: 
-          Column(
-            children: [
-              Text(
-                "Libri più utilizzati", 
-                style: TextStyle(fontSize: size(mediaQueryData.size.width, mediaQueryData.size.height, 20), fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 30,),
-              Wrap(
-                direction: Axis.horizontal,
-                alignment: WrapAlignment.center,
-                crossAxisAlignment: WrapCrossAlignment.center,
-                spacing: 10.0,
-                runSpacing: 20.0,
-                children: [ 
-
-                  SizedBox(
-                    width: getMinor(mediaQueryData.size.width, mediaQueryData.size.height) > 600 ? 220: 180,
-                    child: _NumberCardWidget(
-                      1,
-                      "assets/copertina.jpg",
-                      mediaQueryData.size.width,
-                      mediaQueryData.size.height
-                    ),
-                  ),
-
-                  SizedBox(
-                    width: getMinor(mediaQueryData.size.width, mediaQueryData.size.height) > 600 ? 220: 180,
-                    child: _NumberCardWidget(
-                      2,
-                      "assets/copertina.jpg",
-                      mediaQueryData.size.width,
-                      mediaQueryData.size.height
-                    ),
-                  ),
-
-                  SizedBox(
-                    width: getMinor(mediaQueryData.size.width, mediaQueryData.size.height) > 600 ? 220: 180,
-                    child: _NumberCardWidget(
-                      3,
-                      "assets/copertina.jpg",
-                      mediaQueryData.size.width,
-                      mediaQueryData.size.height
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          ),
-
-          Padding(padding: EdgeInsets.fromLTRB(10, isTabletVertica(mediaQueryData) ? 0 : isTablet(mediaQueryData) ? 80 : 0, 10, 0),
-          child: 
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                "Percentuale di utilizzo delle funzionalità", 
-                style: TextStyle(fontSize: size(mediaQueryData.size.width, mediaQueryData.size.height, 20), fontWeight: FontWeight.bold,), 
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                width: 350,
-                height: 350,
-                color: Colors.black,
-                child: PieChart(
-                  PieChartData(
-
-                    borderData: FlBorderData(
-                      show: false,
-                    ),
-                    centerSpaceRadius: double.infinity,
-                    sections: _pieChartData(
-                      30, // funzionalità 1
-                      18, // funzionalità 2
-                      62, // funzionalità 3
-                    ),
-                  ),
-                  swapAnimationDuration: Duration(milliseconds: 150), // Optional
-                  swapAnimationCurve: Curves.linear, // Optional
+          Padding(
+            padding: EdgeInsets.fromLTRB(10, isTablet(mediaQueryData) ? 0 : 8, 10, 0),
+            child: Column(
+              mainAxisAlignment: isTabletVerticale(mediaQueryData) ? MainAxisAlignment.start : MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  "Libri più utilizzati", 
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
                 ),
-              ),
-            ],
+                SizedBox(height: 30,),
+                Wrap(
+                  direction: Axis.horizontal,
+                  alignment: WrapAlignment.center,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  spacing: 10.0,
+                  runSpacing: 20.0,
+                  children: [ 
+
+                    SizedBox(
+                      width: getMinor(mediaQueryData.size.width, mediaQueryData.size.height) > 600 ? 220: 180,
+                      child: _NumberCardWidget(
+                        1,
+                        "assets/copertina.jpg",
+                        mediaQueryData.size.width,
+                        mediaQueryData.size.height
+                      ),
+                    ),
+
+                    SizedBox(
+                      width: getMinor(mediaQueryData.size.width, mediaQueryData.size.height) > 600 ? 220: 180,
+                      child: _NumberCardWidget(
+                        2,
+                        "assets/copertina.jpg",
+                        mediaQueryData.size.width,
+                        mediaQueryData.size.height
+                      ),
+                    ),
+
+                    SizedBox(
+                      width: getMinor(mediaQueryData.size.width, mediaQueryData.size.height) > 600 ? 220: 180,
+                      child: _NumberCardWidget(
+                        3,
+                        "assets/copertina.jpg",
+                        mediaQueryData.size.width,
+                        mediaQueryData.size.height
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
+
+          Padding(
+            padding: EdgeInsets.fromLTRB(10, isTabletVerticale(mediaQueryData) ? 0 : isTablet(mediaQueryData) ? 0 : 20, 10, 15),
+            child: Column(
+              mainAxisAlignment: isTabletVerticale(mediaQueryData) ? MainAxisAlignment.start : MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  "Percentuale di utilizzo delle funzionalità", 
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,), 
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 50,
+                ),
+                Container(
+                  width: isTablet(mediaQueryData) ? 300 : 210,
+                  height: isTablet(mediaQueryData) ? 300 : 210,
+                  child: PieChart(
+                    PieChartData(
+
+                      borderData: FlBorderData(
+                        show: false,
+                      ),
+                      centerSpaceRadius: double.infinity,
+                      sections: _pieChartData(
+                        30, // funzionalità 1
+                        18, // funzionalità 2
+                        62, // funzionalità 3
+                      ),
+                    ),
+                    swapAnimationDuration: Duration(milliseconds: 150), // Optional
+                    swapAnimationCurve: Curves.linear, // Optional
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),

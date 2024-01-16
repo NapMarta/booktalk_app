@@ -139,7 +139,7 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
                     ],
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.only(bottom: 15, left: 20, right: 20, top: 12),
+                    padding: const EdgeInsets.only(bottom: 10, left: 20, right: 20, top: 10),
                     child: Column(
                       children: [
                         Row(
@@ -147,7 +147,7 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
                           children: [
                             Text(
                               "I tuoi dati" ,
-                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF0097b2)),
+                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF0097b2)),
                             ),
                                           
                             //SizedBox(width: 170,),
@@ -166,7 +166,7 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
                                   color: Color(0xFF0097b2),
                                   
                                 ),
-                                iconSize: 25,
+                                iconSize: 20,
                                 padding: EdgeInsets.all(0),
                                 color: Color(0xFF0097b2),
                               ),
@@ -194,8 +194,8 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
                 // not render outside
                 renderPanelSheet: false,
                 controller: panelController,
-                minHeight: mediaQueryData.size.height * 0.25,
-                maxHeight: getMinor(mediaQueryData.size.width, mediaQueryData.size.height) > 600 ? mediaQueryData.size.height * 0.9 : mediaQueryData.size.height * 0.955,
+                minHeight:  isTabletOrizzontale(mediaQueryData) ? mediaQueryData.size.height * 0.2 :  mediaQueryData.size.height * 0.25,
+                maxHeight: isTablet(mediaQueryData) ? mediaQueryData.size.height * 0.9 : mediaQueryData.size.height * 0.955,
                 // panel
                 panel: Container(
                   decoration: BoxDecoration(
@@ -263,7 +263,7 @@ Widget _buildProfileCard(
             enabled: false,
             style: TextStyle(
               color: Colors.black,
-              fontSize: size(width, height, 14),
+              fontSize: 14,
             ),
             enableInteractiveSelection: false,
             focusNode: FocusNode(),

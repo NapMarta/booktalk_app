@@ -25,7 +25,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
 
       // HEADER
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(mediaQueryData.size.height * 0.07),
+        preferredSize: Size.fromHeight(isTabletOrizzontale(mediaQueryData) ? mediaQueryData.size.height * 0.1 : mediaQueryData.size.height * 0.07),
         child: Container(
           decoration: BoxDecoration(
             color: Color(0xFF0097b2),
@@ -47,8 +47,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: size(mediaQueryData.size.width,
-                      mediaQueryData.size.height, 16),
+                  fontSize: 16,
                 ),
               ),
               //SizedBox(height: 2),
@@ -232,7 +231,7 @@ void _showDialog(BuildContext context, String bookTitle, double width, double he
 
                   Text(
                     '$bookTitle',
-                    style: TextStyle(fontSize: size(width, height, 20),  fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 20,  fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                   ),
                     
@@ -241,7 +240,7 @@ void _showDialog(BuildContext context, String bookTitle, double width, double he
                   SizedBox(height: height*0.03),
                   Text(
                     'Dettagli del libro',
-                    style: TextStyle(fontSize: size(width, height, 12)),
+                    style: TextStyle(fontSize: 12),
                     textAlign: TextAlign.center,
                   ),
                   //SizedBox(height: 25.0),    
