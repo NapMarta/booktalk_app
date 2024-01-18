@@ -15,7 +15,9 @@ class HomepageResponsitive extends StatefulWidget {
   _HomepageResponsitiveState createState() => _HomepageResponsitiveState();
 }
 
+
 class _HomepageResponsitiveState extends State<HomepageResponsitive> {
+  final panelController = PanelController();
   File ? _selectedImage;
   bool is2 = false;
   bool is3 = false;
@@ -26,7 +28,7 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
     var mediaQueryData = MediaQuery.of(context);
 
     // varaiabile per lo slide-up
-    final panelController = PanelController();
+    //final panelController = PanelController();
     //var slide = _WidgetSlideUpState(mediaQueryData.size.width, mediaQueryData.size.height, panelController);
 
     return SafeArea(
@@ -96,9 +98,11 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
                     "Opere Letterarie e Analisi",
                     "Seleziona un libro dalla tua libreria, poi scansiona il testo di interesse per ricevere analisi approfondite.",
                     () {
-                      is2 = true;
-                      is3= false;
+                      setFunzionalita(true, false);
+                      print(is2);
+                      print(is3);
                       panelController.open();
+
                     },
                     Color(0xFF05a8ba),
                     mediaQueryData.size.height,
@@ -113,8 +117,9 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
                     "Supporto al learning",
                     "Specifica la parte di libro da studiare e BookTalk ti ascolterà durante la ripetizione dell’argomento.",
                     () {
-                      is2 = false;
-                      is3= true;
+                      setFunzionalita(false, true);
+                      print(is2);
+                      print(is3);
                       panelController.open();
                     },
                     Color(0xFFff3a2a),
@@ -142,7 +147,7 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
                     ),
                   ),
                   
-                  child: LibreriaResponsive(),
+                  child: LibreriaResponsive(is2: is2, is3: is3),
                 ),
                         // collapsed 
                 collapsed: Container(
@@ -159,6 +164,8 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
                   topLeft: Radius.circular(24.0),
                   topRight: Radius.circular(24.0),
                 ),
+
+                onPanelClosed: () => setFunzionalita(false, false),
               ),
 
             ],
@@ -176,7 +183,17 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
       _selectedImage = File(image!.path);
     });
   }
+
+
+  Future setFunzionalita(bool isF2, bool isF3) async {
+    setState(() {
+      is2 = isF2;
+      is3 = isF3;
+    });
+  }
+
 }
+
 
 
 
