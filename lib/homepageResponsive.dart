@@ -115,7 +115,7 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
                   _buildFeatureCard(
                     "assets/funzionalità3.jpg",
                     "Supporto al learning",
-                    "Specifica la parte di libro da studiare e BookTalk ti ascolterà durante la ripetizione dell’argomento.",
+                    "Specifica la parte di libro da studiare e BookTalk crearà domande per ripetere dell’argomento.",
                     () {
                       setFunzionalita(false, true);
                       print(is2);
@@ -137,6 +137,11 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
                 controller: panelController,
                 minHeight: isTabletOrizzontale(mediaQueryData) ? mediaQueryData.size.height * 0.2 : mediaQueryData.size.height * 0.165,
                 maxHeight: mediaQueryData.size.height * 0.94,
+
+                // sfondo sfocato quando è aperto
+                backdropEnabled: true,
+                backdropOpacity: 0.5,
+
                 // panel
                 panel: Container(
                   decoration: BoxDecoration(
@@ -227,7 +232,8 @@ Widget _buildFeatureCard(String iconPath, String title, String description, Void
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(top: 8, left: 10, right: 10),
+              // modificato da 10 a 15
+              padding: const EdgeInsets.only(top: 8, left: 15, right: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

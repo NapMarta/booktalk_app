@@ -104,6 +104,24 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
 
           SizedBox(height: isTablet(mediaQueryData) ? mediaQueryData.size.height * 0.02 : mediaQueryData.size.height * 0.04,),
 
+          Center(
+            child: Text( widget.is2 
+                          ? "Seleziona il libro per analizzare l'opera letteraria" 
+                          : widget.is3 
+                            ? "Seleziona il libro per generare le domande"
+                            : "",
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,), 
+                        textAlign: TextAlign.center,
+                      ),
+          ),
+
+          SizedBox(height: (widget.is2 || widget.is3) 
+                            ? isTablet(mediaQueryData) 
+                              ? mediaQueryData.size.height * 0.02 
+                              : mediaQueryData.size.height * 0.04
+                            : 0),
+
+
           // ----------- LISTA A GRIGLIA -----------
           /*
           Expanded(
@@ -143,14 +161,11 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
                         
                           return GestureDetector(
                           onTap: () {
-                            print("info");
                             if(widget.is2){
-                              print("Funzionalità 2");
+                              getImageFromCamera();
                             }
                             else if(widget.is3){
-                              print("Funzionalità 3");
                             }else{
-                              print("libro");
                               _showDialog(context, 'Libro $index', "assets/libro${(index % 7)+1}.jpg", mediaQueryData);
                             }
                           
@@ -204,14 +219,14 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
       _selectedImage = File(image!.path);
     });
   }
-}
 
 
 
 
 
 
-void _showDialog(BuildContext context, String bookTitle, String copertina, var mediaQueryData) {
+
+  void _showDialog(BuildContext context, String bookTitle, String copertina, var mediaQueryData) {
 
     showDialog(
       context: context,
@@ -267,23 +282,33 @@ void _showDialog(BuildContext context, String bookTitle, String copertina, var m
                           mainAxisSize: MainAxisSize.max,
                           children: <Widget>[
                             Expanded(                              
-                              child: Container(
-                                //width: (width*0.5)/2,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.only(
-                                      bottomLeft: Radius.circular(25)),
-                                  border: Border.all(width: 1.0, color: Colors.grey)
-                                ),
-                                height: 50,
-                                child: Center(
-                                  child: Padding(
-                                    padding: EdgeInsets.all(6.0),
-                                    child: Image.asset("assets/2.jpeg"),
+                              child: GestureDetector(
+                                onTap: () { 
+                                  // seconda funzionalità
+                                  getImageFromCamera();
+                                },
+                                child: Container(
+                                  //width: (width*0.5)/2,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                        bottomLeft: Radius.circular(25)),
+                                    border: Border.all(width: 1.0, color: Colors.grey)
+                                  ),
+                                  height: 50,
+                                  child: Center(
+                                    child: Padding(
+                                      padding: EdgeInsets.all(6.0),
+                                      child: Image.asset("assets/2.jpeg"),
+                                    ),
                                   ),
                                 ),
                               ),
-                              ),
-                              Expanded(
+                            ),
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () { 
+                                  // terza funzionalità
+                                },
                                 child: Container(
                                   //width: (width*0.5)/2,
                                   decoration: BoxDecoration(
@@ -299,7 +324,7 @@ void _showDialog(BuildContext context, String bookTitle, String copertina, var m
                                   ),
                                 ),
                               ),
-
+                            ),
                           ],
                         ),        
                       ),
@@ -313,3 +338,4 @@ void _showDialog(BuildContext context, String bookTitle, String copertina, var m
       },
     );
   }
+}

@@ -194,6 +194,11 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
                 // making false it does 
                 // not render outside
                 renderPanelSheet: false,
+
+                // sfondo sfocato quando è aperto
+                backdropEnabled: true,
+                backdropOpacity: 0.5,
+
                 controller: panelController,
                 minHeight: isTabletOrizzontale(mediaQueryData) ? mediaQueryData.size.height * 0.2 :  mediaQueryData.size.height * 0.25,
                 maxHeight: isTabletVerticale(mediaQueryData) ? mediaQueryData.size.height * 0.91 : mediaQueryData.size.height * 0.94,
