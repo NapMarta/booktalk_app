@@ -61,6 +61,8 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
                     ),
                   ),
                   
+                  SizedBox(height: isTablet(mediaQueryData) ? 0 : 30,),
+
                   // logo dell'app
                   Align(
                     alignment: Alignment.center,
@@ -128,8 +130,8 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
                 // not render outside
                 renderPanelSheet: false,
                 controller: panelController,
-                minHeight: isTabletOrizzontale(mediaQueryData) ? mediaQueryData.size.height * 0.2 : mediaQueryData.size.height * 0.25,
-                maxHeight: mediaQueryData.size.height * 0.955,
+                minHeight: isTabletOrizzontale(mediaQueryData) ? mediaQueryData.size.height * 0.2 : mediaQueryData.size.height * 0.165,
+                maxHeight: mediaQueryData.size.height * 0.94,
                 // panel
                 panel: Container(
                   decoration: BoxDecoration(
