@@ -98,7 +98,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
           ),
           */
 
-          SizedBox(height: mediaQueryData.size.height * 0.04,),
+          SizedBox(height: isTablet(mediaQueryData) ? mediaQueryData.size.height * 0.02 : mediaQueryData.size.height * 0.04,),
 
           // ----------- LISTA A GRIGLIA -----------
           /*
