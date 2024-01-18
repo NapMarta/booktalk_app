@@ -7,8 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
     
 class LibreriaResponsive extends StatefulWidget {
-  const LibreriaResponsive({Key? key}) : super(key: key);
+  final bool is2;
+  final bool is3;
 
+  
+  const LibreriaResponsive({Key? key, required this.is2, required this.is3}) : super(key: key);
+  
   @override
   _LibreriaResponsiveState createState() => _LibreriaResponsiveState();
 }
@@ -139,7 +143,17 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
                         
                           return GestureDetector(
                           onTap: () {
-                            _showDialog(context, 'Libro $index', "assets/libro${(index % 7)+1}.jpg", mediaQueryData);
+                            print("info");
+                            if(widget.is2){
+                              print("Funzionalità 2");
+                            }
+                            else if(widget.is3){
+                              print("Funzionalità 3");
+                            }else{
+                              print("libro");
+                              _showDialog(context, 'Libro $index', "assets/libro${(index % 7)+1}.jpg", mediaQueryData);
+                            }
+                          
                           },
                           child: Container(
                             decoration: BoxDecoration(
