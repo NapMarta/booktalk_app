@@ -75,7 +75,7 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
                   ),
                   
                   // spazio sotto al logo
-                  SizedBox(height: mediaQueryData.size.height * 0.03,),
+                  SizedBox(height: isTabletOrizzontale(mediaQueryData) ? mediaQueryData.size.height * 0.05 : mediaQueryData.size.height * 0.03,),
 
                   // i pulsanti con le tre funzionalità
                   _buildFeatureCard(
@@ -135,7 +135,7 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
                 // not render outside
                 renderPanelSheet: false,
                 controller: panelController,
-                minHeight: isTabletOrizzontale(mediaQueryData) ? mediaQueryData.size.height * 0.2 : mediaQueryData.size.height * 0.165,
+                minHeight: isTabletOrizzontale(mediaQueryData) ? mediaQueryData.size.height * 0.1 : mediaQueryData.size.height * 0.165,
                 maxHeight: isTabletOrizzontale(mediaQueryData) 
                             ? mediaQueryData.size.height * 0.7 
                             : isTabletVerticale(mediaQueryData) 
