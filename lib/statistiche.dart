@@ -56,7 +56,7 @@ class _StatisticheState extends State<Statistiche> {
         resizable: false, // non modifica la dimensione dell'elemento manualmenteqq
         children: [
           Padding(
-            padding: EdgeInsets.fromLTRB(10, isTablet(mediaQueryData) ? 50 : 8, 10, 0),
+            padding: EdgeInsets.fromLTRB(10, isTablet(mediaQueryData) ? 10 : 8, 10, 0),
             child: Column(
               mainAxisAlignment: isTabletVerticale(mediaQueryData) ? MainAxisAlignment.start : MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -116,7 +116,7 @@ class _StatisticheState extends State<Statistiche> {
           ),
 
           Padding(
-            padding: EdgeInsets.fromLTRB(10, isTablet(mediaQueryData) ? 0 : 0, 10, 15),
+            padding: EdgeInsets.fromLTRB(10, 0, 10, isTablet(mediaQueryData) ? 75 : 15),
             child: Column(
               mainAxisAlignment: isTabletVerticale(mediaQueryData) ? MainAxisAlignment.start : MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,

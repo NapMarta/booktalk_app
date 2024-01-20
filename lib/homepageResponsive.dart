@@ -136,7 +136,11 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
                 renderPanelSheet: false,
                 controller: panelController,
                 minHeight: isTabletOrizzontale(mediaQueryData) ? mediaQueryData.size.height * 0.2 : mediaQueryData.size.height * 0.165,
-                maxHeight: mediaQueryData.size.height * 0.94,
+                maxHeight: isTabletOrizzontale(mediaQueryData) 
+                            ? mediaQueryData.size.height * 0.7 
+                            : isTabletVerticale(mediaQueryData) 
+                              ? mediaQueryData.size.height * 0.75
+                              : mediaQueryData.size.height * 0.7, 
 
                 // sfondo sfocato quando è aperto
                 backdropEnabled: true,

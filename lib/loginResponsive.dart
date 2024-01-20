@@ -68,7 +68,7 @@ class _LoginResponsiveState extends State<LoginResponsive> {
 
             // ----- LOGO -----
             Image.asset('assets/logo_noSfondo.png', height: logoSize(mediaQueryData.size.width, mediaQueryData.size.height, 0.2)),
-            SizedBox(height: 40),
+            SizedBox(height: isTabletOrizzontale(mediaQueryData) ? 6 : 40),
 
             // ----- EMAIL -----
             TextFormField(

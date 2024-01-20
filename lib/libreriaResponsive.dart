@@ -102,23 +102,33 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
           ),
           */
 
-          SizedBox(height: isTablet(mediaQueryData) ? mediaQueryData.size.height * 0.02 : mediaQueryData.size.height * 0.04,),
+          SizedBox(height: isTablet(mediaQueryData) ? mediaQueryData.size.height * 0.02 : mediaQueryData.size.height * 0.02,),
 
-          Center(
-            child: Text( widget.is2 
-                          ? "Seleziona il libro per analizzare l'opera letteraria" 
-                          : widget.is3 
-                            ? "Seleziona il libro per generare le domande"
-                            : "",
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,), 
-                        textAlign: TextAlign.center,
-                      ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (widget.is2) 
+                Image.asset("assets/2.jpeg", height: 40,) 
+                else if(widget.is3) 
+                  Image.asset("assets/funzionalità3.jpg", height: 40,),
+
+              if(widget.is2 || widget.is3)
+                SizedBox(width: 20,),
+
+              Text( (widget.is2 || widget.is3) 
+                  ? "Seleziona un libro" 
+                  : "",
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,), 
+                textAlign: TextAlign.center,
+              ),
+            ],
           ),
 
           SizedBox(height: (widget.is2 || widget.is3) 
                             ? isTablet(mediaQueryData) 
                               ? mediaQueryData.size.height * 0.02 
-                              : mediaQueryData.size.height * 0.04
+                              : mediaQueryData.size.height * 0.02
                             : 0),
 
 

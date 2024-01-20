@@ -81,7 +81,7 @@ class _ModificaProfiloResponsiveState extends State<ModificaProfiloResponsive> {
               
               child: Column(
                 children: <Widget>[
-                  SizedBox(height: 80,),
+                  SizedBox(height: isTabletOrizzontale(mediaQueryData) ? 10 : 80,),
                   // ----- NOME -----
                   TextFormField(
                     controller: firstNameController,

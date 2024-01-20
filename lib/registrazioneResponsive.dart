@@ -67,7 +67,7 @@ class _RegistrazioneResponsiveState extends State<RegistrazioneResponsive> {
 
             // ----- LOGO -----
             Image.asset('assets/logo_noSfondo.png', height: logoSize(mediaQueryData.size.width, mediaQueryData.size.height, 0.2)),
-            SizedBox(height: 30),
+            SizedBox(height: isTabletOrizzontale(mediaQueryData) ? 10 : 30),
 
             // ----- NOME -----
             TextFormField(

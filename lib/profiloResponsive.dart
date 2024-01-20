@@ -200,7 +200,7 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
                 backdropOpacity: 0.5,
 
                 controller: panelController,
-                minHeight: isTabletOrizzontale(mediaQueryData) ? mediaQueryData.size.height * 0.2 :  mediaQueryData.size.height * 0.25,
+                minHeight: isTabletOrizzontale(mediaQueryData) ? mediaQueryData.size.height * 0.17 :  mediaQueryData.size.height * 0.25,
                 maxHeight: isTabletVerticale(mediaQueryData) ? mediaQueryData.size.height * 0.91 : mediaQueryData.size.height * 0.94,
                 // panel
                 panel: Container(
