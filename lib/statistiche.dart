@@ -53,7 +53,7 @@ class _StatisticheState extends State<Statistiche> {
       //backgroundColor: Colors.white,
       body: MultiSplitView(
         axis: (mediaQueryData.orientation == Orientation.landscape) ? Axis.horizontal : Axis.vertical,
-        resizable: false, // non modifica la dimensione dell'elemento manualmenteqq
+        resizable: false, // non modifica la dimensione dell'elemento manualmente
         children: [
           Padding(
             padding: EdgeInsets.fromLTRB(10, isTablet(mediaQueryData) ? 10 : 8, 10, 0),

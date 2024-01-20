@@ -6,6 +6,7 @@ import 'package:booktalk_app/statistiche.dart';
 import 'package:booktalk_app/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:multi_split_view/multi_split_view.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
     
 class ProfiloResponsitive extends StatefulWidget {
@@ -52,6 +53,7 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
                   isProfilo: true,
                 ),
               ),
+              
               
               // ----- foto profilo con fotocamera per la modifica -----
               Align(
@@ -142,37 +144,37 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
                     padding: const EdgeInsets.only(bottom: 10, left: 20, right: 20, top: 4),
                     child: Column(
                       children: [
-                        Padding(padding: const EdgeInsets.only(bottom: 0),
+                        Padding(padding: const EdgeInsets.only(bottom: 0, right: 0),
                         child: 
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween, // aggiunge lo spazio tra gli elementi
-                          children: [
-                            Text(
-                              "I tuoi dati" ,
-                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF0097b2)),
-                            ),
-                            Align(
-                              alignment: Alignment.topRight,
-                              child: IconButton(
-                                onPressed: () {
-                                  Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) => ModificaProfiloResponsive(),
-                                      ),
-                                  ); 
-                                },
-                                icon: Icon(
-                                  Icons.edit,
-                                  color: Color(0xFF0097b2),
-                                  
-                                ),
-                                iconSize: 20,
-                                padding: EdgeInsets.all(0),
-                                color: Color(0xFF0097b2),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween, // aggiunge lo spazio tra gli elementi
+                            children: [
+                              Text(
+                                "I tuoi dati" ,
+                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF0097b2)),
                               ),
-                            ),
-                          ],
-                        ),
+                              Align(
+                                alignment: Alignment.topRight,
+                                child: IconButton(
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) => ModificaProfiloResponsive(),
+                                        ),
+                                    ); 
+                                  },
+                                  icon: Icon(
+                                    Icons.edit,
+                                    color: Color(0xFF0097b2),
+                                    
+                                  ),
+                                  iconSize: 20,
+                                  padding: EdgeInsets.all(0),
+                                  color: Color(0xFF0097b2),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                         _buildProfileCard(
                             mediaQueryData.size.width, mediaQueryData.size.height, 'Nome', Icons.account_circle, 'Maria'),
@@ -200,7 +202,7 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
                 backdropOpacity: 0.5,
 
                 controller: panelController,
-                minHeight: isTabletOrizzontale(mediaQueryData) ? mediaQueryData.size.height * 0.17 :  mediaQueryData.size.height * 0.25,
+                minHeight: isTabletOrizzontale(mediaQueryData) ? mediaQueryData.size.height * 0.1 :  mediaQueryData.size.height * 0.25,
                 maxHeight: isTabletVerticale(mediaQueryData) ? mediaQueryData.size.height * 0.91 : mediaQueryData.size.height * 0.94,
                 // panel
                 panel: Container(
