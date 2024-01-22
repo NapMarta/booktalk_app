@@ -1,9 +1,11 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:booktalk_app/widget/header.dart';
 import 'package:booktalk_app/libreriaResponsive.dart';
 import 'package:booktalk_app/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -87,6 +89,9 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
                     "Scansiona o inserisci l'espressione matematica e BookTalk ti aiuterà nella risoluzione.",
                     () {
                       getImageFromCamera();
+                      if (_selectedImage != null) {
+                        isbnRecognition(_selectedImage!);
+                      }
                     },
                     Color(0xFFf0bc5e),
                     mediaQueryData.size.height,
@@ -102,8 +107,6 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
                     "Seleziona un libro dalla tua libreria, poi scansiona il testo di interesse per ricevere analisi approfondite.",
                     () {
                       setFunzionalita(true, false);
-                      print(is2);
-                      print(is3);
                       panelController.open();
 
                     },
@@ -118,11 +121,9 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
                   _buildFeatureCard(
                     "assets/funzionalità3.jpg",
                     "Supporto al learning",
-                    "Specifica la parte di libro da studiare e BookTalk crearà domande per ripetere dell’argomento.",
+                    "Specifica la parte di libro da studiare e BookTalk crearà domande per ripetere l'argomento.",
                     () {
                       setFunzionalita(false, true);
-                      print(is2);
-                      print(is3);
                       panelController.open();
                     },
                     Color(0xFFff3a2a),
@@ -194,12 +195,9 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
     setState(() {
       _selectedImage = File(image!.path);
     });
-    if (_selectedImage != null) {
-      await isbnRecognition(_selectedImage!);
-    }
   }
 
-
+  // --- INIZIO RICONOSCIMENTO TESTO --
   String? extractISBN(String input) {
     final RegExp regex = RegExp(r'(\bISBN\b\s*)?(\d{3})\s*[-]?\s*(\d{1,5})\s*[-]?\s*(\d{1,7})\s*[-]?\s*(\d{1,7})\s*[-]?\s*(\d{1,7})\s*[-]?\s*(\d{1,7})\s*[-]?\s*(\d{1,7})\b');
 
@@ -223,18 +221,20 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
   Future<void> isbnRecognition(File imageFile) async {
     try {
       final apiUrl = Uri.parse('http://130.61.22.178:9000/extract_text');
-      final imageBytes = await imageFile.readAsBytes();
+      //final Uint8List imageBytes = await imageFile.readAsBytes();
+      final ByteData data = await rootBundle.load('assets/libro3.jpg');
 
+      print("try");
       // Crea una richiesta multipart per inviare l'immagine
       var request = http.MultipartRequest('POST', apiUrl)
         ..files.add(http.MultipartFile.fromBytes(
           'image',
-          imageBytes,
+          data.buffer.asUint8List(),
           filename: 'image.png',
         ));
-
+      print(request.fields);
       var response = await http.Response.fromStream(await request.send());
-
+      print(response);
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = json.decode(response.body);
         print('Testo estratto: ${data['text']}');
@@ -248,6 +248,7 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
       print('Errore: $e');
     }
   }
+  // --- FINE RICONOSCIMENTO TESTO --
 
 
   Future setFunzionalita(bool isF2, bool isF3) async {

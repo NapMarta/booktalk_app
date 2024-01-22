@@ -6,7 +6,6 @@ import 'package:booktalk_app/statistiche.dart';
 import 'package:booktalk_app/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:multi_split_view/multi_split_view.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
     
 class ProfiloResponsitive extends StatefulWidget {
