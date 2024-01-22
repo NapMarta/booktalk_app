@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:booktalk_app/extract_text.dart';
 import 'package:booktalk_app/widget/header.dart';
 import 'package:booktalk_app/libreriaResponsive.dart';
 import 'package:booktalk_app/utils.dart';
@@ -90,7 +91,7 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
                     () {
                       getImageFromCamera();
                       if (_selectedImage != null) {
-                        isbnRecognition(_selectedImage!);
+                        prova(_selectedImage!);
                       }
                     },
                     Color(0xFFf0bc5e),
@@ -196,60 +197,6 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
       _selectedImage = File(image!.path);
     });
   }
-
-  // --- INIZIO RICONOSCIMENTO TESTO --
-  String? extractISBN(String input) {
-    final RegExp regex = RegExp(r'(\bISBN\b\s*)?(\d{3})\s*[-]?\s*(\d{1,5})\s*[-]?\s*(\d{1,7})\s*[-]?\s*(\d{1,7})\s*[-]?\s*(\d{1,7})\s*[-]?\s*(\d{1,7})\s*[-]?\s*(\d{1,7})\b');
-
-    final Iterable<Match> matches = regex.allMatches(input);
-    if (matches.isNotEmpty) {
-      final Match match = matches.first;
-      String? isbn = match.group(0);
-
-      int lastHyphenIndex = isbn?.lastIndexOf('-') ?? -1;
-
-      if (lastHyphenIndex != -1) {
-        isbn = isbn?.substring(0, lastHyphenIndex+2);
-      }
-
-      return isbn;
-    } else {
-      return 'ISBN non trovato';
-    }
-  }
-
-  Future<void> isbnRecognition(File imageFile) async {
-    try {
-      final apiUrl = Uri.parse('http://130.61.22.178:9000/extract_text');
-      //final Uint8List imageBytes = await imageFile.readAsBytes();
-      final ByteData data = await rootBundle.load('assets/libro3.jpg');
-
-      print("try");
-      // Crea una richiesta multipart per inviare l'immagine
-      var request = http.MultipartRequest('POST', apiUrl)
-        ..files.add(http.MultipartFile.fromBytes(
-          'image',
-          data.buffer.asUint8List(),
-          filename: 'image.png',
-        ));
-      print(request.fields);
-      var response = await http.Response.fromStream(await request.send());
-      print(response);
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> data = json.decode(response.body);
-        print('Testo estratto: ${data['text']}');
-        String extractedText = data['text'];
-        String? isbnCode = extractISBN(extractedText);
-        print(isbnCode);
-      } else {
-        print('Errore nella richiesta API: ${response.statusCode}');
-      }
-    } catch (e) {
-      print('Errore: $e');
-    }
-  }
-  // --- FINE RICONOSCIMENTO TESTO --
-
 
   Future setFunzionalita(bool isF2, bool isF3) async {
     setState(() {
