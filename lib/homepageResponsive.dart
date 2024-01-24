@@ -1,7 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
-
-import 'package:booktalk_app/extract_text.dart';
 import 'package:booktalk_app/widget/header.dart';
 import 'package:booktalk_app/libreriaResponsive.dart';
 import 'package:booktalk_app/utils.dart';
@@ -10,8 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'dart:async' show Future;
 
 class HomepageResponsitive extends StatefulWidget {
@@ -90,9 +85,6 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
                     "Scansiona o inserisci l'espressione matematica e BookTalk ti aiuterà nella risoluzione.",
                     () {
                       getImageFromCamera();
-                      if (_selectedImage != null) {
-                        prova(_selectedImage!);
-                      }
                     },
                     Color(0xFFf0bc5e),
                     mediaQueryData.size.height,
@@ -294,4 +286,3 @@ class WidgetSlideUp extends StatefulWidget {
   @override
   _WidgetSlideUpState createState() => _WidgetSlideUpState();
 }*/
-

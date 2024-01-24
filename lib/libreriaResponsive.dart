@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:booktalk_app/extract_text.dart';
 import 'package:booktalk_app/widget/ExpandableFloatingActionButton.dart';
 import 'package:booktalk_app/utils.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,8 @@ class LibreriaResponsive extends StatefulWidget {
 }
 
 class _LibreriaResponsiveState extends State<LibreriaResponsive> {
-  File ? _selectedImage;
+  File ? _selectedImageAddLibro;
+  File ? _selectedImageOpera;
 
   @override
   Widget build(BuildContext context) {
@@ -172,7 +174,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
                           return GestureDetector(
                           onTap: () {
                             if(widget.is2){
-                              getImageFromCamera();
+                              getImageFromCameraOpera();
                             }
                             else if(widget.is3){
                             }else{
@@ -215,24 +217,32 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
         onPressed: () {
           _scrollController.animateTo(0,
               duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
-          getImageFromCamera();
+          getImageFromCameraISBN();
         },
       ),
     );
   }
 
-  Future getImageFromCamera() async {
+  Future getImageFromCameraISBN() async {
     final image = await ImagePicker().pickImage(source: ImageSource.camera);
 
     if(image == null) return;
     setState(() {
-      _selectedImage = File(image!.path);
+      _selectedImageAddLibro = File(image!.path);
+      addLibro(_selectedImageAddLibro);
     });
   }
 
 
 
+  Future getImageFromCameraOpera() async {
+    final image = await ImagePicker().pickImage(source: ImageSource.camera);
 
+    if(image == null) return;
+    setState(() {
+      _selectedImageOpera = File(image!.path);
+    });
+  }
 
 
 
@@ -295,7 +305,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
                               child: GestureDetector(
                                 onTap: () { 
                                   // seconda funzionalità
-                                  getImageFromCamera();
+                                  getImageFromCameraOpera();
                                 },
                                 child: Container(
                                   //width: (width*0.5)/2,

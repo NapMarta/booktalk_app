@@ -34,18 +34,18 @@ String? extractISBN(String input) {
   }
 }
 
-void prova(File file) async {
+void addLibro(File? file) async {
   WidgetsFlutterBinding.ensureInitialized();
   try {
     final apiUrl = Uri.parse('http://130.61.22.178:9000/extract_text');
-    final Uint8List imageBytes = await file.readAsBytes();
+    final Uint8List? imageBytes = await file?.readAsBytes();
 
 
     // Crea una richiesta multipart per inviare l'immagine
     var request = http.MultipartRequest('POST', apiUrl)
       ..files.add(http.MultipartFile.fromBytes(
         'image',
-        imageBytes,
+        imageBytes!,
         filename: 'image.png',
       ));
 

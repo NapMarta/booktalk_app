@@ -23,9 +23,13 @@ Future<void> main() async {
     ]);
   }*/
   
+  
   runApp(MaterialApp(
     home: BookTalkApp(),
   ));
+  
+
+  //extract_text();
 }
 
 
