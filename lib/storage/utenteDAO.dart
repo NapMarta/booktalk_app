@@ -43,6 +43,36 @@ class UtenteDao {
     }
   }
 
+
+  Future<Utente?> getUtenteByEmail(String email) async {
+    try {
+      final response = await http.get(Uri.parse('$baseUrl/selectUtente'));
+
+      if (response.statusCode == 200) {
+        Map<String, dynamic> resultData =
+            json.decode(response.body) as Map<String, dynamic>;
+        List<dynamic> resultList = resultData['result_set'] ?? [];
+
+        if (resultList.isNotEmpty) {
+          for (Map<String, dynamic> utente in resultList) {
+            Utente u = Utente.fromJson(utente);
+            if (u.email == email) return u;
+          }
+          return null;
+        } else {
+          print('Nessun risultato disponibile.');
+          return null;
+        }
+      } else {
+        print('Errore nella chiamata API: ${response.statusCode}');
+        return null;
+      }
+    } catch (e) {
+      print('Errore durante la chiamata API: $e');
+      return null;
+    }
+  }
+
   Future<Utente?> getUtenteByEmailPassword(String email, String password) async {
   try {
     final response = await http.get(Uri.parse('$baseUrl/selectUtente'));
