@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:booktalk_app/expression_recognition.dart';
 import 'package:booktalk_app/widget/header.dart';
 import 'package:booktalk_app/libreriaResponsive.dart';
 import 'package:booktalk_app/utils.dart';
@@ -16,10 +17,9 @@ class HomepageResponsitive extends StatefulWidget {
   _HomepageResponsitiveState createState() => _HomepageResponsitiveState();
 }
 
-
 class _HomepageResponsitiveState extends State<HomepageResponsitive> {
   final panelController = PanelController();
-  File ? _selectedImage;
+  File? _selectedImage;
   bool is2 = false;
   bool is3 = false;
 
@@ -57,14 +57,16 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
                   PreferredSize(
                     preferredSize: Size.fromHeight(kToolbarHeight),
                     child: Header(
-                      iconProfile: Image.asset('assets/person-icon.png'), 
+                      iconProfile: Image.asset('assets/person-icon.png'),
                       text: "Ciao Maria!",
                       isHomePage: true,
                       isProfilo: false,
                     ),
                   ),
-                  
-                  SizedBox(height: isTablet(mediaQueryData) ? 0 : 30,),
+
+                  SizedBox(
+                    height: isTablet(mediaQueryData) ? 0 : 30,
+                  ),
 
                   // logo dell'app
                   Align(
@@ -74,70 +76,68 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
                       height: mediaQueryData.size.height * 0.15,
                     ),
                   ),
-                  
+
                   // spazio sotto al logo
-                  SizedBox(height: isTabletOrizzontale(mediaQueryData) ? mediaQueryData.size.height * 0.05 : mediaQueryData.size.height * 0.03,),
+                  SizedBox(
+                    height: isTabletOrizzontale(mediaQueryData)
+                        ? mediaQueryData.size.height * 0.05
+                        : mediaQueryData.size.height * 0.03,
+                  ),
 
                   // i pulsanti con le tre funzionalità
-                  _buildFeatureCard(
-                    "assets/1.png",
-                    "Espressioni Matematiche",
-                    "Scansiona o inserisci l'espressione matematica e BookTalk ti aiuterà nella risoluzione.",
-                    () {
-                      getImageFromCamera();
-                    },
-                    Color(0xFFf0bc5e),
-                    mediaQueryData.size.height,
-                    mediaQueryData.size.width
-                  ),
+                  _buildFeatureCard("assets/1.png", "Espressioni Matematiche",
+                      "Scansiona o inserisci l'espressione matematica e BookTalk ti aiuterà nella risoluzione.",
+                      () {
+                    getImageFromCameraEspressioni();
+                  }, Color(0xFFf0bc5e), mediaQueryData.size.height,
+                      mediaQueryData.size.width),
 
                   // spazio tra i pulsanti
-                  SizedBox(height: mediaQueryData.size.height * 0.02,),
-                  
-                  _buildFeatureCard(
-                    "assets/2.jpeg",
-                    "Opere Letterarie e Analisi",
-                    "Seleziona un libro dalla tua libreria, poi scansiona il testo di interesse per ricevere analisi approfondite.",
-                    () {
-                      setFunzionalita(true, false);
-                      panelController.open();
-
-                    },
-                    Color(0xFF05a8ba),
-                    mediaQueryData.size.height,
-                    mediaQueryData.size.width
+                  SizedBox(
+                    height: mediaQueryData.size.height * 0.02,
                   ),
+
+                  _buildFeatureCard(
+                      "assets/2.jpeg",
+                      "Opere Letterarie e Analisi",
+                      "Seleziona un libro dalla tua libreria, poi scansiona il testo di interesse per ricevere analisi approfondite.",
+                      () {
+                    setFunzionalita(true, false);
+                    panelController.open();
+                  }, Color(0xFF05a8ba), mediaQueryData.size.height,
+                      mediaQueryData.size.width),
 
                   // spazio tra i pulsanti
-                  SizedBox(height: mediaQueryData.size.height * 0.02,),
+                  SizedBox(
+                    height: mediaQueryData.size.height * 0.02,
+                  ),
 
                   _buildFeatureCard(
-                    "assets/funzionalità3.jpg",
-                    "Supporto al learning",
-                    "Specifica la parte di libro da studiare e BookTalk crearà domande per ripetere l'argomento.",
-                    () {
-                      setFunzionalita(false, true);
-                      panelController.open();
-                    },
-                    Color(0xFFff3a2a),
-                    mediaQueryData.size.height,
-                    mediaQueryData.size.width
-                  ),
+                      "assets/funzionalità3.jpg",
+                      "Supporto al learning",
+                      "Specifica la parte di libro da studiare e BookTalk crearà domande per ripetere l'argomento.",
+                      () {
+                    setFunzionalita(false, true);
+                    panelController.open();
+                  }, Color(0xFFff3a2a), mediaQueryData.size.height,
+                      mediaQueryData.size.width),
                 ],
               ),
-              
+
               // ----- SLIDEUP - Libreria ----
               SlidingUpPanel(
-                // making false it does 
+                // making false it does
                 // not render outside
                 renderPanelSheet: false,
                 controller: panelController,
-                minHeight: isTabletOrizzontale(mediaQueryData) ? mediaQueryData.size.height * 0.1 : mediaQueryData.size.height * 0.165,
-                maxHeight: isTabletOrizzontale(mediaQueryData) 
-                            ? mediaQueryData.size.height * 0.7 
-                            : isTabletVerticale(mediaQueryData) 
-                              ? mediaQueryData.size.height * 0.75
-                              : mediaQueryData.size.height * 0.7, 
+                minHeight: isTabletOrizzontale(mediaQueryData)
+                    ? mediaQueryData.size.height * 0.1
+                    : mediaQueryData.size.height * 0.165,
+                maxHeight: isTabletOrizzontale(mediaQueryData)
+                    ? mediaQueryData.size.height * 0.7
+                    : isTabletVerticale(mediaQueryData)
+                        ? mediaQueryData.size.height * 0.75
+                        : mediaQueryData.size.height * 0.7,
 
                 // sfondo sfocato quando è aperto
                 backdropEnabled: true,
@@ -152,10 +152,9 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
                       topRight: Radius.circular(24.0),
                     ),
                   ),
-                  
                   child: LibreriaResponsive(is2: is2, is3: is3),
                 ),
-                        // collapsed 
+                // collapsed
                 collapsed: Container(
                   decoration: BoxDecoration(
                     color: Colors.transparent,
@@ -165,7 +164,7 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
                     ),
                   ),
                 ),
-                
+
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(24.0),
                   topRight: Radius.circular(24.0),
@@ -173,7 +172,6 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
 
                 onPanelClosed: () => setFunzionalita(false, false),
               ),
-
             ],
           ),
         ),
@@ -181,12 +179,13 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
     );
   }
 
-  Future getImageFromCamera() async {
+  Future getImageFromCameraEspressioni() async {
     final image = await ImagePicker().pickImage(source: ImageSource.camera);
 
-    if(image == null) return;
+    if (image == null) return;
     setState(() {
       _selectedImage = File(image!.path);
+      expRecognition(_selectedImage);
     });
   }
 
@@ -196,13 +195,10 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
       is3 = isF3;
     });
   }
-
 }
 
-
-
-
-Widget _buildFeatureCard(String iconPath, String title, String description, VoidCallback onPressed, Color titleColor, double height, double width) {
+Widget _buildFeatureCard(String iconPath, String title, String description,
+    VoidCallback onPressed, Color titleColor, double height, double width) {
   return GestureDetector(
     onTap: onPressed,
     child: Container(
@@ -239,17 +235,16 @@ Widget _buildFeatureCard(String iconPath, String title, String description, Void
                 children: [
                   Align(
                     alignment: Alignment.center,
-                    child:  FittedBox(
+                    child: FittedBox(
                       fit: BoxFit.scaleDown,
-                      child: 
-                        Text(
-                          title,
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: titleColor,
-                          ),
+                      child: Text(
+                        title,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: titleColor,
                         ),
+                      ),
                     ),
                   ),
                   SizedBox(height: height * 0.01),
@@ -272,7 +267,6 @@ Widget _buildFeatureCard(String iconPath, String title, String description, Void
     ),
   );
 }
-
 
 /*
 class WidgetSlideUp extends StatefulWidget {
