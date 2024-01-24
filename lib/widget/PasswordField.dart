@@ -1,4 +1,3 @@
-import 'package:booktalk_app/utils.dart';
 import 'package:flutter/material.dart';
     
 class PasswordField extends StatefulWidget {
@@ -15,7 +14,8 @@ class PasswordField extends StatefulWidget {
     this.textInputAction,
     this.height,
     this.width,
-    this.text
+    this.text,
+    this.controller,
   });
 
   final String? restorationId;
@@ -30,6 +30,7 @@ class PasswordField extends StatefulWidget {
   final TextInputAction? textInputAction;
   final double? width, height;
   final String? text;
+  final TextEditingController? controller;
 
   @override
   State<PasswordField> createState() => _PasswordFieldState();
@@ -64,16 +65,14 @@ class _PasswordFieldState extends State<PasswordField> with RestorationMixin {
         ),
 
         fillColor: const Color.fromARGB(123, 255, 255, 255),
-        // focusColor: Color(0xFF0097b2),
-        labelText: widget.text, 
-        labelStyle: TextStyle(fontSize: 16,
-                              color: Colors.grey),
+        labelText: widget.text,
+        labelStyle: TextStyle(fontSize: 16, color: Colors.grey),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20.0),
           borderSide: BorderSide(
             color: Colors.grey,
             width: 1.5,
-          )
+          ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20.0),
@@ -83,9 +82,7 @@ class _PasswordFieldState extends State<PasswordField> with RestorationMixin {
           ),
         ),
         filled: true,
-        prefixIcon: Icon(Icons.lock, color: Colors.grey,),
-        /* hintText: localizations.demoTextFieldYourEmailAddress,
-        labelText: localizations.demoTextFieldEmail, */
+        prefixIcon: Icon(Icons.lock, color: Colors.grey),
       ),
 
       key: widget.fieldKey,
@@ -94,6 +91,7 @@ class _PasswordFieldState extends State<PasswordField> with RestorationMixin {
       onSaved: widget.onSaved,
       validator: widget.validator,
       onFieldSubmitted: widget.onFieldSubmitted,
+      controller: widget.controller,
     );
   }
 }
