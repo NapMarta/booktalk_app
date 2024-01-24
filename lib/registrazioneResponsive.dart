@@ -21,13 +21,16 @@ class _RegistrazioneResponsiveState extends State<RegistrazioneResponsive> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confermaPasswordController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   FocusNode email = FocusNode();
 
   String? validatePassword(String? value) {
     if (value == null || value.isEmpty) {
+      //mostraErrore(context, 'Inserisci una password');
       return 'Inserisci una password';
     } else if (value.length < 6) {
+      //mostraErrore(context, 'La password deve essere lunga almeno 6 caratteri');
       return 'La password deve essere lunga almeno 6 caratteri';
     }
     return null;
@@ -35,8 +38,10 @@ class _RegistrazioneResponsiveState extends State<RegistrazioneResponsive> {
 
   String? validateEmail(String? value) {
     if (value == null || value.isEmpty) {
+      //mostraErrore(context, 'Inserisci un indirizzo email');
       return 'Inserisci un indirizzo email';
     } else if (!RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$').hasMatch(value)) {
+      //mostraErrore(context, 'Inserisci un indirizzo email valido');
       return 'Inserisci un indirizzo email valido';
     }
     return null;
@@ -44,6 +49,7 @@ class _RegistrazioneResponsiveState extends State<RegistrazioneResponsive> {
 
   String? validateNome(String? value) {
     if (value == null || value.isEmpty) {
+      //mostraErrore(context, 'Inserisci un nome');
       return 'Inserisci un nome';
     }
     return null;
@@ -51,6 +57,7 @@ class _RegistrazioneResponsiveState extends State<RegistrazioneResponsive> {
 
   String? validateCognome(String? value) {
     if (value == null || value.isEmpty) {
+      //mostraErrore(context, 'Inserisci un cognome');
       return 'Inserisci un cognome';
     }
     return null;
@@ -58,8 +65,10 @@ class _RegistrazioneResponsiveState extends State<RegistrazioneResponsive> {
 
   String? validateConfermaPassword(String? value) {
     if (value == null || value.isEmpty) {
+      //mostraErrore(context, 'Conferma la password');
       return 'Conferma la password';
     } else if (value != passwordController.text) {
+      //mostraErrore(context, 'Le password inserite non corrispondono');
       return 'Le password inserite non corrispondono';
     }
     return null;
@@ -165,6 +174,8 @@ class _RegistrazioneResponsiveState extends State<RegistrazioneResponsive> {
           top: mediaQueryData.size.height * 0.02,
           bottom: mediaQueryData.size.height * 0.05,
         ),
+        child: Form( 
+          key: _formKey,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -280,50 +291,49 @@ class _RegistrazioneResponsiveState extends State<RegistrazioneResponsive> {
             SizedBox(height: 20,),
             ElevatedButton(
               onPressed: () async {
-                // Validazione dei parametri
-                final validationError = registrazione.validateParameters(
-                  Utente(
-                    nome: nomeController.text,
-                    cognome: cognomeController.text,
-                    email: emailController.text,
-                    password: passwordController.text,
-                  ),
-                  confermaPasswordController.text,
-                );
+                if (_formKey.currentState!.validate()){
+                  final validationError = registrazione.validateParameters(
+                    Utente(
+                      nome: nomeController.text,
+                      cognome: cognomeController.text,
+                      email: emailController.text,
+                      password: passwordController.text,
+                    ),
+                    confermaPasswordController.text,
+                  );
 
-                if (validationError.isNotEmpty) {
-                  // Visualizza un messaggio di errore
-                  // Implementa la gestione degli errori in base al tuo layout
-                  mostraErrore(context, validationError['error']);
-                  print(validationError['error']);
-                  return;
+                  if (validationError.isNotEmpty) {
+                    mostraErrore(context, validationError['error']);
+                    print(validationError['error']);
+                    return;
+                  }
+
+                  // Effettua la registrazione
+                  final risultato = await registrazione.registrati(
+                    Utente(
+                      nome: nomeController.text,
+                      cognome: cognomeController.text,
+                      email: emailController.text,
+                      password: passwordController.text,
+                    ),
+                    confermaPasswordController.text
+                  );
+
+
+                  if (risultato.containsKey('success')) {
+                    // Se la registrazione è avvenuta con successo
+                    registrazioneOK(context, risultato['success']);
+                    Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => LoginResponsive(),
+                        ),
+                    ); 
+                  } else if (risultato.containsKey('error')) {
+                    // Se c'è stato un errore durante la registrazione
+                    mostraErrore(context, risultato['error']);
+                  }
+                  print(risultato);
                 }
-
-                // Effettua la registrazione
-                final risultato = await registrazione.registrati(
-                  Utente(
-                    nome: nomeController.text,
-                    cognome: cognomeController.text,
-                    email: emailController.text,
-                    password: passwordController.text,
-                  ),
-                  confermaPasswordController.text
-                );
-
-
-                if (risultato.containsKey('success')) {
-                  // Se la registrazione è avvenuta con successo
-                  registrazioneOK(context, risultato['success']);
-                  Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => LoginResponsive(),
-                      ),
-                  ); 
-                } else if (risultato.containsKey('error')) {
-                  // Se c'è stato un errore durante la registrazione
-                  mostraErrore(context, risultato['error']);
-                }
-                print(risultato);
               },
               style: ButtonStyle(
                 fixedSize: MaterialStateProperty.all(Size(buttonWidth(mediaQueryData.size.width, mediaQueryData.size.height), 55)),
@@ -338,6 +348,7 @@ class _RegistrazioneResponsiveState extends State<RegistrazioneResponsive> {
               child: Text('Registrati', style: TextStyle(color: Colors.white)),
             ),
           ],
+        ),
         ),
       ),
     );
