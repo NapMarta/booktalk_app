@@ -84,7 +84,7 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
                     "Espressioni Matematiche",
                     "Scansiona o inserisci l'espressione matematica e BookTalk ti aiuterà nella risoluzione.",
                     () {
-                      getImageFromCamera();
+                      getImageFromCameraEspressioni();
                     },
                     Color(0xFFf0bc5e),
                     mediaQueryData.size.height,
@@ -181,7 +181,7 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
     );
   }
 
-  Future getImageFromCamera() async {
+  Future getImageFromCameraEspressioni() async {
     final image = await ImagePicker().pickImage(source: ImageSource.camera);
 
     if(image == null) return;
