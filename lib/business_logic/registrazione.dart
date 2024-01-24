@@ -9,18 +9,26 @@ class Registrazione implements RegistrazioneService{
   Registrazione(this.baseUrl) : utenteDao = UtenteDao(baseUrl);
 
   Map<String, dynamic> validateParameters(Utente utente, String confermaPassword){
+    
     if (utente.password == confermaPassword){
+
+      if (utente.nome.length <1)
+        return {'error': 'Inserisci un nome valido'};
+
+      if (utente.cognome.length <1)
+        return {'error': 'Inserisci un cognome valido'};
+
       if (!isValidEmail(utente.email)) {
-        return {'error': 'Formato email non valido.'};
+        return {'error': 'Inserisci un indirizzo email valido'};
       }
 
       if (!isValidPassword(utente.password)) {
-        return {'error': 'Formato password non valido.'};
+        return {'error': 'La password deve essere lunga almeno 6 caratteri'};
       }
       return {};
     }
     else {
-      return{'error': 'Le password non coincidono'};
+      return{'error': 'Le password inserite non coincidono'};
     }
   }
 
