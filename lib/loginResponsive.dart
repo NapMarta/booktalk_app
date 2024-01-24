@@ -1,3 +1,4 @@
+import 'package:booktalk_app/main.dart';
 import 'package:booktalk_app/widget/PasswordField.dart';
 import 'package:booktalk_app/homepageResponsive.dart';
 import 'package:booktalk_app/registrazioneResponsive.dart';
@@ -17,7 +18,12 @@ class _LoginResponsiveState extends State<LoginResponsive> {
     var mediaQueryData = MediaQuery.of(context);
     FocusNode email = FocusNode();
 
-    return Scaffold(
+    return WillPopScope(
+      onWillPop: () async {
+        // Restituisci 'false' per impedire la navigazione indietro.
+        return false;
+      },
+    child: Scaffold(
       backgroundColor: Colors.white,
 
       // ----- HEADER -----
@@ -28,7 +34,11 @@ class _LoginResponsiveState extends State<LoginResponsive> {
           child: IconButton(
             icon: Icon(Icons.arrow_back_ios_new_rounded, color: Color(0xFF0097b2),), // Icona personalizzata
             onPressed: () {
-              Navigator.of(context).pop(); // Torna indietro alla schermata precedente
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => BookTalkApp(),
+                ),
+              ); 
             },
             //iconSize: 25,
             // iconSize: iconSize(mediaQueryData.size.width, mediaQueryData.size.height, 0.005),
@@ -172,6 +182,7 @@ class _LoginResponsiveState extends State<LoginResponsive> {
           ]
         ),
       ),
+    ),
     );
   }
 }
