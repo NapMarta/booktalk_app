@@ -1,6 +1,8 @@
+import 'package:booktalk_app/utils.dart';
 import 'package:booktalk_app/widget/espressioniResponsive.dart';
 import 'package:booktalk_app/widget/header.dart';
 import 'package:flutter/material.dart';
+import 'package:math_expressions/math_expressions.dart';
 import 'package:math_keyboard/math_keyboard.dart';
     
 class WriteExpression extends StatefulWidget {
@@ -13,6 +15,9 @@ class WriteExpression extends StatefulWidget {
 class _WriteExpressionState extends State<WriteExpression> {
   @override
   Widget build(BuildContext context) {
+    // variabile che indica le informazioni correnti del dispositivo
+    var mediaQueryData = MediaQuery.of(context);
+
     return SafeArea(
       left: true,
       right: true,
@@ -33,7 +38,9 @@ class _WriteExpressionState extends State<WriteExpression> {
               ),
             ),
             backgroundColor: Colors.white,
-            body: ListView(
+            body: Column(
+              //mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 /*
                 const Padding(
@@ -41,15 +48,44 @@ class _WriteExpressionState extends State<WriteExpression> {
                   child: TextField(),
                 ),*/
                 Padding(
-                  padding: EdgeInsets.all(16),
+                  padding: EdgeInsets.only(top: mediaQueryData.size.height * 0.2,
+                                          left: 20,
+                                          right: 20 ),
                   child: MathField(
                     keyboardType: MathKeyboardType.expression, // Specify the keyboard type (expression or number only).
                     variables: const ['x', '='], // Specify the variables the user can use (only in expression mode).
-                    decoration: const InputDecoration(), // Decorate the input field using the familiar InputDecoration.
+                    decoration: const InputDecoration(
+                      labelText: 'Espressione',
+
+                      fillColor: Colors.white,
+                      labelStyle: TextStyle(fontSize:  16, 
+                                            color: Colors.grey),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        borderSide: BorderSide(
+                          color: Colors.grey,
+                          width: 1.5,
+                        )
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        borderSide: BorderSide(
+                          color: Colors.grey,
+                          width: 1.5,
+                        ),
+                      ),
+                      filled: true,
+                      prefixIcon: Icon(Icons.calculate , color: Colors.grey,),
+                    ), // Decorate the input field using the familiar InputDecoration.
                     //onChanged: (String value) {}, // Respond to changes in the input field.
                     
                     onSubmitted: (value) {
                       print(value);
+                      
+                      /*final mathExpression = TeXParser(value).parse();
+                      final texNode = convertMathExpressionToTeXNode(mathExpression);
+                      print(mathExpression);
+                      */
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => EspressioniResponsive(value: value),
