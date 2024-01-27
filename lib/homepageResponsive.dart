@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:booktalk_app/expression_recognition.dart';
-import 'package:booktalk_app/widget/espressioniResponsive.dart';
 import 'package:booktalk_app/widget/header.dart';
 import 'package:booktalk_app/libreriaResponsive.dart';
 import 'package:booktalk_app/utils.dart';

@@ -1,5 +1,5 @@
 import 'package:booktalk_app/utils.dart';
-import 'package:booktalk_app/widget/espressioniResponsive.dart';
+import 'package:booktalk_app/espressioniResponsive.dart';
 import 'package:booktalk_app/widget/header.dart';
 import 'package:flutter/material.dart';
 import 'package:math_expressions/math_expressions.dart';
@@ -53,7 +53,7 @@ class _WriteExpressionState extends State<WriteExpression> {
                                           right: 20 ),
                   child: MathField(
                     keyboardType: MathKeyboardType.expression, // Specify the keyboard type (expression or number only).
-                    variables: const ['x', '='], // Specify the variables the user can use (only in expression mode).
+                    variables: const ['x', '=', '>', '<'], // Specify the variables the user can use (only in expression mode).
                     decoration: const InputDecoration(
                       labelText: 'Espressione',
 
