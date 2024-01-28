@@ -3,6 +3,7 @@ import 'package:booktalk_app/expression_recognition.dart';
 import 'package:booktalk_app/widget/header.dart';
 import 'package:booktalk_app/libreriaResponsive.dart';
 import 'package:booktalk_app/utils.dart';
+import 'package:booktalk_app/writeExpression.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -88,8 +89,16 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
                   _buildFeatureCard("assets/1.png", "Espressioni Matematiche",
                       "Scansiona o inserisci l'espressione matematica e BookTalk ti aiuterà nella risoluzione.",
                       () {
-                    getImageFromCameraEspressioni();
-                  }, Color(0xFFf0bc5e), mediaQueryData.size.height,
+                        //getImageFromCameraEspressioni();
+                        
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => WriteExpression(),
+                          ),
+                        );
+                        
+                      },
+                      Color(0xFFf0bc5e), mediaQueryData.size.height,
                       mediaQueryData.size.width),
 
                   // spazio tra i pulsanti
