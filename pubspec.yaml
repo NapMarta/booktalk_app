@@ -56,6 +56,10 @@ dependencies:
   multi_split_view: ^2.4.0
   # tastiera matematica
   math_keyboard: ^0.2.1
+  # chat
+  provider: ^6.0.5
+  flutter_svg: ^2.0.5
+  flutter_chat_bubble: ^2.0.2
 
 
 
@@ -88,6 +92,7 @@ flutter:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
   assets:
+    - assets/icons/
     - assets/logo_Sfondo.jpg
     - assets/logo_noSfondo.png
     - assets/person-icon.png
@@ -100,8 +105,6 @@ flutter:
     - assets/sfondo.png
     - assets/icona-studia-argomento.GIF
     - assets/linea.png
-    - assets/grafico1.png
-    - assets/grafico2.png
     - assets/scritta_noSfondo.png
     - assets/logout.png
     - assets/sfondo2.jpg

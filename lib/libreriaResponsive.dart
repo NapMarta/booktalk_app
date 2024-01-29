@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:booktalk_app/chatResponsive.dart';
 import 'package:booktalk_app/extract_text.dart';
 import 'package:booktalk_app/widget/ExpandableFloatingActionButton.dart';
 import 'package:booktalk_app/utils.dart';
@@ -177,6 +178,11 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
                               getImageFromCameraOpera();
                             }
                             else if(widget.is3){
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => ChatResponsive(),
+                                ),
+                              );
                             }else{
                               _showDialog(context, 'Libro $index', "assets/libro${(index % 7)+1}.jpg", mediaQueryData);
                             }
@@ -328,6 +334,11 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
                               child: GestureDetector(
                                 onTap: () { 
                                   // terza funzionalità
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => ChatResponsive(),
+                                    ),
+                                  );
                                 },
                                 child: Container(
                                   //width: (width*0.5)/2,
