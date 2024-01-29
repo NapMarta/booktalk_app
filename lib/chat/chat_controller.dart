@@ -1,9 +1,19 @@
 import 'package:booktalk_app/chat/chat.dart';
+import 'package:booktalk_app/chat/chat_message_type.dart';
 import 'package:flutter/material.dart';
+import 'chatPDF.dart';
 
 class ChatController extends ChangeNotifier {
   /* Variables */
-  List<Chat> chatList = Chat.generate();
+  List<Chat> chatList = [
+    Chat(
+        message: "Hello!",
+        type: ChatMessageType.received,
+        time: DateTime.now(),
+      ),
+  ];
+
+  ChatPDF chat = ChatPDF();
 
   /* Controllers */
   late final ScrollController scrollController = ScrollController();
@@ -19,6 +29,17 @@ class ChatController extends ChangeNotifier {
     chatList = [
       ...chatList,
       Chat.sent(message: textEditingController.text),
+    ];
+
+    String risposta = chat.askChatPDF(textEditingController.text) as String;
+
+    chatList = [
+      ...chatList,
+      Chat(
+        message: risposta,
+        type: ChatMessageType.received,
+        time: DateTime.now(),
+      ),
     ];
 
     // 2. 스크롤 최적화 위치
