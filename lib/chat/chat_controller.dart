@@ -31,16 +31,7 @@ class ChatController extends ChangeNotifier {
       Chat.sent(message: textEditingController.text),
     ];
 
-    String risposta = chat.askChatPDF(textEditingController.text) as String;
-
-    chatList = [
-      ...chatList,
-      Chat(
-        message: risposta,
-        type: ChatMessageType.received,
-        time: DateTime.now(),
-      ),
-    ];
+    scriviRisposta(textEditingController.text);
 
     // 2. 스크롤 최적화 위치
     // 가장 위에 스크롤 된 상태에서 채팅을 입력했을 때 최근 submit한 채팅 메세지가 보이도록
@@ -56,6 +47,35 @@ class ChatController extends ChangeNotifier {
   }
 
   void onFieldChanged(String term) {
+    notifyListeners();
+  }
+
+  void scriviRisposta (String richiesta) async{
+    Future<String> risposta = chat.askChatPDF(richiesta);
+    String risp = "";
+    while (!(risposta is  String)){
+      chatList = [
+        ...chatList,
+        Chat(
+          message: "...",
+          type: ChatMessageType.received,
+          time: DateTime.now(),
+        ),
+      ];
+      notifyListeners();
+    }
+
+    risp= risposta.toString();
+
+    chatList = [
+      ...chatList,
+      Chat(
+        message: risp,
+        type: ChatMessageType.received,
+        time: DateTime.now(),
+      ),
+    ];
+
     notifyListeners();
   }
 
