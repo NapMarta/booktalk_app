@@ -6,18 +6,17 @@ class EspressioniResponsive extends StatefulWidget {
   final List<String> step;
   var element = 0;
 
-  
-
-  String getDescription(){
-    String s ="";
-    if(element != 0){
+  String getDescription() {
+    String s = "";
+    if (element != 0) {
       element++;
     }
 
     while (isTextStep(step[element])) {
       s += step[element];
       element++;
-    };
+    }
+    ;
     return s;
   }
 
@@ -27,11 +26,10 @@ class EspressioniResponsive extends StatefulWidget {
 }
 
 class _EspressioniResponsiveState extends State<EspressioniResponsive> {
-
   @override
   Widget build(BuildContext context) {
     var mediaQueryData = MediaQuery.of(context);
-    
+
     //var stepSoluzioni = List.generate(10);
 
     return SafeArea(
@@ -55,12 +53,13 @@ class _EspressioniResponsiveState extends State<EspressioniResponsive> {
             ),
             backgroundColor: Colors.white,
             body: ListView.builder(
+              itemCount: widget.step.length,
               padding: EdgeInsets.only(top: 20),
               scrollDirection: Axis.vertical,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
-                  // padding: EdgeInsets.only(top: 20),
-                  // height: 100,
+                  padding: EdgeInsets.only(top: 20),
+                  height: 100,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -76,6 +75,7 @@ class _EspressioniResponsiveState extends State<EspressioniResponsive> {
                       SizedBox(
                         height: 10,
                       ),
+                      /*
                       Text(
                         widget.getDescription(),
                         textAlign: TextAlign.center,
@@ -92,12 +92,12 @@ class _EspressioniResponsiveState extends State<EspressioniResponsive> {
                             ),
                           ],
                         ),
-                      ),
+                      ),*/
                       SizedBox(
                         height: 10,
                       ),
                       Text(
-                        widget.step[widget.element],
+                        widget.step[index],
                         textAlign: TextAlign.center,
                         style: TextStyle(fontSize: 14),
                       ),
@@ -125,6 +125,4 @@ class _EspressioniResponsiveState extends State<EspressioniResponsive> {
       ),
     );
   }
-
-  
 }

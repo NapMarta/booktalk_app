@@ -89,14 +89,14 @@ Future<List<String>> risolviEspressione(String value) async {
       } else {
         testo = testo.replaceAll('|', '');
         print(testo);
-        for (int i = 0; i < testo.length; i++) {
+        for (int i = 0; testo != "|"; i++) {
           if (testo[i] == '\n') {
             step.add(testo.substring(indiceInizio, i));
             indiceInizio = i + 1; // Ignora il carattere '\n' stesso
           }
         }
         // Aggiungi l'ultima riga
-        step.add(testo.substring(indiceInizio));
+        step.add(testo.substring(indiceInizio + 2));
         // Stampa le righe
         print(step);
       }
@@ -133,7 +133,7 @@ class _GetExpression extends State<GetExpression> {
             return Text("something is wrong!");
           } else if (yourlistofstringresult.connectionState ==
               ConnectionState.done) {
-            List<String> data = yourlistofstringresult.data as List<String>; 
+            List<String> data = yourlistofstringresult.data as List<String>;
             return EspressioniResponsive(step: data);
           } else {
             return SafeArea(
@@ -156,19 +156,26 @@ class _GetExpression extends State<GetExpression> {
                 body: Center(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children:[
-                      SizedBox(height: mediaQueryData.size.height * 0.15,),
+                    children: [
+                      SizedBox(
+                        height: mediaQueryData.size.height * 0.15,
+                      ),
                       Text(
-                        "Calcolo dell'espressione inserita in corso", 
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        "Calcolo dell'espressione inserita in corso",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
                         textAlign: TextAlign.center,
                       ),
-                      SizedBox(height: mediaQueryData.size.height * 0.15,),
-                      CircularProgressIndicator(color: Color(0xFF0097b2), ),
+                      SizedBox(
+                        height: mediaQueryData.size.height * 0.15,
+                      ),
+                      CircularProgressIndicator(
+                        color: Color(0xFF0097b2),
+                      ),
                     ],
                   ),
-                ), 
-              ),  
+                ),
+              ),
             );
           }
         });
