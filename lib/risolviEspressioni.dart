@@ -11,13 +11,18 @@ Future<List<String>> risolviEspressione(String value) async {
   WidgetsFlutterBinding.ensureInitialized();
 
   List<String> step = [];
+  String sourceId = '';
 
   try {
     final apiUrl =
         Uri.parse('http://130.61.22.178:9000/wolframalpha/show_step');
 
-    var request = http.MultipartRequest('POST', apiUrl)
-      ..fields['query'] = value;
+    final response = await http.post(apiUrl,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'query': value}));
+
+    //var request = http.MultipartRequest('POST', apiUrl)
+    //  ..fields['query'] = value;
     /*
   var body = {'query': value};
 
@@ -30,11 +35,7 @@ Future<List<String>> risolviEspressione(String value) async {
 
       print("aaa");
       final Map<String, dynamic> data = json.decode(response.body);
-      String extractedText;
-
-      print(data);
-      int indiceInizio = 0;
-      String testo = data['text'];
+       v
 
       print(testo);
 
@@ -59,38 +60,34 @@ Future<List<String>> risolviEspressione(String value) async {
     }
   }).catchError((error) {
     print('Errore durante l\'invio della richiesta: $error');
-  });*/
+  });
 
     // Crea una richiesta multipart per inviare l'immagine
     //var request = http.MultipartRequest('GET', apiUrl);
 
     //Aggiunta dell'espressione come parametro
     //request.fields['query'] = value;
-
-    print("fff");
-
-    // Invia la richiesta
-    var response = await request.send();
+    */
 
     print(response.headers);
 
-    /*
     // Gestisci la risposta
     if (response.statusCode == 200) {
       print("aaa");
-      final Map<String, dynamic> data = json.decode(response.);
-      String extractedText;
-
+      final data = jsonDecode(response.body);
       print(data);
-      int indiceInizio = 0;
-      String testo = data['text'];
+      String testo = data['step'];
+      String vuoto;
 
       print(testo);
+      int indiceInizio = 0;
+      //String testo = data['text'];
 
-      if (data['text'] ==
-          "La soluzione non appartiene all'insieme dei numeri reali!") {
-        extractedText = data['text'];
+      if (testo.isEmpty) {
+        vuoto = "La soluzione non appartiene all'insieme dei numeri reali!";
       } else {
+        testo = testo.replaceAll('|', '');
+        print(testo);
         for (int i = 0; i < testo.length; i++) {
           if (testo[i] == '\n') {
             step.add(testo.substring(indiceInizio, i));
@@ -105,7 +102,6 @@ Future<List<String>> risolviEspressione(String value) async {
     } else {
       print('Errore nella richiesta API: ${response.statusCode}');
     }
-    */
   } catch (e) {
     print('Errore: $e');
   }
