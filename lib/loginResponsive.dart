@@ -77,7 +77,7 @@ class _LoginResponsiveState extends State<LoginResponsive> {
           children: <Widget>[
 
             // ----- LOGO -----
-            Image.asset('assets/logo_noSfondo.png', height: logoSize(mediaQueryData.size.width, mediaQueryData.size.height, 0.2)),
+            Image.asset('assets/logo_noSfondo.png', height: logoSize(mediaQueryData.size.width, mediaQueryData.size.height, 0.15)),
             SizedBox(height: isTabletOrizzontale(mediaQueryData) ? 6 : 40),
 
             // ----- EMAIL -----
