@@ -1,5 +1,6 @@
 library flutter_chat_bubble;
 
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:booktalk_app/chat/chat.dart';
 import 'package:booktalk_app/chat/chat_message_type.dart';
 import 'package:booktalk_app/chat/formatter.dart';
@@ -46,10 +47,17 @@ class Bubble extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: crossAlignmentOnType,
                 children: [
-                  Text(
-                    chat.message,
-                    style: TextStyle(color: textColorOnType),
-                  ),
+                  chat.message == "Sto elaborando la risposta..."
+                    ? DefaultTextStyle(
+                      style: TextStyle(color: textColorOnType),
+                      child: AnimatedTextKit(
+                        animatedTexts:[
+                          TyperAnimatedText(chat.message),
+                        ]))
+                    : Text(
+                      chat.message,
+                      style: TextStyle(color: textColorOnType),
+                    ),
                   const SizedBox(
                     height: 8,
                   ),

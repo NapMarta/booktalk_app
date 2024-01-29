@@ -11,6 +11,7 @@ class Chat {
   factory Chat.sent({required message}) =>
       Chat(message: message, type: ChatMessageType.sent, time: DateTime.now());
 
+  /*
   static List<Chat> generate() {
     return [
       Chat(
@@ -114,7 +115,7 @@ class Chat {
         time: DateTime.now(),
       ),
     ];
-  }
+  }*/
 
 
 // static List<Chat> generate() {

@@ -69,7 +69,7 @@ class ChatController extends ChangeNotifier {
       chatList = [
         ...chatList,
         Chat(
-          message: value,
+          message: value.toString(),
           type: ChatMessageType.received,
           time: DateTime.now(),
         ),

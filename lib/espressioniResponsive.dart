@@ -37,7 +37,6 @@ class _EspressioniResponsiveState extends State<EspressioniResponsive> {
             ),
             backgroundColor: Colors.white,
             body: ListView.builder(
-              itemCount: 20,
               scrollDirection: Axis.vertical,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
