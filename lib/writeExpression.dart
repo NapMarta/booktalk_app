@@ -33,7 +33,7 @@ class _WriteExpressionState extends State<WriteExpression> {
               preferredSize: Size.fromHeight(kToolbarHeight),
               child: Header(
                 iconProfile: Image.asset('assets/person-icon.png'),
-                text: "Inserisci l'espressione matematica",
+                text: "Espressione matematica",
                 isHomePage: false,
                 isProfilo: false,
               ),
@@ -43,14 +43,17 @@ class _WriteExpressionState extends State<WriteExpression> {
               //mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                /*
-                const Padding(
-                  padding: EdgeInsets.all(16),
-                  child: TextField(),
-                ),*/
+                Padding(
+                  padding: EdgeInsets.only(top: mediaQueryData.size.height * 0.1),
+                  child: Text(
+                    "Inserisci un'equazione o una disequazione", 
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,), 
+                    textAlign: TextAlign.center,
+                  ),
+                ),
                 Padding(
                   padding: EdgeInsets.only(
-                      top: mediaQueryData.size.height * 0.2,
+                      top: mediaQueryData.size.height * 0.1,
                       left: 20,
                       right: 20),
                   child: MathField(
