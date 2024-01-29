@@ -1,19 +1,37 @@
+import 'package:booktalk_app/utils.dart';
 import 'package:booktalk_app/widget/header.dart';
 import 'package:flutter/material.dart';
 
 class EspressioniResponsive extends StatefulWidget {
   final List<String> step;
+  var element = 0;
 
-  const EspressioniResponsive({required this.step});
+  
 
+  String getDescription(){
+    String s ="";
+    if(element != 0){
+      element++;
+    }
+
+    while (isTextStep(step[element])) {
+      s += step[element];
+      element++;
+    };
+    return s;
+  }
+
+  EspressioniResponsive({required this.step});
   @override
   _EspressioniResponsiveState createState() => _EspressioniResponsiveState();
 }
 
 class _EspressioniResponsiveState extends State<EspressioniResponsive> {
+
   @override
   Widget build(BuildContext context) {
     var mediaQueryData = MediaQuery.of(context);
+    
     //var stepSoluzioni = List.generate(10);
 
     return SafeArea(
@@ -37,11 +55,12 @@ class _EspressioniResponsiveState extends State<EspressioniResponsive> {
             ),
             backgroundColor: Colors.white,
             body: ListView.builder(
+              padding: EdgeInsets.only(top: 20),
               scrollDirection: Axis.vertical,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
-                  padding: EdgeInsets.only(top: 20),
-                  height: 100,
+                  // padding: EdgeInsets.only(top: 20),
+                  // height: 100,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -58,7 +77,7 @@ class _EspressioniResponsiveState extends State<EspressioniResponsive> {
                         height: 10,
                       ),
                       Text(
-                        widget.step[2 * index],
+                        widget.getDescription(),
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontFamily: 'Roboto',
@@ -78,7 +97,7 @@ class _EspressioniResponsiveState extends State<EspressioniResponsive> {
                         height: 10,
                       ),
                       Text(
-                        widget.step[(2 * index) + 1],
+                        widget.step[widget.element],
                         textAlign: TextAlign.center,
                         style: TextStyle(fontSize: 14),
                       ),
@@ -106,4 +125,6 @@ class _EspressioniResponsiveState extends State<EspressioniResponsive> {
       ),
     );
   }
+
+  
 }

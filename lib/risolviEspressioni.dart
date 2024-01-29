@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:booktalk_app/espressioniResponsive.dart';
+import 'package:booktalk_app/widget/header.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async' show Future;
@@ -121,6 +122,8 @@ class GetExpression extends StatefulWidget {
 class _GetExpression extends State<GetExpression> {
   @override
   Widget build(BuildContext context) {
+    var mediaQueryData = MediaQuery.of(context);
+
     return FutureBuilder(
         // initialize flutterfire:
         future: risolviEspressione(widget.exp),
@@ -130,10 +133,43 @@ class _GetExpression extends State<GetExpression> {
             return Text("something is wrong!");
           } else if (yourlistofstringresult.connectionState ==
               ConnectionState.done) {
-            List<String> data = yourlistofstringresult.data as List<String>; //
+            List<String> data = yourlistofstringresult.data as List<String>; 
             return EspressioniResponsive(step: data);
           } else {
-            return CircularProgressIndicator();
+            return SafeArea(
+              left: true,
+              right: true,
+              bottom: false,
+              top: true,
+              child: Scaffold(
+                // ----- HEADER -----
+                appBar: PreferredSize(
+                  preferredSize: Size.fromHeight(kToolbarHeight),
+                  child: Header(
+                    iconProfile: Image.asset('assets/person-icon.png'),
+                    text: "",
+                    isHomePage: false,
+                    isProfilo: false,
+                  ),
+                ),
+                backgroundColor: Colors.white,
+                body: Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children:[
+                      SizedBox(height: mediaQueryData.size.height * 0.15,),
+                      Text(
+                        "Calcolo dell'espressione inserita in corso", 
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: mediaQueryData.size.height * 0.15,),
+                      CircularProgressIndicator(color: Color(0xFF0097b2), ),
+                    ],
+                  ),
+                ), 
+              ),  
+            );
           }
         });
   }
