@@ -52,31 +52,28 @@ class ChatController extends ChangeNotifier {
 
   void scriviRisposta (String richiesta) async{
     Future<String> risposta = chat.askChatPDF(richiesta);
-    String risp = "";
-    while (!(risposta is  String)){
+
+    chatList = [
+        ...chatList,
+        Chat(
+          message: "Sto elaborando la risposta...",
+          type: ChatMessageType.received,
+          time: DateTime.now(),
+        ),
+    ];
+
+    risposta.then((value) {
+      chatList.removeLast();
       chatList = [
         ...chatList,
         Chat(
-          message: "...",
+          message: value,
           type: ChatMessageType.received,
           time: DateTime.now(),
         ),
       ];
       notifyListeners();
-    }
-
-    risp= risposta.toString();
-
-    chatList = [
-      ...chatList,
-      Chat(
-        message: risp,
-        type: ChatMessageType.received,
-        time: DateTime.now(),
-      ),
-    ];
-
-    notifyListeners();
+    });
   }
 
   /* Getters */
