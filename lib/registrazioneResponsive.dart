@@ -179,7 +179,7 @@ class _RegistrazioneResponsiveState extends State<RegistrazioneResponsive> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Image.asset('assets/logo_noSfondo.png', height: logoSize(mediaQueryData.size.width, mediaQueryData.size.height, 0.2)),
+            Image.asset('assets/logo_noSfondo.png', height: logoSize(mediaQueryData.size.width, mediaQueryData.size.height, 0.15)),
             SizedBox(height: isTabletOrizzontale(mediaQueryData) ? 10 : 30),
             TextFormField(
               controller: nomeController,
