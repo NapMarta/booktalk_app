@@ -17,13 +17,14 @@ class ChatController extends ChangeNotifier {
 
   /* Controllers */
   late final ScrollController scrollController = ScrollController();
-  late final TextEditingController textEditingController =
+  late TextEditingController textEditingController =
       TextEditingController();
   late final FocusNode focusNode = FocusNode();
+  bool isProcessing = false; 
 
   /* Intents */
   Future<void> onFieldSubmitted() async {
-    if (!isTextFieldEnable) return;
+    if (!isTextFieldEnable || isProcessing) return;
 
     // 1. chat list에 첫 번째 배열 위치에 put
     chatList = [
@@ -51,6 +52,7 @@ class ChatController extends ChangeNotifier {
   }
 
   void scriviRisposta (String richiesta) async{
+    isProcessing = true;
     Future<String> risposta = chat.askChatPDF(richiesta);
 
     chatList = [
@@ -73,6 +75,7 @@ class ChatController extends ChangeNotifier {
         ),
       ];
       notifyListeners();
+      isProcessing = false;
     });
   }
 
