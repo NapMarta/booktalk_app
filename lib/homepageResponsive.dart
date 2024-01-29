@@ -89,16 +89,14 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
                   _buildFeatureCard("assets/1.png", "Espressioni Matematiche",
                       "Scansiona o inserisci l'espressione matematica e BookTalk ti aiuterà nella risoluzione.",
                       () {
-                        //getImageFromCameraEspressioni();
-                        
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => WriteExpression(),
-                          ),
-                        );
-                        
-                      },
-                      Color(0xFFf0bc5e), mediaQueryData.size.height,
+                    //getImageFromCameraEspressioni();
+
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => WriteExpression(),
+                      ),
+                    );
+                  }, Color(0xFFf0bc5e), mediaQueryData.size.height,
                       mediaQueryData.size.width),
 
                   // spazio tra i pulsanti
