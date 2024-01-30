@@ -10,7 +10,7 @@ class ChatPDF {
 
   Future<void> uploadPDF() async {
     
-    final apiEndpoint = 'http://130.61.22.178:9000/uploadPDF/./file.pdf';
+    final apiEndpoint = 'http://130.61.22.178:9000/uploadPDF/./I-libri-della-famiglia2.pdf';
     final response = await http.post(      
       Uri.parse(apiEndpoint),
       headers: {'Content-Type': 'application/json'},
@@ -24,12 +24,12 @@ class ChatPDF {
     }
   }
 
-  Future<String> askChatPDF(String userQuestion) async {
-    final apiEndpoint = 'http://130.61.22.178:9000/askChatPDF';
+  Future<String> askChatPDF(String userQuestion, List<int> pages) async {
+    final apiEndpoint = 'http://130.61.22.178:9000/askChatPDFwithPages';
     final response = await http.post(
       Uri.parse(apiEndpoint),
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'source_id': sourceId, 'user_question': userQuestion}),
+      body: jsonEncode({'source_id': sourceId, 'user_question': userQuestion, 'pages': pages}),
     );
 
     if (response.statusCode == 200) {
