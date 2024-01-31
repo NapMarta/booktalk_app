@@ -10,7 +10,7 @@ class ChatPDF {
 
   Future<void> uploadPDF() async {
     
-    final apiEndpoint = 'http://130.61.22.178:9000/uploadPDF/./I-libri-della-famiglia2.pdf';
+    final apiEndpoint = 'http://130.61.22.178:9000/uploadPDF/./Aforismi-novelle-e-profezie.pdf';
     final response = await http.post(      
       Uri.parse(apiEndpoint),
       headers: {'Content-Type': 'application/json'},

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'chatPDF.dart';
 
 class ChatController extends ChangeNotifier {
-  /* Variables */
+
   List<Chat> chatList = [
     Chat(
         message: "Indica la pagina iniziale dell'argomento che vuoi ripetere",
@@ -15,7 +15,7 @@ class ChatController extends ChangeNotifier {
 
   ChatPDF chat = ChatPDF();
 
-  /* Controllers */
+
   late final ScrollController scrollController = ScrollController();
   late TextEditingController textEditingController =
       TextEditingController();
@@ -24,12 +24,13 @@ class ChatController extends ChangeNotifier {
   bool isFirstResponse = true;
   bool isSecondResponse = false;
   List<int> pages = [0,0];
+  List<String> domande = [];
+  int numDomanda = -1;
+  bool messaggioRipetizione = false;
 
-  /* Intents */
   Future<void> onFieldSubmitted() async {
     if (!isTextFieldEnable || isProcessing) return;
 
-    // 1. chat list에 첫 번째 배열 위치에 put
     chatList = [
       ...chatList,
       Chat.sent(message: textEditingController.text),
@@ -61,9 +62,7 @@ class ChatController extends ChangeNotifier {
     richiesta = textEditingController.text.replaceAll("opera letteraria", "PDF");
     scriviRisposta(richiesta);
 
-    // 2. 스크롤 최적화 위치
-    // 가장 위에 스크롤 된 상태에서 채팅을 입력했을 때 최근 submit한 채팅 메세지가 보이도록
-    // 스크롤 위치를 가장 아래 부분으로 변경
+
     scrollController.animateTo(
       0,
       duration: const Duration(milliseconds: 300),
@@ -125,7 +124,7 @@ class ChatController extends ChangeNotifier {
       }
       else if (isSecondResponse){
         if(pages[1]>= pages[0]){
-          Future<String> risposta = chat.askChatPDF("Fammi una domanda per ripetere questo argomento", pages);
+          Future<String> risposta = chat.askChatPDF("Fammi due domande per ripetere questo argomento", pages);
 
           chatList = [
               ...chatList,
@@ -138,15 +137,19 @@ class ChatController extends ChangeNotifier {
 
           risposta.then((value) {
             value = value.replaceAll('PDF', 'libro');
+            domande = estraiDomande(value);
+            numDomanda=0;
+
             chatList.removeLast();
             chatList = [
               ...chatList,
               Chat(
-                message: value.toString(),
+                message: domande[numDomanda],
                 type: ChatMessageType.received,
                 time: DateTime.now(),
               ),
             ];
+            numDomanda++;
             notifyListeners();
             isProcessing = false;
             isSecondResponse = false;
@@ -167,7 +170,41 @@ class ChatController extends ChangeNotifier {
         }
       }
       else{
-        richiesta = richiesta+"?";
+        if (richiesta == "non lo so"){
+          if (numDomanda -1 < domande.length)
+            richiesta = domande[numDomanda-1];
+          else
+            richiesta = domande[numDomanda-2];
+        }
+        else if (richiesta == "no" && messaggioRipetizione){
+          chatList = [
+            ...chatList,
+            Chat(
+              message: "Ciao, buono studio!",
+              type: ChatMessageType.received,
+              time: DateTime.now(),
+            ),
+          ];
+          notifyListeners();
+          isProcessing = false;
+          return;
+        }
+        else if (richiesta == "si" && messaggioRipetizione){
+          chatList = [
+            ...chatList,
+            Chat(
+              message: "Fammi la domanda che vuoi",
+              type: ChatMessageType.received,
+              time: DateTime.now(),
+            ),
+          ];
+          notifyListeners();
+          isProcessing = false;
+          return;
+        }
+        else{
+          richiesta = richiesta+"?";
+        }
         Future<String> risposta = chat.askChatPDF(richiesta, pages);
 
         chatList = [
@@ -192,21 +229,35 @@ class ChatController extends ChangeNotifier {
           ];
           notifyListeners();
 
-          richiesta = "fammi un'altra domanda per ripetere questo argomento";
-          risposta = chat.askChatPDF(richiesta, pages);
-          risposta.then((value) {
-            value = value.replaceAll('PDF', 'libro');
+          if(numDomanda<domande.length){
+
             chatList = [
-              ...chatList,
-              Chat(
-                message: value.toString(),
-                type: ChatMessageType.received,
-                time: DateTime.now(),
-              ),
+                ...chatList,
+                Chat(
+                  message: domande[numDomanda],
+                  type: ChatMessageType.received,
+                  time: DateTime.now(),
+                ),
             ];
-            notifyListeners();
+              numDomanda++;
+              notifyListeners();
+              isProcessing = false;
+          }
+          else{
+            if (!messaggioRipetizione){
+              chatList = [
+                  ...chatList,
+                  Chat(
+                    message: "Hai terminato la ripetizione, hai qualche altra domanda da pormi?",
+                    type: ChatMessageType.received,
+                    time: DateTime.now(),
+                  ),
+              ];
+                notifyListeners();
+                messaggioRipetizione = true;
+            }
             isProcessing = false;
-          });
+          }
         });
       }
     }
@@ -215,3 +266,16 @@ class ChatController extends ChangeNotifier {
   /* Getters */
   bool get isTextFieldEnable => textEditingController.text.isNotEmpty;
 }
+
+  List<String> estraiDomande (String value){
+
+    RegExp regex = RegExp(r'\d+\.\s(.*?\?)');
+    Iterable<RegExpMatch> matches = regex.allMatches(value);
+
+    List<String> questions = [];
+    for (RegExpMatch match in matches) {
+      questions.add(match.group(1)!);
+    }
+
+    return questions;
+  }
