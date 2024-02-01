@@ -4,9 +4,10 @@ import 'package:booktalk_app/espressioniResponsive.dart';
 import 'package:booktalk_app/widget/header.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:async' show Future;
+import 'dart:async' show Future, runZonedGuarded;
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:typed_data';
+import 'package:talker_flutter/talker_flutter.dart';
 
 Future<List<String>> risolviEspressione(String value) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -74,18 +75,15 @@ Future<List<String>> risolviEspressione(String value) async {
 
     // Gestisci la risposta
     if (response.statusCode == 200) {
-      print("aaa");
       final data = jsonDecode(response.body);
       print(data);
       String testo = data['step'];
-      String vuoto;
 
       print(testo);
       int indiceInizio = 0;
-      //String testo = data['text'];
 
       if (testo.isEmpty) {
-        vuoto = "La soluzione non appartiene all'insieme dei numeri reali!";
+        return step;
       } else {
         testo = testo.replaceAll('|', '');
         print(testo);
@@ -130,11 +128,20 @@ class _GetExpression extends State<GetExpression> {
         builder: (context, yourlistofstringresult) {
           // check for errors
           if (yourlistofstringresult.hasError) {
-            return Text("something is wrong!");
+            return Text("Errore. Ti invitiamo a riprovare");
+            //AGGIUNGERE BOX CON MESSAGGIO DI ERRORE
           } else if (yourlistofstringresult.connectionState ==
               ConnectionState.done) {
             List<String> data = yourlistofstringresult.data as List<String>;
-            return EspressioniResponsive(step: data);
+
+            if (data.isEmpty) {
+              return MaterialApp(
+                title: 'Errore Equazione Matematica',
+                home: ErrorAlertPage(),
+              );
+            } else {
+              return EspressioniResponsive(step: data);
+            }
           } else {
             return SafeArea(
               left: true,
@@ -181,3 +188,90 @@ class _GetExpression extends State<GetExpression> {
         });
   }
 }
+
+//-----------------ERRORE-----------------
+
+class ErrorAlertPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: AlertDialog(
+          title: Text('Errore'),
+          content: Text(
+              'Equazione non valida o soluzione non appartenente all\'insieme dei numeri reali. Riprovare!'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                // Torna alla pagina precedente
+                Navigator.pop(context);
+              },
+              child: Text('OK'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/* class CustomErrorWidget extends StatelessWidget {
+  final String errorMessage =
+      "La soluzione non appartiene all'insieme dei numeri reali!";
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.error_outline,
+            color: Colors.red,
+            size: 50.0,
+          ),
+          SizedBox(height: 10.0),
+          Text(
+            'Errore!',
+            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(height: 10.0),
+          Text(
+            errorMessage,
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 16.0),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class MyWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: ElevatedButton(
+        onPressed: () {
+          // Mostra lo Snackbar con il messaggio di errore
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                  "La soluzione non appartiene all'insieme dei numeri reali!"),
+              duration: Duration(seconds: 3), // Durata del messaggio
+              action: SnackBarAction(
+                label: 'OK',
+                onPressed: () {
+                  ScaffoldMessenger.of(context)
+                      .hideCurrentSnackBar(); // Nasconde lo Snackbar
+                },
+              ),
+            ),
+          );
+        },
+        child: Text('Mostra messaggio di errore'),
+      ),
+    );
+  }
+}
+ */
