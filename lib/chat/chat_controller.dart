@@ -2,7 +2,6 @@ import 'package:booktalk_app/chat/chat.dart';
 import 'package:booktalk_app/chat/chat_message_type.dart';
 import 'package:flutter/material.dart';
 import 'chatPDF.dart';
-import 'dart:convert';
 
 class ChatController extends ChangeNotifier {
 
