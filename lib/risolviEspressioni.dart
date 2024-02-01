@@ -7,7 +7,6 @@ import 'package:http/http.dart' as http;
 import 'dart:async' show Future, runZonedGuarded;
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:typed_data';
-import 'package:talker_flutter/talker_flutter.dart';
 
 Future<List<String>> risolviEspressione(String value) async {
   WidgetsFlutterBinding.ensureInitialized();
