@@ -2,12 +2,13 @@ import 'package:booktalk_app/chat/chat.dart';
 import 'package:booktalk_app/chat/chat_message_type.dart';
 import 'package:flutter/material.dart';
 import 'chatPDF.dart';
+import 'dart:convert';
 
 class ChatController extends ChangeNotifier {
 
   List<Chat> chatList = [
     Chat(
-        message: "Indica la pagina iniziale dell'argomento che vuoi ripetere",
+        message: "Quale capitolo del libro vuoi ripetere?",
         type: ChatMessageType.received,
         time: DateTime.now(),
       ),
@@ -23,8 +24,10 @@ class ChatController extends ChangeNotifier {
   bool isProcessing = false; 
   bool isFirstResponse = true;
   bool isSecondResponse = false;
-  List<int> pages = [0,0];
+  String libro = "La-fabbrica";
+  int capitolo = -1;
   List<String> domande = [];
+  int domandeTot = -1;
   int numDomanda = -1;
   bool messaggioRipetizione = false;
 
@@ -38,27 +41,27 @@ class ChatController extends ChangeNotifier {
 
     if(isFirstResponse){
       try{
-        pages[0] = int.parse(textEditingController.text);
+        capitolo = int.parse(textEditingController.text);
       }
       on Exception catch(e){
         print(e);
-        textEditingController.text= "erroreINT";
+        textEditingController.text= "erroreINT_CAPITOLO";
       }
     }
     if (isSecondResponse){
       try{
-        pages[1] = int.parse(textEditingController.text);
-        print(pages);
+        domandeTot = int.parse(textEditingController.text);
       }
       on Exception catch(e){
         print(e);
-        textEditingController.text= "erroreINT";
+        textEditingController.text= "erroreINT_DOMANDE";
       }
     }
 
     String richiesta = textEditingController.text.replaceAll("libro", "PDF");
     richiesta = textEditingController.text.replaceAll("opera", "PDF");
     richiesta = textEditingController.text.replaceAll("testo", "PDF");
+    richiesta = textEditingController.text.replaceAll("capitolo", "PDF");
     richiesta = textEditingController.text.replaceAll("opera letteraria", "PDF");
     scriviRisposta(richiesta);
 
@@ -79,11 +82,23 @@ class ChatController extends ChangeNotifier {
 
   void scriviRisposta (String richiesta) async{
     isProcessing = true;
-    if (richiesta == "erroreINT"){
+    if (richiesta == "erroreINT_CAPITOLO"){
       chatList = [
         ...chatList,
         Chat(
-          message: "Scrivi solo il numero di pagina.\n Es. 20",
+          message: "Scrivi solo il numero del capitolo che vuoi ripetere. Es. 4",
+          type: ChatMessageType.received,
+          time: DateTime.now(),
+        ),
+      ];
+      notifyListeners();
+      isProcessing= false;
+    }
+    else if (richiesta == "erroreINT_DOMANDE"){
+      chatList = [
+        ...chatList,
+        Chat(
+          message: "Scrivi solo il numero di domande che vuoi ricevere. Es. 5",
           type: ChatMessageType.received,
           time: DateTime.now(),
         ),
@@ -93,11 +108,12 @@ class ChatController extends ChangeNotifier {
     }
     else{
       if (isFirstResponse){
-        if(pages[0]<0){
+        String path = "$libro/$capitolo.pdf";
+        if(capitolo<0){
           chatList = [
             ...chatList,
             Chat(
-              message: "Scrivi un valore corretto per la pagina iniziale",
+              message: "Scrivi un valore corretto per il capitolo da ripetere.",
               type: ChatMessageType.received,
               time: DateTime.now(),
             ),
@@ -109,22 +125,54 @@ class ChatController extends ChangeNotifier {
         }
         else{
           chatList = [
-            ...chatList,
-            Chat(
-              message: "Scrivi la pagina finale dell'argomento che vuoi ripetere",
-              type: ChatMessageType.received,
-              time: DateTime.now(),
-            ),
+                ...chatList,
+                Chat(
+                  message: "Sto elaborando la risposta...",
+                  type: ChatMessageType.received,
+                  time: DateTime.now(),
+                ),
           ];
-          isFirstResponse = false;
-          isSecondResponse = true;
-          isProcessing= false;
-          notifyListeners();
         }
+        Future<bool> isCapitoloOK = chat.uploadPDF(path);
+
+        isCapitoloOK.then((value) {
+
+          if(!value){
+            chatList.removeLast();
+            chatList = [
+              ...chatList,
+              Chat(
+                message: "Scrivi un valore corretto per il capitolo da ripetere.",
+                type: ChatMessageType.received,
+                time: DateTime.now(),
+              ),
+            ];
+            isFirstResponse = true;
+            isSecondResponse = false;
+            isProcessing= false;
+            notifyListeners();
+          }
+          else{
+            chatList.removeLast();
+            chatList = [
+              ...chatList,
+              Chat(
+                message: "Quante domande vuoi ricevere per ripetere questo capitolo?",
+                type: ChatMessageType.received,
+                time: DateTime.now(),
+              ),
+            ];
+            isFirstResponse = false;
+            isSecondResponse = true;
+            isProcessing= false;
+            notifyListeners();
+          }
+        });
       }
       else if (isSecondResponse){
-        if(pages[1]>= pages[0]){
-          Future<String> risposta = chat.askChatPDF("Fammi due domande per ripetere questo argomento", pages);
+        if(domandeTot>1 && domandeTot<11){
+
+          Future<String> risposta = chat.askChatPDF("Fammi $domandeTot domande per ripetere questo argomento");
 
           chatList = [
               ...chatList,
@@ -136,7 +184,7 @@ class ChatController extends ChangeNotifier {
           ];
 
           risposta.then((value) {
-            value = value.replaceAll('PDF', 'libro');
+            value = value.replaceAll('PDF', 'capitolo');
             domande = estraiDomande(value);
             numDomanda=0;
 
@@ -159,7 +207,7 @@ class ChatController extends ChangeNotifier {
           chatList = [
             ...chatList,
             Chat(
-              message: "Scrivi un valore corretto per la pagina finale",
+              message: "Scrivi un valore corretto per il numero di domande che vuoi ricevere.\nIl numero deve essere compreso tra 2 e 10.",
               type: ChatMessageType.received,
               time: DateTime.now(),
             ),
@@ -170,7 +218,7 @@ class ChatController extends ChangeNotifier {
         }
       }
       else{
-        if (richiesta == "non lo so"){
+        if (richiesta == "non lo so" || richiesta == "RISPOSTA"){
           if (numDomanda -1 < domande.length)
             richiesta = domande[numDomanda-1];
           else
@@ -205,7 +253,7 @@ class ChatController extends ChangeNotifier {
         else{
           richiesta = richiesta+"?";
         }
-        Future<String> risposta = chat.askChatPDF(richiesta, pages);
+        Future<String> risposta = chat.askChatPDF(richiesta);
 
         chatList = [
             ...chatList,
@@ -217,8 +265,12 @@ class ChatController extends ChangeNotifier {
         ];
 
         risposta.then((value) {
-          value = value.replaceAll('PDF', 'libro');
+          value = value.replaceAll('PDF', 'capitolo');
           chatList.removeLast();
+          if (value.startsWith("Mi dispiace") && numDomanda<domandeTot){
+            value= "Prova a scrivere una risposta più completa in modo che possa correggerti.\nPer conoscere la risposta esatta digita 'RISPOSTA'";
+            numDomanda--;
+          }
           chatList = [
             ...chatList,
             Chat(
