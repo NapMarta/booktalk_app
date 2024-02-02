@@ -39,6 +39,7 @@ class LibroDao {
           'autori': libro.autori,
           'materia': libro.materia,
           'edizione': libro.edizione,
+          'copertina': libro.copertina,
           'num_Pagine': libro.numPagine,
         }),
       );
