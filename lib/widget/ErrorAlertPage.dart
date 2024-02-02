@@ -14,38 +14,40 @@ class ErrorAlertPage extends StatefulWidget {
 class _ErrorAlertPageState extends State<ErrorAlertPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: AlertDialog(
-          title: Text(
-            'Errore', 
-            style: TextStyle(color: Colors.red),
-          ),
-          content: Text(
-            widget.text,
-          ),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                // Torna alla pagina precedente
-                /*
-                    RIMOZIONE INDIETRO
-                */
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => WriteExpression(),
-                  ),
-                ); 
-              },
-              child: Text(
-                'OK', 
-                style: TextStyle(
+    return WillPopScope(
+      onWillPop: () async {
+        // Restituisci 'false' per impedire la navigazione indietro.
+        return false;
+      },
+      child: Scaffold(
+        body: Center(
+          child: AlertDialog(
+            title: Text(
+              'Errore', 
+              style: TextStyle(color: Colors.red),
+            ),
+            content: Text(
+              widget.text,
+            ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (context) => WriteExpression(),
+                    ),
+                  );
+                },
+                child: Text(
+                  'OK', 
+                  style: TextStyle(
                     color: Colors.black, 
                     fontWeight: FontWeight.bold,
                   ),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
