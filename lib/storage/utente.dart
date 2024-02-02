@@ -1,11 +1,22 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
+List<String> splitEvery(String string, int chunkSize) {
+  List<String> chunks = [];
+  for (int i = 0; i < string.length; i += chunkSize) {
+    chunks.add(string.substring(i, i + chunkSize));
+  }
+  return chunks;
+}
+
 class Utente {
   int? id;
   String nome;
   String cognome;
   String email;
   String password;
-  List<int>? foto; // Potrebbe essere nullabile 
-  int? ultfunz1; // Potrebbe essere nullabile 
+  List<int>? foto;
+  int? ultfunz1;
   int? ultfunz2;
   int? ultfunz3;
 
@@ -22,13 +33,22 @@ class Utente {
   });
 
   factory Utente.fromJson(Map<String, dynamic> json) {
+    List<int>? foto;
+    if (json['FOTO'] != null) {
+      String hexString = json['FOTO'];
+      foto = hexString.isNotEmpty
+          ? splitEvery(hexString.replaceAll(' ', '').replaceAll('\n', ''), 2)
+              .map((e) => int.parse(e, radix: 16))
+              .toList()
+          : null;
+    }
     return Utente(
       id: json['ID'],
       nome: json['NOME'],
       cognome: json['COGNOME'],
       email: json['EMAIL'],
       password: json['PASSWORD'],
-      foto: json['FOTO'], // Nota: potrebbe essere necessaria la conversione, a seconda del formato
+      foto: foto,
       ultfunz1: json['ULTFUNZ1'],
       ultfunz2: json['ULTFUNZ2'],
       ultfunz3: json['ULTFUNZ3'],
@@ -42,7 +62,7 @@ class Utente {
       'COGNOME': cognome,
       'EMAIL': email,
       'PASSWORD': password,
-      'FOTO': foto,
+      'FOTO': foto != null ? base64Encode(Uint8List.fromList(foto!)) : null,
       'ULTFUNZ1': ultfunz1,
       'ULTFUNZ2': ultfunz2,
       'ULTFUNZ3': ultfunz3,
