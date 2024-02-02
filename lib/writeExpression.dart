@@ -33,7 +33,7 @@ class _WriteExpressionState extends State<WriteExpression> {
               preferredSize: Size.fromHeight(kToolbarHeight),
               child: Header(
                 iconProfile: Image.asset('assets/person-icon.png'),
-                text: "Espressione matematica",
+                text: "Equazione matematica",
                 isHomePage: false,
                 isProfilo: false,
               ),
@@ -46,7 +46,7 @@ class _WriteExpressionState extends State<WriteExpression> {
                 Padding(
                   padding: EdgeInsets.only(top: mediaQueryData.size.height * 0.1),
                   child: Text(
-                    "Inserisci un'equazione o una disequazione", 
+                    "Inserisci un'equazione", 
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,), 
                     textAlign: TextAlign.center,
                   ),
@@ -62,11 +62,9 @@ class _WriteExpressionState extends State<WriteExpression> {
                     variables: const [
                       'x',
                       '=',
-                      '>',
-                      '<'
                     ], // Specify the variables the user can use (only in expression mode).
                     decoration: const InputDecoration(
-                      labelText: 'Espressione',
+                      labelText: 'Equazione',
                       fillColor: Colors.white,
                       labelStyle: TextStyle(fontSize: 16, color: Colors.grey),
                       enabledBorder: OutlineInputBorder(

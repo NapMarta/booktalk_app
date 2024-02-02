@@ -1,12 +1,9 @@
-import 'dart:io';
-import 'package:booktalk_app/expression_recognition.dart';
 import 'package:booktalk_app/widget/header.dart';
 import 'package:booktalk_app/libreriaResponsive.dart';
 import 'package:booktalk_app/utils.dart';
 import 'package:booktalk_app/writeExpression.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'dart:async' show Future;
@@ -20,7 +17,6 @@ class HomepageResponsitive extends StatefulWidget {
 
 class _HomepageResponsitiveState extends State<HomepageResponsitive> {
   final panelController = PanelController();
-  File? _selectedImage;
   bool is2 = false;
   bool is3 = false;
 
@@ -86,19 +82,17 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
                   ),
 
                   // i pulsanti con le tre funzionalità
-                  _buildFeatureCard("assets/1.png", "Espressioni Matematiche",
-                      "Scansiona o inserisci l'espressione matematica e BookTalk ti aiuterà nella risoluzione.",
+                  _buildFeatureCard("assets/1.png", "Equazioni Matematiche",
+                      "Scansiona o inserisci l'equazione matematica e BookTalk ti aiuterà nella risoluzione passo dopo passo.",
                       () {
-                    //getImageFromCameraEspressioni();
-
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => WriteExpression(),
-                      ),
-                    );
-                  }, Color(0xFFf0bc5e), mediaQueryData.size.height,
-                      mediaQueryData.size.width),
-
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => WriteExpression(),
+                          ),
+                        );
+                      }, Color(0xFFf0bc5e), mediaQueryData.size.height,
+                          mediaQueryData.size.width
+                  ),
                   // spazio tra i pulsanti
                   SizedBox(
                     height: mediaQueryData.size.height * 0.02,
@@ -184,16 +178,6 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
         ),
       ),
     );
-  }
-
-  Future getImageFromCameraEspressioni() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.camera);
-
-    if (image == null) return;
-    setState(() {
-      _selectedImage = File(image!.path);
-      expRecognition(_selectedImage);
-    });
   }
 
   Future setFunzionalita(bool isF2, bool isF3) async {

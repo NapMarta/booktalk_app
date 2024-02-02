@@ -4,22 +4,6 @@ import 'package:flutter/material.dart';
 
 class EspressioniResponsive extends StatefulWidget {
   final List<String> step;
-  var element = 0;
-
-  String getDescription() {
-    String s = "";
-    if (element != 0) {
-      element++;
-    }
-
-    while (isTextStep(step[element])) {
-      s += step[element];
-      element++;
-    }
-    ;
-    return s;
-  }
-
   EspressioniResponsive({required this.step});
   @override
   _EspressioniResponsiveState createState() => _EspressioniResponsiveState();
@@ -54,60 +38,81 @@ class _EspressioniResponsiveState extends State<EspressioniResponsive> {
             backgroundColor: Colors.white,
             body: ListView.builder(
               itemCount: widget.step.length,
-              padding: EdgeInsets.only(top: 20),
+              padding: EdgeInsets.only(
+                top: 20,
+                left: isTablet(mediaQueryData) 
+                      ? mediaQueryData.size.width * 0.2
+                      : 0,
+                right: isTablet(mediaQueryData) 
+                      ? mediaQueryData.size.width * 0.2
+                      : 0,
+              ),
               scrollDirection: Axis.vertical,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
-                  padding: EdgeInsets.only(top: 20),
-                  height: 100,
+                  padding: EdgeInsets.only(
+                    top: 20, 
+                    left: isTablet(mediaQueryData) 
+                      ? mediaQueryData.size.width * 0.32
+                      : mediaQueryData.size.width * 0.12,
+                    right: isTablet(mediaQueryData) 
+                      ? mediaQueryData.size.width * 0.32
+                      : mediaQueryData.size.width * 0.12,
+                  ),
+                  height: 120,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Align(
                         alignment: Alignment.topLeft,
                         child: Padding(
                           padding: EdgeInsets.only(left: 10),
-                          child: Text("step ${index + 1}",
-                              style: TextStyle(fontSize: 10)),
+                          child: Text(
+                            (index == 0)
+                            ? "Equazione"
+                            /*
+                              : (index == widget.step.length-1)
+                                ? "Risultato"
+                                : ...
+                            */
+                            : "Step ${index + 2}",
+                            style: TextStyle(
+                              color: Color(0xFFf0bc5e),
+                              fontSize: 13, 
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 10,
                       ),
                       /*
-                      Text(
-                        widget.getDescription(),
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontFamily: 'Roboto',
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                          shadows: [
-                            Shadow(
-                              blurRadius: 8,
-                              color: Colors.white,
-                              offset: Offset(2, 2),
-                            ),
-                          ],
-                        ),
-                      ),*/
                       SizedBox(
-                        height: 10,
-                      ),
+                        height: 15,
+                      ),*/
                       Text(
+                        
                         widget.step[index],
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 14),
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: (index == 0)
+                            ? FontWeight.bold
+                            : FontWeight.normal,
+                        ),
                       ),
                       Expanded(
                         child: Align(
                           alignment: FractionalOffset.bottomCenter,
                           child: Padding(
-                            padding: EdgeInsets.only(
-                                left: mediaQueryData.size.width * 0.1,
-                                right: mediaQueryData.size.width * 0.1),
+                            padding: EdgeInsets.only(/*
+                                left: isTablet(mediaQueryData) 
+                                  ? mediaQueryData.size.width * 0.3
+                                  : mediaQueryData.size.width * 0.1,
+                                right: isTablet(mediaQueryData) 
+                                  ? mediaQueryData.size.width * 0.3
+                                  : mediaQueryData.size.width * 0.1
+                            */
+                            ),
                             child: Container(
                               height: 1,
                               color: Colors.grey, // Colore della linea grigia
@@ -120,6 +125,9 @@ class _EspressioniResponsiveState extends State<EspressioniResponsive> {
                 );
               },
             ),
+              
+            
+            
           ),
         ],
       ),
