@@ -44,7 +44,9 @@ class _WriteExpressionState extends State<WriteExpression> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(top: mediaQueryData.size.height * 0.1),
+                  padding: EdgeInsets.only(top: isTabletOrizzontale(mediaQueryData)
+                                                ? mediaQueryData.size.height * 0.05
+                                                : mediaQueryData.size.height * 0.1),
                   child: Text(
                     "Inserisci un'equazione", 
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,), 
@@ -53,7 +55,9 @@ class _WriteExpressionState extends State<WriteExpression> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                      top: mediaQueryData.size.height * 0.1,
+                      top: isTabletOrizzontale(mediaQueryData)
+                                                ? mediaQueryData.size.height * 0.05
+                                                : mediaQueryData.size.height * 0.1,
                       left: 20,
                       right: 20),
                   child: MathField(

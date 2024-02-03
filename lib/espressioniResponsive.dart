@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:booktalk_app/utils.dart';
 import 'package:booktalk_app/widget/header.dart';
 import 'package:flutter/material.dart';
@@ -40,29 +41,26 @@ class _EspressioniResponsiveState extends State<EspressioniResponsive> {
               itemCount: widget.step.length,
               padding: EdgeInsets.only(
                 top: 20,
-                left: isTablet(mediaQueryData) 
-                      ? mediaQueryData.size.width * 0.2
-                      : 0,
-                right: isTablet(mediaQueryData) 
-                      ? mediaQueryData.size.width * 0.2
-                      : 0,
+                left: 0,
+                right: 0,
               ),
               scrollDirection: Axis.vertical,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
                   padding: EdgeInsets.only(
-                    top: 20, 
+                    //top: 15, 
                     left: isTablet(mediaQueryData) 
-                      ? mediaQueryData.size.width * 0.32
-                      : mediaQueryData.size.width * 0.12,
+                      ? mediaQueryData.size.width * 0.15
+                      : mediaQueryData.size.width * 0.08,
                     right: isTablet(mediaQueryData) 
-                      ? mediaQueryData.size.width * 0.32
-                      : mediaQueryData.size.width * 0.12,
+                      ? mediaQueryData.size.width * 0.15
+                      : mediaQueryData.size.width * 0.08,
+                      bottom: 25,
                   ),
                   height: 120,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    //mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Align(
                         alignment: Alignment.topLeft,
@@ -72,14 +70,14 @@ class _EspressioniResponsiveState extends State<EspressioniResponsive> {
                             (index == 0)
                             ? "Equazione"
                             /*
-                              : (index == widget.step.length-1)
-                                ? "Risultato"
-                                : ...
+                            : (index == widget.step.length-1)
+                              ? "Risultato"
+                              : ...
                             */
                             : "Step ${index + 2}",
                             style: TextStyle(
                               color: Color(0xFFf0bc5e),
-                              fontSize: 13, 
+                              fontSize: 12, 
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -89,29 +87,46 @@ class _EspressioniResponsiveState extends State<EspressioniResponsive> {
                       SizedBox(
                         height: 15,
                       ),*/
-                      Text(
-                        
-                        widget.step[index],
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: (index == 0)
-                            ? FontWeight.bold
-                            : FontWeight.normal,
-                        ),
-                      ),
                       Expanded(
                         child: Align(
+                          alignment: FractionalOffset.center,
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 15, right: 15, bottom: 0),
+                            child: AutoSizeText(
+                              widget.step[index],
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: (index == 0)
+                                  ? FontWeight.bold
+                                  : FontWeight.normal,
+                              ),
+                              minFontSize: 12,
+                              maxLines: 3,
+                            ),
+                            /*
+                            child: Text(                        
+                              widget.step[index],
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: (index == 0)
+                                  ? FontWeight.bold
+                                  : FontWeight.normal,
+                              ),
+                            ),
+                            */
+                          ),
+                        ),
+                      ),
+                      //Spacer(),
+
+                      //Expanded(
+                        Align(
                           alignment: FractionalOffset.bottomCenter,
                           child: Padding(
-                            padding: EdgeInsets.only(/*
-                                left: isTablet(mediaQueryData) 
-                                  ? mediaQueryData.size.width * 0.3
-                                  : mediaQueryData.size.width * 0.1,
-                                right: isTablet(mediaQueryData) 
-                                  ? mediaQueryData.size.width * 0.3
-                                  : mediaQueryData.size.width * 0.1
-                            */
+                            padding: EdgeInsets.only(
+                              top: 0,
                             ),
                             child: Container(
                               height: 1,
@@ -119,7 +134,7 @@ class _EspressioniResponsiveState extends State<EspressioniResponsive> {
                             ),
                           ),
                         ),
-                      ),
+                      //),
                     ],
                   ),
                 );
