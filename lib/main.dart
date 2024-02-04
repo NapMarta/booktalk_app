@@ -40,7 +40,12 @@ class BookTalkApp extends StatelessWidget {
     var mediaQueryData = MediaQuery.of(context);
     print(mediaQueryData.size);
     // print(mediaQueryData.size);
-    return MaterialApp(
+    return WillPopScope(
+      onWillPop: () async {
+        // Restituisci 'false' per impedire la navigazione indietro.
+        return false;
+      },
+    child: MaterialApp(
       home: Scaffold(
       backgroundColor: Colors.white,
 
@@ -104,6 +109,7 @@ class BookTalkApp extends StatelessWidget {
           ),
         ),
       ),
+    ),
     );
   }
 }
