@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:booktalk_app/aggiuntaLibroResponsive.dart';
 import 'package:booktalk_app/chatResponsive.dart';
 import 'package:booktalk_app/extract_text.dart';
+import 'package:booktalk_app/opereLetterarieResponsive.dart';
 import 'package:booktalk_app/widget/ExpandableFloatingActionButton.dart';
 import 'package:booktalk_app/utils.dart';
 import 'package:flutter/material.dart';
@@ -175,7 +177,12 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
                           return GestureDetector(
                           onTap: () {
                             if(widget.is2){
-                              getImageFromCameraOpera();
+                              //getImageFromCameraOpera();
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => OpereLetterarieResponsive(),
+                                ),
+                              );
                             }
                             else if(widget.is3){
                               Navigator.of(context).push(
@@ -223,7 +230,12 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
         onPressed: () {
           _scrollController.animateTo(0,
               duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
-          getImageFromCameraISBN();
+          //getImageFromCameraISBN();
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => AggiuntaLibroResponsive(),
+            ),
+          );
         },
       ),
     );
