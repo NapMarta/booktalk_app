@@ -1,13 +1,19 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:booktalk_app/modificaProfiloResponsive.dart';
+import 'package:booktalk_app/storage/utente.dart';
+import 'package:booktalk_app/storage/utenteDAO.dart';
 import 'package:booktalk_app/widget/header.dart';
 import 'package:booktalk_app/statistiche.dart';
 import 'package:booktalk_app/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-    
+
 class ProfiloResponsitive extends StatefulWidget {
   const ProfiloResponsitive({Key? key}) : super(key: key);
 
@@ -16,18 +22,46 @@ class ProfiloResponsitive extends StatefulWidget {
 }
 
 class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
-  File ? _selectedImage;
+  File? _selectedImage;
+  late SharedPreferences _preferences;
+  String nome = '';
+  String cognome = '';
+  String email = '';
+  late Uint8List imageBytes;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  // Funzione per caricare i dati dell'utente dalle SharedPreferences
+  Future<void> _loadUserData() async {
+    _preferences = await SharedPreferences.getInstance();
+    String utenteJson = _preferences.getString('utente') ?? '';
+    if (utenteJson.isNotEmpty) {
+      Map<String, dynamic> utenteMap = json.decode(utenteJson);
+      UtenteDao dao = UtenteDao('http://130.61.22.178:9000');
+      //Future<Utente?> u = dao.getUtenteById(utenteMap['id']);
+      nome = utenteMap['NOME'] ?? '';
+      cognome = utenteMap['COGNOME'] ?? '';
+      email = utenteMap['EMAIL'] ?? '';
+      //u.then((u) {
+      /*if (u!.foto != null){
+        imageBytes =  Uint8List.fromList(u.foto!);
+      }
+      });*/
+      
+      setState(() {});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    // variabile che indica le informazioni correnti del dispositivo
     var mediaQueryData = MediaQuery.of(context);
-
-    // varaiabile per lo slide-up
     final panelController = PanelController();
 
     return SafeArea(
-      // settaggio dei bordi da considerare del telefono
       left: true,
       right: true,
       bottom: false,
@@ -42,66 +76,66 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
           ),
           child: Stack(
             children: [
-              // ----- Header -----
               PreferredSize(
                 preferredSize: Size.fromHeight(kToolbarHeight),
                 child: Header(
-                  iconProfile: Image.asset('assets/person-icon.png'), 
+                  iconProfile: Image.asset('assets/person-icon.png'),
                   text: "",
                   isHomePage: false,
                   isProfilo: true,
                 ),
               ),
-              
-              
-              // ----- foto profilo con fotocamera per la modifica -----
               Align(
                 alignment: Alignment.topCenter,
                 child: Stack(
                   children: [
-                    // --- FOTO PROFILO ---
                     Padding(
-                      padding: EdgeInsets.only(top: mediaQueryData.size.height * 0.07, bottom: 40),
+                      padding: EdgeInsets.only(
+                          top: mediaQueryData.size.height * 0.07, bottom: 40),
                       child: InkWell(
-                        onTap: () {
-                          // Azione da eseguire quando la foto profilo viene premuta
-                        },
-                        child: _selectedImage != null 
-                        ? // se l'immagine è stata selezionata
-                          // Crea un contenitore con lo sfondo nero e adatta la foto in altezza
-                          Container(                            
-                            height: mediaQueryData.size.height * 0.20,
-                            decoration:  BoxDecoration(
-                              color: Colors.black,
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                fit: BoxFit.fitHeight,
-                                image: FileImage(
-                                  _selectedImage!,
-                                ),
-                                )
+                        onTap: () {},
+                        child: _selectedImage != null
+                            ? Container(
+                                height: mediaQueryData.size.height * 0.20,
+                                decoration: BoxDecoration(
+                                    color: Colors.black,
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                      fit: BoxFit.fitHeight,
+                                      image: FileImage(
+                                        _selectedImage!,
+                                      ),
+                                    )),
                               )
-                          )
-                        : // se l'immagine non è stata selezionata
-                          Image.asset(
-                            "assets/person-icon.png",
-                            height: mediaQueryData.size.height * 0.20,
-                          ),
-                      ),
+                              /*imageBytes != null
+                                ? Container(
+                                    height: mediaQueryData.size.height * 0.20,
+                                    decoration: BoxDecoration(
+                                      color: Colors.black,
+                                      shape: BoxShape.circle,
+                                      image: DecorationImage(
+                                        fit: BoxFit.fitHeight,
+                                        image: MemoryImage(imageBytes!),
+                                      ),
+                                    ),
+                                  )*/
+                            
+                                : Image.asset(
+                                    "assets/person-icon.png",
+                                    height: mediaQueryData.size.height * 0.20,
+                                  ),
+                              ),
+                      //),
                     ),
-
-                    // --- Modifica Foto ---
                     Positioned(
                       bottom: mediaQueryData.size.height * 0.04,
                       right: 0,
                       left: mediaQueryData.size.height * 0.12,
                       child: InkWell(
                         onTap: () {
-                          // Azione da eseguire quando l'icona della fotocamera viene premuta
                           getImageFromGallery();
                         },
                         child: Container(
-                          //width: mediaQueryData.size. * 0.04,
                           padding: EdgeInsets.all(5),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
@@ -109,7 +143,7 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
                           ),
                           child: Icon(
                             Icons.camera_alt,
-                            color: Color(0xFF0097b2), // Puoi impostare il colore desiderato
+                            color: Color(0xFF0097b2),
                           ),
                         ),
                       ),
@@ -117,16 +151,22 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
                   ],
                 ),
               ),
-
-              // ----- Visualizzazione dati dell'utente -----
               Positioned(
-                top: mediaQueryData.size.height * 0.32, // Regola la posizione verticale del riquadro
-                // left: mediaQueryData.size.width , // Regola la posizione orizzontale del riquadro
+                top: mediaQueryData.size.height * 0.32,
                 child: Container(
-                  width: isTabletOrizzontale(mediaQueryData) ? mediaQueryData.size.width * 0.7 : mediaQueryData.size.width * 0.8,
-                  //height: mediaQueryData.size.height * 0.,
+                  width: isTabletOrizzontale(mediaQueryData)
+                      ? mediaQueryData.size.width * 0.7
+                      : mediaQueryData.size.width * 0.8,
                   alignment: Alignment.center,
-                  margin: EdgeInsets.fromLTRB(isTabletOrizzontale(mediaQueryData) ? mediaQueryData.size.width * 0.15 : mediaQueryData.size.width * 0.10, 0.0, isTabletOrizzontale(mediaQueryData) ? mediaQueryData.size.width * 0.15 : mediaQueryData.size.width * 0.10, 0.0),
+                  margin: EdgeInsets.fromLTRB(
+                      isTabletOrizzontale(mediaQueryData)
+                          ? mediaQueryData.size.width * 0.15
+                          : mediaQueryData.size.width * 0.10,
+                      0.0,
+                      isTabletOrizzontale(mediaQueryData)
+                          ? mediaQueryData.size.width * 0.15
+                          : mediaQueryData.size.width * 0.10,
+                      0.0),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20),
@@ -140,32 +180,36 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
                     ],
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.only(bottom: 10, left: 20, right: 20, top: 4),
+                    padding: const EdgeInsets.only(
+                        bottom: 10, left: 20, right: 20, top: 4),
                     child: Column(
                       children: [
-                        Padding(padding: const EdgeInsets.only(bottom: 0, right: 0),
-                        child: 
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween, // aggiunge lo spazio tra gli elementi
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 0, right: 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "I tuoi dati" ,
-                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF0097b2)),
+                                "I tuoi dati",
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xFF0097b2)),
                               ),
                               Align(
                                 alignment: Alignment.topRight,
                                 child: IconButton(
                                   onPressed: () {
                                     Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (context) => ModificaProfiloResponsive(),
-                                        ),
-                                    ); 
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            ModificaProfiloResponsive(),
+                                      ),
+                                    );
                                   },
                                   icon: Icon(
                                     Icons.edit,
                                     color: Color(0xFF0097b2),
-                                    
                                   ),
                                   iconSize: 20,
                                   padding: EdgeInsets.all(0),
@@ -176,34 +220,45 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
                           ),
                         ),
                         _buildProfileCard(
-                            mediaQueryData.size.width, mediaQueryData.size.height, 'Nome', Icons.account_circle, 'Maria'),
-                        SizedBox(height: isTabletOrizzontale(mediaQueryData) ? 0 : 8),
+                            mediaQueryData.size.width,
+                            mediaQueryData.size.height,
+                            'Nome',
+                            Icons.account_circle,
+                            nome),
+                        SizedBox(
+                            height: isTabletOrizzontale(mediaQueryData) ? 0 : 8),
                         _buildProfileCard(
-                            mediaQueryData.size.width, mediaQueryData.size.height, 'Cognome', Icons.account_circle, 'Rossi'),
-                        SizedBox(height: isTabletOrizzontale(mediaQueryData) ? 0 : 8),
+                            mediaQueryData.size.width,
+                            mediaQueryData.size.height,
+                            'Cognome',
+                            Icons.account_circle,
+                            cognome),
+                        SizedBox(
+                            height: isTabletOrizzontale(mediaQueryData) ? 0 : 8),
                         _buildProfileCard(
-                            mediaQueryData.size.width, mediaQueryData.size.height, 'Email', Icons.email, 'mariarossi@email.com'),
-                        SizedBox(height: isTabletOrizzontale(mediaQueryData) ? 0 : 8),
+                            mediaQueryData.size.width,
+                            mediaQueryData.size.height,
+                            'Email',
+                            Icons.email,
+                            email),
+                        SizedBox(
+                            height: isTabletOrizzontale(mediaQueryData) ? 0 : 8),
                       ],
                     ),
                   ),
                 ),
               ),
-
-              // SLIDE UP - Statistiche
               SlidingUpPanel(
-                // making false it does 
-                // not render outside
                 renderPanelSheet: false,
-
-                // sfondo sfocato quando è aperto
                 backdropEnabled: true,
                 backdropOpacity: 0.5,
-
                 controller: panelController,
-                minHeight: isTabletOrizzontale(mediaQueryData) ? mediaQueryData.size.height * 0.1 :  mediaQueryData.size.height * 0.25,
-                maxHeight: isTabletVerticale(mediaQueryData) ? mediaQueryData.size.height * 0.91 : mediaQueryData.size.height * 0.94,
-                // panel
+                minHeight: isTabletOrizzontale(mediaQueryData)
+                    ? mediaQueryData.size.height * 0.1
+                    : mediaQueryData.size.height * 0.25,
+                maxHeight: isTabletVerticale(mediaQueryData)
+                    ? mediaQueryData.size.height * 0.91
+                    : mediaQueryData.size.height * 0.94,
                 panel: Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -212,10 +267,8 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
                       topRight: Radius.circular(24.0),
                     ),
                   ),
-                  
                   child: Statistiche(),
                 ),
-                        // collapsed 
                 collapsed: Container(
                   decoration: BoxDecoration(
                     color: Colors.transparent,
@@ -225,7 +278,6 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
                     ),
                   ),
                 ),
-                
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(24.0),
                   topRight: Radius.circular(24.0),
@@ -238,48 +290,44 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
     );
   }
 
-  // Funzione che apre la galleria e restituisce l'immagine
   Future getImageFromGallery() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    final image =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
 
-    if(image == null) return;
+    if (image == null) return;
     setState(() {
-      _selectedImage = File(image!.path);
+      _selectedImage = File(image.path);
     });
   }
 }
 
-
-Widget _buildProfileCard(
-    double width, double height, String label, IconData iconData, String text) {
-      TextEditingController _controller = TextEditingController(text: text);
+Widget _buildProfileCard(double width, double height, String label,
+    IconData iconData, String text) {
   return Align(
-    alignment: Alignment.center,
-    child: Row(
-      // center della riga
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(iconData),
-        SizedBox(width: 10),
-        SizedBox(
-          width: width * 0.60,
-          child: TextField(
-            controller: _controller,
-            readOnly: true,
-            enabled: false,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 14,
-            ),
-            enableInteractiveSelection: false,
-            focusNode: FocusNode(),
-            decoration: InputDecoration(
-              labelText: label,
+      alignment: Alignment.center,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(iconData),
+          SizedBox(width: 10),
+          SizedBox(
+            width: width * 0.60,
+            child: TextField(
+              readOnly: true,
+              enabled: false,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 14,
+              ),
+              enableInteractiveSelection: false,
+              focusNode: FocusNode(),
+              decoration: InputDecoration(
+                labelText: label,
+              ),
+              controller: TextEditingController(text: text),
             ),
           ),
-        ),
-      ],
-    )
-  );
+        ],
+      ));
 }

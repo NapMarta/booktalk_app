@@ -1,3 +1,5 @@
+import 'package:booktalk_app/business_logic/autenticazione.dart';
+import 'package:booktalk_app/business_logic/autenticazioneService.dart';
 import 'package:booktalk_app/main.dart';
 import 'package:booktalk_app/utils.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +12,7 @@ class AllertConferma extends StatefulWidget {
 }
 
 class _AllertConfermaState extends State<AllertConferma> {
+  AutenticazioneService autenticazione = Autenticazione('http://130.61.22.178:9000');
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +62,7 @@ class _AllertConfermaState extends State<AllertConferma> {
                   ),
                 ),
                 onPressed: () {
+                  autenticazione.logout();
                   // Handle logout action
                   Navigator.of(context).push(
                     MaterialPageRoute(

@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:booktalk_app/widget/header.dart';
 import 'package:booktalk_app/libreriaResponsive.dart';
 import 'package:booktalk_app/utils.dart';
 import 'package:booktalk_app/writeExpression.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'dart:async' show Future;
@@ -19,6 +22,25 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
   final panelController = PanelController();
   bool is2 = false;
   bool is3 = false;
+  late SharedPreferences _preferences;
+  String nome="";
+
+    @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  // Funzione per caricare i dati dell'utente dalle SharedPreferences
+  Future<void> _loadUserData() async {
+    _preferences = await SharedPreferences.getInstance();
+    String utenteJson = _preferences.getString('utente') ?? '';
+    if (utenteJson.isNotEmpty) {
+      Map<String, dynamic> utenteMap = json.decode(utenteJson);
+      nome = utenteMap['NOME'] ?? '';
+      setState(() {});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +77,7 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
                     preferredSize: Size.fromHeight(kToolbarHeight),
                     child: Header(
                       iconProfile: Image.asset('assets/person-icon.png'),
-                      text: "Ciao Maria!",
+                      text: "Ciao $nome!",
                       isHomePage: true,
                       isProfilo: false,
                     ),
