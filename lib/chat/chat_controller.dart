@@ -176,7 +176,7 @@ class ChatController extends ChangeNotifier {
           chatList = [
               ...chatList,
               Chat(
-                message: "Sto elaborando la risposta...",
+                message: "...",
                 type: ChatMessageType.received,
                 time: DateTime.now(),
               ),
@@ -257,7 +257,7 @@ class ChatController extends ChangeNotifier {
         chatList = [
             ...chatList,
             Chat(
-              message: "Sto elaborando la risposta...",
+              message: "...",
               type: ChatMessageType.received,
               time: DateTime.now(),
             ),
