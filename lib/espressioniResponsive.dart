@@ -48,14 +48,14 @@ class _EspressioniResponsiveState extends State<EspressioniResponsive> {
               itemBuilder: (BuildContext context, int index) {
                 return Container(
                   padding: EdgeInsets.only(
-                    //top: 15, 
-                    left: isTabletOrizzontale(mediaQueryData) 
-                      ? mediaQueryData.size.width * 0.15
-                      : mediaQueryData.size.width * 0.08,
-                    right: isTabletOrizzontale(mediaQueryData) 
-                      ? mediaQueryData.size.width * 0.15
-                      : mediaQueryData.size.width * 0.08,
-                      bottom: 25,
+                    //top: 15,
+                    left: isTabletOrizzontale(mediaQueryData)
+                        ? mediaQueryData.size.width * 0.15
+                        : mediaQueryData.size.width * 0.08,
+                    right: isTabletOrizzontale(mediaQueryData)
+                        ? mediaQueryData.size.width * 0.15
+                        : mediaQueryData.size.width * 0.08,
+                    bottom: 25,
                   ),
                   height: 120,
                   child: Column(
@@ -68,16 +68,13 @@ class _EspressioniResponsiveState extends State<EspressioniResponsive> {
                           padding: EdgeInsets.only(left: 10),
                           child: Text(
                             (index == 0)
-                            ? "Equazione"
-                            /*
-                            : (index == widget.step.length-1)
-                              ? "Risultato"
-                              : ...
-                            */
-                            : "Step ${index + 2}",
+                                ? "Equazione"
+                                : (index == widget.step.length - 1)
+                                    ? "Risultato"
+                                    : "Step ${index + 2}",
                             style: TextStyle(
                               color: Color(0xFFf0bc5e),
-                              fontSize: 12, 
+                              fontSize: 12,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -91,15 +88,16 @@ class _EspressioniResponsiveState extends State<EspressioniResponsive> {
                         child: Align(
                           alignment: FractionalOffset.center,
                           child: Padding(
-                            padding: EdgeInsets.only(left: 15, right: 15, bottom: 0),
+                            padding:
+                                EdgeInsets.only(left: 15, right: 15, bottom: 0),
                             child: AutoSizeText(
                               widget.step[index],
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: (index == 0)
-                                  ? FontWeight.bold
-                                  : FontWeight.normal,
+                                    ? FontWeight.bold
+                                    : FontWeight.normal,
                               ),
                               minFontSize: 12,
                               maxLines: 3,
@@ -122,27 +120,24 @@ class _EspressioniResponsiveState extends State<EspressioniResponsive> {
                       //Spacer(),
 
                       //Expanded(
-                        Align(
-                          alignment: FractionalOffset.bottomCenter,
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                              top: 0,
-                            ),
-                            child: Container(
-                              height: 1,
-                              color: Colors.grey, // Colore della linea grigia
-                            ),
+                      Align(
+                        alignment: FractionalOffset.bottomCenter,
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            top: 0,
+                          ),
+                          child: Container(
+                            height: 1,
+                            color: Colors.grey, // Colore della linea grigia
                           ),
                         ),
+                      ),
                       //),
                     ],
                   ),
                 );
               },
             ),
-              
-            
-            
           ),
         ],
       ),
