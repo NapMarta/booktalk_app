@@ -16,9 +16,9 @@ class Utente {
   String email;
   String password;
   List<int>? foto;
-  int? ultfunz1;
-  int? ultfunz2;
-  int? ultfunz3;
+  double? ultfunz1;
+  double? ultfunz2;
+  double? ultfunz3;
 
   Utente({
     this.id,

@@ -1,6 +1,11 @@
+import 'dart:convert';
+
+import 'package:booktalk_app/storage/utente.dart';
+import 'package:booktalk_app/storage/utenteDAO.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_split_view/multi_split_view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'utils.dart';
 
@@ -12,6 +17,46 @@ class Statistiche extends StatefulWidget {
 }
 
 class _StatisticheState extends State<Statistiche> {
+
+  late SharedPreferences _preferences;
+  late Future<Utente?> utente;
+  double utlFunz1 = 1.0, utlFunz2 = 1.0, utlFunz3 = 1.0;
+
+  
+  @override
+  void initState() {
+    _loadUserData();
+    super.initState();
+  }
+
+
+  // Funzione per caricare i dati dell'utente dalle SharedPreferences
+  Future<void> _loadUserData() async {
+    print("Loading user data...");
+    _preferences = await SharedPreferences.getInstance();
+    String utenteJson = _preferences.getString('utente') ?? '';
+    if (utenteJson.isNotEmpty) {
+      Map<String, dynamic> utenteMap = json.decode(utenteJson);
+      UtenteDao dao = UtenteDao('http://130.61.22.178:9000');
+      print(utenteMap);
+      utente = dao.getUtenteByEmail(utenteMap['EMAIL']);
+      utente.then((value){
+        print(value.toString());
+        if(value?.ultfunz1 != null){
+          utlFunz1 = value!.ultfunz1!;
+        }
+        if(value?.ultfunz2 != null){
+          utlFunz2 = value!.ultfunz2!;
+        }
+        if(value?.ultfunz3 != null){
+          utlFunz3 = value!.ultfunz3!;
+        }
+      });
+      setState(() {});
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     var mediaQueryData = MediaQuery.of(context);
@@ -148,9 +193,9 @@ class _StatisticheState extends State<Statistiche> {
                         ),
                         centerSpaceRadius: double.infinity,
                         sections: _pieChartData(
-                          18.5, // funzionalità 1
-                          31.5, // funzionalità 2
-                          50, // funzionalità 3
+                          utlFunz1, // funzionalità 1
+                          utlFunz2, // funzionalità 2
+                          utlFunz3, // funzionalità 3
                         ),
                       ),
                       swapAnimationDuration: Duration(milliseconds: 150), // Optional

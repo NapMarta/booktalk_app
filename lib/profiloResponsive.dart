@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:booktalk_app/homepageResponsive.dart';
 import 'package:booktalk_app/modificaProfiloResponsive.dart';
 import 'package:booktalk_app/storage/utente.dart';
 import 'package:booktalk_app/storage/utenteDAO.dart';
@@ -37,6 +38,7 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
 
   // Funzione per caricare i dati dell'utente dalle SharedPreferences
   Future<void> _loadUserData() async {
+    print("Loading user data...");
     _preferences = await SharedPreferences.getInstance();
     String utenteJson = _preferences.getString('utente') ?? '';
     if (utenteJson.isNotEmpty) {
@@ -61,7 +63,17 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
     var mediaQueryData = MediaQuery.of(context);
     final panelController = PanelController();
 
-    return SafeArea(
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => HomepageResponsitive(),
+          ),
+        ); 
+        return false;
+      },
+
+    child: SafeArea(
       left: true,
       right: true,
       bottom: false,
@@ -287,6 +299,7 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
           ),
         ),
       ),
+    ),
     );
   }
 
