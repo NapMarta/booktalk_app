@@ -49,10 +49,10 @@ class _EspressioniResponsiveState extends State<EspressioniResponsive> {
                 return Container(
                   padding: EdgeInsets.only(
                     //top: 15, 
-                    left: isTablet(mediaQueryData) 
+                    left: isTabletOrizzontale(mediaQueryData) 
                       ? mediaQueryData.size.width * 0.15
                       : mediaQueryData.size.width * 0.08,
-                    right: isTablet(mediaQueryData) 
+                    right: isTabletOrizzontale(mediaQueryData) 
                       ? mediaQueryData.size.width * 0.15
                       : mediaQueryData.size.width * 0.08,
                       bottom: 25,
@@ -96,7 +96,7 @@ class _EspressioniResponsiveState extends State<EspressioniResponsive> {
                               widget.step[index],
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 15,
                                 fontWeight: (index == 0)
                                   ? FontWeight.bold
                                   : FontWeight.normal,
