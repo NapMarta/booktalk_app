@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:booktalk_app/business_logic/registrazioneService.dart';
 import 'package:booktalk_app/storage/utente.dart';
 import 'package:booktalk_app/storage/utenteDAO.dart';
+import 'package:crypto/crypto.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Registrazione implements RegistrazioneService{
   final String baseUrl;
@@ -71,5 +75,62 @@ class Registrazione implements RegistrazioneService{
       print('Errore durante la registrazione: $e');
       return {'error': 'Errore durante la registrazione.'};
     }
+  }
+  
+  @override
+  Future<Map<String, dynamic>> modificaUtente(Utente utente) async {
+    UtenteDao dao = UtenteDao('http://130.61.22.178:9000');
+    try{
+      final response = await utenteDao.updateUtente(utente);
+
+      if (response.containsKey('error')) {
+        print(response);
+        return response;
+
+      } else {
+        var bytes = utf8.encode(utente.password);
+        var hashed = sha256.convert(bytes);
+        String hashedPassword = hashed.toString();
+        utente.password= hashedPassword;
+        SharedPreferences _preferences = await SharedPreferences.getInstance();
+        await _preferences.remove('utente');
+        await _preferences.clear();
+        await _preferences.setString('utente', json.encode(utente.toJson()));
+        print("success modifica");
+        return {'success': 'Modifica avvenuta con successo.'};
+      }
+    } catch (e) {
+      print('Errore durante la modifica: $e');
+      return {'error': 'Errore durante la modifica.'};
+    }
+  }
+  
+  @override
+  Map<String, dynamic> validateParametersModifica(Utente utente, String nome, String cognome, String passwordAttuale, String nuovaPassword) {
+    
+    if (nome.isEmpty) {
+      return {'error': 'Inserisci un nome valido'};
+    }
+
+    if (cognome.isEmpty) {
+      return {'error': 'Inserisci un cognome valido'};
+    }
+    
+    if (!isValidPassword(passwordAttuale)) {
+      return {'error': 'La password attuale è errata'};
+    }
+
+    if (!isValidPassword(nuovaPassword)) {
+      return {'error': 'La password deve essere lunga almeno 6 caratteri'};
+    }
+
+    var bytes = utf8.encode(passwordAttuale);
+    var hashed = sha256.convert(bytes);
+    String hashedPassword = hashed.toString();
+    if (utente.password != hashedPassword) {
+      return {'error': 'La password attuale è errata'};
+    }
+    
+    return {};
   }
 }

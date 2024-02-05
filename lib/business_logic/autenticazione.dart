@@ -48,6 +48,7 @@ class Autenticazione implements AutenticazioneService{
       this.utente = utente;
       //print("Autenticazione: " + utente.toString());
       await _saveUtenteToPreferences();
+      print("UTENTE LOGGATO:"+utente.toString());
 
       return {'success': 'Login eseguito con successo'};
     } else {

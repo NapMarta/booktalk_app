@@ -23,9 +23,9 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
   bool is2 = false;
   bool is3 = false;
   late SharedPreferences _preferences;
-  String nome="";
+  String nome = "";
 
-    @override
+  @override
   void initState() {
     super.initState();
     _loadUserData();
@@ -107,14 +107,13 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
                   _buildFeatureCard("assets/1.png", "Equazioni Matematiche",
                       "Inserisci l'equazione matematica e BookTalk ti aiuterà nella risoluzione passo dopo passo.",
                       () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => WriteExpression(),
-                          ),
-                        );
-                      }, Color(0xFFf0bc5e), mediaQueryData.size.height,
-                          mediaQueryData.size.width
-                  ),
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => WriteExpression(),
+                      ),
+                    );
+                  }, Color(0xFFf0bc5e), mediaQueryData.size.height,
+                      mediaQueryData.size.width),
                   // spazio tra i pulsanti
                   SizedBox(
                     height: mediaQueryData.size.height * 0.02,
@@ -138,7 +137,7 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
                   _buildFeatureCard(
                       "assets/funzionalità3.jpg",
                       "Supporto al learning",
-                      "Seleziona un libro dalla tua libreria e specifica il capitolo da studiare e BookTalk creerà domande per ripetere l'argomento.",
+                      "Seleziona un libro, specifica il capitolo da studiare e BookTalk creerà domande per ripetere l'argomento.",
                       () {
                     setFunzionalita(false, true);
                     panelController.open();
