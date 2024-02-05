@@ -105,7 +105,7 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
 
                   // i pulsanti con le tre funzionalità
                   _buildFeatureCard("assets/1.png", "Equazioni Matematiche",
-                      "Scansiona o inserisci l'equazione matematica e BookTalk ti aiuterà nella risoluzione passo dopo passo.",
+                      "Inserisci l'equazione matematica e BookTalk ti aiuterà nella risoluzione passo dopo passo.",
                       () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
@@ -138,7 +138,7 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
                   _buildFeatureCard(
                       "assets/funzionalità3.jpg",
                       "Supporto al learning",
-                      "Specifica la parte di libro da studiare e BookTalk crearà domande per ripetere l'argomento.",
+                      "Specifica il capitolo da studiare e BookTalk crearà domande per ripetere l'argomento.",
                       () {
                     setFunzionalita(false, true);
                     panelController.open();
