@@ -123,7 +123,7 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
                   _buildFeatureCard(
                       "assets/2.jpeg",
                       "Opere Letterarie e Analisi",
-                      "Seleziona un libro dalla tua libreria, poi scansiona il testo di interesse per ricevere analisi approfondite.",
+                      "Seleziona un libro dalla tua libreria e scansiona il testo di interesse per ricevere analisi approfondite.",
                       () {
                     setFunzionalita(true, false);
                     panelController.open();
@@ -138,7 +138,7 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
                   _buildFeatureCard(
                       "assets/funzionalità3.jpg",
                       "Supporto al learning",
-                      "Specifica il capitolo da studiare e BookTalk crearà domande per ripetere l'argomento.",
+                      "Seleziona un libro dalla tua libreria e specifica il capitolo da studiare e BookTalk creerà domande per ripetere l'argomento.",
                       () {
                     setFunzionalita(false, true);
                     panelController.open();
