@@ -23,7 +23,6 @@ Future<List<String>> risolviEspressione(String value) async {
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'query': value}));
 
-    
     print(response.headers);
 
     // Gestisci la risposta
@@ -38,7 +37,6 @@ Future<List<String>> risolviEspressione(String value) async {
       if (testo.isEmpty) {
         return step;
       } else {
-        print(testo);
         //testo = testo.replaceAll('|', '');
         //print(testo);
         for (int i = 0; i < testo.length; i++) {
@@ -50,7 +48,17 @@ Future<List<String>> risolviEspressione(String value) async {
         // Aggiungi l'ultima riga
         step.add(testo.substring(indiceInizio));
         // Stampa le righe
+
+        print(step.length);
+        for (int i = 1; i < step.length - 1; i++) {
+          if (step[i] == step[i + 1]) {
+            step.removeAt(i);
+            i--;
+          }
+        }
+
         print(step);
+        print(step.length);
       }
     } else {
       print('Errore nella richiesta API: ${response.statusCode}');
@@ -84,16 +92,16 @@ class _GetExpression extends State<GetExpression> {
           if (list.hasError) {
             return Text("Errore. Ti invitiamo a riprovare");
             //AGGIUNGERE BOX CON MESSAGGIO DI ERRORE
-          } else if (list.connectionState ==
-              ConnectionState.done) {
+          } else if (list.connectionState == ConnectionState.done) {
             List<String> data = list.data as List<String>;
 
             if (data.isEmpty) {
               return MaterialApp(
                 title: 'Errore Equazione Matematica',
                 home: ErrorAlertPage(
-                  text: 'Equazione non valida o soluzione non appartenente all\'insieme dei numeri reali. Riprovare!',
-                  ),
+                  text:
+                      'Equazione non valida o soluzione non appartenente all\'insieme dei numeri reali. Riprovare!',
+                ),
               );
             } else {
               return EspressioniResponsive(step: data);
