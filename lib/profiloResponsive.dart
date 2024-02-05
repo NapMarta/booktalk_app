@@ -44,7 +44,7 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
     if (utenteJson.isNotEmpty) {
       Map<String, dynamic> utenteMap = json.decode(utenteJson);
       UtenteDao dao = UtenteDao('http://130.61.22.178:9000');
-      //Future<Utente?> u = dao.getUtenteById(utenteMap['id']);
+      //Future<Utente?> u = dao.getUtenteByEmail(utenteMap['email']);
       nome = utenteMap['NOME'] ?? '';
       cognome = utenteMap['COGNOME'] ?? '';
       email = utenteMap['EMAIL'] ?? '';

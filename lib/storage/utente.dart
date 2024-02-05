@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:typed_data';
 
 List<String> splitEvery(String string, int chunkSize) {
@@ -16,9 +17,9 @@ class Utente {
   String email;
   String password;
   List<int>? foto;
-  double? ultfunz1;
-  double? ultfunz2;
-  double? ultfunz3;
+  int? ultfunz1;
+  int? ultfunz2;
+  int? ultfunz3;
 
   Utente({
     this.id,
@@ -42,6 +43,9 @@ class Utente {
               .toList()
           : null;
     }
+
+    print('JSON: $json');
+    print(json['ultfunz1'].toString());
     return Utente(
       id: json['ID'],
       nome: json['NOME'],
@@ -55,12 +59,19 @@ class Utente {
     );
   }
 
+
   factory Utente.fromJson2(Map<String, dynamic> json) {
     List<int>? foto;
     if (json['FOTO'] != null) {
       String base64String = json['FOTO'];
       foto = base64.decode(base64String);
     }
+
+    /*double ultfunz1 = json['ULTFUNZ1'] != null ? (json['ULTFUNZ1'] as num).toDouble() : 0.0;
+    double ultfunz2 = json['ULTFUNZ2'] != null ? (json['ULTFUNZ2'] as num).toDouble() : 0.0;
+    double ultfunz3 = json['ULTFUNZ3'] != null ? (json['ULTFUNZ3'] as num).toDouble() : 0.0;*/
+
+    
     return Utente(
       id: json['ID'],
       nome: json['NOME'],

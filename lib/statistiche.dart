@@ -41,8 +41,8 @@ class _StatisticheState extends State<Statistiche> {
       print(utenteMap);
       utente = dao.getUtenteByEmail(utenteMap['EMAIL']);
       utente.then((value){
-        print(value.toString());
-        if(value?.ultfunz1 != null){
+        print("Utente in statistiche: "+value.toString());
+        /*if(value?.ultfunz1 != null){
           utlFunz1 = value!.ultfunz1!;
         }
         if(value?.ultfunz2 != null){
@@ -50,7 +50,7 @@ class _StatisticheState extends State<Statistiche> {
         }
         if(value?.ultfunz3 != null){
           utlFunz3 = value!.ultfunz3!;
-        }
+        }*/
       });
       setState(() {});
     }
