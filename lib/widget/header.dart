@@ -1,3 +1,4 @@
+import 'package:booktalk_app/homepageResponsive.dart';
 import 'package:booktalk_app/main.dart';
 import 'package:booktalk_app/profiloResponsive.dart';
 import 'package:booktalk_app/widget/AllertConferma.dart';
@@ -45,7 +46,15 @@ class _HeaderState extends State<Header> {
             child:IconButton(
               icon: Icon(Icons.arrow_back_ios_new_rounded, color: Color(0xFF0097b2),), // Icona personalizzata
               onPressed: () {
-                Navigator.of(context).pop(); // Torna indietro alla schermata precedente
+                if(Navigator.of(context).canPop()){ // controlla che c'è la pagina indietro
+                   Navigator.of(context).pop(); // Torna indietro alla schermata precedente
+                }else{
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => HomepageResponsitive(),
+                    ),
+                  );
+                }
               },
               //iconSize: 25,
               // iconSize: iconSize(mediaQueryData.size.width, mediaQueryData.size.height, 0.005),
