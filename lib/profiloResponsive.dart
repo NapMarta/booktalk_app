@@ -22,12 +22,12 @@ class ProfiloResponsitive extends StatefulWidget {
 }
 
 class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
-  File? _selectedImage;
+  //File? _selectedImage;
   late SharedPreferences _preferences;
   String nome = '';
   String cognome = '';
   String email = '';
-  late Uint8List imageBytes;
+  Future<Uint8List>? foto;
 
   @override
   void initState() {
@@ -90,43 +90,42 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
                 child: Stack(
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(
-                          top: mediaQueryData.size.height * 0.07, bottom: 40),
+                      padding: EdgeInsets.only(top: mediaQueryData.size.height * 0.07, bottom: 40),
                       child: InkWell(
                         onTap: () {},
-                        child: _selectedImage != null
-                            ? Container(
-                                height: mediaQueryData.size.height * 0.20,
-                                decoration: BoxDecoration(
+                        child: foto != null
+                          ? FutureBuilder<Uint8List?>(
+                            future: Future.value(foto),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState == ConnectionState.waiting) {
+                                return CircularProgressIndicator();
+                              } else if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              } else if (snapshot.hasData && snapshot.data != null) {
+                                return Container(
+                                  height: mediaQueryData.size.height * 0.20,
+                                  decoration: BoxDecoration(
                                     color: Colors.black,
                                     shape: BoxShape.circle,
                                     image: DecorationImage(
-                                      fit: BoxFit.fitHeight,
-                                      image: FileImage(
-                                        _selectedImage!,
-                                      ),
-                                    )),
-                              )
-                              /*imageBytes != null
-                                ? Container(
-                                    height: mediaQueryData.size.height * 0.20,
-                                    decoration: BoxDecoration(
-                                      color: Colors.black,
-                                      shape: BoxShape.circle,
-                                      image: DecorationImage(
                                         fit: BoxFit.fitHeight,
-                                        image: MemoryImage(imageBytes!),
+                                        image: MemoryImage(snapshot.data!),
                                       ),
                                     ),
-                                  )*/
-                            
-                                : Image.asset(
-                                    "assets/person-icon.png",
-                                    height: mediaQueryData.size.height * 0.20,
-                                  ),
-                              ),
-                      //),
+                                  );
+                              } else {
+                                return Center(child: Text('No image selected'));
+                              }
+                            },
+                          )
+                                
+                          : Image.asset(
+                              "assets/person-icon.png",
+                              height: mediaQueryData.size.height * 0.20,
+                            ),                
+                      ),
                     ),
+
                     Positioned(
                       bottom: mediaQueryData.size.height * 0.04,
                       right: 0,
@@ -295,8 +294,11 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
         await ImagePicker().pickImage(source: ImageSource.gallery);
 
     if (image == null) return;
-    setState(() {
-      _selectedImage = File(image.path);
+
+    File _selectedImage = File(image.path);
+    Future<Uint8List> _imageBytes = _selectedImage.readAsBytes();
+    setState(()  {
+      foto = _imageBytes;
     });
   }
 }
