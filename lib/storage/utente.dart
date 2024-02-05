@@ -55,6 +55,26 @@ class Utente {
     );
   }
 
+  factory Utente.fromJson2(Map<String, dynamic> json) {
+    List<int>? foto;
+    if (json['FOTO'] != null) {
+      String base64String = json['FOTO'];
+      foto = base64.decode(base64String);
+    }
+    return Utente(
+      id: json['ID'],
+      nome: json['NOME'],
+      cognome: json['COGNOME'],
+      email: json['EMAIL'],
+      password: json['PASSWORD'],
+      foto: foto,
+      ultfunz1: json['ULTFUNZ1'],
+      ultfunz2: json['ULTFUNZ2'],
+      ultfunz3: json['ULTFUNZ3'],
+    );
+  }
+
+
   Map<String, dynamic> toJson() {
     return {
       'ID': id,

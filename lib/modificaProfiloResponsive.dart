@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:booktalk_app/profiloResponsive.dart';
 import 'package:booktalk_app/utils.dart';
 import 'package:booktalk_app/widget/PasswordField.dart';
 import 'package:booktalk_app/widget/header.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
     
 class ModificaProfiloResponsive extends StatefulWidget {
   const ModificaProfiloResponsive({Key? key}) : super(key: key);
@@ -15,25 +18,41 @@ class _ModificaProfiloResponsiveState extends State<ModificaProfiloResponsive> {
 
   String firstName = 'Maria';
   String lastName = 'Rossi';
-  String email = 'email@example.com';
+  //String email = 'email@example.com';
+  String password = 'password';
+  late SharedPreferences _preferences;
 
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
+  //TextEditingController passwordController= TextEditingController();
 
   @override
   void initState() {
+    _loadUserData();
+    super.initState();
+  }
+
+    // Funzione per caricare i dati dell'utente dalle SharedPreferences
+  Future<void> _loadUserData() async {
+    _preferences = await SharedPreferences.getInstance();
+    String utenteJson = _preferences.getString('utente') ?? '';
+    if (utenteJson.isNotEmpty) {
+      Map<String, dynamic> utenteMap = json.decode(utenteJson);
+      firstName = utenteMap['NOME'] ?? '';
+      lastName = utenteMap['COGNOME'] ?? '';
+      //password = utenteMap['PASSWORD'] ?? '';
+      setState(() {});
+    }
     firstNameController.text = firstName;
     lastNameController.text = lastName;
-    emailController.text = email;
-    super.initState();
+    //passwordController.text = password;
   }
 
   void saveChanges() {
     setState(() {
       firstName = firstNameController.text;
       lastName = lastNameController.text;
-      email = emailController.text;
+      //password = passwordController.text;
     });
 
     // Salvare i dati aggiornati nel db

@@ -1,8 +1,11 @@
 //import 'package:camera/camera.dart'
+import 'package:booktalk_app/homepageResponsive.dart';
 import 'package:booktalk_app/loginResponsive.dart';
 import 'package:booktalk_app/registrazioneResponsive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:path/path.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'utils.dart';
 
 Future<void> main() async {
@@ -22,15 +25,36 @@ Future<void> main() async {
       DeviceOrientation.portraitDown
     ]);
   }*/
+
+  //await initializeApp(context as BuildContext); // Chiamata alla funzione di inizializzazione  
   
-  
-  runApp(MaterialApp(
+  /*runApp(MaterialApp(
     home: BookTalkApp(),
+  ));*/
+  runApp(MaterialApp(
+    home: await initializeApp(), // Chiamata alla funzione di inizializzazione
   ));
   
 
   //extract_text();
 }
+
+Future<Widget> initializeApp() async {
+  // Ottieni le SharedPreferences
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+
+  // Controlla se c'è un utente memorizzato nelle SharedPreferences
+  String? utenteJson = preferences.getString('utente');
+
+  if (utenteJson != null && utenteJson.isNotEmpty) {
+    print("L'utente è già autenticato");
+    return HomepageResponsitive();
+  } else {
+    print('Nessun utente memorizzato');
+    return BookTalkApp();
+  }
+}
+
 
 
 class BookTalkApp extends StatelessWidget {
