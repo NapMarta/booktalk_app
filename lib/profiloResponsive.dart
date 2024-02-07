@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:booktalk_app/business_logic/registrazione.dart';
+import 'package:booktalk_app/business_logic/registrazioneService.dart';
 import 'package:booktalk_app/homepageResponsive.dart';
 import 'package:booktalk_app/modificaProfiloResponsive.dart';
 import 'package:booktalk_app/storage/utente.dart';
@@ -29,6 +31,62 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
   String cognome = '';
   String email = '';
   Future<Uint8List>? foto;
+  late Future<Utente?> utente;
+
+  void mostraErrore(BuildContext context, String messaggio) {
+    final snackBar = SnackBar(
+      content: Row(
+        children: [
+          Icon(
+            Icons.error_outline,
+            color: Colors.red, // Colore dell'icona
+          ),
+          SizedBox(width: 8), // Spazio tra l'icona e il testo
+          Expanded(
+            child: Text(
+              messaggio,
+              style: TextStyle(
+                color: Colors.red, // Colore del testo
+                fontWeight: FontWeight.bold, // Grassetto
+              ),
+            ),
+          ),
+        ],
+      ),
+      backgroundColor: Colors.white, // Colore di sfondo
+      duration: Duration(seconds: 3), // Durata del messaggio
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+
+  void modificaOK(BuildContext context, String messaggio) {
+    final snackBar = SnackBar(
+      content: Row(
+        children: [
+          Icon(
+            Icons.verified,
+            color: Colors.green, // Colore dell'icona
+          ),
+          SizedBox(width: 8), // Spazio tra l'icona e il testo
+          Expanded(
+            child: Text(
+              messaggio,
+              style: TextStyle(
+                color: Colors.green, // Colore del testo
+                fontWeight: FontWeight.bold, // Grassetto
+              ),
+            ),
+          ),
+        ],
+      ),
+      backgroundColor: Colors.white, // Colore di sfondo
+      duration: Duration(seconds: 3), // Durata del messaggio
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
 
   @override
   void initState() {
@@ -44,16 +102,13 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
     if (utenteJson.isNotEmpty) {
       Map<String, dynamic> utenteMap = json.decode(utenteJson);
       UtenteDao dao = UtenteDao('http://130.61.22.178:9000');
-      //Future<Utente?> u = dao.getUtenteByEmail(utenteMap['email']);
+      print(utenteMap);
+      utente = dao.getUtenteByEmail(utenteMap['EMAIL']);
+      utente.then((value) => print(value.toString()));
+      setState(() {});
       nome = utenteMap['NOME'] ?? '';
       cognome = utenteMap['COGNOME'] ?? '';
       email = utenteMap['EMAIL'] ?? '';
-      //u.then((u) {
-      /*if (u!.foto != null){
-        imageBytes =  Uint8List.fromList(u.foto!);
-      }
-      });*/
-      
       setState(() {});
     }
   }
@@ -310,6 +365,22 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
 
     File _selectedImage = File(image.path);
     Future<Uint8List> _imageBytes = _selectedImage.readAsBytes();
+    _imageBytes.then((value) {
+      utente.then((valueUtente) async {
+        valueUtente?.foto = value;
+        RegistrazioneService registrazione = Registrazione('http://130.61.22.178:9000');
+        final risultato = await registrazione.modificaUtente(valueUtente!);
+        if (risultato.containsKey('success')) {
+          // Se la modifica è avvenuta con successo
+          modificaOK(context, risultato['success']);
+      
+        } else if (risultato.containsKey('error')) {
+          mostraErrore(context, risultato['error']);
+        }
+        print(risultato);  
+      });
+    });
+
     setState(()  {
       foto = _imageBytes;
     });
