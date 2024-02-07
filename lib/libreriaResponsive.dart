@@ -5,6 +5,7 @@ import 'package:booktalk_app/aggiuntaLibroResponsive.dart';
 import 'package:booktalk_app/chatResponsive.dart';
 import 'package:booktalk_app/extract_text.dart';
 import 'package:booktalk_app/opereLetterarieResponsive.dart';
+import 'package:booktalk_app/storage/opera_letteraria.dart';
 import 'package:booktalk_app/widget/ExpandableFloatingActionButton.dart';
 import 'package:booktalk_app/utils.dart';
 import 'package:flutter/material.dart';
@@ -260,6 +261,12 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
     setState(() {
       _selectedImageOpera = File(image!.path);
     });
+
+    Navigator.of(context).push(
+    MaterialPageRoute(
+      builder: (context) => OpereLetterarieResponsive(selectedImageOpera: _selectedImageOpera),
+    ),
+  );
   }
 
 

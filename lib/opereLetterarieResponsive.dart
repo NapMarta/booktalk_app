@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:booktalk_app/utils.dart';
 import 'package:booktalk_app/widget/header.dart';
 import 'package:flutter/material.dart';
     
 class OpereLetterarieResponsive extends StatefulWidget {
-  const OpereLetterarieResponsive({Key? key}) : super(key: key);
+  final File? selectedImageOpera;
+
+  const OpereLetterarieResponsive({Key? key, this.selectedImageOpera}) : super(key: key);
 
   @override
   _OpereLetterarieResponsiveState createState() => _OpereLetterarieResponsiveState();
@@ -51,6 +55,20 @@ class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
                   ),
                 child: Column(
                   children: [
+
+                    /*
+                    IMMAGINE DA ANALIZZARE
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        if (widget.selectedImageOpera != null)
+                          Image.file(widget.selectedImageOpera!),
+                        SizedBox(height: 20),
+                        Text(
+                          'Altre informazioni o widget qui...',
+                        ),
+                      ],
+                    ),*/
                     
                     Text(
                       "L'opera \"L'Infinito\" è contenuta nel seguente libro", 
