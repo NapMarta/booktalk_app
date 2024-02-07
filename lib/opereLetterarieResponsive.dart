@@ -1,8 +1,15 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
+import 'package:booktalk_app/chat/chatPDF.dart';
 import 'package:booktalk_app/utils.dart';
 import 'package:booktalk_app/widget/header.dart';
 import 'package:flutter/material.dart';
+import 'package:image/image.dart' as Img;
+import 'package:http/http.dart' as http;
+
+
     
 class OpereLetterarieResponsive extends StatefulWidget {
   final File? selectedImageOpera;
@@ -14,6 +21,87 @@ class OpereLetterarieResponsive extends StatefulWidget {
 }
 
 class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
+
+  String analisi = "Analisi in corso...", autore = "Caricamento in corso...";
+
+  @override
+  void initState() {
+    super.initState();
+    loadPdf();
+  }
+
+  Future<void> loadPdf() async {
+
+    // ESTRAZIONE TESTO DA IMMAGINE
+    final apiUrl = Uri.parse('http://130.61.22.178:9000/text_detection');
+    Img.Image image = Img.decodeImage(await widget.selectedImageOpera! .readAsBytes())!;
+    Uint8List imageBytes = Uint8List.fromList(Img.encodePng(image)!);
+    String extractedText = "";
+    ChatPDF chatPDF = ChatPDF();
+
+    try{
+      var request = http.MultipartRequest('POST', apiUrl)
+        ..files.add(http.MultipartFile.fromBytes(
+          'image',
+          imageBytes,
+          filename: 'temp.png',
+        ));
+      final response = await http.Response.fromStream(await request.send());
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = json.decode(response.body);
+        print(response.body);
+        //extractedText = data['detected_text'];
+        extractedText = response.body;
+        print(extractedText);
+      } else {
+        print(response.body);
+        print('Errore nella richiesta API: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Errore: $e');
+    }
+
+    // CONVERSIONE in PDF
+    final apiEndpoint = 'http://130.61.22.178:9000/convertToPDF';
+    try {
+      final response = await http.post(
+        Uri.parse(apiEndpoint),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({'poesia': extractedText}),
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        print(data);
+      } else {
+        throw Exception('Failed to convert string to PDF');
+      }
+    } catch (e) {
+      print('Error: $e');
+      // Gestisci l'errore in modo appropriato per la tua app
+    }
+
+    //CARICAMENTO PDF
+    //chatPDF.uploadPDF("../output.pdf");
+    await chatPDF.uploadPDF("Infinito/1.pdf");
+
+    // ANALISI DELL'OPERA
+    analisi = await chatPDF.askChatPDF2("Fammi un riassunto");
+    analisi.replaceAll('Certo', '');
+    analisi.replaceAll('Certamente', '');
+    analisi.replaceAll('PDF', 'opera');
+    print(analisi);
+
+    //INFO AUTORE
+    autore = await chatPDF.askChatPDF2("Dammi informazioni sull'autore dell'opera contenuta in questo PDF");
+    autore.replaceAll('PDF', 'opera');
+    autore.replaceAll('PDF.', 'opera');
+    print(autore);
+
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     var mediaQueryData = MediaQuery.of(context);
@@ -133,8 +221,8 @@ class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
                           ),
                         Padding(
                           padding: EdgeInsets.only(left: 20, right: 20, bottom: 0),
-                          child: Text(
-                            "\"L'Infinito\" di Giacomo Leopardi è una poesia composta nel 1819 che esplora il contrasto tra il desiderio umano di comprendere l\'infinito e la consapevolezza della propria finitezza. La struttura metrica regolare e il ritmo uniforme creano un senso di riflessione continua. Leopardi utilizza simboli come l\'orizzonte, il mare e la selva oscura per rappresentare l\'infinito e sottolinea la difficoltà umana nell\'esplorare questo concetto. La poesia riflette l\'atmosfera romantica del XIX secolo e mostra un profondo senso di malinconia e nostalgia per un'esperienza irraggiungibile. La chiusura con l\'immagine dell\'alba suggerisce una sorta di speranza nonostante la limitatezza umana.",
+                          child: Text( analisi,
+                            //"\"L'Infinito\" di Giacomo Leopardi è una poesia composta nel 1819 che esplora il contrasto tra il desiderio umano di comprendere l\'infinito e la consapevolezza della propria finitezza. La struttura metrica regolare e il ritmo uniforme creano un senso di riflessione continua. Leopardi utilizza simboli come l\'orizzonte, il mare e la selva oscura per rappresentare l\'infinito e sottolinea la difficoltà umana nell\'esplorare questo concetto. La poesia riflette l\'atmosfera romantica del XIX secolo e mostra un profondo senso di malinconia e nostalgia per un'esperienza irraggiungibile. La chiusura con l\'immagine dell\'alba suggerisce una sorta di speranza nonostante la limitatezza umana.",
                             textAlign: TextAlign.justify,
                             style: TextStyle(
                               fontSize: 14,
@@ -175,7 +263,8 @@ class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
                         Padding(
                           padding: EdgeInsets.only(left: 20, right: 20, bottom: 0),
                           child: Text(
-                            "Giacomo Leopardi (1798-1837) è stato un poeta, filosofo e scrittore italiano, considerato uno dei più grandi intellettuali del periodo romantico. Nato a Recanati, nelle Marche, Leopardi ha trascorso gran parte della sua vita in isolamento a causa di una salute precaria e di una famiglia oppressiva. \n La sua produzione poetica è notevole e include opere come \"L\'Infinito,\" \"A Silvia,\" e \"Il Sabato del Villaggio.\" Leopardi è spesso associato al pessimismo e al malinconico senso della vita, riflessi nelle sue opere. \n Oltre alla poesia, Leopardi ha scritto saggi filosofici, tra cui \"Operette morali\" e \"Zibaldone,\" un ampio diario di pensieri e riflessioni. La sua produzione riflette profondità intellettuale, critica sociale e una visione profondamente critica della condizione umana. Leopardi è riconosciuto come una figura chiave nella letteratura italiana e europea.",
+                            autore,
+                            //"Giacomo Leopardi (1798-1837) è stato un poeta, filosofo e scrittore italiano, considerato uno dei più grandi intellettuali del periodo romantico. Nato a Recanati, nelle Marche, Leopardi ha trascorso gran parte della sua vita in isolamento a causa di una salute precaria e di una famiglia oppressiva. \n La sua produzione poetica è notevole e include opere come \"L\'Infinito,\" \"A Silvia,\" e \"Il Sabato del Villaggio.\" Leopardi è spesso associato al pessimismo e al malinconico senso della vita, riflessi nelle sue opere. \n Oltre alla poesia, Leopardi ha scritto saggi filosofici, tra cui \"Operette morali\" e \"Zibaldone,\" un ampio diario di pensieri e riflessioni. La sua produzione riflette profondità intellettuale, critica sociale e una visione profondamente critica della condizione umana. Leopardi è riconosciuto come una figura chiave nella letteratura italiana e europea.",
                             textAlign: TextAlign.justify,
                             style: TextStyle(
                               fontSize: 14,
