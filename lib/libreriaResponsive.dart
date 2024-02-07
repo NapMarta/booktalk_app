@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
 
@@ -5,11 +6,15 @@ import 'package:booktalk_app/aggiuntaLibroResponsive.dart';
 import 'package:booktalk_app/chatResponsive.dart';
 import 'package:booktalk_app/extract_text.dart';
 import 'package:booktalk_app/opereLetterarieResponsive.dart';
+import 'package:booktalk_app/storage/libreria.dart';
+import 'package:booktalk_app/storage/libreriaDAO.dart';
+import 'package:booktalk_app/storage/libro.dart';
 import 'package:booktalk_app/storage/opera_letteraria.dart';
 import 'package:booktalk_app/widget/ExpandableFloatingActionButton.dart';
 import 'package:booktalk_app/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
     
 class LibreriaResponsive extends StatefulWidget {
   final bool is2;
@@ -25,6 +30,37 @@ class LibreriaResponsive extends StatefulWidget {
 class _LibreriaResponsiveState extends State<LibreriaResponsive> {
   File ? _selectedImageAddLibro;
   File ? _selectedImageOpera;
+  late SharedPreferences _preferences;
+  late Future<List<Libro>?> libreria;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  // Funzione per caricare i dati dell'utente dalle SharedPreferences
+  Future<void> _loadUserData() async {
+    print("Loading user data...");
+    _preferences = await SharedPreferences.getInstance();
+    String utenteJson = _preferences.getString('utente') ?? '';
+    if (utenteJson.isNotEmpty) {
+      Map<String, dynamic> utenteMap = json.decode(utenteJson);
+      LibreriaDao dao = LibreriaDao('http://130.61.22.178:9000');
+      int id = utenteMap['ID'];
+      print(id);
+      libreria = dao.getLibreriaUtente(id);
+
+      libreria.then((value) {
+        print("LIBRERIA");
+        for (Libro l in value!){
+          print(l.toString());
+        }
+      });
+      
+      setState(() {});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

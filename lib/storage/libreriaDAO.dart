@@ -1,15 +1,18 @@
 import 'dart:convert';
+import 'package:booktalk_app/storage/libro.dart';
 import 'package:http/http.dart' as http;
-import 'libro.dart';
+import 'libreria.dart';
 
-class LibroDao {
-  final String baseUrl; // URL di base per la chiamata API
+class LibreriaDao {
+  final String baseUrl;
 
-  LibroDao(this.baseUrl);
+  LibreriaDao(this.baseUrl);
 
-  Future<List<Libro>> getAllLibri() async {
+  Future<List<Libro>> getLibreriaUtente(int id) async {
   try {
-    final response = await http.get(Uri.parse('$baseUrl/selectLibro'));
+    final response = await http.post(Uri.parse('$baseUrl/selectLibreria'),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({'id': id}));
 
     if (response.statusCode == 200) {
       List<dynamic> resultList = json.decode(response.body) ?? [];
@@ -18,7 +21,7 @@ class LibroDao {
           resultList.map((libroData) => Libro.fromJson(libroData)).toList();
       return libriList;
     } else {
-      print('Errore nella chiamata API select: ${response.statusCode}');
+      print('Errore nella chiamata API selectLibreriaUtente: ${response.statusCode}');
       return [];
     }
   } catch (e) {
@@ -28,58 +31,76 @@ class LibroDao {
 }
 
 
-  Future<Map<String, dynamic>> insertLibro(Libro libro) async {
+  Future<void> insertLibreria(Libreria libreria) async {
     try {
       final response = await http.post(
-        Uri.parse('$baseUrl/insertLibro'),
+        Uri.parse('$baseUrl/insertLibreria'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
-          'isbn': libro.isbn,
-          'titolo': libro.titolo,
-          'autori': libro.autori,
-          'materia': libro.materia,
-          'edizione': libro.edizione,
-          'copertina': libro.copertina,
-          'num_Pagine': libro.numPagine,
+          'utente': libreria.utente,
+          'numLibri': libreria.numLibri,
+          'materia1': libreria.materia1,
+          'materia2': libreria.materia2,
+          'materia3': libreria.materia3,
         }),
       );
 
       if (response.statusCode == 200) {
-        return json.decode(response.body);
+        print('Libreria inserita con successo');
       } else {
         print('Errore nella chiamata API: ${response.statusCode}');
-        return {'error': 'Errore nella chiamata API'};
       }
     } catch (e) {
       print('Errore durante la chiamata API: $e');
-      return {'error': 'Errore durante la chiamata API'};
     }
   }
 
-  Future<Map<String, dynamic>> updateLibro(Libro libro) async {
+  Future<List<Libreria>> getLibreriaByUtente(int utenteId) async {
+  try {
+    final response = await http.get(Uri.parse('$baseUrl/selectLibreria'));
+
+    if (response.statusCode == 200) {
+      List<dynamic> resultList = json.decode(response.body) as List<dynamic>;
+
+      List<Libreria> libreriaList = [];
+      for (Map<String, dynamic> libreriaData in resultList) {
+        Libreria libreria = Libreria.fromJson(libreriaData);
+        if (libreria.utente == utenteId) {
+          libreriaList.add(libreria);
+        }
+      }
+      return libreriaList;
+    } else {
+      print('Errore nella chiamata API: ${response.statusCode}');
+      return [];
+    }
+  } catch (e) {
+    print('Errore durante la chiamata API: $e');
+    return [];
+  }
+}
+
+  Future<void> updateLibreria(Libreria libreria) async {
     try {
       final response = await http.put(
-        Uri.parse('$baseUrl/updateLibro'),
+        Uri.parse('$baseUrl/updateLibreria'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
-          'isbn': libro.isbn,
-          'titolo': libro.titolo,
-          'autori': libro.autori,
-          'materia': libro.materia,
-          'edizione': libro.edizione,
-          'num_Pagine': libro.numPagine,
+          'utente': libreria.utente,
+          'numLibri': libreria.numLibri,
+          'materia1': libreria.materia1,
+          'materia2': libreria.materia2,
+          'materia3': libreria.materia3,
         }),
       );
 
       if (response.statusCode == 200) {
-        return json.decode(response.body);
+        print('Libreria aggiornata con successo');
       } else {
         print('Errore nella chiamata API: ${response.statusCode}');
-        return {'error': 'Errore nella chiamata API'};
       }
     } catch (e) {
       print('Errore durante la chiamata API: $e');
-      return {'error': 'Errore durante la chiamata API'};
     }
   }
 }
