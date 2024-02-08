@@ -83,8 +83,8 @@ class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
     }
 
     //CARICAMENTO PDF
-    //chatPDF.uploadPDF("../output.pdf");
-    await chatPDF.uploadPDF("Infinito/1.pdf");
+    chatPDF.uploadPDF("../output.pdf");
+    //await chatPDF.uploadPDF("Infinito/1.pdf");
 
     // ANALISI DELL'OPERA
     analisi = await chatPDF.askChatPDF2("Fammi un riassunto");

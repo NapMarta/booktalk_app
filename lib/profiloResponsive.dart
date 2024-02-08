@@ -11,6 +11,7 @@ import 'package:booktalk_app/storage/utenteDAO.dart';
 import 'package:booktalk_app/widget/header.dart';
 import 'package:booktalk_app/statistiche.dart';
 import 'package:booktalk_app/utils.dart';
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -368,6 +369,8 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
     _imageBytes.then((value) {
       utente.then((valueUtente) async {
         valueUtente?.foto = value;
+        Digest digest = sha256.convert(utf8.encode(valueUtente!.password));
+        valueUtente.password = utf8.decode(digest.bytes);
         RegistrazioneService registrazione = Registrazione('http://130.61.22.178:9000');
         final risultato = await registrazione.modificaUtente(valueUtente!);
         if (risultato.containsKey('success')) {
