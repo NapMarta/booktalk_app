@@ -24,6 +24,24 @@ class ChatPDF {
     }
   }
 
+   Future<bool> uploadPDFOpera() async {
+    
+    final apiEndpoint = 'http://130.61.22.178:9000/uploadPDF/./output.pdf';
+    final response = await http.post(      
+      Uri.parse(apiEndpoint),
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      sourceId = data['source_id'];
+      return true;
+    } else {
+      //throw Exception('Failed to upload PDF');
+      return false;
+    }
+  }
+
   Future<String> askChatPDF(String userQuestion) async {
     final apiEndpoint = 'http://130.61.22.178:9000/askChatPDFwithPages';
     final response = await http.post(
