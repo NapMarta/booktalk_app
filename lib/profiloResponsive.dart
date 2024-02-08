@@ -106,18 +106,18 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
       UtenteDao dao = UtenteDao('http://130.61.22.178:9000');
       print(utenteMap);
       utente = dao.getUtenteByEmail(utenteMap['EMAIL']);
-      utente.then((value) => print(value.toString()));
       setState(() {});
       nome = utenteMap['NOME'] ?? '';
       cognome = utenteMap['COGNOME'] ?? '';
       email = utenteMap['EMAIL'] ?? '';
       setState(() {
-        utente.then((value){
-          if(value?.foto != null){
-            temp = Uint8List.fromList(value!.foto!);
-          }
-        });
+        String blobString = utenteMap['FOTO'] ?? '';
+        if (blobString.isNotEmpty) {
+          temp = base64Decode(blobString);
+        }
       });
+      print("kkk");
+      print(temp);
     }
   }
 
@@ -193,8 +193,66 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
                               }
                             },
                           )
+                          /*
+                          : FutureBuilder<Utente?>(
+                            future: utente,
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState == ConnectionState.waiting) {
+                                return CircularProgressIndicator();
+                              } else if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              } else if (snapshot.data == null) {
+                                return Text('Utente non trovato');
+                              } else {
+                                Utente utente = snapshot.data!;
+                                Uint8List imageBytes = Uint8List.fromList(utente.foto!);
+                                return utente.foto != null
+                                  ? Container(
+                                    height: mediaQueryData.size.height * 0.20,
+                                    decoration: BoxDecoration(
+                                      color: Colors.black,
+                                      shape: BoxShape.circle,
+                                      image: DecorationImage(
+                                          fit: BoxFit.fitHeight,
+                                          image: MemoryImage(imageBytes),
+                                        ),
+                                      ),
+                                    )
+                                  : Image.asset(
+                                    "assets/person-icon.png",
+                                    height: mediaQueryData.size.height * 0.20,
+                                  );
+                              }
+                            },
+                          ),
+                          */
                           : temp != null
-                            ? Container(
+                            ? FutureBuilder<Uint8List?>(
+                              future: Future.value(temp),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState == ConnectionState.waiting) {
+                                  return CircularProgressIndicator();
+                                } else if (snapshot.hasError) {
+                                  return Text('Error: ${snapshot.error}');
+                                } else if (snapshot.hasData && snapshot.data != null) {
+                                  return Container(
+                                    height: mediaQueryData.size.height * 0.20,
+                                    decoration: BoxDecoration(
+                                      color: Colors.black,
+                                      shape: BoxShape.circle,
+                                      image: DecorationImage(
+                                          fit: BoxFit.fitHeight,
+                                          image: MemoryImage(snapshot.data!),
+                                        ),
+                                      ),
+                                    );
+                                } else {
+                                  return Center(child: Text('No image selected'));
+                                }
+                              },
+                            )
+                              /*
+                              Container(
                                 height: mediaQueryData.size.height * 0.20,
                                 decoration: BoxDecoration(
                                   color: Colors.black,
@@ -204,12 +262,12 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
                                       image: MemoryImage(temp!),
                                     ),
                                   ),
-                                )
+                                )*/
                                 
                             : Image.asset(
                                 "assets/person-icon.png",
                                 height: mediaQueryData.size.height * 0.20,
-                              ),                
+                              ),  
                       ),
                     ),
 
