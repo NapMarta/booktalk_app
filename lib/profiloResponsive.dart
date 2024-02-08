@@ -116,8 +116,8 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
           temp = base64Decode(blobString);
         }
       });
-      //print("kkk");
-      //print(temp);
+      print("kkk");
+      print(temp);
     }
   }
 
@@ -193,39 +193,6 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
                               }
                             },
                           )
-                          /*
-                          : FutureBuilder<Utente?>(
-                            future: utente,
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState == ConnectionState.waiting) {
-                                return CircularProgressIndicator();
-                              } else if (snapshot.hasError) {
-                                return Text('Error: ${snapshot.error}');
-                              } else if (snapshot.data == null) {
-                                return Text('Utente non trovato');
-                              } else {
-                                Utente utente = snapshot.data!;
-                                Uint8List imageBytes = Uint8List.fromList(utente.foto!);
-                                return utente.foto != null
-                                  ? Container(
-                                    height: mediaQueryData.size.height * 0.20,
-                                    decoration: BoxDecoration(
-                                      color: Colors.black,
-                                      shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                          fit: BoxFit.fitHeight,
-                                          image: MemoryImage(imageBytes),
-                                        ),
-                                      ),
-                                    )
-                                  : Image.asset(
-                                    "assets/person-icon.png",
-                                    height: mediaQueryData.size.height * 0.20,
-                                  );
-                              }
-                            },
-                          ),
-                          */
                           : temp != null
                             ? FutureBuilder<Uint8List?>(
                               future: Future.value(temp),

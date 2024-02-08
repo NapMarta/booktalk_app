@@ -215,12 +215,13 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
                           return GestureDetector(
                           onTap: () {
                             if(widget.is2){
-                              //getImageFromCameraOpera();
+                              getImageFromCameraOpera();
+                              /*
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (context) => OpereLetterarieResponsive(),
                                 ),
-                              );
+                              );*/
                             }
                             else if(widget.is3){
                               Navigator.of(context).push(

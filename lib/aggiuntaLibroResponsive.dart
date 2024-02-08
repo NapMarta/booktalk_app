@@ -24,7 +24,7 @@ class AggiuntaLibroResponsive extends StatefulWidget {
 }
 
 class _AggiuntaLibroResponsiveState extends State<AggiuntaLibroResponsive> {
-  late String? isbn;
+  String? isbn = "";
 
   @override
   void initState() {
