@@ -1,17 +1,93 @@
 
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+import 'dart:ui';
+
+import 'package:booktalk_app/chat/chatPDF.dart';
 import 'package:booktalk_app/homepageResponsive.dart';
 import 'package:booktalk_app/utils.dart';
 import 'package:booktalk_app/widget/header.dart';
 import 'package:flutter/material.dart';
+
+import 'package:image/image.dart' as Img;
+import 'package:http/http.dart' as http;
     
 class AggiuntaLibroResponsive extends StatefulWidget {
-  const AggiuntaLibroResponsive({Key? key}) : super(key: key);
+  final File? selectedImageAddLibro;
+  const AggiuntaLibroResponsive({Key? key, this.selectedImageAddLibro}) : super(key: key);
 
   @override
   _AggiuntaLibroResponsiveState createState() => _AggiuntaLibroResponsiveState();
 }
 
 class _AggiuntaLibroResponsiveState extends State<AggiuntaLibroResponsive> {
+
+  late String? isbn;
+
+  @override
+  void initState() {
+    super.initState();
+    loadISBN();
+  }
+
+  String? extractISBN(String input) {
+  final RegExp regex = RegExp(r'(\bISBN\b\s*)?(\d{3})\s*[-]?\s*(\d{1,5})\s*[-]?\s*(\d{1,7})\s*[-]?\s*(\d{1,7})\s*[-]?\s*(\d{1,7})\s*[-]?\s*(\d{1,7})\s*[-]?\s*(\d{1,7})\b');
+
+  final Iterable<Match> matches = regex.allMatches(input);
+  if (matches.isNotEmpty) {
+    final Match match = matches.first;
+    String? isbn = match.group(0);
+
+    // Trova la posizione dell'ultimo trattino nella stringa
+    int lastHyphenIndex = isbn?.lastIndexOf('-') ?? -1;
+
+    // Taglia la stringa solo prima dell'ultimo trattino
+    if (lastHyphenIndex != -1) {
+      isbn = isbn?.substring(0, lastHyphenIndex+2);
+    }
+
+    return isbn;
+  } else {
+    return 'ISBN non trovato';
+  }
+}
+
+  Future<void> loadISBN() async {
+
+    // ESTRAZIONE TESTO DA IMMAGINE
+    final apiUrl = Uri.parse('http://130.61.22.178:9000/text_detection');
+    Img.Image image = Img.decodeImage(await widget.selectedImageAddLibro!.readAsBytes())!;
+    Uint8List imageBytes = Uint8List.fromList(Img.encodePng(image)!);
+    String extractedText = "";
+
+    try{
+      var request = http.MultipartRequest('POST', apiUrl)
+        ..files.add(http.MultipartFile.fromBytes(
+          'image',
+          imageBytes,
+          filename: 'temp.png',
+        ));
+      final response = await http.Response.fromStream(await request.send());
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = json.decode(response.body);
+        print(response.body);
+        //extractedText = data['detected_text'];
+        extractedText = response.body;
+        //print(extractedText);
+        isbn = extractISBN(extractedText);
+        print(isbn);
+      } else {
+        print(response.body);
+        print('Errore nella richiesta API: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Errore: $e');
+    }
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     // variabile che indica le informazioni correnti del dispositivo
