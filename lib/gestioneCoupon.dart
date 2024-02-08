@@ -8,12 +8,12 @@ import 'dart:async' show Future, runZonedGuarded;
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:typed_data';
 
-Future<void> verificaCoupon() async {
+Future<void> verificaCoupon(String isbn, String coupon) async {
   WidgetsFlutterBinding.ensureInitialized();
 
   //Prendere i parametri isbn e coupon da quelli che ha inserito l'utente
-  String isbn = '8806134965';
-  String coupon = 'A45DF3';
+  //String isbn = '8806134965';
+  //String coupon = 'A45DF3';
 
   final url = 'http://130.61.22.178:9000/verificaCoupon';
 

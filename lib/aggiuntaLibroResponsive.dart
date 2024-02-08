@@ -1,10 +1,10 @@
-
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
 import 'dart:ui';
 
+import 'package:booktalk_app/gestioneCoupon.dart';
 import 'package:booktalk_app/homepageResponsive.dart';
 import 'package:booktalk_app/utils.dart';
 import 'package:booktalk_app/widget/header.dart';
@@ -12,18 +12,18 @@ import 'package:flutter/material.dart';
 
 import 'package:image/image.dart' as Img;
 import 'package:http/http.dart' as http;
-    
-class AggiuntaLibroResponsive extends StatefulWidget {
 
+class AggiuntaLibroResponsive extends StatefulWidget {
   final File? selectedImageAddLibro;
-  const AggiuntaLibroResponsive({Key? key, this.selectedImageAddLibro}) : super(key: key);
+  const AggiuntaLibroResponsive({Key? key, this.selectedImageAddLibro})
+      : super(key: key);
 
   @override
-  _AggiuntaLibroResponsiveState createState() => _AggiuntaLibroResponsiveState();
+  _AggiuntaLibroResponsiveState createState() =>
+      _AggiuntaLibroResponsiveState();
 }
 
 class _AggiuntaLibroResponsiveState extends State<AggiuntaLibroResponsive> {
-
   late String? isbn;
 
   @override
@@ -33,36 +33,37 @@ class _AggiuntaLibroResponsiveState extends State<AggiuntaLibroResponsive> {
   }
 
   String? extractISBN(String input) {
-  final RegExp regex = RegExp(r'(\bISBN\b\s*)?(\d{3})\s*[-]?\s*(\d{1,5})\s*[-]?\s*(\d{1,7})\s*[-]?\s*(\d{1,7})\s*[-]?\s*(\d{1,7})\s*[-]?\s*(\d{1,7})\s*[-]?\s*(\d{1,7})\b');
+    final RegExp regex = RegExp(
+        r'(\bISBN\b\s*)?(\d{3})\s*[-]?\s*(\d{1,5})\s*[-]?\s*(\d{1,7})\s*[-]?\s*(\d{1,7})\s*[-]?\s*(\d{1,7})\s*[-]?\s*(\d{1,7})\s*[-]?\s*(\d{1,7})\b');
 
-  final Iterable<Match> matches = regex.allMatches(input);
-  if (matches.isNotEmpty) {
-    final Match match = matches.first;
-    String? isbn = match.group(0);
+    final Iterable<Match> matches = regex.allMatches(input);
+    if (matches.isNotEmpty) {
+      final Match match = matches.first;
+      String? isbn = match.group(0);
 
-    // Trova la posizione dell'ultimo trattino nella stringa
-    int lastHyphenIndex = isbn?.lastIndexOf('-') ?? -1;
+      // Trova la posizione dell'ultimo trattino nella stringa
+      int lastHyphenIndex = isbn?.lastIndexOf('-') ?? -1;
 
-    // Taglia la stringa solo prima dell'ultimo trattino
-    if (lastHyphenIndex != -1) {
-      isbn = isbn?.substring(0, lastHyphenIndex+2);
+      // Taglia la stringa solo prima dell'ultimo trattino
+      if (lastHyphenIndex != -1) {
+        isbn = isbn?.substring(0, lastHyphenIndex + 2);
+      }
+
+      return isbn;
+    } else {
+      return 'ISBN non trovato';
     }
-
-    return isbn;
-  } else {
-    return 'ISBN non trovato';
   }
-}
 
   Future<void> loadISBN() async {
-
     // ESTRAZIONE TESTO DA IMMAGINE
     final apiUrl = Uri.parse('http://130.61.22.178:9000/text_detection');
-    Img.Image image = Img.decodeImage(await widget.selectedImageAddLibro!.readAsBytes())!;
+    Img.Image image =
+        Img.decodeImage(await widget.selectedImageAddLibro!.readAsBytes())!;
     Uint8List imageBytes = Uint8List.fromList(Img.encodePng(image)!);
     String extractedText = "";
 
-    try{
+    try {
       var request = http.MultipartRequest('POST', apiUrl)
         ..files.add(http.MultipartFile.fromBytes(
           'image',
@@ -119,9 +120,10 @@ class _AggiuntaLibroResponsiveState extends State<AggiuntaLibroResponsive> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(top: isTabletOrizzontale(mediaQueryData)
-                                                ? 0
-                                                : mediaQueryData.size.height * 0.05),
+                  padding: EdgeInsets.only(
+                      top: isTabletOrizzontale(mediaQueryData)
+                          ? 0
+                          : mediaQueryData.size.height * 0.05),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -130,60 +132,61 @@ class _AggiuntaLibroResponsiveState extends State<AggiuntaLibroResponsive> {
                         borderRadius: BorderRadius.circular(6.0),
                         child: Image.asset(
                           "assets/libro1.jpg",
-                          width: isTabletOrizzontale(mediaQueryData)
-                              ? 45
-                              : 60,
+                          width: isTabletOrizzontale(mediaQueryData) ? 45 : 60,
                         ),
                       ),
-
-                      SizedBox(width: 30,),
-
+                      SizedBox(
+                        width: 30,
+                      ),
                       Text(
-                        "Titolo libro", 
-                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold,), 
+                        "Titolo libro",
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
                         textAlign: TextAlign.center,
                       ),
                     ],
                   ),
                 ),
-
                 Padding(
-                  padding: EdgeInsets.only(top: isTabletOrizzontale(mediaQueryData)
-                                                ? mediaQueryData.size.height * 0.04
-                                                : mediaQueryData.size.height * 0.1),
+                  padding: EdgeInsets.only(
+                      top: isTabletOrizzontale(mediaQueryData)
+                          ? mediaQueryData.size.height * 0.04
+                          : mediaQueryData.size.height * 0.1),
                   child: Text(
-                    "Inserisci il coupon del tuo libro", 
-                    style: TextStyle(fontSize: 18, 
-                                      fontWeight: FontWeight.bold,), 
+                    "Inserisci il coupon del tuo libro",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                     textAlign: TextAlign.center,
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.only(
                       top: isTabletOrizzontale(mediaQueryData)
-                              ? mediaQueryData.size.height * 0.03
-                              : mediaQueryData.size.height * 0.05,
+                          ? mediaQueryData.size.height * 0.03
+                          : mediaQueryData.size.height * 0.05,
                       left: isTabletOrizzontale(mediaQueryData)
-                              ? mediaQueryData.size.width * 0.20
-                              : 20,
+                          ? mediaQueryData.size.width * 0.20
+                          : 20,
                       right: isTabletOrizzontale(mediaQueryData)
-                              ? mediaQueryData.size.width * 0.20
-                              : 20),
+                          ? mediaQueryData.size.width * 0.20
+                          : 20),
                   child: TextFormField(
                     restorationId: 'coupon_field',
                     decoration: InputDecoration(
                       fillColor: Colors.white,
                       // focusColor: Color(0xFF0097b2),
-                      labelText: 'Coupon', 
-                      labelStyle: TextStyle(fontSize:  16, 
-                                            color: Colors.grey),
+                      labelText: 'Coupon',
+                      labelStyle: TextStyle(fontSize: 16, color: Colors.grey),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                        borderSide: BorderSide(
-                          color: Colors.grey,
-                          width: 1.5,
-                        )
-                      ),
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(
+                            color: Colors.grey,
+                            width: 1.5,
+                          )),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20.0),
                         borderSide: BorderSide(
@@ -192,16 +195,17 @@ class _AggiuntaLibroResponsiveState extends State<AggiuntaLibroResponsive> {
                         ),
                       ),
                       filled: true,
-                      prefixIcon: Icon(Icons.book_outlined,),
+                      prefixIcon: Icon(
+                        Icons.book_outlined,
+                      ),
                     ),
                     keyboardType: TextInputType.name,
-                    autofocus: true,                    
+                    autofocus: true,
                     onFieldSubmitted: (value) {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => HomepageResponsitive(),
-                        )
-                      );
+                      verificaCoupon(isbn!, value);
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => HomepageResponsitive(),
+                      ));
                     },
                   ),
                 ),
