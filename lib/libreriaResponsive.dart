@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:booktalk_app/aggiuntaLibroResponsive.dart';
@@ -237,14 +238,44 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
                               borderRadius: BorderRadius.circular(10.0),
                               //border: Border.all(width: 1.0, color: Colors.grey), 
                             ),
-                            child: ClipRRect(
+                            /*child: ClipRRect(
                               borderRadius: BorderRadius.circular(8.0),
                               child: Image.asset(
                                 "assets/libro${(index % 7)+1}.jpg",
                               ),
+                            ),*/
+                            child: FutureBuilder<List<Libro>?>(
+                              future: libreria,
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState == ConnectionState.waiting) {
+                                  return CircularProgressIndicator();
+                                } else if (snapshot.hasError) {
+                                  return Text('Error: ${snapshot.error}');
+                                } else if (snapshot.data == null) {
+                                  return Text('Libreria non trovata');
+                                } else {
+                                  List<Libro> libri = snapshot.data!;
+                                  if (libri.isNotEmpty) {
+                                    return Column(
+                                      children: libri.map((Libro l) {
+                                        if (l.copertina != null) {
+                                          Uint8List imageBytes = Uint8List.fromList(l.copertina!);
+                                          return ClipRRect(
+                                            borderRadius: BorderRadius.circular(8.0),
+                                            child: Image.memory(imageBytes),
+                                          );
+                                        } else {
+                                          return Text('COPERTINA non disponibile');
+                                        }
+                                      }).toList(),
+                                    );
+                                  } else {
+                                    return Text("");
+                                  }
+                                }
+                              },
                             ),
-                          ),
-                          
+                          ),                
                         );
                         
                       },
@@ -267,12 +298,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
         onPressed: () {
           _scrollController.animateTo(0,
               duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
-          //getImageFromCameraISBN();
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => AggiuntaLibroResponsive(),
-            ),
-          );
+          getImageFromCameraISBN();
         },
       ),
     );
@@ -284,8 +310,14 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
     if(image == null) return;
     setState(() {
       _selectedImageAddLibro = File(image!.path);
-      addLibro(_selectedImageAddLibro);
+      //addLibro(_selectedImageAddLibro);
     });
+
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => AggiuntaLibroResponsive(selectedImageAddLibro: _selectedImageAddLibro),
+      ),
+    );
   }
 
 
