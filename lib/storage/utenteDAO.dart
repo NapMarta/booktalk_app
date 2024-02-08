@@ -207,4 +207,36 @@ class UtenteDao {
   }
 }
 
+Future<Map<String, dynamic>> updateUtenteNoEncode(Utente utente) async {
+  try {
+    // Hash the new password before sending it
+
+    final response = await http.put(
+      Uri.parse('$baseUrl/updateUtente'),
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode({
+        'nome': utente.nome,
+        'cognome': utente.cognome,
+        'email': utente.email,
+        'password': utente.password,
+        'foto': utente.foto,
+        'ultfunz1': utente.ultfunz1,
+        'ultfunz2': utente.ultfunz2,
+        'ultfunz3': utente.ultfunz3,
+        'id': utente.id
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      print('Errore nella chiamata API: ${response.statusCode}');
+      print('Dettagli errore: ${response.body}');
+      return {'error': 'Errore nella chiamata API'};
+    }
+  } catch (e) {
+    print('Errore durante la chiamata API: $e');
+    return {'error': 'Errore durante la chiamata API'};
+  }
+}
 }

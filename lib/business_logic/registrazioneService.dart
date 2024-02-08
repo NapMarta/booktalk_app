@@ -5,4 +5,5 @@ abstract class RegistrazioneService {
   Future<Map<String, dynamic>> registrati(Utente utente, String confermaPassword);
   Map<String, dynamic> validateParametersModifica (Utente utente, String nome, String cognome, String passwordAttuale, String nuovaPassword);
   Future<Map<String, dynamic>> modificaUtente (Utente utente);
+  Future<Map<String, dynamic>> modificaUtenteNoPassword (Utente utente);
 }

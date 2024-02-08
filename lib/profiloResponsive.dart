@@ -388,10 +388,9 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
     _imageBytes.then((value) {
       utente.then((valueUtente) async {
         valueUtente?.foto = value;
-        Digest digest = sha256.convert(utf8.encode(valueUtente!.password));
-        valueUtente.password = utf8.decode(digest.bytes);
+        
         RegistrazioneService registrazione = Registrazione('http://130.61.22.178:9000');
-        final risultato = await registrazione.modificaUtente(valueUtente!);
+        final risultato = await registrazione.modificaUtenteNoPassword(valueUtente!);
         if (risultato.containsKey('success')) {
           // Se la modifica è avvenuta con successo
           modificaOK(context, risultato['success']);
