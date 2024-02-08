@@ -1,8 +1,14 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:booktalk_app/homepageResponsive.dart';
 import 'package:booktalk_app/main.dart';
 import 'package:booktalk_app/profiloResponsive.dart';
+import 'package:booktalk_app/storage/utente.dart';
+import 'package:booktalk_app/storage/utenteDAO.dart';
 import 'package:booktalk_app/widget/AllertConferma.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../utils.dart';
     
 class Header extends StatefulWidget {
@@ -31,6 +37,33 @@ class Header extends StatefulWidget {
 }
 
 class _HeaderState extends State<Header> {
+  late SharedPreferences _preferences;
+  late Future<Utente?> utente;
+  Uint8List? fotoProfilo;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  Future<void> _loadUserData() async {
+    print("Loading user data...");
+    _preferences = await SharedPreferences.getInstance();
+    String utenteJson = _preferences.getString('utente') ?? '';
+    if (utenteJson.isNotEmpty) {
+      Map<String, dynamic> utenteMap = json.decode(utenteJson);
+      UtenteDao dao = UtenteDao('http://130.61.22.178:9000');
+      print(utenteMap);
+      utente = dao.getUtenteByEmail(utenteMap['EMAIL']);
+      setState(() {
+        String blobString = utenteMap['FOTO'] ?? '';
+        if (blobString.isNotEmpty) {
+          fotoProfilo = base64Decode(blobString);
+        }
+      });
+    }
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -103,17 +136,54 @@ class _HeaderState extends State<Header> {
                   icon: Image.asset("assets/logout.png"),
                   iconSize: 0,
                 )
-              : IconButton(
-                icon: widget.iconProfile,
-                iconSize: 2,
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                    builder: (context) => ProfiloResponsitive(),
-                    ),
-                  ); 
-                },
-              ),
+              : fotoProfilo != null
+                ? FutureBuilder<Uint8List?>(
+                  future: Future.value(fotoProfilo),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return CircularProgressIndicator();
+                    } else if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    } else if (snapshot.hasData && snapshot.data != null) {
+                      return Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.black,
+                        ),
+                        //padding: EdgeInsets.only(top:0, bottom: 0),
+                        child: IconButton(
+                          //padding: EdgeInsets.only(top:0, bottom: 0),
+                          icon: CircleAvatar(
+                            backgroundColor: Colors.transparent,
+                            backgroundImage: MemoryImage(fotoProfilo!),
+                          ),
+                          iconSize: 2, // Modifica la dimensione dell'icona secondo le tue esigenze
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => ProfiloResponsitive(),
+                              ),
+                            );
+                          },
+                        ),
+                      );
+                    } else {
+                      return Center(child: Text('No image selected'));
+                    }
+                  },
+                )
+              
+                : IconButton(
+                  icon: widget.iconProfile,
+                  iconSize: 2,
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                      builder: (context) => ProfiloResponsitive(),
+                      ),
+                    ); 
+                  },
+                ),
           ),
         ),
       ],
