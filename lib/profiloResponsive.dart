@@ -11,6 +11,7 @@ import 'package:booktalk_app/storage/utenteDAO.dart';
 import 'package:booktalk_app/widget/header.dart';
 import 'package:booktalk_app/statistiche.dart';
 import 'package:booktalk_app/utils.dart';
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -32,6 +33,7 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
   String email = '';
   Future<Uint8List>? foto;
   late Future<Utente?> utente;
+  Uint8List? temp;
 
   void mostraErrore(BuildContext context, String messaggio) {
     final snackBar = SnackBar(
@@ -109,7 +111,13 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
       nome = utenteMap['NOME'] ?? '';
       cognome = utenteMap['COGNOME'] ?? '';
       email = utenteMap['EMAIL'] ?? '';
-      setState(() {});
+      setState(() {
+        utente.then((value){
+          if(value?.foto != null){
+            temp = Uint8List.fromList(value!.foto!);
+          }
+        });
+      });
     }
   }
 
@@ -185,11 +193,23 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
                               }
                             },
                           )
+                          : temp != null
+                            ? Container(
+                                height: mediaQueryData.size.height * 0.20,
+                                decoration: BoxDecoration(
+                                  color: Colors.black,
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                      fit: BoxFit.fitHeight,
+                                      image: MemoryImage(temp!),
+                                    ),
+                                  ),
+                                )
                                 
-                          : Image.asset(
-                              "assets/person-icon.png",
-                              height: mediaQueryData.size.height * 0.20,
-                            ),                
+                            : Image.asset(
+                                "assets/person-icon.png",
+                                height: mediaQueryData.size.height * 0.20,
+                              ),                
                       ),
                     ),
 
@@ -368,6 +388,8 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
     _imageBytes.then((value) {
       utente.then((valueUtente) async {
         valueUtente?.foto = value;
+        Digest digest = sha256.convert(utf8.encode(valueUtente!.password));
+        valueUtente.password = utf8.decode(digest.bytes);
         RegistrazioneService registrazione = Registrazione('http://130.61.22.178:9000');
         final risultato = await registrazione.modificaUtente(valueUtente!);
         if (risultato.containsKey('success')) {
