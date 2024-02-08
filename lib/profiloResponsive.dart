@@ -116,8 +116,6 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
           temp = base64Decode(blobString);
         }
       });
-      print("kkk");
-      print(temp);
     }
   }
 
