@@ -17,9 +17,9 @@ class Utente {
   String email;
   String password;
   List<int>? foto;
-  int? ultfunz1;
-  int? ultfunz2;
-  int? ultfunz3;
+  double? ultfunz1;
+  double? ultfunz2;
+  double? ultfunz3;
 
   Utente({
     this.id,
@@ -45,7 +45,13 @@ class Utente {
     }
 
     //print('JSON: $json');
-    //print(json['ultfunz1'].toString());
+
+    double u1 = json['ultfunz1'] != null ? double.parse(json['ultfunz1']) : 0.0;
+    double u2 = json['ultfunz2'] != null ? double.parse(json['ultfunz2']) : 0.0;
+    double u3 = json['ultfunz3'] != null ? double.parse(json['ultfunz3']) : 0.0;
+
+    print("VARIABILI "+ u1.toString() +  u2.toString() + u3.toString());
+
     return Utente(
       id: json['ID'],
       nome: json['NOME'],
@@ -53,9 +59,9 @@ class Utente {
       email: json['EMAIL'],
       password: json['PASSWORD'],
       foto: foto,
-      ultfunz1: json['ULTFUNZ1'],
-      ultfunz2: json['ULTFUNZ2'],
-      ultfunz3: json['ULTFUNZ3'],
+      ultfunz1: u1,
+      ultfunz2: u2,
+      ultfunz3: u3,
     );
   }
 
@@ -67,9 +73,9 @@ class Utente {
       foto = base64.decode(base64String);
     }
 
-    /*double ultfunz1 = json['ULTFUNZ1'] != null ? (json['ULTFUNZ1'] as num).toDouble() : 0.0;
-    double ultfunz2 = json['ULTFUNZ2'] != null ? (json['ULTFUNZ2'] as num).toDouble() : 0.0;
-    double ultfunz3 = json['ULTFUNZ3'] != null ? (json['ULTFUNZ3'] as num).toDouble() : 0.0;*/
+    double u1 = json['ultfunz1'] != null ? double.parse(json['ultfunz1']) : 0.0;
+    double u2 = json['ultfunz2'] != null ? double.parse(json['ultfunz2']) : 0.0;
+    double u3 = json['ultfunz3'] != null ? double.parse(json['ultfunz3']) : 0.0;
 
     
     return Utente(
@@ -79,9 +85,9 @@ class Utente {
       email: json['EMAIL'],
       password: json['PASSWORD'],
       foto: foto,
-      ultfunz1: json['ULTFUNZ1'],
-      ultfunz2: json['ULTFUNZ2'],
-      ultfunz3: json['ULTFUNZ3'],
+      ultfunz1: u1,
+      ultfunz2: u2,
+      ultfunz3: u3,
     );
   }
 
@@ -94,15 +100,14 @@ class Utente {
       'EMAIL': email,
       'PASSWORD': password,
       'FOTO': foto != null ? base64Encode(Uint8List.fromList(foto!)) : null,
-      'ULTFUNZ1': ultfunz1,
-      'ULTFUNZ2': ultfunz2,
-      'ULTFUNZ3': ultfunz3,
+      'ULTFUNZ1': ultfunz1 != null ? ultfunz1.toString() : null,
+      'ULTFUNZ2': ultfunz2 != null ? ultfunz2.toString() : null,
+      'ULTFUNZ3': ultfunz3 != null ? ultfunz3.toString() : null,
     };
   }
 
   @override
   String toString() {
-    return 'Utente{id: $id, nome: $nome, cognome: $cognome, email: $email, password: $password, '
-        'foto: $foto, ultfunz1: $ultfunz1, ultfunz2: $ultfunz2, ultfunz3: $ultfunz3}';
+    return 'Utente{id: $id, nome: $nome, cognome: $cognome, email: $email, password: $password, ultfunz1: $ultfunz1, ultfunz2: $ultfunz2, ultfunz3: $ultfunz3}';
   }
 }

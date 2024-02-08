@@ -19,7 +19,7 @@ class Statistiche extends StatefulWidget {
 class _StatisticheState extends State<Statistiche> {
 
   late SharedPreferences _preferences;
-  late Future<Utente?> utente;
+  //late Future<Utente?> utente;
   double utlFunz1 = 1.0, utlFunz2 = 1.0, utlFunz3 = 1.0;
 
   
@@ -32,16 +32,19 @@ class _StatisticheState extends State<Statistiche> {
 
   // Funzione per caricare i dati dell'utente dalle SharedPreferences
   Future<void> _loadUserData() async {
-    print("Loading user data...");
+    //print("Loading user data...");
     _preferences = await SharedPreferences.getInstance();
     String utenteJson = _preferences.getString('utente') ?? '';
     if (utenteJson.isNotEmpty) {
       Map<String, dynamic> utenteMap = json.decode(utenteJson);
-      UtenteDao dao = UtenteDao('http://130.61.22.178:9000');
-      print(utenteMap);
-      utente = dao.getUtenteByEmail(utenteMap['EMAIL']);
-      utente.then((value){
-        print("Utente in statistiche: "+value.toString());
+      utlFunz1 = double.parse(utenteMap['ULTFUNZ1']);
+      utlFunz2 = double.parse(utenteMap['ULTFUNZ2']);
+      utlFunz3 = double.parse(utenteMap['ULTFUNZ3']);
+      //UtenteDao dao = UtenteDao('http://130.61.22.178:9000');
+      //print(utenteMap);
+      //utente = dao.getUtenteByEmail(utenteMap['EMAIL']);
+      //utente.then((value){
+        //print("Utente in statistiche: " + value.toString());
         /*if(value?.ultfunz1 != null){
           utlFunz1 = value!.ultfunz1!;
         }
@@ -50,8 +53,8 @@ class _StatisticheState extends State<Statistiche> {
         }
         if(value?.ultfunz3 != null){
           utlFunz3 = value!.ultfunz3!;
-        }*/
-      });
+        }
+      });*/
       setState(() {});
     }
   }

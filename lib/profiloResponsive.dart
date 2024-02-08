@@ -104,7 +104,7 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
     if (utenteJson.isNotEmpty) {
       Map<String, dynamic> utenteMap = json.decode(utenteJson);
       UtenteDao dao = UtenteDao('http://130.61.22.178:9000');
-      print(utenteMap);
+      //(utenteMap);
       utente = dao.getUtenteByEmail(utenteMap['EMAIL']);
       setState(() {});
       nome = utenteMap['NOME'] ?? '';
@@ -116,8 +116,8 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
           temp = base64Decode(blobString);
         }
       });
-      print("kkk");
-      print(temp);
+      //print("kkk");
+      //print(temp);
     }
   }
 
