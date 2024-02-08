@@ -14,6 +14,7 @@ import 'package:image/image.dart' as Img;
 import 'package:http/http.dart' as http;
     
 class AggiuntaLibroResponsive extends StatefulWidget {
+  
   final File? selectedImageAddLibro;
   const AggiuntaLibroResponsive({Key? key, this.selectedImageAddLibro}) : super(key: key);
 
