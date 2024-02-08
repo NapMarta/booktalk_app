@@ -4,7 +4,6 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
 
-import 'package:booktalk_app/chat/chatPDF.dart';
 import 'package:booktalk_app/homepageResponsive.dart';
 import 'package:booktalk_app/utils.dart';
 import 'package:booktalk_app/widget/header.dart';
@@ -14,7 +13,7 @@ import 'package:image/image.dart' as Img;
 import 'package:http/http.dart' as http;
     
 class AggiuntaLibroResponsive extends StatefulWidget {
-  
+
   final File? selectedImageAddLibro;
   const AggiuntaLibroResponsive({Key? key, this.selectedImageAddLibro}) : super(key: key);
 
