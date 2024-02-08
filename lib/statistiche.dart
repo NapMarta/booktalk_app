@@ -1,7 +1,6 @@
 import 'dart:convert';
 
-import 'package:booktalk_app/storage/utente.dart';
-import 'package:booktalk_app/storage/utenteDAO.dart';
+import 'package:booktalk_app/business_logic/monitoraggioStatistiche.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_split_view/multi_split_view.dart';
@@ -36,25 +35,17 @@ class _StatisticheState extends State<Statistiche> {
     _preferences = await SharedPreferences.getInstance();
     String utenteJson = _preferences.getString('utente') ?? '';
     if (utenteJson.isNotEmpty) {
-      Map<String, dynamic> utenteMap = json.decode(utenteJson);
-      utlFunz1 = double.parse(utenteMap['ULTFUNZ1']);
+      //Map<String, dynamic> utenteMap = json.decode(utenteJson);
+      MonitoraggioStatistiche monitoraggioStatistiche = MonitoraggioStatistiche.instance;
+      //print(monitoraggioStatistiche.getPercentualeF1().toString());
+      utlFunz1 = monitoraggioStatistiche.getPercentualeF1();
+      utlFunz2 = monitoraggioStatistiche.getPercentualeF2();
+      utlFunz3 = monitoraggioStatistiche.getPercentualeF3();
+
+      /*utlFunz1 = double.parse(utenteMap['ULTFUNZ1']);
       utlFunz2 = double.parse(utenteMap['ULTFUNZ2']);
-      utlFunz3 = double.parse(utenteMap['ULTFUNZ3']);
-      //UtenteDao dao = UtenteDao('http://130.61.22.178:9000');
-      //print(utenteMap);
-      //utente = dao.getUtenteByEmail(utenteMap['EMAIL']);
-      //utente.then((value){
-        //print("Utente in statistiche: " + value.toString());
-        /*if(value?.ultfunz1 != null){
-          utlFunz1 = value!.ultfunz1!;
-        }
-        if(value?.ultfunz2 != null){
-          utlFunz2 = value!.ultfunz2!;
-        }
-        if(value?.ultfunz3 != null){
-          utlFunz3 = value!.ultfunz3!;
-        }
-      });*/
+      utlFunz3 = double.parse(utenteMap['ULTFUNZ3']);*/
+
       setState(() {});
     }
   }

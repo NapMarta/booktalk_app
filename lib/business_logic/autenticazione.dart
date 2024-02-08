@@ -1,3 +1,4 @@
+import 'package:booktalk_app/business_logic/monitoraggioStatistiche.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../storage/utente.dart';
 import '../storage/utenteDAO.dart';
@@ -10,6 +11,7 @@ class Autenticazione implements AutenticazioneService{
   UtenteDao _utenteDao = UtenteDao("http://130.61.22.178:9000");
   Utente? utente;
   SharedPreferences? _preferences;
+  late MonitoraggioStatistiche monitoraggio = MonitoraggioStatistiche.instance;
 
   Autenticazione(this.baseUrl) {
     _utenteDao = UtenteDao(baseUrl);
@@ -48,6 +50,14 @@ class Autenticazione implements AutenticazioneService{
       this.utente = utente;
       //print("Autenticazione: " + utente.toString());
       await _saveUtenteToPreferences();
+      monitoraggio = MonitoraggioStatistiche.instance;
+      if (utente.ultfunz1 != null) 
+        monitoraggio.setFunz1(utente.ultfunz1!);
+      if (utente.ultfunz2 != null)
+        monitoraggio.setFunz2(utente.ultfunz2!);
+      if (utente.ultfunz3 != null)
+        monitoraggio.setFunz3(utente.ultfunz3!);
+      
       print("UTENTE LOGGATO:"+utente.toString());
 
       return {'success': 'Login eseguito con successo'};
@@ -59,7 +69,13 @@ class Autenticazione implements AutenticazioneService{
 
   @override
   Future<Map<String, dynamic>> logout() async {
+    utente?.ultfunz1 = monitoraggio.getFunz1();
+    utente?.ultfunz2 = monitoraggio.getFunz2();
+    utente?.ultfunz3 = monitoraggio.getFunz3();
+    UtenteDao dao = UtenteDao('http://130.61.22.178:9000');
+    await dao.updateUtenteFunz(utente!);
     utente = null;
+    monitoraggio.azzera();
     await _removeUtenteFromPreferences();
     return {'success': 'Logout eseguito con successo'};
   }

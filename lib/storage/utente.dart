@@ -50,7 +50,7 @@ class Utente {
     double u2 = json['ultfunz2'] != null ? double.parse(json['ultfunz2']) : 0.0;
     double u3 = json['ultfunz3'] != null ? double.parse(json['ultfunz3']) : 0.0;
 
-    print("VARIABILI "+ u1.toString() +  u2.toString() + u3.toString());
+    //print("VARIABILI "+ u1.toString() +  u2.toString() + u3.toString());
 
     return Utente(
       id: json['ID'],
