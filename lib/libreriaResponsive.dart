@@ -258,7 +258,8 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
                                   List<Libro> libri = snapshot.data!;
                                   if (libri.isNotEmpty) {
                                     return Column(
-                                      children: libri.map((Libro l) {
+                                      children: List.generate(libri.length, (index) {
+                                        Libro l = libri[index];
                                         if (l.copertina != null) {
                                           Uint8List imageBytes = Uint8List.fromList(l.copertina!);
                                           return ClipRRect(
@@ -268,7 +269,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
                                         } else {
                                           return Text('COPERTINA non disponibile');
                                         }
-                                      }).toList(),
+                                      }),
                                     );
                                   } else {
                                     return Text("");
@@ -276,9 +277,9 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
                                 }
                               },
                             ),
+                            
                           ),                
                         );
-                        
                       },
                       childCount: 30,
                     ),                  

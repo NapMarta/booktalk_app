@@ -44,8 +44,8 @@ class Utente {
           : null;
     }
 
-    print('JSON: $json');
-    print(json['ultfunz1'].toString());
+    //print('JSON: $json');
+    //print(json['ultfunz1'].toString());
     return Utente(
       id: json['ID'],
       nome: json['NOME'],
