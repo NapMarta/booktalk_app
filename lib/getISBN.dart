@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:booktalk_app/aggiuntaLibroResponsive.dart';
 import 'package:booktalk_app/caricamentoResponsive.dart';
+import 'package:booktalk_app/storage/libroDAO.dart';
 import 'package:flutter/material.dart';
 
 import 'package:image/image.dart' as Img;
@@ -97,7 +98,28 @@ class _GetIsbnState extends State<GetIsbn> {
         if(isbn.hasError){
           return Text("Errore. Ti invitiamo a riprovare");
         }else if (isbn.connectionState == ConnectionState.done){
-          return AggiuntaLibroResponsive(isbn: isbn.data as String);
+          if (isbn.data == null)
+            return Text("Errore. ISBN non inserito");
+          else{
+            LibroDao dao = LibroDao('http://130.61.22.178:9000');
+            Future<bool> isIsbnInDB = dao.searchISBN(isbn.data!);
+            return FutureBuilder<bool>(
+              future: isIsbnInDB,
+              builder: (context, dbSnapshot) {
+                if(dbSnapshot.hasError) {
+                  return Text("Errore. Ti invitiamo a riprovare");
+                } else if (dbSnapshot.connectionState == ConnectionState.done) {
+                  if (dbSnapshot.data == true)
+                    return AggiuntaLibroResponsive(isbn: isbn.data as String);
+                  else
+                    return Text("Errore. L'ISBN non è nel DB");
+                } else {
+                  return CaricamentoResponsive(text: "Ricerca dell'ISBN in corso...");
+                }
+              },
+            );
+          }
+
         }else {
           return CaricamentoResponsive(text: "Ricerca dell'ISBN in corso...");
         }

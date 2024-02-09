@@ -27,6 +27,31 @@ class LibroDao {
   }
 }
 
+  Future<bool> searchISBN(String isbn) async {
+    try {
+      final response = await http.get(Uri.parse('$baseUrl/selectLibro'));
+
+      if (response.statusCode == 200) {
+        List<dynamic> resultList = json.decode(response.body) ?? [];
+
+        List<Libro> libriList =
+            resultList.map((libroData) => Libro.fromJson(libroData)).toList();
+        for (Libro l in libriList){
+          if (l.isbn == isbn || "ISBN: "+l.isbn == isbn){
+            return true;
+          }
+        }
+        return false;
+      } else {
+        print('Errore nella chiamata API search: ${response.statusCode}');
+        return false;
+      }
+    } catch (e) {
+      print('Errore durante la chiamata API search: $e');
+      return false;
+    }
+  }
+
 
   Future<Map<String, dynamic>> insertLibro(Libro libro) async {
     try {
