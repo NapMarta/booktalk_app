@@ -4,7 +4,7 @@ import 'package:booktalk_app/storage/autorizzazioneDAO.dart';
 import 'package:intl/intl.dart';
 
 
-class Autenticazione implements GestioneAutorizzazioniService{
+class GestioneAutorizzazioni implements GestioneAutorizzazioniService{
 
   AutorizzazioneDao dao = AutorizzazioneDao('http://130.61.22.178:9000');
 
