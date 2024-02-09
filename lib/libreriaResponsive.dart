@@ -260,39 +260,41 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
                                 "assets/libro${(index % 7)+1}.jpg",
                               ),
                             ),*/
-                            child: FutureBuilder<List<Libro>?>(
-                              future: libreria,
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState == ConnectionState.waiting) {
-                                  return CircularProgressIndicator();
-                                } else if (snapshot.hasError) {
-                                  return Text('Error: ${snapshot.error}');
-                                } else if (snapshot.data == null) {
-                                  return Text('Libreria non trovata');
-                                } else {
-                                  List<Libro> libri = snapshot.data!;
-                                  if (libri.isNotEmpty) {
-                                    return Column(
-                                      children: List.generate(libri.length, (index) {
-                                        Libro l = libri[index];
-                                        if (l.copertina != null) {
-                                          Uint8List imageBytes = Uint8List.fromList(l.copertina!);
-                                          return ClipRRect(
-                                            borderRadius: BorderRadius.circular(8.0),
-                                            child: Image.memory(imageBytes),
-                                          );
-                                        } else {
-                                          return Text('COPERTINA non disponibile');
-                                        }
-                                      }),
-                                    );
+                            child: ClipRRect (
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: FutureBuilder<List<Libro>?>(
+                                future: libreria,
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState == ConnectionState.waiting) {
+                                    return CircularProgressIndicator();
+                                  } else if (snapshot.hasError) {
+                                    return Text('Error: ${snapshot.error}');
+                                  } else if (snapshot.data == null) {
+                                    return Text('Libreria non trovata');
                                   } else {
-                                    return Text("");
+                                    List<Libro> libri = snapshot.data!;
+                                    if (libri.isNotEmpty) {
+                                      return Column(
+                                        children: List.generate(libri.length, (index) {
+                                          Libro l = libri[index];
+                                          if (l.copertina != null) {
+                                            Uint8List imageBytes = Uint8List.fromList(l.copertina!);
+                                            return Expanded(
+                                              child: Image.memory(imageBytes),
+                                            );
+                                          } else {
+                                            return Text('COPERTINA non disponibile');
+                                          }
+                                        }),
+                                      );
+                                    } else {
+                                      return Text("");
+                                    }
                                   }
-                                }
-                              },
+                                },
+                              ),
                             ),
-                            
+
                           ),                
                         );
                       },
