@@ -30,6 +30,7 @@ class _ModificaProfiloResponsiveState extends State<ModificaProfiloResponsive> {
   String password = '';
   late SharedPreferences _preferences;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   final RegistrazioneService registrazione = Registrazione('http://130.61.22.178:9000');
   final AutenticazioneService autenticazione = Autenticazione('http://130.61.22.178:9000');
   late Future<Utente?> utente;
@@ -210,6 +211,7 @@ class _ModificaProfiloResponsiveState extends State<ModificaProfiloResponsive> {
                                       bottom: MediaQuery.of(context).viewInsets.bottom,),
               child: Form (
                 key: _formKey,
+                
                 child: Column(
                   children: <Widget>[
                     SizedBox(height: isTabletOrizzontale(mediaQueryData) ? 10 : 80,),
@@ -348,11 +350,13 @@ class _ModificaProfiloResponsiveState extends State<ModificaProfiloResponsive> {
                                 
                                 // Se la modifica è avvenuta con successo
                                 modificaOK(context, risultato['success']);
+
+                                Navigator.of(context).popUntil((route) => route.isFirst);
                                     
                                 Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
                                     builder: (context) => ProfiloResponsitive(),
-                                  ),
+                                  )
                                 ); 
                               } else if (risultato.containsKey('error')) {
                                 // Se c'è stato un errore durante la modifica

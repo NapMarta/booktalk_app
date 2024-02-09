@@ -61,7 +61,7 @@ class _HeaderState extends State<Header> {
       if (blobString.isNotEmpty) {
         fotoProfilo = base64Decode(blobString);
       }
-      print("FOTO PROFILO HEADER: $fotoProfilo");
+      //print("FOTO PROFILO HEADER: $fotoProfilo");
       if (mounted)
         setState(() {});
     }

@@ -106,6 +106,7 @@ class _GetExpression extends State<GetExpression> {
             List<String> data = list.data as List<String>;
 
             if (data.isEmpty) {
+              Navigator.of(context).pop;
               return MaterialApp(
                 title: 'Errore Equazione Matematica',
                 home: ErrorAlertPage(

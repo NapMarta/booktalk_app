@@ -100,10 +100,12 @@ class _WriteExpressionState extends State<WriteExpression> {
                       print(mathExpression);
                       */
 
-                      Navigator.of(context).push(
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(
                           builder: (context) => GetExpression(exp: value),
                         ),
+                        (route) => true,
                       );
                     },
 

@@ -126,6 +126,8 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
 
     return WillPopScope(
       onWillPop: () async {
+        Navigator.of(context).popUntil((route) => route.isFirst);
+
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) => HomepageResponsitive(),
