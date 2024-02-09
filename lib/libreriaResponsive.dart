@@ -251,7 +251,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
                                         return GestureDetector(
                                           onTap: () {
                                             if(widget.is2){
-                                              getImageFromCameraOpera();
+                                              getImageFromCameraOpera(libri[index]);
                                             }
                                             else if(widget.is3){
                                               Navigator.of(context).push(
@@ -348,7 +348,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
     return File(imagePath);
   }
 
-  Future getImageFromCameraOpera() async {
+  Future getImageFromCameraOpera(Libro libro) async {
     final image = await ImagePicker().pickImage(source: ImageSource.camera);
 
     if(image == null) return;
@@ -357,10 +357,13 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
     });
 
     Navigator.of(context).push(
-    MaterialPageRoute(
-      builder: (context) => OpereLetterarieResponsive(selectedImageOpera: _selectedImageOpera),
-    ),
-  );
+      MaterialPageRoute(
+        builder: (context) => OpereLetterarieResponsive(
+          selectedImageOpera: _selectedImageOpera!,
+          libro: libro,
+        ),
+      ),
+    );
   }
 
 
@@ -431,7 +434,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
                               child: GestureDetector(
                                 onTap: () { 
                                   // seconda funzionalità
-                                  getImageFromCameraOpera();
+                                  getImageFromCameraOpera(libro);
                                 },
                                 child: Container(
                                   //width: (width*0.5)/2,

@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:booktalk_app/business_logic/monitoraggioStatistiche.dart';
 import 'package:booktalk_app/chat/chatPDF.dart';
+import 'package:booktalk_app/storage/libro.dart';
 import 'package:booktalk_app/utils.dart';
 import 'package:booktalk_app/widget/header.dart';
 import 'package:flutter/material.dart';
@@ -13,9 +14,14 @@ import 'package:http/http.dart' as http;
 
     
 class OpereLetterarieResponsive extends StatefulWidget {
-  final File? selectedImageOpera;
+  final File selectedImageOpera;
+  final Libro libro;
 
-  const OpereLetterarieResponsive({Key? key, this.selectedImageOpera}) : super(key: key);
+  const OpereLetterarieResponsive({
+    Key? key,
+    required this.selectedImageOpera,
+    required this.libro,
+  }) : super(key: key);
 
   @override
   _OpereLetterarieResponsiveState createState() => _OpereLetterarieResponsiveState();
@@ -25,11 +31,13 @@ class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
 
   String analisi = "Analisi in corso...", autore = "Caricamento in corso...";
   MonitoraggioStatistiche monitoraggioStatistiche = MonitoraggioStatistiche.instance;
+  late Uint8List imageBytes;
 
   @override
   void initState() {
     super.initState();
     monitoraggioStatistiche.incrementaFunz2();
+    imageBytes = Uint8List.fromList(widget.libro.copertina!);
     //loadPdf();
   }
 
@@ -175,6 +183,7 @@ class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
                     ),
 
                     SizedBox(height: 15,),
+                    
 
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -182,8 +191,8 @@ class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(6.0),
-                          child: Image.asset(
-                            "assets/libro1.jpg",
+                          child: Image.memory(
+                            imageBytes,
                             width: isTabletOrizzontale(mediaQueryData)
                                 ? 45
                                 : 60,
@@ -193,7 +202,7 @@ class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
                         SizedBox(width: 30,),
 
                         Text(
-                          "Titolo libro", 
+                          widget.libro.titolo, 
                           style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold,), 
                           textAlign: TextAlign.center,
                         ),
