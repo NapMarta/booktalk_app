@@ -74,6 +74,7 @@ class AutorizzazioneDao {
           'data_Scadenza': autorizzazione.dataScadenza,
           'utente': autorizzazione.utente,
           'libro': autorizzazione.libro,
+          'numClick': autorizzazione.numClick
         }),
       );
 
@@ -98,6 +99,30 @@ class AutorizzazioneDao {
           'id': autorizzazione.id,
           'tempo_Utilizzato': autorizzazione.tempoUtilizzato,
           'data_Scadenza': autorizzazione.dataScadenza,
+          'numClick': autorizzazione.numClick
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        return json.decode(response.body);
+      } else {
+        print('Errore nella chiamata API: ${response.statusCode}');
+        return {'error': 'Errore nella chiamata API'};
+      }
+    } catch (e) {
+      print('Errore durante la chiamata API: $e');
+      return {'error': 'Errore durante la chiamata API'};
+    }
+  }
+
+  Future<Map<String, dynamic>> updateAutorizzazioneClick(int id, int numClick) async {
+    try {
+      final response = await http.put(
+        Uri.parse('$baseUrl/updateAutorizzazioneClick'),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({
+          'id': id,
+          'numClick': numClick
         }),
       );
 
