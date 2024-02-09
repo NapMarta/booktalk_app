@@ -16,8 +16,15 @@ class _ErrorAlertPageState extends State<ErrorAlertPage> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        // Restituisci 'false' per impedire la navigazione indietro.
+          Navigator.of(context).pop();
+          Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+              builder: (context) => WriteExpression(),
+            ),
+            (route) => true,
+          );
         return false;
+        
       },
       child: Scaffold(
         body: Center(
@@ -32,10 +39,12 @@ class _ErrorAlertPageState extends State<ErrorAlertPage> {
             actions: <Widget>[
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).pushReplacement(
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
                       builder: (context) => WriteExpression(),
                     ),
+                    (route) => true,
                   );
                 },
                 child: Text(
