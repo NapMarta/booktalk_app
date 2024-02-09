@@ -6,6 +6,7 @@ import 'dart:ui';
 import 'package:booktalk_app/aggiuntaLibroResponsive.dart';
 import 'package:booktalk_app/chatResponsive.dart';
 import 'package:booktalk_app/extract_text.dart';
+import 'package:booktalk_app/getISBN.dart';
 import 'package:booktalk_app/opereLetterarieResponsive.dart';
 import 'package:booktalk_app/storage/libreria.dart';
 import 'package:booktalk_app/storage/libreriaDAO.dart';
@@ -312,14 +313,19 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
     if(image == null) return;
     setState(() {
       _selectedImageAddLibro = File(image!.path);
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => GetIsbn(foto: _selectedImageAddLibro),
+        ),
+      );
       //addLibro(_selectedImageAddLibro);
     });
-
+    /*
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => AggiuntaLibroResponsive(selectedImageAddLibro: _selectedImageAddLibro),
       ),
-    );
+    );*/
   }
 
 

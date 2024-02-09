@@ -14,8 +14,8 @@ import 'package:image/image.dart' as Img;
 import 'package:http/http.dart' as http;
 
 class AggiuntaLibroResponsive extends StatefulWidget {
-  final File? selectedImageAddLibro;
-  const AggiuntaLibroResponsive({Key? key, this.selectedImageAddLibro})
+  final String isbn;
+  const AggiuntaLibroResponsive({Key? key, required this.isbn,})
       : super(key: key);
 
   @override
@@ -24,72 +24,14 @@ class AggiuntaLibroResponsive extends StatefulWidget {
 }
 
 class _AggiuntaLibroResponsiveState extends State<AggiuntaLibroResponsive> {
-  String? isbn = "";
+  
 
   @override
   void initState() {
     super.initState();
-    loadISBN();
   }
 
-  String? extractISBN(String input) {
-    final RegExp regex = RegExp(
-      r'((\bISBN\b\s*)?(\d{3})\s*[-]?\s*(\d{1,5})\s*[-]?\s*(\d{1,7})\s*[-]?\s*(\d{1,7})\s*[-]?\s*(\d{1,7})\s*[-]?\s*(\d{1,7})\s*[-]?\s*(\d{1,7})\b)|^\d{10}|\d{13}$');
-
-
-    final Iterable<Match> matches = regex.allMatches(input);
-    if (matches.isNotEmpty) {
-      final Match match = matches.first;
-      String? isbn = match.group(0);
-
-      // Trova la posizione dell'ultimo trattino nella stringa
-      int lastHyphenIndex = isbn?.lastIndexOf('-') ?? -1;
-
-      // Taglia la stringa solo prima dell'ultimo trattino
-      if (lastHyphenIndex != -1) {
-        isbn = isbn?.substring(0, lastHyphenIndex + 2);
-      }
-
-      return isbn;
-    } else {
-      return 'ISBN non trovato';
-    }
-  }
-
-  Future<void> loadISBN() async {
-    // ESTRAZIONE TESTO DA IMMAGINE
-    final apiUrl = Uri.parse('http://130.61.22.178:9000/text_detection');
-    Img.Image image =
-        Img.decodeImage(await widget.selectedImageAddLibro!.readAsBytes())!;
-    Uint8List imageBytes = Uint8List.fromList(Img.encodePng(image)!);
-    String extractedText = "";
-
-    try {
-      var request = http.MultipartRequest('POST', apiUrl)
-        ..files.add(http.MultipartFile.fromBytes(
-          'image',
-          imageBytes,
-          filename: 'temp.png',
-        ));
-      final response = await http.Response.fromStream(await request.send());
-
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> data = json.decode(response.body);
-        //extractedText = data['detected_text'];
-        extractedText = response.body;
-        print("TESTO RILEVATO: $extractedText");
-        //print(extractedText);
-        isbn = extractISBN(extractedText);
-        print("ISBN: $isbn");
-      } else {
-        print(response.body);
-        print('Errore nella richiesta API: ${response.statusCode}');
-      }
-    } catch (e) {
-      print('Errore: $e');
-    }
-    setState(() {});
-  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -203,8 +145,9 @@ class _AggiuntaLibroResponsiveState extends State<AggiuntaLibroResponsive> {
                     keyboardType: TextInputType.name,
                     autofocus: true,
                     onFieldSubmitted: (value) {
-                      verificaCoupon(isbn!, value);
-                      Navigator.of(context).push(MaterialPageRoute(
+                      verificaCoupon(widget.isbn, value);
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
                         builder: (context) => HomepageResponsitive(),
                       ));
                     },
