@@ -1,9 +1,10 @@
 class Autorizzazione {
   int? id;
-  String? tempoUtilizzato; // Cambiato il tipo in String
-  String dataScadenza; // Cambiato il tipo in String
+  String? tempoUtilizzato;
+  String dataScadenza;
   int? utente;
   String? libro;
+  int? numClick;
 
   Autorizzazione({
     this.id,
@@ -11,6 +12,7 @@ class Autorizzazione {
     required this.dataScadenza,
     this.utente,
     this.libro,
+    this.numClick
   });
 
   factory Autorizzazione.fromJson(Map<String, dynamic> json) {
@@ -20,6 +22,7 @@ class Autorizzazione {
       dataScadenza: json['DATA_SCADENZA'],
       utente: json['UTENTE'],
       libro: json['LIBRO'],
+      numClick: json['NUMCLICK'] != null ? int.parse(json['NUMCLICK']) : 0
     );
   }
 
@@ -30,12 +33,13 @@ class Autorizzazione {
       'DATA_SCADENZA': dataScadenza,
       'UTENTE': utente,
       'LIBRO': libro,
+      'NUMCLICK': numClick != null ? numClick.toString() : null
     };
   }
 
   @override
   String toString() {
     return 'Autorizzazione{id: $id, tempoUtilizzato: $tempoUtilizzato, '
-        'dataScadenza: $dataScadenza, utente: $utente, libro: $libro}';
+        'dataScadenza: $dataScadenza, utente: $utente, libro: $libro, numClick: $numClick}';
   }
 }
