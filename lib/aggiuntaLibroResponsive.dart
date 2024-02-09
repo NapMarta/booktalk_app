@@ -34,7 +34,8 @@ class _AggiuntaLibroResponsiveState extends State<AggiuntaLibroResponsive> {
 
   String? extractISBN(String input) {
     final RegExp regex = RegExp(
-        r'(\bISBN\b\s*)?(\d{3})\s*[-]?\s*(\d{1,5})\s*[-]?\s*(\d{1,7})\s*[-]?\s*(\d{1,7})\s*[-]?\s*(\d{1,7})\s*[-]?\s*(\d{1,7})\s*[-]?\s*(\d{1,7})\b');
+      r'((\bISBN\b\s*)?(\d{3})\s*[-]?\s*(\d{1,5})\s*[-]?\s*(\d{1,7})\s*[-]?\s*(\d{1,7})\s*[-]?\s*(\d{1,7})\s*[-]?\s*(\d{1,7})\s*[-]?\s*(\d{1,7})\b)|^\d{10}|\d{13}$');
+
 
     final Iterable<Match> matches = regex.allMatches(input);
     if (matches.isNotEmpty) {
@@ -74,12 +75,12 @@ class _AggiuntaLibroResponsiveState extends State<AggiuntaLibroResponsive> {
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = json.decode(response.body);
-        print(response.body);
         //extractedText = data['detected_text'];
         extractedText = response.body;
+        print("TESTO RILEVATO: $extractedText");
         //print(extractedText);
         isbn = extractISBN(extractedText);
-        print(isbn);
+        print("ISBN: $isbn");
       } else {
         print(response.body);
         print('Errore nella richiesta API: ${response.statusCode}');

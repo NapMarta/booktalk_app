@@ -37,7 +37,7 @@ class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
 
     // ESTRAZIONE TESTO DA IMMAGINE
     final apiUrl = Uri.parse('http://130.61.22.178:9000/text_detection');
-    Img.Image image = Img.decodeImage(await widget.selectedImageOpera! .readAsBytes())!;
+    Img.Image image = Img.decodeImage(await widget.selectedImageOpera!.readAsBytes())!;
     Uint8List imageBytes = Uint8List.fromList(Img.encodePng(image)!);
     String extractedText = "";
     ChatPDF chatPDF = ChatPDF();
