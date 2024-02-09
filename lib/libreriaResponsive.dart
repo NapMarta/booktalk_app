@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:booktalk_app/aggiuntaLibroResponsive.dart';
+import 'package:booktalk_app/caricamentoResponsive.dart';
 import 'package:booktalk_app/chatResponsive.dart';
 import 'package:booktalk_app/extract_text.dart';
 import 'package:booktalk_app/getISBN.dart';
@@ -14,6 +15,7 @@ import 'package:booktalk_app/storage/libro.dart';
 import 'package:booktalk_app/storage/opera_letteraria.dart';
 import 'package:booktalk_app/widget/ExpandableFloatingActionButton.dart';
 import 'package:booktalk_app/utils.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -34,6 +36,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
   File ? _selectedImageOpera;
   late SharedPreferences _preferences;
   Future<List<Libro>?> libreria = Future.value([]);
+  int numLibri = 0;
 
   @override
   void initState() {
@@ -48,6 +51,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
     if (libreriaJson.isNotEmpty) {
       List<dynamic> libreriaList = json.decode(libreriaJson);
       libreria = libreriaList.map((libroData) => Libro.fromJson(libroData)).toList();
+      numLibri = libreria.length;
     }
 
     return libreria;
@@ -212,7 +216,10 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
           )
           */
           Expanded(
-            child:  CustomScrollView(
+            child: 
+            numLibri == 0
+            ? Text("Non sono presenti libri")
+            : CustomScrollView(
               controller: _scrollController,
               slivers: <Widget>[
                 SliverPadding(
@@ -227,78 +234,58 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
                     delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
                         
-                          return GestureDetector(
-                          onTap: () {
-                            if(widget.is2){
-                              getImageFromCameraOpera();
-                              /*
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => OpereLetterarieResponsive(),
-                                ),
-                              );*/
-                            }
-                            else if(widget.is3){
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => ChatResponsive(),
-                                ),
-                              );
-                            }else{
-                              _showDialog(context, 'Libro $index', "assets/libro${(index % 7)+1}.jpg", mediaQueryData);
-                            }
-                          
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              //border: Border.all(width: 1.0, color: Colors.grey), 
-                            ),
-                            /*child: ClipRRect(
-                              borderRadius: BorderRadius.circular(8.0),
-                              child: Image.asset(
-                                "assets/libro${(index % 7)+1}.jpg",
-                              ),
-                            ),*/
-                            child: ClipRRect (
-                              borderRadius: BorderRadius.circular(8.0),
-                              child: FutureBuilder<List<Libro>?>(
-                                future: libreria,
-                                builder: (context, snapshot) {
-                                  if (snapshot.connectionState == ConnectionState.waiting) {
-                                    return CircularProgressIndicator();
-                                  } else if (snapshot.hasError) {
-                                    return Text('Error: ${snapshot.error}');
-                                  } else if (snapshot.data == null) {
-                                    return Text('Libreria non trovata');
-                                  } else {
-                                    List<Libro> libri = snapshot.data!;
-                                    if (libri.isNotEmpty) {
-                                      return Column(
-                                        children: List.generate(libri.length, (index) {
-                                          Libro l = libri[index];
-                                          if (l.copertina != null) {
-                                            Uint8List imageBytes = Uint8List.fromList(l.copertina!);
-                                            return Expanded(
+                          return FutureBuilder<List<Libro>?>(
+                              future: libreria,
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState == ConnectionState.waiting) {
+                                  return CircularProgressIndicator();
+                                } else if (snapshot.hasError) {
+                                  return Text('Error: ${snapshot.error}');
+                                } else if (snapshot.data == null) {
+                                  return Text('Libreria non trovata');
+                                } else {
+                                  List<Libro> libri = snapshot.data!;
+                                  if (libri.isNotEmpty) {
+                                    if (libri[index].copertina != null) {
+                                      Uint8List imageBytes = Uint8List.fromList(libri[index].copertina!);
+                                        return GestureDetector(
+                                          onTap: () {
+                                            if(widget.is2){
+                                              getImageFromCameraOpera();
+                                            }
+                                            else if(widget.is3){
+                                              Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                  builder: (context) => ChatResponsive(),
+                                                ),
+                                              );
+                                            }else{
+                                              _showDialog(context, libri[index], imageBytes, mediaQueryData);
+                                            }
+                                          
+                                          },
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(10.0),
+                                              //border: Border.all(width: 1.0, color: Colors.grey), 
+                                            ),
+                                            child: ClipRRect(
+                                              borderRadius: BorderRadius.circular(8.0),
                                               child: Image.memory(imageBytes),
-                                            );
-                                          } else {
-                                            return Text('COPERTINA non disponibile');
-                                          }
-                                        }),
-                                      );
-                                    } else {
-                                      return Text("");
-                                    }
+                                              ),
+                                          ),
+                                        );
+                                      } else {
+                                        return Text('COPERTINA non disponibile');
+                                      }
+                                  } else {
+                                    return Text("");
                                   }
-                                },
-                              ),
-                            ),
-
-                          ),                
-                        );
+                                }
+                              },
+                          );            
                       },
-                      childCount: 30,
+                      childCount: numLibri,
                     ),                  
                   ),
                 ),
@@ -327,14 +314,23 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
     final image = await ImagePicker().pickImage(source: ImageSource.camera);
 
     if(image == null) return;
-    setState(() {
-      _selectedImageAddLibro = File(image!.path);
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => GetIsbn(foto: _selectedImageAddLibro),
-        ),
-      );
-      //addLibro(_selectedImageAddLibro);
+    print("aaaa");
+    
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => CaricamentoResponsive(text: "Ricerca dell'ISBN in corso..."),
+      )
+    );
+
+    // esegue su un altro tread
+    _selectedImageAddLibro = compute(loadSelectedImage, image.path) as File?;
+    print("bbb");
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) => GetIsbn(foto: _selectedImageAddLibro!),
+      ),
+    );
+    setState(() { //addLibro(_selectedImageAddLibro);
     });
     /*
     Navigator.of(context).push(
@@ -344,7 +340,13 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
     );*/
   }
 
+  Future<File?> loadSelectedImage(String imagePath) async {
+    // Simula un'operazione che potrebbe essere bloccante
+    await Future.delayed(Duration(seconds: 1));
 
+    // Esegui l'operazione di creazione del file su un thread separato
+    return File(imagePath);
+  }
 
   Future getImageFromCameraOpera() async {
     final image = await ImagePicker().pickImage(source: ImageSource.camera);
@@ -363,7 +365,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
 
 
 
-  void _showDialog(BuildContext context, String bookTitle, String copertina, var mediaQueryData) {
+  void _showDialog(BuildContext context, Libro libro, Uint8List copertina, var mediaQueryData) {
 
     showDialog(
       context: context,
@@ -377,17 +379,17 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
                 color: Color.fromARGB(255, 255, 255, 255),
                 borderRadius: BorderRadius.circular(25.0),
               ),
-              width: isTabletOrizzontale(mediaQueryData) ? mediaQueryData.size.width * 0.4 : mediaQueryData.size.width * 0.5,
-              height: isTabletOrizzontale(mediaQueryData) ? mediaQueryData.size.height * 0.55 : mediaQueryData.size.height * 0.35,
+              width: isTabletOrizzontale(mediaQueryData) ? mediaQueryData.size.width * 0.5 : mediaQueryData.size.width * 0.6,
+              height: isTabletOrizzontale(mediaQueryData) ? mediaQueryData.size.height * 0.65 : mediaQueryData.size.height * 0.45,
               alignment: Alignment.center,
               padding: EdgeInsets.all(0),
 
               child: Column(
                 children: [
                   Hero(
-                    tag: "book_cover_$bookTitle",
+                    tag: "book_cover",
                     child: Padding(padding: const EdgeInsets.all(15), // Aggiunge spazio attorno all'immagine
-                        child: Image.asset(
+                        child: Image.memory(
                         copertina,
                         width: 80,
                       ),
@@ -395,8 +397,8 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
                   ),
 
                   Text(
-                    '$bookTitle',
-                    style: TextStyle(fontSize: 20,  fontWeight: FontWeight.bold),
+                    libro.titolo,
+                    style: TextStyle(fontSize: 18,  fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                   ),
                     
@@ -404,7 +406,14 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
                   
                   SizedBox(height: mediaQueryData.size.height*0.03),
                   Text(
-                    'Dettagli del libro',
+                    "Autori: " + libro.autori,
+                    style: TextStyle(fontSize: 12),
+                    textAlign: TextAlign.center,
+                  ),
+                  
+                  SizedBox(height: 10),
+                  Text(
+                    "Edizione: " + libro.edizione,
                     style: TextStyle(fontSize: 12),
                     textAlign: TextAlign.center,
                   ),

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:booktalk_app/aggiuntaLibroResponsive.dart';
 import 'package:booktalk_app/caricamentoResponsive.dart';
 import 'package:booktalk_app/storage/libroDAO.dart';
+import 'package:booktalk_app/widget/ErrorAlertPage.dart';
 import 'package:flutter/material.dart';
 
 import 'package:image/image.dart' as Img;
@@ -87,7 +88,7 @@ class _GetIsbnState extends State<GetIsbn> {
   @override
   void initState() {
     super.initState();
-    _isbnFuture = widget.foto != null ? loadISBN(widget.foto!) : Future.value(null);
+    //_isbnFuture = widget.foto != null ? loadISBN(widget.foto!) : Future.value(null);
   }
 
   @override
@@ -96,13 +97,19 @@ class _GetIsbnState extends State<GetIsbn> {
       future: _isbnFuture, 
       builder: (context, isbn) {
         if(isbn.hasError){
-          return Text("Errore. Ti invitiamo a riprovare");
+          return ErrorAlertPage(text: "Errore. Ti invitiamo a riprovare");
         }else if (isbn.connectionState == ConnectionState.done){
           if (isbn.data == null)
-            return Text("Errore. ISBN non inserito");
+            return ErrorAlertPage(text: "Errore. ISBN non inserito");
           else{
+            if(isbn.data == "8806134965" || isbn.data == "8886113277" || isbn.data == "9788866565062" || isbn.data == "9781070658773" || isbn.data == "8879835629" || isbn.data == "8811584043")
+              return AggiuntaLibroResponsive(isbn: isbn.data as String);
+            else
+              return ErrorAlertPage(text: "L'ISBN inserito non è valido.");
+
+            /*
             LibroDao dao = LibroDao('http://130.61.22.178:9000');
-            Future<bool> isIsbnInDB = dao.searchISBN(isbn.data!);
+            Future<bool> isIsbnInDB = dao.searchISBN(isbn.data!);            
             return FutureBuilder<bool>(
               future: isIsbnInDB,
               builder: (context, dbSnapshot) {
@@ -118,6 +125,7 @@ class _GetIsbnState extends State<GetIsbn> {
                 }
               },
             );
+            */
           }
 
         }else {
