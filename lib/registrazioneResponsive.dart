@@ -263,7 +263,7 @@ class _RegistrazioneResponsiveState extends State<RegistrazioneResponsive> {
                   ),
                 ),
                 filled: true,
-                prefixIcon: Icon(Icons.email, color: email.hasFocus ? Color(0xFF0097b2) : Colors.grey),
+                prefixIcon: Icon(Icons.email, color: Colors.grey),
               ),
               keyboardType: TextInputType.emailAddress,
               validator: validateEmail,

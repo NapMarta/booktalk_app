@@ -195,7 +195,7 @@ class _LoginResponsiveState extends State<LoginResponsive> {
                     ),
                   ),
                   filled: true,
-                  prefixIcon: Icon(Icons.email, color: email.hasFocus ? Color(0xFF0097b2) : Colors.grey,),
+                  prefixIcon: Icon(Icons.email, color: Colors.grey,),
                   /* hintText: localizations.demoTextFieldYourEmailAddress,
                   labelText: localizations.demoTextFieldEmail, */
                 ),

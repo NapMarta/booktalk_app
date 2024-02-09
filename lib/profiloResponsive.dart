@@ -181,7 +181,7 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
                                     color: Colors.black,
                                     shape: BoxShape.circle,
                                     image: DecorationImage(
-                                        fit: BoxFit.fitHeight,
+                                        fit: BoxFit.contain,
                                         image: MemoryImage(snapshot.data!),
                                       ),
                                     ),
@@ -202,6 +202,22 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
                                 } else if (snapshot.hasData && snapshot.data != null) {
                                   return Container(
                                     height: mediaQueryData.size.height * 0.20,
+                                    width: mediaQueryData.size.height * 0.20,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.black,
+                                    ),
+                                    child: IconButton(
+                                      icon: Image.memory(snapshot.data!),
+                                      iconSize: mediaQueryData.size.height * 0.20, // Imposta la dimensione dell'icona come la dimensione del container
+                                      onPressed: () {
+                                      },
+                                    ),
+                                  );
+
+                                  
+                                  /*Container(
+                                    height: mediaQueryData.size.height * 0.20,
                                     decoration: BoxDecoration(
                                       color: Colors.black,
                                       shape: BoxShape.circle,
@@ -210,7 +226,7 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
                                           image: MemoryImage(snapshot.data!),
                                         ),
                                       ),
-                                    );
+                                    );*/
                                 } else {
                                   return Center(child: Text('No image selected'));
                                 }

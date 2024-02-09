@@ -7,9 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
-class ChatScreen extends StatelessWidget {
+class ChatScreen extends StatefulWidget {
   const ChatScreen({Key? key}) : super(key: key);
+  @override
+  _ChatScreen createState() => _ChatScreen();
+}
 
+class _ChatScreen  extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -40,7 +44,7 @@ class ChatScreen extends StatelessWidget {
             appBar: PreferredSize(
               preferredSize: Size.fromHeight(kToolbarHeight),
               child: Header(
-                iconProfile: Image.asset('assets/person-icon.png'), 
+                iconProfile: Image.asset('assets/person-icon.png'),
                 text: "Supporto al Learning",
                 isHomePage: false,
                 isProfilo: false,
@@ -88,6 +92,7 @@ class ChatScreen extends StatelessWidget {
       ),
     );
   }
+  
 }
 
 /// Bottom Fixed Filed

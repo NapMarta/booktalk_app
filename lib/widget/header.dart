@@ -56,12 +56,11 @@ class _HeaderState extends State<Header> {
       UtenteDao dao = UtenteDao('http://130.61.22.178:9000');
       print(utenteMap);
       utente = dao.getUtenteByEmail(utenteMap['EMAIL']);
-      setState(() {
-        String blobString = utenteMap['FOTO'] ?? '';
-        if (blobString.isNotEmpty) {
-          fotoProfilo = base64Decode(blobString);
-        }
-      });
+      String blobString = utenteMap['FOTO'] ?? '';
+      if (blobString.isNotEmpty) {
+        fotoProfilo = base64Decode(blobString);
+      }
+      setState(() {});
     }
   }
   
@@ -153,10 +152,7 @@ class _HeaderState extends State<Header> {
                         //padding: EdgeInsets.only(top:0, bottom: 0),
                         child: IconButton(
                           //padding: EdgeInsets.only(top:0, bottom: 0),
-                          icon: CircleAvatar(
-                            backgroundColor: Colors.transparent,
-                            backgroundImage: MemoryImage(fotoProfilo!),
-                          ),
+                          icon: Image.memory(fotoProfilo!),
                           iconSize: 2, // Modifica la dimensione dell'icona secondo le tue esigenze
                           onPressed: () {
                             Navigator.of(context).push(

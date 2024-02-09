@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:booktalk_app/business_logic/monitoraggioStatistiche.dart';
 import 'package:booktalk_app/chat/chat_controller.dart';
-import 'package:booktalk_app/chat/chat_screen.dart';
+import 'package:booktalk_app/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
     
