@@ -1,4 +1,6 @@
 import 'package:booktalk_app/business_logic/monitoraggioStatistiche.dart';
+import 'package:booktalk_app/storage/libreriaDAO.dart';
+import 'package:booktalk_app/storage/libro.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../storage/utente.dart';
 import '../storage/utenteDAO.dart';
@@ -12,9 +14,14 @@ class Autenticazione implements AutenticazioneService{
   Utente? utente;
   SharedPreferences? _preferences;
   late MonitoraggioStatistiche monitoraggio = MonitoraggioStatistiche.instance;
+  List<Map<String, dynamic>>? libreriaJson;
+  LibreriaDao _libreriaDao = LibreriaDao('http://130.61.22.178:9000');
+
+
 
   Autenticazione(this.baseUrl) {
     _utenteDao = UtenteDao(baseUrl);
+    _libreriaDao = LibreriaDao(baseUrl);
     _initPreferences();
   }
 
@@ -49,7 +56,6 @@ class Autenticazione implements AutenticazioneService{
     if (utente != null) {
       this.utente = utente;
       //print("Autenticazione: " + utente.toString());
-      await _saveUtenteToPreferences();
       monitoraggio = MonitoraggioStatistiche.instance;
       monitoraggio.setUtente(utente);
       if (utente.ultfunz1 != null) 
@@ -61,7 +67,12 @@ class Autenticazione implements AutenticazioneService{
       
       print("UTENTE LOGGATO:"+utente.toString());
 
+      libreriaJson = await _libreriaDao.getLibreriaUtenteJson(utente.id!);
+
+      await _saveUtenteToPreferences();
+
       return {'success': 'Login eseguito con successo'};
+
     } else {
       print("Errore login");
       return {'error': 'Login non riuscito, credenziali errate'};
@@ -101,11 +112,13 @@ class Autenticazione implements AutenticazioneService{
   }
 
   Future<void> _saveUtenteToPreferences() async {
-  if (_preferences != null) {
-    await _preferences!.setString('utente', json.encode(utente!.toJson()));
-    //printSharedPreferences();
+    if (_preferences != null) {
+      await _preferences!.setString('utente', json.encode(utente!.toJson()));
+      await _preferences!.setString('libreria', json.encode(libreriaJson));
+      //printSharedPreferences();
+    }
   }
-}
+
 
   Future<void> _restoreUtenteFromPreferences() async {
     if (_preferences != null) {
@@ -121,8 +134,9 @@ class Autenticazione implements AutenticazioneService{
   Future<void> _removeUtenteFromPreferences() async {
     if (_preferences != null) {
       await _preferences!.remove('utente');
+      await _preferences!.remove('libreria');
       await _preferences!.clear();
-      print("In _removeUtenteFromPreferences");
+      //print("In _removeUtenteFromPreferences");
       //printSharedPreferences();
       _preferences = null;
     }

@@ -48,7 +48,7 @@ class _HeaderState extends State<Header> {
   }
 
   Future<void> _loadUserData() async {
-    print("Loading user data header...");
+    //print("Loading user data header...");
     _preferences = await SharedPreferences.getInstance();
     String utenteJson = _preferences.getString('utente') ?? '';
     if (utenteJson.isNotEmpty) {

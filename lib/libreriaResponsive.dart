@@ -33,12 +33,24 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
   File ? _selectedImageAddLibro;
   File ? _selectedImageOpera;
   late SharedPreferences _preferences;
-  late Future<List<Libro>?> libreria;
+  Future<List<Libro>?> libreria = Future.value([]);
 
   @override
   void initState() {
     super.initState();
     _loadUserData();
+  }
+
+  Future<List<Libro>?> _getLibreriaFromPreferences() async {
+    String libreriaJson = _preferences.getString('libreria') ?? '';
+    List<Libro> libreria = [];
+
+    if (libreriaJson.isNotEmpty) {
+      List<dynamic> libreriaList = json.decode(libreriaJson);
+      libreria = libreriaList.map((libroData) => Libro.fromJson(libroData)).toList();
+    }
+
+    return libreria;
   }
 
   // Funzione per caricare i dati dell'utente dalle SharedPreferences
@@ -48,7 +60,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
     String utenteJson = _preferences.getString('utente') ?? '';
     if (utenteJson.isNotEmpty) {
       Map<String, dynamic> utenteMap = json.decode(utenteJson);
-      LibreriaDao dao = LibreriaDao('http://130.61.22.178:9000');
+      /*LibreriaDao dao = LibreriaDao('http://130.61.22.178:9000');
       int id = utenteMap['ID'];
       print(id);
       libreria = dao.getLibreriaUtente(id);
@@ -58,7 +70,9 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
         for (Libro l in value!){
           print(l.toString());
         }
-      });
+      });*/
+
+      libreria = _getLibreriaFromPreferences();
       
       setState(() {});
     }

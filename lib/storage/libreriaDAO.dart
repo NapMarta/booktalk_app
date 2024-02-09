@@ -9,26 +9,48 @@ class LibreriaDao {
   LibreriaDao(this.baseUrl);
 
   Future<List<Libro>> getLibreriaUtente(int id) async {
-  try {
-    final response = await http.post(Uri.parse('$baseUrl/selectLibreria'),
-        headers: {'Content-Type': 'application/json'},
-        body: json.encode({'id': id}));
+    try {
+      final response = await http.post(Uri.parse('$baseUrl/selectLibreria'),
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode({'id': id}));
 
-    if (response.statusCode == 200) {
-      List<dynamic> resultList = json.decode(response.body) ?? [];
+      if (response.statusCode == 200) {
+        List<dynamic> resultList = json.decode(response.body) ?? [];
 
-      List<Libro> libriList =
-          resultList.map((libroData) => Libro.fromJson(libroData)).toList();
-      return libriList;
-    } else {
-      print('Errore nella chiamata API selectLibreriaUtente: ${response.statusCode}');
+        List<Libro> libriList =
+            resultList.map((libroData) => Libro.fromJson(libroData)).toList();
+        return libriList;
+      } else {
+        print('Errore nella chiamata API selectLibreriaUtente: ${response.statusCode}');
+        return [];
+      }
+    } catch (e) {
+      print('Errore durante la chiamata API select: $e');
       return [];
     }
-  } catch (e) {
-    print('Errore durante la chiamata API select: $e');
-    return [];
   }
-}
+
+  Future<List<Map<String, dynamic>>> getLibreriaUtenteJson(int id) async {
+    try {
+      final response = await http.post(Uri.parse('$baseUrl/selectLibreria'),
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode({'id': id}));
+
+      if (response.statusCode == 200) {
+        List<dynamic> resultList = json.decode(response.body) ?? [];
+
+        List<Map<String, dynamic>> libriJsonList = List<Map<String, dynamic>>.from(resultList);
+        return libriJsonList;
+      } else {
+        print('Errore nella chiamata API selectLibreriaUtente: ${response.statusCode}');
+        return [];
+      }
+    } catch (e) {
+      print('Errore durante la chiamata API select: $e');
+      return [];
+    }
+  }
+
 
 
   Future<void> insertLibreria(Libreria libreria) async {
