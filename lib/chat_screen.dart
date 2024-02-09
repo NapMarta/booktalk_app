@@ -8,14 +8,24 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 class ChatScreen extends StatefulWidget {
-  const ChatScreen({Key? key}) : super(key: key);
+
+  final String? libro;
+  const ChatScreen({Key? key, this.libro}) : super(key: key);
+
   @override
   _ChatScreen createState() => _ChatScreen();
 }
 
+
 class _ChatScreen  extends State<ChatScreen> {
+
   @override
   Widget build(BuildContext context) {
+    final chatController = Provider.of<ChatController>(context);
+
+    // Imposta la stringa "libro" nel ChatController
+    chatController.setLibro(widget.libro!);
+
     return SafeArea(
       left: true,
       right: true,

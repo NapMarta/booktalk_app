@@ -256,7 +256,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
                                             else if(widget.is3){
                                               Navigator.of(context).push(
                                                 MaterialPageRoute(
-                                                  builder: (context) => ChatResponsive(),
+                                                  builder: (context) => ChatResponsive(libro: libri[index]),
                                                 ),
                                               );
                                             }else{
@@ -456,7 +456,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
                                   // terza funzionalità
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      builder: (context) => ChatResponsive(),
+                                      builder: (context) => ChatResponsive(libro: libro),
                                     ),
                                   );
                                 },

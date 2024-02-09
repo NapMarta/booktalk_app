@@ -23,12 +23,12 @@ class ChatController extends ChangeNotifier {
   bool isProcessing = false; 
   bool isFirstResponse = true;
   bool isSecondResponse = false;
-  String libro = "La-fabbrica";
   int capitolo = -1;
   List<String> domande = [];
   int domandeTot = -1;
   int numDomanda = -1;
   bool messaggioRipetizione = false;
+  String libro ="";
 
   Future<void> onFieldSubmitted() async {
     if (!isTextFieldEnable || isProcessing) return;
@@ -316,6 +316,10 @@ class ChatController extends ChangeNotifier {
 
   /* Getters */
   bool get isTextFieldEnable => textEditingController.text.isNotEmpty;
+
+  void setLibro(String s) {
+    this.libro = s;
+  }
 }
 
   List<String> estraiDomande (String value){
