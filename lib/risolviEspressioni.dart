@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:booktalk_app/business_logic/monitoraggioStatistiche.dart';
 import 'package:booktalk_app/espressioniResponsive.dart';
 import 'package:booktalk_app/widget/ErrorAlertPage.dart';
 import 'package:booktalk_app/widget/header.dart';
@@ -80,6 +81,14 @@ class GetExpression extends StatefulWidget {
 }
 
 class _GetExpression extends State<GetExpression> {
+  MonitoraggioStatistiche monitoraggioStatistiche = MonitoraggioStatistiche.instance;
+
+  @override
+  void initState(){
+    super.initState();
+    monitoraggioStatistiche.incrementaFunz1();
+  }
+
   @override
   Widget build(BuildContext context) {
     var mediaQueryData = MediaQuery.of(context);

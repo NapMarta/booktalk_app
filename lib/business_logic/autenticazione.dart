@@ -51,6 +51,7 @@ class Autenticazione implements AutenticazioneService{
       //print("Autenticazione: " + utente.toString());
       await _saveUtenteToPreferences();
       monitoraggio = MonitoraggioStatistiche.instance;
+      monitoraggio.setUtente(utente);
       if (utente.ultfunz1 != null) 
         monitoraggio.setFunz1(utente.ultfunz1!);
       if (utente.ultfunz2 != null)
@@ -69,11 +70,11 @@ class Autenticazione implements AutenticazioneService{
 
   @override
   Future<Map<String, dynamic>> logout() async {
-    utente?.ultfunz1 = monitoraggio.getFunz1();
+    /*utente?.ultfunz1 = monitoraggio.getFunz1();
     utente?.ultfunz2 = monitoraggio.getFunz2();
     utente?.ultfunz3 = monitoraggio.getFunz3();
     UtenteDao dao = UtenteDao('http://130.61.22.178:9000');
-    await dao.updateUtenteFunz(utente!);
+    await dao.updateUtenteFunz(utente!);*/
     utente = null;
     monitoraggio.azzera();
     await _removeUtenteFromPreferences();
@@ -102,7 +103,7 @@ class Autenticazione implements AutenticazioneService{
   Future<void> _saveUtenteToPreferences() async {
   if (_preferences != null) {
     await _preferences!.setString('utente', json.encode(utente!.toJson()));
-    printSharedPreferences();
+    //printSharedPreferences();
   }
 }
 
@@ -113,7 +114,7 @@ class Autenticazione implements AutenticazioneService{
         Map<String, dynamic> utenteMap = json.decode(utenteJson);
         utente = Utente.fromJson2(utenteMap);
       }
-      printSharedPreferences();
+      //printSharedPreferences();
     }
   }
 
@@ -122,7 +123,7 @@ class Autenticazione implements AutenticazioneService{
       await _preferences!.remove('utente');
       await _preferences!.clear();
       print("In _removeUtenteFromPreferences");
-      printSharedPreferences();
+      //printSharedPreferences();
       _preferences = null;
     }
   }

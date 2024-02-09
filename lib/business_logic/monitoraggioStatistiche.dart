@@ -1,6 +1,15 @@
 
+import 'dart:convert';
+
+import 'package:booktalk_app/storage/utente.dart';
+import 'package:booktalk_app/storage/utenteDAO.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 class MonitoraggioStatistiche {
   double funz1 = 1.0, funz2 = 1.0, funz3 = 1.0;
+  late Utente utente;
+  UtenteDao dao = UtenteDao('http://130.61.22.178:9000');
+  late SharedPreferences _preferences;
 
   // Singola istanza della classe
   static MonitoraggioStatistiche? _instance;
@@ -12,6 +21,11 @@ class MonitoraggioStatistiche {
   static MonitoraggioStatistiche get instance {
     _instance ??= MonitoraggioStatistiche._(); // Creare l'istanza se non esiste già
     return _instance!;
+  }
+
+  Future<void> setUtente(Utente utente) async {
+    this.utente= utente;
+    _preferences = await SharedPreferences.getInstance();
   }
 
   double getFunz1(){
@@ -38,16 +52,31 @@ class MonitoraggioStatistiche {
     funz3 = f3;
   }
 
-  void incrementaFunz1(double f1){
+  Future<void> incrementaFunz1() async {
+    await _preferences.remove('utente');
+    await _preferences.clear();
     funz1++;
+    utente.ultfunz1 = funz1;
+    dao.updateUtenteFunz(utente);
+    await _preferences!.setString('utente', json.encode(utente.toJson()));
   }
 
-  void incrementaFunz2(double f2){
+  Future<void> incrementaFunz2() async {
+    await _preferences.remove('utente');
+    await _preferences.clear();
     funz2++;
+    utente.ultfunz2 = funz2;
+    dao.updateUtenteFunz(utente);
+    await _preferences!.setString('utente', json.encode(utente.toJson()));
   }
 
-  void incrementaFunz3(double f3){
+  Future<void> incrementaFunz3() async {
+    await _preferences.remove('utente');
+    await _preferences.clear();
     funz3++;
+    utente.ultfunz3 = funz3;
+    dao.updateUtenteFunz(utente);
+    await _preferences!.setString('utente', json.encode(utente.toJson()));
   }
 
   double getPercentualeF1(){

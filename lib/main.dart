@@ -1,7 +1,12 @@
 //import 'package:camera/camera.dart'
+import 'dart:convert';
+
+import 'package:booktalk_app/business_logic/monitoraggioStatistiche.dart';
 import 'package:booktalk_app/homepageResponsive.dart';
 import 'package:booktalk_app/loginResponsive.dart';
 import 'package:booktalk_app/registrazioneResponsive.dart';
+import 'package:booktalk_app/storage/utente.dart';
+import 'package:booktalk_app/storage/utenteDAO.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
@@ -48,6 +53,23 @@ Future<Widget> initializeApp() async {
 
   if (utenteJson != null && utenteJson.isNotEmpty) {
     print("L'utente è già autenticato");
+    Map<String, dynamic> utenteMap = json.decode(utenteJson);
+
+    MonitoraggioStatistiche monitoraggio = MonitoraggioStatistiche.instance;
+    UtenteDao dao = UtenteDao('http://130.61.22.178:9000');
+    Utente? utente = await dao.getUtenteByEmail(utenteMap['EMAIL']);
+    if (utente != null)
+      monitoraggio.setUtente(utente);
+    else
+      print("ERRORE");
+
+      if (utenteMap['ULTFUNZ1'] != null) 
+        monitoraggio.setFunz1(double.parse(utenteMap['ULTFUNZ1']));
+      if (utenteMap['ULTFUNZ2'] != null)
+        monitoraggio.setFunz2(double.parse(utenteMap['ULTFUNZ2']));
+      if (utenteMap['ULTFUNZ3'] != null)
+        monitoraggio.setFunz3(double.parse(utenteMap['ULTFUNZ3']));
+  
     return HomepageResponsitive();
   } else {
     print('Nessun utente memorizzato');

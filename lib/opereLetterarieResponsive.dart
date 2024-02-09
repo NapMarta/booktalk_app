@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:booktalk_app/business_logic/monitoraggioStatistiche.dart';
 import 'package:booktalk_app/chat/chatPDF.dart';
 import 'package:booktalk_app/utils.dart';
 import 'package:booktalk_app/widget/header.dart';
@@ -23,10 +24,12 @@ class OpereLetterarieResponsive extends StatefulWidget {
 class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
 
   String analisi = "Analisi in corso...", autore = "Caricamento in corso...";
+  MonitoraggioStatistiche monitoraggioStatistiche = MonitoraggioStatistiche.instance;
 
   @override
   void initState() {
     super.initState();
+    monitoraggioStatistiche.incrementaFunz2();
     loadPdf();
   }
 
