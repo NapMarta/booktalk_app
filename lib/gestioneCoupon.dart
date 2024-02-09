@@ -25,7 +25,9 @@ Future<void> verificaCoupon(String isbn, String coupon) async {
     final data = jsonDecode(response.body);
     if (data['result']) {
       print('Il libro è supportato e il codice coupon è valido.');
-      //Aggiungere il libro al database e messaggio di conferma
+      //Aggiungere il libro al database
+      
+      //messaggio di conferma
     } else {
       print('Libro attualmente non supportato o codice coupon non valido.');
       //Stampare messaggio di errore

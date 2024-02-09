@@ -7,7 +7,7 @@ class AutorizzazioneDao {
 
   AutorizzazioneDao(this.baseUrl);
 
-  Future<Autorizzazione?> getAutorizzazioneById(int id) async {
+  Future<Autorizzazione?> getAutorizzazioneById(String isbn, int idUtente) async {
     try {
       final response = await http.get(Uri.parse('$baseUrl/selectAutorizzazione'));
       print('Response from API: ${response.body}');
@@ -18,7 +18,7 @@ class AutorizzazioneDao {
         if (resultList.isNotEmpty) {
           
           Autorizzazione autorizzazione = Autorizzazione.fromJson(resultList[0]);
-          if (autorizzazione.id == id) return autorizzazione;
+          if (autorizzazione.utente== idUtente && autorizzazione.libro == isbn) return autorizzazione;
           
           return null;
         } else {
