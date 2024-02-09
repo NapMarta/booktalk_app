@@ -62,6 +62,8 @@ dependencies:
   flutter_chat_bubble: ^2.0.2
   animated_text_kit: ^4.2.2
   image: ^4.1.4
+  device_info: ^2.0.0
+
 
 
 
