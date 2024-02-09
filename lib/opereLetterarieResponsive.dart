@@ -120,8 +120,12 @@ class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
         alignment: Alignment.center,
         children: [
           Scaffold(
-            // ----- HEADER -----
-            appBar: PreferredSize(
+            
+            backgroundColor: Colors.white,
+            body: Column (
+            children: [
+              // ----- HEADER -----
+            PreferredSize(
               preferredSize: Size.fromHeight(kToolbarHeight),
               child: Header(
                 iconProfile: Image.asset('assets/person-icon.png'),
@@ -130,8 +134,7 @@ class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
                 isProfilo: false,
               ),
             ),
-            backgroundColor: Colors.white,
-            body: SingleChildScrollView(
+            SingleChildScrollView(
               child: Container(
                 alignment: Alignment.center,
                 padding: EdgeInsets.only(
@@ -287,6 +290,8 @@ class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
                   ],
                 ),
               ),
+            ),
+            ],
             ),
           ),
         ],

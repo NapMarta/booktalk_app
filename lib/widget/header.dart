@@ -48,19 +48,22 @@ class _HeaderState extends State<Header> {
   }
 
   Future<void> _loadUserData() async {
-    print("Loading user data...");
+    print("Loading user data header...");
     _preferences = await SharedPreferences.getInstance();
     String utenteJson = _preferences.getString('utente') ?? '';
     if (utenteJson.isNotEmpty) {
       Map<String, dynamic> utenteMap = json.decode(utenteJson);
-      UtenteDao dao = UtenteDao('http://130.61.22.178:9000');
+      /*UtenteDao dao = UtenteDao('http://130.61.22.178:9000');
       print(utenteMap);
       utente = dao.getUtenteByEmail(utenteMap['EMAIL']);
-      String blobString = utenteMap['FOTO'] ?? '';
+      String blobString = utenteMap['FOTO'] ?? '';*/
+      String blobString = utenteMap['FOTO'] != null ? utenteMap['FOTO'] : "";
       if (blobString.isNotEmpty) {
         fotoProfilo = base64Decode(blobString);
       }
-      setState(() {});
+      print("FOTO PROFILO HEADER: $fotoProfilo");
+      if (mounted)
+        setState(() {});
     }
   }
   

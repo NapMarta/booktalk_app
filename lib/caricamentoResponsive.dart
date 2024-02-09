@@ -21,19 +21,20 @@ class _CaricamentoResponsiveState extends State<CaricamentoResponsive> {
       bottom: false,
       top: true,
       child: Scaffold(
-        // ----- HEADER -----
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(kToolbarHeight),
-          child: Header(
-            iconProfile: Image.asset('assets/person-icon.png'),
-            text: "",
-            isHomePage: false,
-            isProfilo: false,
-          ),
-        ),
         backgroundColor: Colors.white,
-        body: Center(
-          child: Column(
+        body: Column(
+          children: [
+            // ----- HEADER -----
+            PreferredSize(
+              preferredSize: Size.fromHeight(kToolbarHeight),
+              child: Header(
+                iconProfile: Image.asset('assets/person-icon.png'),
+                text: "",
+                isHomePage: false,
+                isProfilo: false,
+              ),
+            ),
+            Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
@@ -53,6 +54,7 @@ class _CaricamentoResponsiveState extends State<CaricamentoResponsive> {
               ),
             ],
           ),
+          ],
         ),
       ),
     );

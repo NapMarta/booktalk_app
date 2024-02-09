@@ -39,20 +39,20 @@ class _ChatScreen  extends State<ChatScreen> {
             resizeToAvoidBottomInset: true,
             // backgroundColor: Colors.transparent,
             backgroundColor: Colors.white,
-
-            //  -----HEADER -----
-            appBar: PreferredSize(
-              preferredSize: Size.fromHeight(kToolbarHeight),
-              child: Header(
-                iconProfile: Image.asset('assets/person-icon.png'),
-                text: "Supporto al Learning",
-                isHomePage: false,
-                isProfilo: false,
-              ),
-            ),
             
             body: Column(
               children: [
+                //  -----HEADER -----
+                PreferredSize(
+                  preferredSize: Size.fromHeight(kToolbarHeight),
+                  child: Header(
+                    iconProfile: Image.asset('assets/person-icon.png'),
+                    text: "Supporto al Learning",
+                    isHomePage: false,
+                    isProfilo: false,
+                  ),
+                ),
+                
                 Expanded(
                   child: GestureDetector(
                     onTap: () {

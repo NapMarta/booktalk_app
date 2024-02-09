@@ -53,8 +53,6 @@ class MonitoraggioStatistiche {
   }
 
   Future<void> incrementaFunz1() async {
-    await _preferences.remove('utente');
-    await _preferences.clear();
     funz1++;
     utente.ultfunz1 = funz1;
     dao.updateUtenteFunz(utente);
@@ -62,8 +60,6 @@ class MonitoraggioStatistiche {
   }
 
   Future<void> incrementaFunz2() async {
-    await _preferences.remove('utente');
-    await _preferences.clear();
     funz2++;
     utente.ultfunz2 = funz2;
     dao.updateUtenteFunz(utente);
@@ -71,8 +67,6 @@ class MonitoraggioStatistiche {
   }
 
   Future<void> incrementaFunz3() async {
-    await _preferences.remove('utente');
-    await _preferences.clear();
     funz3++;
     utente.ultfunz3 = funz3;
     dao.updateUtenteFunz(utente);
