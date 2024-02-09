@@ -19,7 +19,7 @@ class _StatisticheState extends State<Statistiche> {
 
   late SharedPreferences _preferences;
   //late Future<Utente?> utente;
-  double utlFunz1 = 1.0, utlFunz2 = 1.0, utlFunz3 = 1.0;
+  double utlFunz1 = 0.0, utlFunz2 = 0.0, utlFunz3 = 0.0;
 
   
   @override

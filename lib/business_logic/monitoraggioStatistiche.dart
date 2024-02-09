@@ -6,7 +6,7 @@ import 'package:booktalk_app/storage/utenteDAO.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MonitoraggioStatistiche {
-  double funz1 = 1.0, funz2 = 1.0, funz3 = 1.0;
+  double funz1 = 0.0, funz2 = 0.0, funz3 = 0.0;
   late Utente utente;
   UtenteDao dao = UtenteDao('http://130.61.22.178:9000');
   late SharedPreferences _preferences;
@@ -107,9 +107,9 @@ class MonitoraggioStatistiche {
   }
 
   void azzera(){
-    funz1 = 1.0;
-    funz2 = 1.0;
-    funz3 = 1.0;
+    funz1 = 0.0;
+    funz2 = 0.0;
+    funz3 = 0.0;
   }
   
 }
