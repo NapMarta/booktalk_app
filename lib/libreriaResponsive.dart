@@ -383,7 +383,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       SizedBox(
-                        width: mediaQueryData.size.width * 0.15,
+                        width: mediaQueryData.size.width * 0.1,
                       ),
 
                       Text(
@@ -413,7 +413,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       SizedBox(
-                        width: mediaQueryData.size.width * 0.15,
+                        width: mediaQueryData.size.width * 0.1,
                       ),
 
                       Text(

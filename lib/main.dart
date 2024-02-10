@@ -10,15 +10,15 @@ import 'package:booktalk_app/storage/utenteDAO.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-//import 'package:device_info/device_info.dart';
+import 'package:device_info/device_info.dart';
 import 'dart:ui';
 import 'utils.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  //DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-  //AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+  AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
   var physicalWidth = window.physicalSize.width;
   var screenWidth = physicalWidth / window.devicePixelRatio;
 
