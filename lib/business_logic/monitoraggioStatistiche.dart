@@ -59,21 +59,21 @@ class MonitoraggioStatistiche {
     funz1++;
     utente.ultfunz1 = funz1;
     dao.updateUtenteFunz(utente);
-    await _preferences!.setString('utente', json.encode(utente.toJson()));
+    await _preferences.setString('utente', json.encode(utente.toJson()));
   }
 
   Future<void> incrementaFunz2() async {
     funz2++;
     utente.ultfunz2 = funz2;
     dao.updateUtenteFunz(utente);
-    await _preferences!.setString('utente', json.encode(utente.toJson()));
+    await _preferences.setString('utente', json.encode(utente.toJson()));
   }
 
   Future<void> incrementaFunz3() async {
     funz3++;
     utente.ultfunz3 = funz3;
     dao.updateUtenteFunz(utente);
-    await _preferences!.setString('utente', json.encode(utente.toJson()));
+    await _preferences.setString('utente', json.encode(utente.toJson()));
   }
 
   double getPercentualeF1(){

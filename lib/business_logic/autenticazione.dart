@@ -1,6 +1,5 @@
 import 'package:booktalk_app/business_logic/monitoraggioStatistiche.dart';
 import 'package:booktalk_app/storage/libreriaDAO.dart';
-import 'package:booktalk_app/storage/libro.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../storage/utente.dart';
 import '../storage/utenteDAO.dart';

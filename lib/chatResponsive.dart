@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:booktalk_app/business_logic/monitoraggioStatistiche.dart';
 import 'package:booktalk_app/chat/chat_controller.dart';
 import 'package:booktalk_app/chat_screen.dart';
@@ -22,7 +20,7 @@ class _ChatResponsiveState extends State<ChatResponsive> {
   @override
   void initState(){
     super.initState();
-    print(widget.libro.isbn);
+    //print(widget.libro.isbn);
     monitoraggioStatistiche.incrementaFunz3();
     monitoraggioStatistiche.aggiungiClickLibro(widget.libro.isbn);
   }
@@ -31,7 +29,7 @@ class _ChatResponsiveState extends State<ChatResponsive> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
         create: (_) => ChatController(),
-        child: ChatScreen(libro: widget.libro!.titolo),
+        child: ChatScreen(libro: widget.libro.titolo),
       );
   }
 }

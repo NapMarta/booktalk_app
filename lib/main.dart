@@ -9,7 +9,6 @@ import 'package:booktalk_app/storage/utente.dart';
 import 'package:booktalk_app/storage/utenteDAO.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:device_info/device_info.dart';
 import 'dart:ui';
