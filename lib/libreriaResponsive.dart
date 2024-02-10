@@ -28,8 +28,8 @@ class LibreriaResponsive extends StatefulWidget {
 }
 
 class _LibreriaResponsiveState extends State<LibreriaResponsive> {
-  File ? _selectedImageAddLibro;
-  File ? _selectedImageOpera;
+  //File ? _selectedImageAddLibro;
+  //File ? _selectedImageOpera;
   late SharedPreferences _preferences;
   Future<List<Libro>?> libreria = Future.value([]);
   int numLibri = 0;
@@ -59,7 +59,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
     _preferences = await SharedPreferences.getInstance();
     String utenteJson = _preferences.getString('utente') ?? '';
     if (utenteJson.isNotEmpty) {
-      Map<String, dynamic> utenteMap = json.decode(utenteJson);
+      //Map<String, dynamic> utenteMap = json.decode(utenteJson);
       /*LibreriaDao dao = LibreriaDao('http://130.61.22.178:9000');
       int id = utenteMap['ID'];
       print(id);
