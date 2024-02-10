@@ -1,5 +1,7 @@
 import 'package:booktalk_app/business_logic/autenticazione.dart';
 import 'package:booktalk_app/business_logic/autenticazioneService.dart';
+import 'package:booktalk_app/caricamentoResponsive.dart';
+import 'package:booktalk_app/loading.dart';
 import 'package:booktalk_app/main.dart';
 import 'package:booktalk_app/storage/utenteDAO.dart';
 import 'package:booktalk_app/widget/PasswordField.dart';
@@ -221,13 +223,19 @@ class _LoginResponsiveState extends State<LoginResponsive> {
 
               // ----- ACCEDI -----
               ElevatedButton(
-                  onPressed: () async{
-                    if (_formKey.currentState!.validate()){
+                  onPressed: () async {
+                    if (_formKey.currentState!.validate()) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Loading(text: "Autenticazione in corso...")),
+                      );
+
                       final validationError = autenticazione.validateParameters(
                         emailController.text, passwordController.text
                       );
 
                       if (validationError.isNotEmpty) {
+                        Navigator.pop(context); // Rimuove la pagina di caricamento
                         mostraErrore(context, validationError['error']);
                         print(validationError['error']);
                         return;
@@ -238,17 +246,17 @@ class _LoginResponsiveState extends State<LoginResponsive> {
                         emailController.text, passwordController.text
                       );
 
-
                       if (risultato.containsKey('success')) {
-                        // Se il login è avvenutocon successo
+                        // Se il login è avvenuto con successo
                         autenticazioneOK(context, risultato['success']);
-                        Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => HomepageResponsitive(),
-                            ),
-                        ); 
+                        Navigator.of(context).pushReplacement( // Replace instead of push
+                          MaterialPageRoute(
+                            builder: (context) => HomepageResponsitive(),
+                          ),
+                        );
                       } else if (risultato.containsKey('error')) {
                         // Se c'è stato un errore durante il login
+                        Navigator.pop(context); // Rimuove la pagina di caricamento
                         mostraErrore(context, risultato['error']);
                       }
                       print(risultato);
