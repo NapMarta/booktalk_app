@@ -26,7 +26,7 @@ class _StatisticheState extends State<Statistiche> {
   Uint8List copertina1 = Uint8List(0);
   Uint8List copertina2 = Uint8List(0);
   Uint8List copertina3 = Uint8List(0);
-  bool dataLoaded = false;
+  bool dataLoaded = false, top3NotExist = false;
   
   @override
   void initState() {
@@ -53,9 +53,13 @@ class _StatisticheState extends State<Statistiche> {
       utlFunz3 = double.parse(utenteMap['ULTFUNZ3']);*/
 
       List<Libro> top3 = await monitoraggioStatistiche.getTopThreeLibri();
-      copertina1 = Uint8List.fromList(top3[0].copertina!);
-      copertina2 = Uint8List.fromList(top3[1].copertina!);
-      copertina3 = Uint8List.fromList(top3[2].copertina!);
+      if(top3.length == 3){
+        copertina1 = Uint8List.fromList(top3[0].copertina!);
+        copertina2 = Uint8List.fromList(top3[1].copertina!);
+        copertina3 = Uint8List.fromList(top3[2].copertina!);
+      }else{
+        top3NotExist = true;
+      }
 
       dataLoaded = true;
 
@@ -121,15 +125,15 @@ class _StatisticheState extends State<Statistiche> {
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 30,),
-                /*
-                (book1 == null && book2 == null && book3 == null) 
+                
+                (top3NotExist) 
                 ? Text(
-                    "Non hai libri nella libreria", 
+                    "I tuoi tre libri più utilizzati non sono disponibili!", 
                     style: TextStyle(fontSize: 14,), 
                     textAlign: TextAlign.center,
-                  ),
-                */
-                Wrap(
+                  )
+                
+                : Wrap(
                   direction: Axis.horizontal,
                   alignment: WrapAlignment.center,
                   crossAxisAlignment: WrapCrossAlignment.center,
