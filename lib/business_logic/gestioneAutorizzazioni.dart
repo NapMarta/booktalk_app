@@ -39,6 +39,7 @@ class GestioneAutorizzazioni implements GestioneAutorizzazioniService{
           await dao.insertAutorizzazione(toInsert);
           await daoLib.updateLibreria(id);
           SharedPreferences _preferences = await SharedPreferences.getInstance();
+          await _preferences.remove('libreria');
           List<Map<String, dynamic>> libreriaJson = await daoLib.getLibreriaUtenteJson(id);
           await _preferences.setString('libreria', json.encode(libreriaJson));
           return {'success': 'Inserimento avvenuto con successo.'};

@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:booktalk_app/business_logic/gestioneAutorizzazioni.dart';
 import 'package:booktalk_app/business_logic/gestioneAutorizzazioniService.dart';
+import 'package:booktalk_app/caricamentoResponsive.dart';
+import 'package:booktalk_app/homepageResponsive.dart';
 import 'package:booktalk_app/storage/libro.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -80,9 +82,11 @@ void mostraErrore(BuildContext context, String messaggio) {
     return true;
   }
 
-Future<void> verificaCoupon(String isbn, String coupon, BuildContext context) async {
+Future verificaCoupon(String isbn, String coupon, BuildContext context) async {
   WidgetsFlutterBinding.ensureInitialized();
+
   int idUtente = 0;
+  
 
   //Prendere i parametri isbn e coupon da quelli che ha inserito l'utente
   //String isbn = '8806134965';
@@ -98,6 +102,7 @@ Future<void> verificaCoupon(String isbn, String coupon, BuildContext context) as
           body: jsonEncode({'isbn': isbn, 'coupon': coupon}));
 
       if (response.statusCode == 200) {
+        
         final data = jsonDecode(response.body);
         if (data['result']) {
           print('Il libro è supportato e il codice coupon è valido.');
@@ -113,6 +118,7 @@ Future<void> verificaCoupon(String isbn, String coupon, BuildContext context) as
           else{
             print("ERRORE: utente non trovato");
             mostraErrore(context, 'ERRORE: utente non trovato');
+            
           }
           
           modificaOK(context, 'Il libro è supportato e il codice coupon è valido.');

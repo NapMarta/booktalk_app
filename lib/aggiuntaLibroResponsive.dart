@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:booktalk_app/caricamentoResponsive.dart';
 import 'package:booktalk_app/gestioneCoupon.dart';
 import 'package:booktalk_app/homepageResponsive.dart';
 import 'package:booktalk_app/utils.dart';
@@ -138,11 +139,32 @@ class _AggiuntaLibroResponsiveState extends State<AggiuntaLibroResponsive> {
                     keyboardType: TextInputType.name,
                     autofocus: true,
                     onFieldSubmitted: (value) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CaricamentoResponsive(text: "Aggiornamento dei dati in corso...")),
+                      );
+
+                      verificaCoupon(widget.isbn, value, context).then((_) {     
+                        Navigator.of(context).pushReplacement(       
+                          MaterialPageRoute(         
+                            builder: (context) => HomepageResponsitive(),       
+                            ),     
+                          );   
+                        }
+                      );
+                      /*
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CaricamentoResponsive(text: "Aggiornamento dei dati in corso...")),
+                      );
+
                       verificaCoupon(widget.isbn, value, context);
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                        builder: (context) => HomepageResponsitive(),
-                      ));
+
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomepageResponsitive())
+                      );
+                      */
                     },
                   ),
                 ),
