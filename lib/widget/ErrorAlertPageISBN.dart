@@ -1,18 +1,17 @@
 import 'package:booktalk_app/homepageResponsive.dart';
-import 'package:booktalk_app/writeExpression.dart';
 import 'package:flutter/material.dart';
     
-class ErrorAlertPageOpera extends StatefulWidget {
+class ErrorAlertPageIsbn extends StatefulWidget {
 
   final String text;
 
-  const ErrorAlertPageOpera({Key? key, required this.text}) : super(key: key);
+  const ErrorAlertPageIsbn({Key? key, required this.text}) : super(key: key);
 
   @override
-  _ErrorAlertPageState createState() => _ErrorAlertPageState();
+  _ErrorAlertPageIsbnState createState() => _ErrorAlertPageIsbnState();
 }
 
-class _ErrorAlertPageState extends State<ErrorAlertPageOpera> {
+class _ErrorAlertPageIsbnState extends State<ErrorAlertPageIsbn> {
   @override
   Widget build(BuildContext context) {
     
@@ -38,7 +37,11 @@ class _ErrorAlertPageState extends State<ErrorAlertPageOpera> {
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
-                  Navigator.pop(context);
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => HomepageResponsitive(),
+                    ),
+                  );
                 },
                 child: Text(
                   'OK', 

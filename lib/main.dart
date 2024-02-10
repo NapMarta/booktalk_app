@@ -56,7 +56,47 @@ Future<void> main() async {
     home: BookTalkApp(),
   ));*/
   runApp(MaterialApp(
-    home: await initializeApp(), // Chiamata alla funzione di inizializzazione
+    home: FutureBuilder<Widget>(
+      future: initializeApp(), 
+      builder: (context, widget) { 
+        if(widget.hasError){
+          return BookTalkApp();
+        }else if(widget.connectionState == ConnectionState.waiting){
+          // pagina di caricamento
+          var mediaQueryData = MediaQuery.of(context);
+          return SafeArea(
+            left: true,
+            right: true,
+            bottom: false,
+            top: true,
+            child: Scaffold(
+              backgroundColor: Colors.white,
+              body: Center( 
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset('assets/logo_noSfondo.png',
+                      height: logoSize(mediaQueryData.size.width,
+                          mediaQueryData.size.height, 0.2)),
+                    SizedBox(height: isTabletOrizzontale(mediaQueryData) ? 10 : 40),
+                    SizedBox(
+                      height: mediaQueryData.size.height * 0.15,
+                    ),
+                    CircularProgressIndicator(
+                      color: Color(0xFF0097b2),
+                    ),
+                  ]
+                ),
+              ),
+            )
+          );
+        }else if(widget.connectionState == ConnectionState.done){
+          return widget.data!;
+        }else{
+          return BookTalkApp();
+        }
+      }
+    ), // Chiamata alla funzione di inizializzazione
   ));
 
   //extract_text();
