@@ -4,6 +4,7 @@ import 'package:booktalk_app/business_logic/autenticazione.dart';
 import 'package:booktalk_app/business_logic/autenticazioneService.dart';
 import 'package:booktalk_app/business_logic/registrazione.dart';
 import 'package:booktalk_app/business_logic/registrazioneService.dart';
+import 'package:booktalk_app/caricamentoResponsive.dart';
 import 'package:booktalk_app/loginResponsive.dart';
 import 'package:booktalk_app/profiloResponsive.dart';
 import 'package:booktalk_app/storage/utente.dart';
@@ -44,7 +45,7 @@ class _ModificaProfiloResponsiveState extends State<ModificaProfiloResponsive> {
 
   String? validatePassword(String? value) {
     if (value == null || value.isEmpty) {
-       return 'Inserisci una password';
+      return 'Inserisci una password';
     } else if (value.length < 6) {
       //mostraErrore(context, 'La password deve essere lunga almeno 6 caratteri');
       return 'La password deve essere lunga almeno 6 caratteri';
@@ -325,6 +326,11 @@ class _ModificaProfiloResponsiveState extends State<ModificaProfiloResponsive> {
                     ElevatedButton(
                         onPressed: () async{
                           if (_formKey.currentState!.validate()){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => CaricamentoResponsive(text: "Aggiornamento dei dati in corso...")),
+                            );
+
                             String passwordAttuale = passwordAttualeController.text;
                             String passwordNuova = passwordNuovaController.text;
                           
@@ -334,6 +340,7 @@ class _ModificaProfiloResponsiveState extends State<ModificaProfiloResponsive> {
                               );
 
                               if (validationError.isNotEmpty) {
+                                Navigator.pop(context); 
                                 mostraErrore(context, validationError['error']);
                                 print(validationError['error']);
                                 return;
@@ -350,7 +357,7 @@ class _ModificaProfiloResponsiveState extends State<ModificaProfiloResponsive> {
                                 
                                 // Se la modifica è avvenuta con successo
                                 modificaOK(context, risultato['success']);
-
+                                Navigator.pop(context); 
                                 Navigator.of(context).popUntil((route) => route.isFirst);
                                     
                                 Navigator.of(context).pushReplacement(
@@ -360,6 +367,7 @@ class _ModificaProfiloResponsiveState extends State<ModificaProfiloResponsive> {
                                 ); 
                               } else if (risultato.containsKey('error')) {
                                 // Se c'è stato un errore durante la modifica
+                                Navigator.pop(context); 
                                 mostraErrore(context, risultato['error']);
                               }
                               print(risultato);    

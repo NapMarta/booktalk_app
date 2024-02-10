@@ -121,44 +121,6 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
 
       body: Column(
         children: [
-          // ----------- BARRA DI RICERCA -----------
-          /*
-          Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.only(top: 10, bottom: 20.0, left: 8.0, right: 8.0),
-            child: SearchAnchor(
-              builder: (BuildContext context, SearchController controller) {
-                return SearchBar(
-                  controller: controller,
-                  padding: const MaterialStatePropertyAll<EdgeInsets>(
-                      EdgeInsets.symmetric(horizontal: 16.0)),
-                  onTap: () {
-                    
-                  },
-                  onChanged: (_) {
-                  },
-                  leading: const Icon(Icons.search),
-                );
-              },
-              
-              // Per i suggerimenti
-              suggestionsBuilder:
-                  (BuildContext context, SearchController controller) {
-                return List<ListTile>.generate(5, (int index) {
-                  final String item = 'Libro $index';
-                  return ListTile(
-                    title: Text(item),
-                    onTap: () {
-                      setState(() {
-                        controller.closeView(item);
-                      });
-                    },
-                  );
-                });
-              },              
-            ),
-          ),
-          */
 
           SizedBox(height: isTablet(mediaQueryData) ? mediaQueryData.size.height * 0.02 : mediaQueryData.size.height * 0.02,),
 
@@ -191,26 +153,6 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
 
 
           // ----------- LISTA A GRIGLIA -----------
-          /*
-          Expanded(
-            child: GridView(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: getMinor(mediaQueryData.size.width, mediaQueryData.size.height) > 600 ? 5 : 3,
-                crossAxisSpacing: 20,
-                mainAxisSpacing: 50,
-                childAspectRatio: 3 / 4,
-              ),
-              itemBuilder: (BuildContext ctx, index) {
-                return Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    border: Border.all(color: Colors.grey[500]!),
-                  ),
-                );
-              },
-            ),
-          )
-          */
           Expanded(
             child: 
             numLibri == 0
@@ -434,18 +376,62 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
                     
                   
                   
-                  SizedBox(height: mediaQueryData.size.height*0.03),
-                  Text(
-                    "Autori: " + libro.autori,
-                    style: TextStyle(fontSize: 12),
-                    textAlign: TextAlign.center,
+                  SizedBox(height: mediaQueryData.size.height*0.05),
+
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: mediaQueryData.size.width * 0.15,
+                      ),
+
+                      Text(
+                        "Autori: ",
+                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                      ),
+
+                      SizedBox(
+                        width: 20,
+                      ),
+
+                      Text(
+                        libro.autori,
+                        style: TextStyle(fontSize: 12),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
                   ),
+
                   
-                  SizedBox(height: 10),
-                  Text(
-                    "Edizione: " + libro.edizione,
-                    style: TextStyle(fontSize: 12),
-                    textAlign: TextAlign.center,
+                  
+                  SizedBox(height: mediaQueryData.size.height*0.03),
+
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: mediaQueryData.size.width * 0.15,
+                      ),
+
+                      Text(
+                        "Edizione: ",
+                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                      ),
+
+                      SizedBox(
+                        width: 20,
+                      ),
+
+                      Text(
+                        libro.edizione,
+                        style: TextStyle(fontSize: 12),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
                   ),
                   //SizedBox(height: 25.0),    
 
@@ -453,7 +439,10 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
                     child: Align(
                       alignment: FractionalOffset.bottomCenter,
                       child: IntrinsicWidth(
-                        stepWidth: isTablet(mediaQueryData) ? (mediaQueryData.size.width*0.5)+30 : (mediaQueryData.size.width*0.5)+35 ,
+
+                        stepWidth: isTabletOrizzontale(mediaQueryData) ? mediaQueryData.size.width * 0.5 +30 : mediaQueryData.size.width * 0.6+35,
+                        
+                        //stepWidth: isTablet(mediaQueryData) ? (mediaQueryData.size.width*0.5)+30 : (mediaQueryData.size.width*0.5)+35 ,
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: <Widget>[
