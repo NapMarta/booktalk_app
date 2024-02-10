@@ -325,9 +325,8 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
     );
 
     
-    await loadSelectedImage(image.path).then((File value) {
+    loadSelectedImage(image.path).then((File value) {
       // Ritarda la navigazione per evitare il blocco dell'interfaccia utente
-      print("AAAA");
       Future.delayed(Duration(seconds: 1), () {
         //Navigator.pop(context);
         Navigator.of(context).pushReplacement(
@@ -356,18 +355,42 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
     final image = await ImagePicker().pickImage(source: ImageSource.camera);
 
     if(image == null) return;
-    setState(() {
+    /*setState(() {
       _selectedImageOpera = File(image!.path);
-    });
+    });*/
 
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => OpereLetterarieResponsive(
-          selectedImageOpera: _selectedImageOpera!,
-          libro: libro,
-        ),
-      ),
+        builder: (context) => CaricamentoResponsive(text: "Caricamento in corso..."),
+      )
     );
+
+    loadSelectedImage(image.path).then((File value) {
+      // Ritarda la navigazione per evitare il blocco dell'interfaccia utente
+      Future.delayed(Duration(seconds: 1), () {
+        //Navigator.pop(context);
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => OpereLetterarieResponsive(
+              selectedImageOpera: value,
+              libro: libro,
+            ),
+          ),
+        );
+      });
+    }).catchError((error) {
+      // Gestisce gli errori di caricamento dell'immagine
+      Future.delayed(Duration(seconds: 1), () {
+        //Navigator.pop(context);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => ErrorAlertPageIsbn(text: "Errore nella ricera dell'opera!"),
+          ),
+        );
+      });
+    });
+
+    
   }
 
 
