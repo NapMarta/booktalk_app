@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 
 import 'package:booktalk_app/business_logic/autenticazione.dart';
@@ -41,30 +43,34 @@ class _ModificaProfiloResponsiveState extends State<ModificaProfiloResponsive> {
   TextEditingController passwordAttualeController =  TextEditingController();
   //TextEditingController passwordController= TextEditingController();
 
-  String? validatePassword(String? value) {
+  String? validatePasswordAttuale(String? value) {
     if (value == null || value.isEmpty) {
+
+      if(passwordNuovaController.text.isEmpty){
+        return null;
+      }
+
       return 'Inserisci una password';
-    } else if (value.length < 6) {
-      //mostraErrore(context, 'La password deve essere lunga almeno 6 caratteri');
+    } 
+    else if (value.length < 6) {
       return 'La password deve essere lunga almeno 6 caratteri';
     }
     return null;
   }
 
-  String? validateNome(String? value) {
+  String? validatePasswordNuova(String? value) {
     if (value == null || value.isEmpty) {
-      //mostraErrore(context, 'Inserisci un nome');
-      return 'Inserisci un nome';
+
+      if(passwordAttualeController.text.isEmpty){
+        return null;
+      }
+
+      return 'Inserisci una password';
+    } 
+    else if (value.length < 6) {
+      return 'La password deve essere lunga almeno 6 caratteri';
     }
     return null;
-  }
-
-  String? validateCognome(String? value) {
-      if (value == null || value.isEmpty) {
-        //mostraErrore(context, 'Inserisci un cognome');
-        return 'Inserisci un cognome';
-      }
-      return null;
   }
 
   void mostraErrore(BuildContext context, String messaggio) {
@@ -235,9 +241,7 @@ class _ModificaProfiloResponsiveState extends State<ModificaProfiloResponsive> {
                         /* hintText: localizations.demoTextFieldYourEmailAddress,
                         labelText: localizations.demoTextFieldEmail, */
                       ),
-                      keyboardType: TextInputType.name,
-                      validator: validateNome,
-                      
+                      keyboardType: TextInputType.name,                      
                     ),
 
                     SizedBox(height: 20,),
@@ -273,9 +277,7 @@ class _ModificaProfiloResponsiveState extends State<ModificaProfiloResponsive> {
                         /* hintText: localizations.demoTextFieldYourEmailAddress,
                         labelText: localizations.demoTextFieldEmail, */
                       ),
-                      keyboardType: TextInputType.name,
-                      validator: validateCognome,
-                      
+                      keyboardType: TextInputType.name,                      
                     ),
 
                     SizedBox(height: 20,),
@@ -291,7 +293,7 @@ class _ModificaProfiloResponsiveState extends State<ModificaProfiloResponsive> {
                       width: mediaQueryData.size.width,
                       height: mediaQueryData.size.height,
                       text: "Password attuale",
-                      validator: validatePassword,
+                      validator: validatePasswordAttuale,
                     ),
 
                     SizedBox(height: 20,),
@@ -305,7 +307,7 @@ class _ModificaProfiloResponsiveState extends State<ModificaProfiloResponsive> {
                       width: mediaQueryData.size.width,
                       height: mediaQueryData.size.height,
                       text: "Nuova Password",
-                      validator: validatePassword,
+                      validator: validatePasswordNuova,
                     ),
 
                     SizedBox(height: 20,),
@@ -328,22 +330,32 @@ class _ModificaProfiloResponsiveState extends State<ModificaProfiloResponsive> {
                               );
 
                               if (validationError.isNotEmpty) {
-                                Navigator.pop(context); 
                                 mostraErrore(context, validationError['error']);
+                                Navigator.pop(context); 
                                 print(validationError['error']);
                                 return;
                               }
 
+                              final risultato;
+
                               // Effettua la modifica
-                              utente.nome= firstNameController.text;
-                              utente.cognome = lastNameController.text;
-                              utente.password= passwordNuova;
-                              final risultato = await registrazione.modificaUtente(
-                                utente);
+                              if(firstNameController.text.isNotEmpty)
+                                utente.nome= firstNameController.text;
+                              
+                              if(lastNameController.text.isNotEmpty)
+                                utente.cognome = lastNameController.text;
+
+                              if(passwordNuova.isNotEmpty && passwordAttuale.isNotEmpty){
+                                utente.password= passwordNuova;
+                                risultato = await registrazione.modificaProfiloUtente(utente, true);
+                              }
+                              else{
+                                risultato = await registrazione.modificaProfiloUtente(utente, false);
+                              }
+
 
                               if (risultato.containsKey('success')) {
                                 
-                                // Se la modifica è avvenuta con successo
                                 modificaOK(context, risultato['success']);
                                 Navigator.pop(context); 
                                 Navigator.of(context).popUntil((route) => route.isFirst);
@@ -353,12 +365,15 @@ class _ModificaProfiloResponsiveState extends State<ModificaProfiloResponsive> {
                                     builder: (context) => ProfiloResponsitive(),
                                   )
                                 ); 
+
                               } else if (risultato.containsKey('error')) {
-                                // Se c'è stato un errore durante la modifica
-                                Navigator.pop(context); 
+
                                 mostraErrore(context, risultato['error']);
+                                Navigator.pop(context); 
+
+
                               }
-                              print(risultato);    
+                              //print(risultato);    
                             });
                           }
                         },

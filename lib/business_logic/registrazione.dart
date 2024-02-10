@@ -98,7 +98,33 @@ class Registrazione implements RegistrazioneService{
         utente.password= hashedPassword;
         SharedPreferences _preferences = await SharedPreferences.getInstance();
         await _preferences.remove('utente');
-        await _preferences.clear();
+        await _preferences.setString('utente', json.encode(utente.toJson()));
+        print("success modifica");
+        return {'success': 'Modifica avvenuta con successo.'};
+      }
+    } catch (e) {
+      print('Errore durante la modifica: $e');
+      return {'error': 'Errore durante la modifica.'};
+    }
+  }
+
+  @override
+  Future<Map<String, dynamic>> modificaProfiloUtente(Utente utente, bool password) async {
+    //UtenteDao dao = UtenteDao('http://130.61.22.178:9000');
+    try{
+      final response = await utenteDao.updateProfiloUtente(utente, password);
+
+      if (response.containsKey('error')) {
+        print(response);
+        return response;
+
+      } else {
+        var bytes = utf8.encode(utente.password);
+        var hashed = sha256.convert(bytes);
+        String hashedPassword = hashed.toString();
+        utente.password= hashedPassword;
+        SharedPreferences _preferences = await SharedPreferences.getInstance();
+        await _preferences.remove('utente');
         await _preferences.setString('utente', json.encode(utente.toJson()));
         print("success modifica");
         return {'success': 'Modifica avvenuta con successo.'};
@@ -126,7 +152,6 @@ class Registrazione implements RegistrazioneService{
         utente.password= hashedPassword;
         SharedPreferences _preferences = await SharedPreferences.getInstance();
         await _preferences.remove('utente');
-        await _preferences.clear();
         await _preferences.setString('utente', json.encode(utente.toJson()));
         print("success modifica");
         return {'success': 'Modifica avvenuta con successo.'};
@@ -140,29 +165,36 @@ class Registrazione implements RegistrazioneService{
   @override
   Map<String, dynamic> validateParametersModifica(Utente utente, String nome, String cognome, String passwordAttuale, String nuovaPassword) {
     
-    if (nome.isEmpty) {
-      return {'error': 'Inserisci un nome valido'};
+    if (nome.isEmpty && cognome.isEmpty && passwordAttuale.isEmpty && nuovaPassword.isEmpty) {
+      return {'error': 'Inserisci almeno un valore da modificare'};
     }
 
-    if (cognome.isEmpty) {
-      return {'error': 'Inserisci un cognome valido'};
-    }
+    if(passwordAttuale.isNotEmpty && nuovaPassword.isNotEmpty){
     
-    if (!isValidPassword(passwordAttuale)) {
-      return {'error': 'La password attuale è errata'};
-    }
+      if (!isValidPassword(passwordAttuale)) {
+        return {'error': 'La password attuale è errata'};
+      }
 
-    if (!isValidPassword(nuovaPassword)) {
+      if (!isValidPassword(nuovaPassword)) {
+        return {'error': 'La password deve essere lunga almeno 6 caratteri'};
+      }
+
+      var bytes = utf8.encode(passwordAttuale);
+      var hashed = sha256.convert(bytes);
+      String hashedPassword = hashed.toString();
+      if (utente.password != hashedPassword) {
+        return {'error': 'La password attuale inserita è errata'};
+      }
+      else{
+        return {};
+      }
+    
+    }
+    else if (passwordAttuale.isEmpty && nuovaPassword.isEmpty){
+      return{};
+    }
+    else{
       return {'error': 'La password deve essere lunga almeno 6 caratteri'};
     }
-
-    var bytes = utf8.encode(passwordAttuale);
-    var hashed = sha256.convert(bytes);
-    String hashedPassword = hashed.toString();
-    if (utente.password != hashedPassword) {
-      return {'error': 'La password attuale è errata'};
-    }
-    
-    return {};
   }
 }

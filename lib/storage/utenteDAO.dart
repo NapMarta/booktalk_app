@@ -46,7 +46,13 @@ class UtenteDao {
 
   Future<Utente?> getUtenteByEmail(String email) async {
     try {
-      final response = await http.get(Uri.parse('$baseUrl/selectUtente'));
+      final response = await http.put(
+        Uri.parse('$baseUrl/selectUtenteByEmail'),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({
+          'email': email,
+        }),
+      );
 
       if (response.statusCode == 200) {
         Map<String, dynamic> resultData =
@@ -74,40 +80,47 @@ class UtenteDao {
   }
 
   Future<Utente?> getUtenteByEmailPassword(String email, String password) async {
-  try {
-    final response = await http.get(Uri.parse('$baseUrl/selectUtente'));
+    try {
+      final response = await http.put(
+          Uri.parse('$baseUrl/loginUtente'),
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode({
+            'email': email,
+            'password': hashPassword(password),
+          }),
+        );
 
-    if (response.statusCode == 200) {
-      Map<String, dynamic> resultData =
-          json.decode(response.body) as Map<String, dynamic>;
-      List<dynamic> resultList = resultData['result_set'] ?? [];
+      if (response.statusCode == 200) {
+        Map<String, dynamic> resultData =
+            json.decode(response.body) as Map<String, dynamic>;
+        List<dynamic> resultList = resultData['result_set'] ?? [];
 
-      if (resultList.isNotEmpty) {
-        for (Map<String, dynamic> utente in resultList) {
-          Utente u = Utente.fromJson(utente);
+        if (resultList.isNotEmpty) {
+          for (Map<String, dynamic> utente in resultList) {
+            Utente u = Utente.fromJson(utente);
 
-          // Hash the provided password
-          String hashedPassword = hashPassword(password);
+            // Hash the provided password
+            String hashedPassword = hashPassword(password);
 
-          // Compare hashed password with stored hashed password
-          if (u.password == hashedPassword && u.email == email) {
-            return u;
+            // Compare hashed password with stored hashed password
+            if (u.password == hashedPassword && u.email == email) {
+              return u;
+            }
           }
+          return null;
+        } else {
+          print('Nessun risultato disponibile.');
+          return null;
         }
-        return null;
       } else {
-        print('Nessun risultato disponibile.');
+        print('Errore nella chiamata API: ${response.statusCode}');
         return null;
       }
-    } else {
-      print('Errore nella chiamata API: ${response.statusCode}');
+    } catch (e) {
+      print('Errore durante la chiamata API: $e');
       return null;
     }
-  } catch (e) {
-    print('Errore durante la chiamata API: $e');
-    return null;
   }
-}
 
   Future<List<Utente>> getAllUtenti() async {
     try {
@@ -174,96 +187,131 @@ class UtenteDao {
 }
 
   Future<Map<String, dynamic>> updateUtente(Utente utente) async {
-  try {
-    // Hash the new password before sending it
-    String hashedPassword = hashPassword(utente.password);
+    try {
+      // Hash the new password before sending it
+      String hashedPassword = hashPassword(utente.password);
 
-    final response = await http.put(
-      Uri.parse('$baseUrl/updateUtente'),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode({
-        'nome': utente.nome,
-        'cognome': utente.cognome,
-        'email': utente.email,
-        'password': hashedPassword,
-        'foto': utente.foto,
-        'ultfunz1': utente.ultfunz1,
-        'ultfunz2': utente.ultfunz2,
-        'ultfunz3': utente.ultfunz3,
-        'id': utente.id
-      }),
-    );
+      final response = await http.put(
+        Uri.parse('$baseUrl/updateUtente'),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({
+          'nome': utente.nome,
+          'cognome': utente.cognome,
+          'email': utente.email,
+          'password': hashedPassword,
+          'foto': utente.foto,
+          'ultfunz1': utente.ultfunz1,
+          'ultfunz2': utente.ultfunz2,
+          'ultfunz3': utente.ultfunz3,
+          'id': utente.id
+        }),
+      );
 
-    if (response.statusCode == 200) {
-      return json.decode(response.body);
-    } else {
-      print('Errore nella chiamata API: ${response.statusCode}');
-      print('Dettagli errore: ${response.body}');
-      return {'error': 'Errore nella chiamata API'};
+      if (response.statusCode == 200) {
+        return json.decode(response.body);
+      } else {
+        print('Errore nella chiamata API: ${response.statusCode}');
+        print('Dettagli errore: ${response.body}');
+        return {'error': 'Errore nella chiamata API'};
+      }
+    } catch (e) {
+      print('Errore durante la chiamata API: $e');
+      return {'error': 'Errore durante la chiamata API'};
     }
-  } catch (e) {
-    print('Errore durante la chiamata API: $e');
-    return {'error': 'Errore durante la chiamata API'};
   }
-}
 
-Future<Map<String, dynamic>> updateUtenteFunz(Utente utente) async {
-  try {
+  Future<Map<String, dynamic>> updateUtenteFunz(Utente utente) async {
+    try {
 
-    final response = await http.put(
-      Uri.parse('$baseUrl/updateFunzUtente'),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode({
-        'ultfunz1': utente.ultfunz1,
-        'ultfunz2': utente.ultfunz2,
-        'ultfunz3': utente.ultfunz3,
-        'id': utente.id
-      }),
-    );
+      final response = await http.put(
+        Uri.parse('$baseUrl/updateFunzUtente'),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({
+          'ultfunz1': utente.ultfunz1,
+          'ultfunz2': utente.ultfunz2,
+          'ultfunz3': utente.ultfunz3,
+          'id': utente.id
+        }),
+      );
 
-    if (response.statusCode == 200) {
-      return json.decode(response.body);
-    } else {
-      print('Errore nella chiamata API: ${response.statusCode}');
-      print('Dettagli errore: ${response.body}');
-      return {'error': 'Errore nella chiamata API'};
+      if (response.statusCode == 200) {
+        return json.decode(response.body);
+      } else {
+        print('Errore nella chiamata API: ${response.statusCode}');
+        print('Dettagli errore: ${response.body}');
+        return {'error': 'Errore nella chiamata API'};
+      }
+    } catch (e) {
+      print('Errore durante la chiamata API: $e');
+      return {'error': 'Errore durante la chiamata API'};
     }
-  } catch (e) {
-    print('Errore durante la chiamata API: $e');
-    return {'error': 'Errore durante la chiamata API'};
   }
-}
 
-Future<Map<String, dynamic>> updateUtenteNoEncode(Utente utente) async {
-  try {
-    // Hash the new password before sending it
+  Future<Map<String, dynamic>> updateUtenteNoEncode(Utente utente) async {
+    try {
+      // Hash the new password before sending it
 
-    final response = await http.put(
-      Uri.parse('$baseUrl/updateUtente'),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode({
-        'nome': utente.nome,
-        'cognome': utente.cognome,
-        'email': utente.email,
-        'password': utente.password,
-        'foto': utente.foto,
-        'ultfunz1': utente.ultfunz1,
-        'ultfunz2': utente.ultfunz2,
-        'ultfunz3': utente.ultfunz3,
-        'id': utente.id
-      }),
-    );
+      final response = await http.put(
+        Uri.parse('$baseUrl/updateUtente'),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({
+          'nome': utente.nome,
+          'cognome': utente.cognome,
+          'email': utente.email,
+          'password': utente.password,
+          'foto': utente.foto,
+          'ultfunz1': utente.ultfunz1,
+          'ultfunz2': utente.ultfunz2,
+          'ultfunz3': utente.ultfunz3,
+          'id': utente.id
+        }),
+      );
 
-    if (response.statusCode == 200) {
-      return json.decode(response.body);
-    } else {
-      print('Errore nella chiamata API: ${response.statusCode}');
-      print('Dettagli errore: ${response.body}');
-      return {'error': 'Errore nella chiamata API'};
+      if (response.statusCode == 200) {
+        return json.decode(response.body);
+      } else {
+        print('Errore nella chiamata API: ${response.statusCode}');
+        print('Dettagli errore: ${response.body}');
+        return {'error': 'Errore nella chiamata API'};
+      }
+    } catch (e) {
+      print('Errore durante la chiamata API: $e');
+      return {'error': 'Errore durante la chiamata API'};
     }
-  } catch (e) {
-    print('Errore durante la chiamata API: $e');
-    return {'error': 'Errore durante la chiamata API'};
   }
-}
+
+  Future<Map<String, dynamic>> updateProfiloUtente(Utente utente, bool password) async {
+
+    try {
+
+      String hashedPassword;
+      if (password)
+        hashedPassword = hashPassword(utente.password);
+      else
+        hashedPassword= utente.password;
+
+      final response = await http.put(
+        Uri.parse('$baseUrl/updateProfiloUtente'),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({
+          'nome': utente.nome,
+          'cognome': utente.cognome,
+          'password': hashedPassword,
+          'id': utente.id
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        return json.decode(response.body);
+      } else {
+        print('Errore nella chiamata API: ${response.statusCode}');
+        print('Dettagli errore: ${response.body}');
+        return {'error': 'Errore nella chiamata API'};
+      }
+
+    } catch (e) {
+      print('Errore durante la chiamata API: $e');
+      return {'error': 'Errore durante la chiamata API'};
+    }
+  }
 }
