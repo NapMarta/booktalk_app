@@ -114,10 +114,8 @@ class MonitoraggioStatistiche {
     try{
 
       final response = await autorizzazioneDao.updateAutorizzazioneClick(utente.id!, isbn);
-
       if (response.containsKey('error'))
         return false;
-
       else 
         return true;
 
@@ -133,7 +131,6 @@ class MonitoraggioStatistiche {
     try{
 
       List<Libro> top3 = await autorizzazioneDao.getTopThree(utente.id!);
-      
       return top3;
 
     } catch (e) {

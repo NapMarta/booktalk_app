@@ -8,9 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
     
 class ChatResponsive extends StatefulWidget {
-  final Libro? libro;
+  final Libro libro;
 
-  const ChatResponsive({Key? key, this.libro}) : super(key: key);
+  const ChatResponsive({Key? key, required this.libro}) : super(key: key);
 
   @override
   _ChatResponsiveState createState() => _ChatResponsiveState();
@@ -22,8 +22,9 @@ class _ChatResponsiveState extends State<ChatResponsive> {
   @override
   void initState(){
     super.initState();
-    print(widget.libro!.isbn);
+    print(widget.libro.isbn);
     monitoraggioStatistiche.incrementaFunz3();
+    monitoraggioStatistiche.aggiungiClickLibro(widget.libro.isbn);
   }
 
   @override

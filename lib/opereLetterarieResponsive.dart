@@ -28,6 +28,7 @@ class OpereLetterarieResponsive extends StatefulWidget {
   _OpereLetterarieResponsiveState createState() => _OpereLetterarieResponsiveState();
 }
 
+
 class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
 
   String analisi = "Analisi in corso...", autore = "Caricamento in corso...";
@@ -39,6 +40,7 @@ class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
   void initState() {
     super.initState();
     monitoraggioStatistiche.incrementaFunz2();
+    monitoraggioStatistiche.aggiungiClickLibro(widget.libro.isbn);
     imageBytes = Uint8List.fromList(widget.libro.copertina!);
     //loadPdf();
   }
@@ -108,7 +110,9 @@ class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
     analisi.replaceAll('nel PDF.', 'nell\'opera.');
     print(analisi);
   
-  if(extractedText.contains("L'infinito") && widget.libro.isbn == '9788866565062'){
+  if(analisi.contains("L'infinito") && widget.libro.isbn == '9788866565062'){
+
+    print("L'opera letteraria è nel libro");
     
     //INFO AUTORE
     autore = await chatPDF.askChatPDF2("Dammi informazioni sull'autore dell'opera contenuta in questo PDF");
@@ -121,6 +125,7 @@ class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
   }
 
     isOperainLibro = false;
+    print("L'opera letteraria NON è nel libro");
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (context) => ErrorAlertPageOpera(text: "Errore. L'opera scannerizzata non è contenuta nel libro selezionato"),
