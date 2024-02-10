@@ -7,7 +7,62 @@ import 'dart:async' show Future;
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<void> verificaCoupon(String isbn, String coupon) async {
+void mostraErrore(BuildContext context, String messaggio) {
+    final snackBar = SnackBar(
+      content: Row(
+        children: [
+          Icon(
+            Icons.error_outline,
+            color: Colors.red, // Colore dell'icona
+          ),
+          SizedBox(width: 8), // Spazio tra l'icona e il testo
+          Expanded(
+            child: Text(
+              messaggio,
+              style: TextStyle(
+                color: Colors.red, // Colore del testo
+                fontWeight: FontWeight.bold, // Grassetto
+              ),
+            ),
+          ),
+        ],
+      ),
+      backgroundColor: Colors.white, // Colore di sfondo
+      duration: Duration(seconds: 3), // Durata del messaggio
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+
+  void modificaOK(BuildContext context, String messaggio) {
+    final snackBar = SnackBar(
+      content: Row(
+        children: [
+          Icon(
+            Icons.verified,
+            color: Colors.green, // Colore dell'icona
+          ),
+          SizedBox(width: 8), // Spazio tra l'icona e il testo
+          Expanded(
+            child: Text(
+              messaggio,
+              style: TextStyle(
+                color: Colors.green, // Colore del testo
+                fontWeight: FontWeight.bold, // Grassetto
+              ),
+            ),
+          ),
+        ],
+      ),
+      backgroundColor: Colors.white, // Colore di sfondo
+      duration: Duration(seconds: 3), // Durata del messaggio
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+Future<void> verificaCoupon(String isbn, String coupon, BuildContext context) async {
   WidgetsFlutterBinding.ensureInitialized();
   int idUtente = 0;
 
@@ -36,14 +91,17 @@ Future<void> verificaCoupon(String isbn, String coupon) async {
       }
       else{
         print("ERRORE: utente non trovato");
+        mostraErrore(context, 'ERRORE: utente non trovato');
       }
       
-      //messaggio di conferma
+      modificaOK(context, 'Il libro è supportato e il codice coupon è valido.');
+
     } else {
       print('Libro attualmente non supportato o codice coupon non valido.');
-      //Stampare messaggio di errore
+      mostraErrore(context, 'Libro attualmente non supportato o codice coupon non valido.');
     }
   } else {
-    throw Exception('Errore durante la richiesta HTTP');
+    //throw Exception('Errore durante la richiesta HTTP');
+    mostraErrore(context, 'ERRORE: impossibile inoltrare la richiesta');
   }
 }
