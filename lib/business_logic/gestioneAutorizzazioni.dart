@@ -35,9 +35,6 @@ class GestioneAutorizzazioni implements GestioneAutorizzazioniService{
         utente: id, 
         libro: isbn);
       
-      Autorizzazione? check = await dao.getAutorizzazioneById(isbn, id);
-
-      if(check == null){
         try {
           await dao.insertAutorizzazione(toInsert);
           await daoLib.updateLibreria(id);
@@ -48,10 +45,6 @@ class GestioneAutorizzazioni implements GestioneAutorizzazioniService{
         }catch(e){
           return {'error': 'Aggiunta libro non riuscita.'};
         }
-      }
-      else{
-        return {'error': 'Il libro è già presente nella tua libreria.'};
-      }
 
     }catch(e){
       print("Errore inserimento autorizzazione in business_logic/gestioneAutorizzazioni.dart: $e");
