@@ -108,7 +108,7 @@ class LibreriaDao {
         Uri.parse('$baseUrl/updateLibreria'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
-          'id': id
+          'utente': id
         }),
       );
 
