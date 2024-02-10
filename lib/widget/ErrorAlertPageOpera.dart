@@ -1,5 +1,3 @@
-import 'package:booktalk_app/homepageResponsive.dart';
-import 'package:booktalk_app/writeExpression.dart';
 import 'package:flutter/material.dart';
     
 class ErrorAlertPageOpera extends StatefulWidget {

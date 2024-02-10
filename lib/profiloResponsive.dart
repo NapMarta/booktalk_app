@@ -2,18 +2,15 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:booktalk_app/business_logic/monitoraggioStatistiche.dart';
 import 'package:booktalk_app/business_logic/registrazione.dart';
 import 'package:booktalk_app/business_logic/registrazioneService.dart';
 import 'package:booktalk_app/homepageResponsive.dart';
 import 'package:booktalk_app/modificaProfiloResponsive.dart';
-import 'package:booktalk_app/storage/libro.dart';
 import 'package:booktalk_app/storage/utente.dart';
 import 'package:booktalk_app/storage/utenteDAO.dart';
 import 'package:booktalk_app/widget/header.dart';
 import 'package:booktalk_app/statistiche.dart';
 import 'package:booktalk_app/utils.dart';
-import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';

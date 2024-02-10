@@ -5,14 +5,12 @@ import 'package:booktalk_app/business_logic/autenticazioneService.dart';
 import 'package:booktalk_app/business_logic/registrazione.dart';
 import 'package:booktalk_app/business_logic/registrazioneService.dart';
 import 'package:booktalk_app/caricamentoResponsive.dart';
-import 'package:booktalk_app/loginResponsive.dart';
 import 'package:booktalk_app/profiloResponsive.dart';
 import 'package:booktalk_app/storage/utente.dart';
 import 'package:booktalk_app/storage/utenteDAO.dart';
 import 'package:booktalk_app/utils.dart';
 import 'package:booktalk_app/widget/PasswordField.dart';
 import 'package:booktalk_app/widget/header.dart';
-import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
     
@@ -131,16 +129,6 @@ class _ModificaProfiloResponsiveState extends State<ModificaProfiloResponsive> {
     _loadUserData();
     super.initState();
   }
-
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      // La pagina è in primo piano, ricarica i dati dell'utente
-      _loadUserData();
-    }
-  }
-
 
     // Funzione per caricare i dati dell'utente dalle SharedPreferences
   Future<void> _loadUserData() async {

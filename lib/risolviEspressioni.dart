@@ -1,21 +1,17 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:booktalk_app/business_logic/monitoraggioStatistiche.dart';
 import 'package:booktalk_app/caricamentoResponsive.dart';
 import 'package:booktalk_app/espressioniResponsive.dart';
 import 'package:booktalk_app/widget/ErrorAlertPage.dart';
-import 'package:booktalk_app/widget/header.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:async' show Future, runZonedGuarded;
-import 'package:flutter/services.dart' show rootBundle;
-import 'dart:typed_data';
+import 'dart:async' show Future;
 
 Future<List<String>> risolviEspressione(String value) async {
   WidgetsFlutterBinding.ensureInitialized();
 
   List<String> step = [];
-  String sourceId = '';
+  //String sourceId = '';
 
   try {
     final apiUrl =
@@ -92,7 +88,7 @@ class _GetExpression extends State<GetExpression> {
 
   @override
   Widget build(BuildContext context) {
-    var mediaQueryData = MediaQuery.of(context);
+    //var mediaQueryData = MediaQuery.of(context);
 
     return FutureBuilder(
         // initialize flutterfire:

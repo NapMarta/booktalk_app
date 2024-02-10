@@ -49,8 +49,8 @@ class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
 
     // ESTRAZIONE TESTO DA IMMAGINE
     final apiUrl = Uri.parse('http://130.61.22.178:9000/text_detection');
-    Img.Image image = Img.decodeImage(await widget.selectedImageOpera!.readAsBytes())!;
-    Uint8List imageBytes = Uint8List.fromList(Img.encodePng(image)!);
+    Img.Image image = Img.decodeImage(await widget.selectedImageOpera.readAsBytes())!;
+    Uint8List imageBytes = Uint8List.fromList(Img.encodePng(image));
     String extractedText = "";
     ChatPDF chatPDF = ChatPDF();
 
@@ -64,13 +64,13 @@ class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
       final response = await http.Response.fromStream(await request.send());
 
       if (response.statusCode == 200) {
-        final Map<String, dynamic> data = json.decode(response.body);
-        print(response.body);
+        //final Map<String, dynamic> data = json.decode(response.body);
+        //print(response.body);
         //extractedText = data['detected_text'];
         extractedText = response.body;
-        print(extractedText);
+        //print(extractedText);
       } else {
-        print(response.body);
+        //print(response.body);
         print('Errore nella richiesta API: ${response.statusCode}');
       }
     } catch (e) {

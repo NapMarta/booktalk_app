@@ -1,5 +1,4 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:booktalk_app/business_logic/monitoraggioStatistiche.dart';
 import 'package:booktalk_app/utils.dart';
 import 'package:booktalk_app/widget/header.dart';
 import 'package:flutter/material.dart';

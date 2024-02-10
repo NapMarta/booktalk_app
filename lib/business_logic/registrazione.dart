@@ -83,7 +83,7 @@ class Registrazione implements RegistrazioneService{
   
   @override
   Future<Map<String, dynamic>> modificaUtente(Utente utente) async {
-    UtenteDao dao = UtenteDao('http://130.61.22.178:9000');
+    //UtenteDao dao = UtenteDao('http://130.61.22.178:9000');
     try{
       final response = await utenteDao.updateUtente(utente);
 
@@ -111,7 +111,7 @@ class Registrazione implements RegistrazioneService{
 
   @override
   Future<Map<String, dynamic>> modificaUtenteNoPassword(Utente utente) async {
-    UtenteDao dao = UtenteDao('http://130.61.22.178:9000');
+    //UtenteDao dao = UtenteDao('http://130.61.22.178:9000');
     try{
       final response = await utenteDao.updateUtenteNoEncode(utente);
 

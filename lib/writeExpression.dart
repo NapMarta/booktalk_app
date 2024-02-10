@@ -1,9 +1,7 @@
 import 'package:booktalk_app/risolviEspressioni.dart';
 import 'package:booktalk_app/utils.dart';
-import 'package:booktalk_app/espressioniResponsive.dart';
 import 'package:booktalk_app/widget/header.dart';
 import 'package:flutter/material.dart';
-import 'package:math_expressions/math_expressions.dart';
 import 'package:math_keyboard/math_keyboard.dart';
 
 class WriteExpression extends StatefulWidget {

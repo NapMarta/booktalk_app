@@ -2,14 +2,11 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:booktalk_app/homepageResponsive.dart';
-import 'package:booktalk_app/main.dart';
 import 'package:booktalk_app/profiloResponsive.dart';
 import 'package:booktalk_app/storage/utente.dart';
-import 'package:booktalk_app/storage/utenteDAO.dart';
 import 'package:booktalk_app/widget/AllertConferma.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../utils.dart';
     
 class Header extends StatefulWidget {
   const Header({Key? key, 
@@ -69,7 +66,7 @@ class _HeaderState extends State<Header> {
   
   @override
   Widget build(BuildContext context) {
-    var mediaQueryData = MediaQuery.of(context);
+    //var mediaQueryData = MediaQuery.of(context);
     
     return AppBar(
       forceMaterialTransparency: true,

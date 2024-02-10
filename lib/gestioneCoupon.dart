@@ -1,14 +1,9 @@
 import 'dart:convert';
-import 'dart:io';
-import 'package:booktalk_app/aggiuntaLibroResponsive.dart';
 import 'package:booktalk_app/business_logic/gestioneAutorizzazioni.dart';
 import 'package:booktalk_app/business_logic/gestioneAutorizzazioniService.dart';
-import 'package:booktalk_app/widget/header.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:async' show Future, runZonedGuarded;
-import 'package:flutter/services.dart' show rootBundle;
-import 'dart:typed_data';
+import 'dart:async' show Future;
 
 import 'package:shared_preferences/shared_preferences.dart';
 

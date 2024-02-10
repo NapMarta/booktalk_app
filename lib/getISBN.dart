@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 
 import 'package:image/image.dart' as Img;
 import 'package:http/http.dart' as http;
-import 'dart:convert';
+//import 'dart:convert';
 import 'dart:typed_data';
 
 
@@ -41,7 +41,7 @@ Future<String?> loadISBN(File? foto) async {
   final apiUrl = Uri.parse('http://130.61.22.178:9000/text_detection');
   Img.Image image =
       Img.decodeImage(await foto!.readAsBytes())!;
-  Uint8List imageBytes = Uint8List.fromList(Img.encodePng(image)!);
+  Uint8List imageBytes = Uint8List.fromList(Img.encodePng(image));
   String extractedText = "";
 
   try {
@@ -54,7 +54,7 @@ Future<String?> loadISBN(File? foto) async {
     final response = await http.Response.fromStream(await request.send());
 
     if (response.statusCode == 200) {
-      final Map<String, dynamic> data = json.decode(response.body);
+      //final Map<String, dynamic> data = json.decode(response.body);
       //extractedText = data['detected_text'];
       extractedText = response.body;
       print("TESTO RILEVATO: $extractedText");
@@ -82,7 +82,7 @@ class GetIsbn extends StatefulWidget {
 
 class _GetIsbnState extends State<GetIsbn> {
 
-  late Future<String?> _isbnFuture;
+  //late Future<String?> _isbnFuture;
 
   @override
   void initState() {
