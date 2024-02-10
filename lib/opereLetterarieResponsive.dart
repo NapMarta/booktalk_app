@@ -346,7 +346,7 @@ class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
                         } else if (snapshot.hasError) {
                           return Text('Errore: ${snapshot.error}');
                         } else {
-                          return CircularProgressIndicator();
+                          return CircularProgressIndicator(color: Color(0xFF0097b2),);
                         }
                       },
                     ),

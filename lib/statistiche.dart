@@ -221,7 +221,7 @@ class _StatisticheState extends State<Statistiche> {
           ),
         ],
       )
-    : Center(child: CircularProgressIndicator()),
+    : Center(child: CircularProgressIndicator(color: Color(0xFF0097b2))),
     );
   }
 }

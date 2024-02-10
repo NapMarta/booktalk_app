@@ -250,7 +250,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
 
   Future<File> loadSelectedImage(String imagePath) async {
     // Simulate an operation that could be blocking
-    await Future.delayed(Duration(seconds: 0));
+    await Future.delayed(Duration(seconds: 2));
     // Execute the file creation operation on a separate thread
     return File(imagePath);
   }
@@ -269,7 +269,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
     
     loadSelectedImage(image.path).then((File value) {
       // Ritarda la navigazione per evitare il blocco dell'interfaccia utente
-      Future.delayed(Duration(seconds: 1), () {
+      Future.delayed(Duration(seconds: 2), () {
         //Navigator.pop(context);
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
@@ -279,7 +279,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
       });
     }).catchError((error) {
       // Gestisce gli errori di caricamento dell'immagine
-      Future.delayed(Duration(seconds: 1), () {
+      Future.delayed(Duration(seconds: 2), () {
         //Navigator.pop(context);
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
@@ -309,7 +309,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
 
     loadSelectedImage(image.path).then((File value) {
       // Ritarda la navigazione per evitare il blocco dell'interfaccia utente
-      Future.delayed(Duration(seconds: 1), () {
+      Future.delayed(Duration(seconds: 2), () {
         //Navigator.pop(context);
         Navigator.of(context).push(
           MaterialPageRoute(
@@ -322,7 +322,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
       });
     }).catchError((error) {
       // Gestisce gli errori di caricamento dell'immagine
-      Future.delayed(Duration(seconds: 1), () {
+      Future.delayed(Duration(seconds: 2), () {
         //Navigator.pop(context);
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
@@ -351,7 +351,11 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
                 color: Color.fromARGB(255, 255, 255, 255),
                 borderRadius: BorderRadius.circular(25.0),
               ),
-              width: isTabletOrizzontale(mediaQueryData) ? mediaQueryData.size.width * 0.5 : mediaQueryData.size.width * 0.6,
+              width: isTabletOrizzontale(mediaQueryData) 
+                    ? mediaQueryData.size.width * 0.5  
+                    : isTabletVerticale(mediaQueryData)
+                      ? mediaQueryData.size.width * 0.6
+                      : mediaQueryData.size.width * 0.65,
               height: isTabletOrizzontale(mediaQueryData) ? mediaQueryData.size.height * 0.65 : mediaQueryData.size.height * 0.45,
               alignment: Alignment.center,
               padding: EdgeInsets.all(0),
@@ -440,7 +444,10 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
                       alignment: FractionalOffset.bottomCenter,
                       child: IntrinsicWidth(
 
-                        stepWidth: isTabletOrizzontale(mediaQueryData) ? mediaQueryData.size.width * 0.5 +30 : mediaQueryData.size.width * 0.6+35,
+                        stepWidth: isTabletOrizzontale(mediaQueryData) ? mediaQueryData.size.width * 0.5 +30 
+                                  : isTabletVerticale(mediaQueryData)
+                                    ? mediaQueryData.size.width * 0.6 + 35
+                                    : mediaQueryData.size.width * 0.65 + 35,
                         
                         //stepWidth: isTablet(mediaQueryData) ? (mediaQueryData.size.width*0.5)+30 : (mediaQueryData.size.width*0.5)+35 ,
                         child: Row(
