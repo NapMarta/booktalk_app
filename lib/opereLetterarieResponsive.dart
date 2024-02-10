@@ -31,7 +31,7 @@ class OpereLetterarieResponsive extends StatefulWidget {
 
 class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
 
-  String analisi = "Analisi in corso...", autore = "Caricamento in corso...";
+  String analisi = "", autore = "";
   MonitoraggioStatistiche monitoraggioStatistiche = MonitoraggioStatistiche.instance;
   late Uint8List imageBytes;
   late bool isOperainLibro;
@@ -75,6 +75,12 @@ class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
       }
     } catch (e) {
       print('Errore: $e');
+      Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) => ErrorAlertPageOpera(text: "Errore. L'opera scannerizzata non è contenuta nel libro selezionato"),
+      )
+    );
+    return false;
     }
 
     // CONVERSIONE in PDF
@@ -90,11 +96,21 @@ class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
         final data = jsonDecode(response.body);
         print(data);
       } else {
-        throw Exception('Failed to convert string to PDF');
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => ErrorAlertPageOpera(text: "Errore. L'opera scannerizzata non è contenuta nel libro selezionato"),
+            )
+          );
+          return false;
       }
     } catch (e) {
       print('Error: $e');
-      // Gestisci l'errore in modo appropriato per la tua app
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => ErrorAlertPageOpera(text: "Errore. L'opera scannerizzata non è contenuta nel libro selezionato"),
+        )
+      );
+      return false;
     }
 
     //CARICAMENTO PDF
