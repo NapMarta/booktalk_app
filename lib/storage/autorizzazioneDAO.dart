@@ -20,26 +20,27 @@ class AutorizzazioneDao {
       );
       print('Response from API: ${response.body}');
 
-      if (response.statusCode == 200) {
-        List<dynamic> resultList = json.decode(response.body) ?? [];
+      Map<String, dynamic> resultData =
+            json.decode(response.body) as Map<String, dynamic>;
+        List<dynamic> resultList = resultData['result_set'] ?? [];
 
-        for (Map<String, dynamic> autorizzazioneData in resultList) {
-          Autorizzazione autorizzazione = Autorizzazione.fromJson(autorizzazioneData);
-          print("in getAutorizzazioneById");
-          if (autorizzazione.utente == idUtente && autorizzazione.libro! == isbn) {
-            print("in if getAutorizzazioneById");
-            return autorizzazione;
+        if (resultList.isNotEmpty) {
+          for (Map<String, dynamic> autorizzazione in resultList) {
+            Autorizzazione a = Autorizzazione.fromJson(autorizzazione);
+            
+            if (a.id == idUtente && a.libro == isbn) {
+              return a;
+            }
           }
+          return null;
+        } else {
+          print('Nessun risultato disponibile.');
+          return null;
         }
-      } else {
-        print('Errore nella chiamata API: ${response.statusCode}');
-        return null;
-      }
     } catch (e) {
       print('Errore durante la chiamata API select by id autorizzazione: $e');
       return null;
     }
-    return null;
   }
 
   Future<List<Autorizzazione>> getAutorizzazioniByUtente(int utenteId) async {
