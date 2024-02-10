@@ -26,6 +26,7 @@ class _StatisticheState extends State<Statistiche> {
   Uint8List copertina1 = Uint8List(0);
   Uint8List copertina2 = Uint8List(0);
   Uint8List copertina3 = Uint8List(0);
+  bool dataLoaded = false;
   
   @override
   void initState() {
@@ -55,7 +56,9 @@ class _StatisticheState extends State<Statistiche> {
       copertina1 = Uint8List.fromList(top3[0].copertina!);
       copertina2 = Uint8List.fromList(top3[1].copertina!);
       copertina3 = Uint8List.fromList(top3[2].copertina!);
-      
+
+      dataLoaded = true;
+
       setState(() {});
     }
   }
@@ -100,7 +103,8 @@ class _StatisticheState extends State<Statistiche> {
       ),
 
       //backgroundColor: Colors.white,
-      body: MultiSplitView(
+      body: dataLoaded ?
+      MultiSplitView(
         axis: (mediaQueryData.orientation == Orientation.landscape) ? Axis.horizontal : Axis.vertical,
         resizable: false, // non modifica la dimensione dell'elemento manualmente
         children: [
@@ -135,9 +139,18 @@ class _StatisticheState extends State<Statistiche> {
                     SizedBox(
                       width: isTablet(mediaQueryData) ? 180 : 160,
                       child: _NumberCardWidget(
-                        //1, // TALE INDICE INDICA LA PRIMA FUNZIONALITA'
+                        1, // TALE INDICE INDICA LA PRIMA FUNZIONALITA'
                         //"assets/copertina.jpg",
                         copertina1,
+                        mediaQueryData
+                      ),
+                    ),
+
+                    SizedBox(
+                      width: isTablet(mediaQueryData) ? 180 : 160,
+                      child: _NumberCardWidget(
+                        2, // TALE INDICE INDICA LA SECONDA FUNZIONALITA'
+                        //"assets/copertina.jpg",
                         copertina2,
                         mediaQueryData
                       ),
@@ -146,21 +159,9 @@ class _StatisticheState extends State<Statistiche> {
                     SizedBox(
                       width: isTablet(mediaQueryData) ? 180 : 160,
                       child: _NumberCardWidget(
-                        //2, // TALE INDICE INDICA LA SECONDA FUNZIONALITA'
-                        //"assets/copertina.jpg",
-                        copertina2,
-                        copertina3,
-                        mediaQueryData
-                      ),
-                    ),
-
-                    SizedBox(
-                      width: isTablet(mediaQueryData) ? 180 : 160,
-                      child: _NumberCardWidget(
-                        //3, // TALE INDICE INDICA LA TERZA FUNZIONALITA'
+                        3, // TALE INDICE INDICA LA TERZA FUNZIONALITA'
                         //"assets/copertina.jpg",
                         copertina3,
-                        copertina1,
                         mediaQueryData
                       ),
                     ),
@@ -216,7 +217,8 @@ class _StatisticheState extends State<Statistiche> {
             ),
           ),
         ],
-      ),
+      )
+    : Center(child: CircularProgressIndicator()),
     );
   }
 }
@@ -347,20 +349,20 @@ List<PieChartSectionData> _pieChartData(
 
 
 // --- ELEMENTO NELLA TOP 3 LIBRI ---
-Widget _NumberCardWidget(Uint8List copertina, Uint8List copertinaSuccessiva, var mediaQueryData) {
+Widget _NumberCardWidget(int index, Uint8List copertina, var mediaQueryData) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 3.5),
     child: Stack(
       children: [
         Positioned(
-          left: 13,
-          bottom: 0,
-          child: Center(
-            child: Image.memory(
-              copertina,
-              width: 60,
+            left: 13,
+            bottom: 0,
+            child: Center(
+              child: Image.asset(
+                "assets/top${index}.png",
+                width: 60,
+              ),
             ),
-          ),
         ),
 
         Row(
@@ -371,7 +373,7 @@ Widget _NumberCardWidget(Uint8List copertina, Uint8List copertinaSuccessiva, var
             ),
             ClipRRect(
               borderRadius: BorderRadius.circular(6.0),
-              child: Image.memory(copertinaSuccessiva,
+              child: Image.memory(copertina,
                 width: isTablet(mediaQueryData) ? 100 : 80,
               ),
             ),
