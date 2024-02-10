@@ -1,12 +1,16 @@
 import 'package:booktalk_app/business_logic/gestioneAutorizzazioniService.dart';
 import 'package:booktalk_app/storage/autorizzazione.dart';
 import 'package:booktalk_app/storage/autorizzazioneDAO.dart';
+import 'package:booktalk_app/storage/libreria.dart';
+import 'package:booktalk_app/storage/libreriaDAO.dart';
 import 'package:intl/intl.dart';
 
 
 class GestioneAutorizzazioni implements GestioneAutorizzazioniService{
 
   AutorizzazioneDao dao = AutorizzazioneDao('http://130.61.22.178:9000');
+  LibreriaDao daoLib = LibreriaDao('http://130.61.22.178:9000');
+
 
   @override
   Future<Map<String, dynamic>> addAutorizzazione(String isbn, int id) async {
@@ -28,9 +32,12 @@ class GestioneAutorizzazioni implements GestioneAutorizzazioniService{
         dataScadenza: formattedScadenza, 
         utente: id, 
         libro: isbn);
-
+      
       await dao.insertAutorizzazione(toInsert);
+      await daoLib.updateLibreria(id);
+
       return {'success': 'Inserimento avvenuto con successo.'};
+      
     }catch(e){
       print("Errore inserimento autorizzazione in business_logic/gestioneAutorizzazioni.dart: $e");
       return {'error': 'Errore durante la modifica.'};

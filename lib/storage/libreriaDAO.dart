@@ -102,17 +102,13 @@ class LibreriaDao {
   }
 }
 
-  Future<void> updateLibreria(Libreria libreria) async {
+  Future<void> updateLibreria(int id) async {
     try {
       final response = await http.put(
         Uri.parse('$baseUrl/updateLibreria'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
-          'utente': libreria.utente,
-          'numLibri': libreria.numLibri,
-          'materia1': libreria.materia1,
-          'materia2': libreria.materia2,
-          'materia3': libreria.materia3,
+          'id': id
         }),
       );
 

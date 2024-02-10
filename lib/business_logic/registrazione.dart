@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:booktalk_app/business_logic/registrazioneService.dart';
+import 'package:booktalk_app/storage/libreria.dart';
+import 'package:booktalk_app/storage/libreriaDAO.dart';
 import 'package:booktalk_app/storage/utente.dart';
 import 'package:booktalk_app/storage/utenteDAO.dart';
 import 'package:crypto/crypto.dart';
@@ -62,10 +64,12 @@ class Registrazione implements RegistrazioneService{
       utente.ultfunz2 ??= null;
       utente.ultfunz3 ??= null;
 
-      final response = await utenteDao.insertUtente(utente);
+      var response = await utenteDao.insertUtente(utente);
 
       if (response.containsKey('error')) {
         print(response);
+        LibreriaDao dao = LibreriaDao(baseUrl);
+        await dao.insertLibreria(Libreria(utente: utente.id!, numLibri: 0));
         return response;
       } else {
         print("success registrazione");
