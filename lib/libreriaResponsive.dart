@@ -8,7 +8,7 @@ import 'package:booktalk_app/chatResponsive.dart';
 import 'package:booktalk_app/getISBN.dart';
 import 'package:booktalk_app/opereLetterarieResponsive.dart';
 import 'package:booktalk_app/storage/libro.dart';
-import 'package:booktalk_app/widget/ErrorAlertPageOpera.dart';
+import 'package:booktalk_app/widget/ErrorAlertPageISBN.dart';
 import 'package:booktalk_app/widget/ExpandableFloatingActionButton.dart';
 import 'package:booktalk_app/utils.dart';
 import 'package:flutter/foundation.dart';
@@ -342,7 +342,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
         //Navigator.pop(context);
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (context) => ErrorAlertPageOpera(text: "Errore nella ricerca dell'ISBN!"),
+            builder: (context) => ErrorAlertPageIsbn(text: "Errore nella ricerca dell'ISBN!"),
           ),
         );
       });
