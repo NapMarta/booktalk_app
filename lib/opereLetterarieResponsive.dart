@@ -34,7 +34,7 @@ class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
   String analisi = "", autore = "";
   MonitoraggioStatistiche monitoraggioStatistiche = MonitoraggioStatistiche.instance;
   late Uint8List imageBytes;
-  late bool isOperainLibro;
+  bool isOperainLibro = false;
 
   @override
   void initState() {
@@ -44,6 +44,62 @@ class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
     imageBytes = Uint8List.fromList(widget.libro.copertina!);
     //loadPdf();
   }
+
+  void mostraErrore(BuildContext context, String messaggio) {
+    final snackBar = SnackBar(
+      content: Row(
+        children: [
+          Icon(
+            Icons.error_outline,
+            color: Colors.red, // Colore dell'icona
+          ),
+          SizedBox(width: 8), // Spazio tra l'icona e il testo
+          Expanded(
+            child: Text(
+              messaggio,
+              style: TextStyle(
+                color: Colors.red, // Colore del testo
+                fontWeight: FontWeight.bold, // Grassetto
+              ),
+            ),
+          ),
+        ],
+      ),
+      backgroundColor: Colors.white, // Colore di sfondo
+      duration: Duration(seconds: 3), // Durata del messaggio
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+
+  void modificaOK(BuildContext context, String messaggio) {
+    final snackBar = SnackBar(
+      content: Row(
+        children: [
+          Icon(
+            Icons.verified,
+            color: Colors.green, // Colore dell'icona
+          ),
+          SizedBox(width: 8), // Spazio tra l'icona e il testo
+          Expanded(
+            child: Text(
+              messaggio,
+              style: TextStyle(
+                color: Colors.green, // Colore del testo
+                fontWeight: FontWeight.bold, // Grassetto
+              ),
+            ),
+          ),
+        ],
+      ),
+      backgroundColor: Colors.white, // Colore di sfondo
+      duration: Duration(seconds: 3), // Durata del messaggio
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
 
   Future<bool> loadPdf() async {
 
@@ -80,7 +136,8 @@ class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
         builder: (context) => ErrorAlertPageOpera(text: "Errore. L'opera scannerizzata non è contenuta nel libro selezionato"),
       )
     );*/
-    analisi = "Errore. L'opera scannerizzata non è contenuta nel libro selezionato";
+    mostraErrore(context, "Errore. L'opera scannerizzata non è contenuta nel libro selezionato");
+    isOperainLibro = false;
     return false;
     }
 
@@ -102,7 +159,8 @@ class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
               builder: (context) => ErrorAlertPageOpera(text: "Errore. L'opera scannerizzata non è contenuta nel libro selezionato"),
             )
           );*/
-          analisi = "Errore. L'opera scannerizzata non è contenuta nel libro selezionato";
+          mostraErrore(context, "Errore. L'opera scannerizzata non è contenuta nel libro selezionato");
+          isOperainLibro=false;
           return false;
       }
     } catch (e) {
@@ -112,7 +170,8 @@ class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
           builder: (context) => ErrorAlertPageOpera(text: "Errore. L'opera scannerizzata non è contenuta nel libro selezionato"),
         )
       );*/
-      analisi = "Errore. L'opera scannerizzata non è contenuta nel libro selezionato";
+      mostraErrore(context, "Errore. L'opera scannerizzata non è contenuta nel libro selezionato");
+      isOperainLibro = false;
       return false;
     }
 
@@ -143,7 +202,8 @@ class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
         builder: (context) => ErrorAlertPageOpera(text: "Errore. L'opera scannerizzata non è contenuta nel libro selezionato"),
       )
     );*/
-    analisi = "Errore. L'opera scannerizzata non è contenuta nel libro selezionato";
+    mostraErrore(context, "Errore. L'opera scannerizzata non è contenuta nel libro selezionato");
+    isOperainLibro=false;
     return false;
   }
 
@@ -253,8 +313,9 @@ class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
                     FutureBuilder(
                       future: loadPdf(), 
                       builder: (context, snapshot) {
+                      if (isOperainLibro){
+
                         if (snapshot.connectionState == ConnectionState.done) {
-                          //if (isOperainLibro){
                             return Column(
                               children: [
                                 Column(
@@ -348,7 +409,13 @@ class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
                         } else {
                           return CircularProgressIndicator(color: Color(0xFF0097b2),);
                         }
-                      },
+                      }
+                      else{
+                        return Column(
+                          children: []
+                        );
+                      }
+                      }
                     ),
 
                     
