@@ -139,9 +139,11 @@ class _AggiuntaLibroResponsiveState extends State<AggiuntaLibroResponsive> {
                     keyboardType: TextInputType.name,
                     autofocus: true,
                     onFieldSubmitted: (value) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => CaricamentoResponsive(text: "Aggiornamento dei dati in corso...")),
+                      
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => CaricamentoResponsive(text: "Aggiornamento dei dati in corso...")
+                        ),
                       );
 
                       verificaCoupon(widget.isbn, value, context).then((_) {     
