@@ -1,9 +1,13 @@
+import 'dart:convert';
+
 import 'package:booktalk_app/business_logic/gestioneAutorizzazioniService.dart';
 import 'package:booktalk_app/storage/autorizzazione.dart';
 import 'package:booktalk_app/storage/autorizzazioneDAO.dart';
 import 'package:booktalk_app/storage/libreria.dart';
 import 'package:booktalk_app/storage/libreriaDAO.dart';
+import 'package:booktalk_app/storage/libro.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class GestioneAutorizzazioni implements GestioneAutorizzazioniService{
@@ -33,11 +37,24 @@ class GestioneAutorizzazioni implements GestioneAutorizzazioniService{
         utente: id, 
         libro: isbn);
       
-      await dao.insertAutorizzazione(toInsert);
-      await daoLib.updateLibreria(id);
+      Autorizzazione? check = await dao.getAutorizzazioneById(isbn, id);
 
-      return {'success': 'Inserimento avvenuto con successo.'};
-      
+      if(check == null){
+        try {
+          await dao.insertAutorizzazione(toInsert);
+          await daoLib.updateLibreria(id);
+          SharedPreferences _preferences = await SharedPreferences.getInstance();
+          List<Map<String, dynamic>> libreriaJson = await daoLib.getLibreriaUtenteJson(id);
+          await _preferences.setString('libreria', json.encode(libreriaJson));
+          return {'success': 'Inserimento avvenuto con successo.'};
+        }catch(e){
+          return {'error': 'Aggiunta libro non riuscita.'};
+        }
+      }
+      else{
+        return {'error': 'Il libro è già presente nella tua libreria.'};
+      }
+
     }catch(e){
       print("Errore inserimento autorizzazione in business_logic/gestioneAutorizzazioni.dart: $e");
       return {'error': 'Errore durante la modifica.'};
