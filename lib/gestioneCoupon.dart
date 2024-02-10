@@ -85,7 +85,7 @@ Future<void> verificaCoupon(String isbn, String coupon, BuildContext context) as
       String utenteJson = _preferences.getString('utente') ?? '';
       if (utenteJson.isNotEmpty) {
         Map<String, dynamic> utenteMap = json.decode(utenteJson);
-        idUtente = int.parse(utenteMap['ID'].toString());
+        idUtente = int.parse(utenteMap['ID']);
         GestioneAutorizzazioniService service = GestioneAutorizzazioni();
         service.addAutorizzazione(isbn, idUtente);
       }
