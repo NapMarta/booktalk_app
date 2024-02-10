@@ -24,6 +24,7 @@ class _ErrorAlertPageState extends State<ErrorAlertPageOpera> {
         
       },
       child: Scaffold(
+        backgroundColor: const Color.fromARGB(255, 201, 201, 201),
         body: Center(
           child: AlertDialog(
             title: Text(

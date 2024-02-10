@@ -3,16 +3,12 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
 
-import 'package:booktalk_app/aggiuntaLibroResponsive.dart';
 import 'package:booktalk_app/caricamentoResponsive.dart';
 import 'package:booktalk_app/chatResponsive.dart';
-import 'package:booktalk_app/extract_text.dart';
 import 'package:booktalk_app/getISBN.dart';
 import 'package:booktalk_app/opereLetterarieResponsive.dart';
-import 'package:booktalk_app/storage/libreria.dart';
-import 'package:booktalk_app/storage/libreriaDAO.dart';
 import 'package:booktalk_app/storage/libro.dart';
-import 'package:booktalk_app/storage/opera_letteraria.dart';
+import 'package:booktalk_app/widget/ErrorAlertPageOpera.dart';
 import 'package:booktalk_app/widget/ExpandableFloatingActionButton.dart';
 import 'package:booktalk_app/utils.dart';
 import 'package:flutter/foundation.dart';
@@ -310,43 +306,51 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
     );
   }
 
-  Future getImageFromCameraISBN() async {
+  Future<File> loadSelectedImage(String imagePath) async {
+    // Simulate an operation that could be blocking
+    await Future.delayed(Duration(seconds: 0));
+    // Execute the file creation operation on a separate thread
+    return File(imagePath);
+  }
+
+  Future<void> getImageFromCameraISBN() async {
     final image = await ImagePicker().pickImage(source: ImageSource.camera);
 
     if(image == null) return;
-    print("aaaa");
-    
+
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => CaricamentoResponsive(text: "Ricerca dell'ISBN in corso..."),
       )
     );
 
-    // esegue su un altro tread
-    _selectedImageAddLibro = compute(loadSelectedImage, image.path) as File?;
-    print("bbb");
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) => GetIsbn(foto: _selectedImageAddLibro!),
-      ),
-    );
-    setState(() { //addLibro(_selectedImageAddLibro);
+    
+    await loadSelectedImage(image.path).then((File value) {
+      // Ritarda la navigazione per evitare il blocco dell'interfaccia utente
+      print("AAAA");
+      Future.delayed(Duration(seconds: 1), () {
+        //Navigator.pop(context);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => GetIsbn(foto: value),
+          ),
+        );
+      });
+    }).catchError((error) {
+      // Gestisce gli errori di caricamento dell'immagine
+      Future.delayed(Duration(seconds: 1), () {
+        //Navigator.pop(context);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => ErrorAlertPageOpera(text: "Errore nella ricerca dell'ISBN!"),
+          ),
+        );
+      });
     });
-    /*
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => AggiuntaLibroResponsive(selectedImageAddLibro: _selectedImageAddLibro),
-      ),
-    );*/
   }
 
-  Future<File?> loadSelectedImage(String imagePath) async {
-    // Simula un'operazione che potrebbe essere bloccante
-    await Future.delayed(Duration(seconds: 1));
+  
 
-    // Esegui l'operazione di creazione del file su un thread separato
-    return File(imagePath);
-  }
 
   Future getImageFromCameraOpera(Libro libro) async {
     final image = await ImagePicker().pickImage(source: ImageSource.camera);

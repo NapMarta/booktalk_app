@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:booktalk_app/aggiuntaLibroResponsive.dart';
 import 'package:booktalk_app/caricamentoResponsive.dart';
-import 'package:booktalk_app/storage/libroDAO.dart';
 import 'package:booktalk_app/widget/ErrorAlertPage.dart';
+import 'package:booktalk_app/widget/ErrorAlertPageOpera.dart';
 import 'package:flutter/material.dart';
 
 import 'package:image/image.dart' as Img;
@@ -94,18 +94,18 @@ class _GetIsbnState extends State<GetIsbn> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<String?>(
-      future: _isbnFuture, 
+      future: loadISBN(widget.foto!), 
       builder: (context, isbn) {
         if(isbn.hasError){
-          return ErrorAlertPage(text: "Errore. Ti invitiamo a riprovare");
+          return ErrorAlertPageOpera(text: "Errore. Ti invitiamo a riprovare");
         }else if (isbn.connectionState == ConnectionState.done){
           if (isbn.data == null)
-            return ErrorAlertPage(text: "Errore. ISBN non inserito");
+            return ErrorAlertPageOpera(text: "Errore. ISBN non inserito");
           else{
             if(isbn.data == "8806134965" || isbn.data == "8886113277" || isbn.data == "9788866565062" || isbn.data == "9781070658773" || isbn.data == "8879835629" || isbn.data == "8811584043")
               return AggiuntaLibroResponsive(isbn: isbn.data as String);
             else
-              return ErrorAlertPage(text: "L'ISBN inserito non è valido.");
+              return ErrorAlertPageOpera(text: "L'ISBN inserito non è valido.");
 
             /*
             LibroDao dao = LibroDao('http://130.61.22.178:9000');
