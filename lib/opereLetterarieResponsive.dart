@@ -118,22 +118,15 @@ class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
     //await chatPDF.uploadPDF("Infinito/1.pdf");
 
     // ANALISI DELL'OPERA
-    analisi = await chatPDF.askChatPDF2("Fammi un riassunto");
-    analisi.replaceAll('Certo', '');
-    analisi.replaceAll('Certamente', '');
-    analisi.replaceAll('Certamente! ', '');
-    analisi.replaceAll('PDF', 'opera');
-    analisi.replaceAll('nel PDF.', 'nell\'opera.');
+    analisi = await chatPDF.askChatPDF2("Fammi un riassunto approfondito o un'analisi dell'opera contenuta in questo PDF");
     print(analisi);
   
-  if(analisi.contains("L'infinito") && widget.libro.isbn == '9788866565062'){
+  if((analisi.contains("L'infinito") && widget.libro.isbn == '9788866565062') || (analisi.contains("cinque maggio") && widget.libro.isbn == '9788817107488') ){
 
     print("L'opera letteraria è nel libro");
     
     //INFO AUTORE
-    autore = await chatPDF.askChatPDF2("Dammi informazioni sull'autore dell'opera contenuta in questo PDF");
-    autore.replaceAll('PDF', 'opera');
-    autore.replaceAll('nel PDF.', 'nell\'opera.');
+    autore = await chatPDF.askChatPDF2("Dammi informazioni dettagliate sull'autore dell'opera contenuta in questo PDF");
     print(autore);
     
     isOperainLibro = true;
