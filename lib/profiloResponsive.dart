@@ -2,10 +2,12 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:booktalk_app/business_logic/monitoraggioStatistiche.dart';
 import 'package:booktalk_app/business_logic/registrazione.dart';
 import 'package:booktalk_app/business_logic/registrazioneService.dart';
 import 'package:booktalk_app/homepageResponsive.dart';
 import 'package:booktalk_app/modificaProfiloResponsive.dart';
+import 'package:booktalk_app/storage/libro.dart';
 import 'package:booktalk_app/storage/utente.dart';
 import 'package:booktalk_app/storage/utenteDAO.dart';
 import 'package:booktalk_app/widget/header.dart';
@@ -110,6 +112,7 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
       nome = utenteMap['NOME'] ?? '';
       cognome = utenteMap['COGNOME'] ?? '';
       email = utenteMap['EMAIL'] ?? '';
+
       setState(() {
         String blobString = utenteMap['FOTO'] ?? '';
         if (blobString.isNotEmpty) {

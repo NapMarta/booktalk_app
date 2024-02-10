@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:booktalk_app/storage/libro.dart';
 import 'package:http/http.dart' as http;
 import 'autorizzazione.dart';
 
@@ -36,30 +37,60 @@ class AutorizzazioneDao {
   }
 
   Future<List<Autorizzazione>> getAutorizzazioniByUtente(int utenteId) async {
-  try {
-    final response = await http.get(Uri.parse('$baseUrl/selectAutorizzazione'));
-    print('Response from API: ${response.body}');
+    try {
+      final response = await http.get(Uri.parse('$baseUrl/selectAutorizzazione'));
+      print('Response from API: ${response.body}');
 
-    if (response.statusCode == 200) {
-      List<dynamic> resultList = json.decode(response.body) ?? [];
+      if (response.statusCode == 200) {
+        List<dynamic> resultList = json.decode(response.body) ?? [];
 
-      List<Autorizzazione> autorizzazioniList = [];
-      for (Map<String, dynamic> autorizzazioneData in resultList) {
-        Autorizzazione autorizzazione = Autorizzazione.fromJson(autorizzazioneData);
-        if (autorizzazione.utente == utenteId) {
-          autorizzazioniList.add(autorizzazione);
+        List<Autorizzazione> autorizzazioniList = [];
+        for (Map<String, dynamic> autorizzazioneData in resultList) {
+          Autorizzazione autorizzazione = Autorizzazione.fromJson(autorizzazioneData);
+          if (autorizzazione.utente == utenteId) {
+            autorizzazioniList.add(autorizzazione);
+          }
         }
+        return autorizzazioniList;
+      } else {
+        print('Errore nella chiamata API: ${response.statusCode}');
+        return [];
       }
-      return autorizzazioniList;
-    } else {
-      print('Errore nella chiamata API: ${response.statusCode}');
+    } catch (e) {
+      print('Errore durante la chiamata API: $e');
       return [];
     }
-  } catch (e) {
-    print('Errore durante la chiamata API: $e');
-    return [];
   }
-}
+
+
+  Future<List<Libro>> getTopThree(int utenteId) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/selectTop3Libri'),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({
+          'id': utenteId
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        List<dynamic> resultList = json.decode(response.body) ?? [];
+
+        List<Libro> top3 = [];
+        for (Map<String, dynamic> libroData in resultList) {
+          Libro libro = Libro.fromJson(libroData);
+          top3.add(libro);
+        }
+        return top3;
+      } else {
+        print('Errore nella chiamata API: ${response.statusCode}');
+        return [];
+      }
+    } catch (e) {
+      print('Errore durante la chiamata API: $e');
+      return [];
+    }
+  }
 
 
 
@@ -115,14 +146,14 @@ class AutorizzazioneDao {
     }
   }
 
-  Future<Map<String, dynamic>> updateAutorizzazioneClick(int id, int numClick) async {
+  Future<Map<String, dynamic>> updateAutorizzazioneClick(int id, String isbn) async {
     try {
       final response = await http.put(
         Uri.parse('$baseUrl/updateAutorizzazioneClick'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
           'id': id,
-          'numClick': numClick
+          'isbn': isbn
         }),
       );
 

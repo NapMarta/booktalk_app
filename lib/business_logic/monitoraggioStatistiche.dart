@@ -1,6 +1,8 @@
 
 import 'dart:convert';
 
+import 'package:booktalk_app/storage/autorizzazioneDAO.dart';
+import 'package:booktalk_app/storage/libro.dart';
 import 'package:booktalk_app/storage/utente.dart';
 import 'package:booktalk_app/storage/utenteDAO.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,6 +11,7 @@ class MonitoraggioStatistiche {
   double funz1 = 0.0, funz2 = 0.0, funz3 = 0.0;
   late Utente utente;
   UtenteDao dao = UtenteDao('http://130.61.22.178:9000');
+  AutorizzazioneDao autorizzazioneDao = AutorizzazioneDao('http://130.61.22.178:9000');
   late SharedPreferences _preferences;
 
   // Singola istanza della classe
@@ -104,6 +107,40 @@ class MonitoraggioStatistiche {
     funz1 = 0.0;
     funz2 = 0.0;
     funz3 = 0.0;
+  }
+
+  Future<bool> aggiungiClickLibro(String isbn) async {
+
+    try{
+
+      final response = await autorizzazioneDao.updateAutorizzazioneClick(utente.id!, isbn);
+
+      if (response.containsKey('error'))
+        return false;
+
+      else 
+        return true;
+
+    } catch (e) {
+      print("Eccezione in business_logic/monitoraggioStatistiche.dart: $e");
+      return false;
+    }
+
+  }
+
+  Future<List<Libro>> getTopThreeLibri () async {
+
+    try{
+
+      List<Libro> top3 = await autorizzazioneDao.getTopThree(utente.id!);
+      
+      return top3;
+
+    } catch (e) {
+      print("Eccezione in business_logic/monitoraggioStatistiche.dart: $e");
+      return [];
+    }
+
   }
   
 }

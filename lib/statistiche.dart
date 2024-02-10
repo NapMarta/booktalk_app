@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:booktalk_app/business_logic/monitoraggioStatistiche.dart';
+import 'package:booktalk_app/storage/libro.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_split_view/multi_split_view.dart';
@@ -13,6 +15,7 @@ class Statistiche extends StatefulWidget {
 
   @override
   _StatisticheState createState() => _StatisticheState();
+  
 }
 
 class _StatisticheState extends State<Statistiche> {
@@ -20,12 +23,14 @@ class _StatisticheState extends State<Statistiche> {
   late SharedPreferences _preferences;
   //late Future<Utente?> utente;
   double utlFunz1 = 0.0, utlFunz2 = 0.0, utlFunz3 = 0.0;
-
+  Uint8List copertina1 = Uint8List(0);
+  Uint8List copertina2 = Uint8List(0);
+  Uint8List copertina3 = Uint8List(0);
   
   @override
   void initState() {
-    _loadUserData();
     super.initState();
+    _loadUserData();
   }
 
 
@@ -46,6 +51,11 @@ class _StatisticheState extends State<Statistiche> {
       utlFunz2 = double.parse(utenteMap['ULTFUNZ2']);
       utlFunz3 = double.parse(utenteMap['ULTFUNZ3']);*/
 
+      List<Libro> top3 = await monitoraggioStatistiche.getTopThreeLibri();
+      copertina1 = Uint8List.fromList(top3[0].copertina!);
+      copertina2 = Uint8List.fromList(top3[1].copertina!);
+      copertina3 = Uint8List.fromList(top3[2].copertina!);
+      
       setState(() {});
     }
   }
@@ -125,8 +135,10 @@ class _StatisticheState extends State<Statistiche> {
                     SizedBox(
                       width: isTablet(mediaQueryData) ? 180 : 160,
                       child: _NumberCardWidget(
-                        1, // TALE INDICE INDICA LA PRIMA FUNZIONALITA'
-                        "assets/copertina.jpg",
+                        //1, // TALE INDICE INDICA LA PRIMA FUNZIONALITA'
+                        //"assets/copertina.jpg",
+                        copertina1,
+                        copertina2,
                         mediaQueryData
                       ),
                     ),
@@ -134,8 +146,10 @@ class _StatisticheState extends State<Statistiche> {
                     SizedBox(
                       width: isTablet(mediaQueryData) ? 180 : 160,
                       child: _NumberCardWidget(
-                        2, // TALE INDICE INDICA LA SECONDA FUNZIONALITA'
-                        "assets/copertina.jpg",
+                        //2, // TALE INDICE INDICA LA SECONDA FUNZIONALITA'
+                        //"assets/copertina.jpg",
+                        copertina2,
+                        copertina3,
                         mediaQueryData
                       ),
                     ),
@@ -143,8 +157,10 @@ class _StatisticheState extends State<Statistiche> {
                     SizedBox(
                       width: isTablet(mediaQueryData) ? 180 : 160,
                       child: _NumberCardWidget(
-                        3, // TALE INDICE INDICA LA TERZA FUNZIONALITA'
-                        "assets/copertina.jpg",
+                        //3, // TALE INDICE INDICA LA TERZA FUNZIONALITA'
+                        //"assets/copertina.jpg",
+                        copertina3,
+                        copertina1,
                         mediaQueryData
                       ),
                     ),
@@ -331,21 +347,22 @@ List<PieChartSectionData> _pieChartData(
 
 
 // --- ELEMENTO NELLA TOP 3 LIBRI ---
-Widget _NumberCardWidget(int index, String imageLibro, var mediaQueryData) {
+Widget _NumberCardWidget(Uint8List copertina, Uint8List copertinaSuccessiva, var mediaQueryData) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 3.5),
     child: Stack(
       children: [
         Positioned(
-            left: 13,
-            bottom: 0,
-            child: Center(
-              child: Image.asset(
-                "assets/top${index}.png",
-                width: 60,
-              ),
+          left: 13,
+          bottom: 0,
+          child: Center(
+            child: Image.memory(
+              copertina,
+              width: 60,
             ),
+          ),
         ),
+
         Row(
           children: [
             const SizedBox(
@@ -354,14 +371,12 @@ Widget _NumberCardWidget(int index, String imageLibro, var mediaQueryData) {
             ),
             ClipRRect(
               borderRadius: BorderRadius.circular(6.0),
-              child: Image.asset(
-                "assets/libro${index+1}.jpg",
+              child: Image.memory(copertinaSuccessiva,
                 width: isTablet(mediaQueryData) ? 100 : 80,
               ),
             ),
           ],
         ),
-        
       ],
     ),
   );
