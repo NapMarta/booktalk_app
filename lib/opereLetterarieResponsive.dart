@@ -6,7 +6,7 @@ import 'package:booktalk_app/business_logic/monitoraggioStatistiche.dart';
 import 'package:booktalk_app/chat/chatPDF.dart';
 import 'package:booktalk_app/storage/libro.dart';
 import 'package:booktalk_app/utils.dart';
-import 'package:booktalk_app/widget/ErrorAlertPageOpera.dart';
+//import 'package:booktalk_app/widget/ErrorAlertPageOpera.dart';
 import 'package:booktalk_app/widget/header.dart';
 import 'package:flutter/material.dart';
 import 'package:image/image.dart' as Img;
@@ -75,11 +75,12 @@ class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
       }
     } catch (e) {
       print('Errore: $e');
-      Navigator.of(context).pushReplacement(
+      /*Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (context) => ErrorAlertPageOpera(text: "Errore. L'opera scannerizzata non è contenuta nel libro selezionato"),
       )
-    );
+    );*/
+    analisi = "Errore. L'opera scannerizzata non è contenuta nel libro selezionato";
     return false;
     }
 
@@ -96,20 +97,22 @@ class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
         final data = jsonDecode(response.body);
         print(data);
       } else {
-          Navigator.of(context).pushReplacement(
+          /*Navigator.of(context).pushReplacement(
             MaterialPageRoute(
               builder: (context) => ErrorAlertPageOpera(text: "Errore. L'opera scannerizzata non è contenuta nel libro selezionato"),
             )
-          );
+          );*/
+          analisi = "Errore. L'opera scannerizzata non è contenuta nel libro selezionato";
           return false;
       }
     } catch (e) {
       print('Error: $e');
-      Navigator.of(context).pushReplacement(
+      /*Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => ErrorAlertPageOpera(text: "Errore. L'opera scannerizzata non è contenuta nel libro selezionato"),
         )
-      );
+      );*/
+      analisi = "Errore. L'opera scannerizzata non è contenuta nel libro selezionato";
       return false;
     }
 
@@ -135,11 +138,12 @@ class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
 
     isOperainLibro = false;
     print("L'opera letteraria NON è nel libro");
-    Navigator.of(context).pushReplacement(
+    /*Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (context) => ErrorAlertPageOpera(text: "Errore. L'opera scannerizzata non è contenuta nel libro selezionato"),
       )
-    );
+    );*/
+    analisi = "Errore. L'opera scannerizzata non è contenuta nel libro selezionato";
     return false;
   }
 
