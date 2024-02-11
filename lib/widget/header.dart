@@ -150,17 +150,22 @@ class _HeaderState extends State<Header> {
                           color: Colors.black,
                         ),
                         //padding: EdgeInsets.only(top:0, bottom: 0),
-                        child: IconButton(
-                          //padding: EdgeInsets.only(top:0, bottom: 0),
-                          icon: Image.memory(fotoProfilo!),
-                          iconSize: 2, // Modifica la dimensione dell'icona secondo le tue esigenze
-                          onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => ProfiloResponsitive(),
-                              ),
-                            );
-                          },
+                        child:ClipOval(
+                          child: Material(
+                            color: Colors.transparent,
+                            child: IconButton(
+                            //padding: EdgeInsets.only(top:0, bottom: 0),
+                            icon: Image.memory(snapshot.data!),
+                            //iconSize: 2, // Modifica la dimensione dell'icona secondo le tue esigenze
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => ProfiloResponsitive(),
+                                ),
+                              );
+                            },
+                          ),
+                          ),
                         ),
                       );
                     } else {

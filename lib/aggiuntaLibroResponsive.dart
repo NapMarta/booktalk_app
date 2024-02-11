@@ -204,12 +204,13 @@ class _AggiuntaLibroResponsiveState extends State<AggiuntaLibroResponsive> {
                       
                       final result = verificaCoupon(widget.isbn, value, context);
                       result.then((value) {
-                        Navigator.of(context).pop();
+                        //Navigator.of(context).pop();
+                        modificaOK(context, 'Il libro è supportato e il codice coupon è valido.');
                         Navigator.of(context).pushReplacement(       
                           MaterialPageRoute(         
                             builder: (context) => HomepageResponsitive(),       
-                            ),     
-                          );
+                          ),     
+                        );
                       });
                       /*
                       Navigator.push(

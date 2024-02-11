@@ -116,10 +116,15 @@ Future verificaCoupon(String isbn, String coupon, BuildContext context) async {
             while (idUtente == null){
               print("idUtente is null");
             }
-            final result = service.addAutorizzazione(isbn, idUtente, preferences);
-            result.then((value) {
+            print("id utente");
+            print(idUtente);
+            print("isbn");
+            print(isbn);
+            await service.addAutorizzazione(isbn, idUtente, preferences);
+            
+            /*result.then((value) {
               modificaOK(context, 'Il libro è supportato e il codice coupon è valido.');
-            });
+            });*/
           }
           else{
             print("ERRORE: utente non trovato");
