@@ -69,11 +69,12 @@ class Registrazione implements RegistrazioneService{
       utente = (await utenteDao.getUtenteByEmail(utente.email))!;
 
       if (response.containsKey('error')) {
+        return {'error': 'Errore durante la registrazione.'};
+      } else {
+        utente = (await utenteDao.getUtenteByEmail(utente.email))!;
         print(response);
         LibreriaDao dao = LibreriaDao(baseUrl);
         await dao.insertLibreria(Libreria(utente: utente.id!, numLibri: 0));
-        return response;
-      } else {
         print("success registrazione");
         return {'success': 'Registrazione avvenuta con successo.'};
       }
