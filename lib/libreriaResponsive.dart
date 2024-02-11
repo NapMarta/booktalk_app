@@ -20,10 +20,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class LibreriaResponsive extends StatefulWidget {
   final bool is2;
   final bool is3;
-  final int id;
-
   
-  const LibreriaResponsive({Key? key, required this.is2, required this.is3, required this.id}) : super(key: key);
+  const LibreriaResponsive({Key? key, required this.is2, required this.is3}) : super(key: key);
   
   @override
   _LibreriaResponsiveState createState() => _LibreriaResponsiveState();
@@ -35,40 +33,32 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
   late Future<List<Libro>> libreria;
   bool dataLoaded = false;
   int numLibri = 0;
+  late int id;
   LibreriaDao _libreriaDao = LibreriaDao('http://130.61.22.178:9000');
 
 
   @override
   void initState() {
     super.initState();
-    loadUserData();
+    _loadUserData();
   }
 
-  Future<List<Libro>> getLibreriaFromPreferences() async {
-    List<Map<String, dynamic>>? libreriaJson = await _libreriaDao.getLibreriaUtenteJson(widget.id);
-    String temp = json.encode(libreriaJson);
-    List<Libro> libreria = [];
 
-    if (libreriaJson.isNotEmpty) {
-      List<dynamic> libreriaList = json.decode(temp);
-      libreria = libreriaList.map((libroData) => Libro.fromJson(libroData)).toList();
-      numLibri = libreria.length;
-    }
-
-    return libreria;
-  }
 
   // Funzione per caricare i dati dell'utente dalle SharedPreferences
-  Future<void> loadUserData() async {
-
+  Future<void> _loadUserData() async {
     print("Loading user data...");
-    //_preferences = await SharedPreferences.getInstance();
-    //String utenteJson = _preferences.getString('utente') ?? '';
-
-    libreria = getLibreriaFromPreferences();
-    libreria.then((value) => dataLoaded = true);
-
-    setState(() {});
+    SharedPreferences _preferences = await SharedPreferences.getInstance();
+    String utenteJson = _preferences.getString('utente') ?? '';
+    if (utenteJson.isNotEmpty) {
+      Map<String, dynamic> utenteMap = json.decode(utenteJson);
+      id = utenteMap['ID'];
+      print(id);
+      libreria = _libreriaDao.getLibreriaUtente(id);
+      libreria.then((value) {dataLoaded = true;
+      numLibri = value.length;});
+      setState(() {});
+    }
   }
 
   @override
@@ -148,10 +138,10 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
           // ----------- LISTA A GRIGLIA -----------
           Expanded(
             child: 
-            numLibri == 0
-            ? Text("Non sono presenti libri")
-            : dataLoaded == false ?
+            dataLoaded == false ?
               Center(child: CircularProgressIndicator(color: Color(0xFF0097b2)))
+            : numLibri == 0
+            ? Text("Non sono presenti libri")
             : CustomScrollView(
               controller: _scrollController,
               slivers: <Widget>[

@@ -39,7 +39,6 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
     if (utenteJson.isNotEmpty) {
       Map<String, dynamic> utenteMap = json.decode(utenteJson);
       nome = utenteMap['NOME'] ?? '';
-      id = int.parse(utenteMap['id'].toString());
       setState(() {});
     }
   }
@@ -176,7 +175,7 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
                       topRight: Radius.circular(24.0),
                     ),
                   ),
-                  child: LibreriaResponsive(is2: is2, is3: is3, id: id),
+                  child: LibreriaResponsive(is2: is2, is3: is3),
                 ),
                 // collapsed
                 collapsed: Container(
