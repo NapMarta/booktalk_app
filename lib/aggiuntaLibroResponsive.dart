@@ -145,15 +145,16 @@ class _AggiuntaLibroResponsiveState extends State<AggiuntaLibroResponsive> {
                           builder: (context) => CaricamentoResponsive(text: "Aggiornamento dei dati in corso...")
                         ),
                       );
-
-                      verificaCoupon(widget.isbn, value, context).then((_) {     
+                      
+                      final result = verificaCoupon(widget.isbn, value, context);
+                      result.then((value) {
+                        Navigator.of(context).pop();
                         Navigator.of(context).pushReplacement(       
                           MaterialPageRoute(         
                             builder: (context) => HomepageResponsitive(),       
                             ),     
-                          );   
-                        }
-                      );
+                          );
+                      });
                       /*
                       Navigator.push(
                         context,

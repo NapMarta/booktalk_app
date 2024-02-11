@@ -107,21 +107,22 @@ Future verificaCoupon(String isbn, String coupon, BuildContext context) async {
         if (data['result']) {
           print('Il libro è supportato e il codice coupon è valido.');
 
-          SharedPreferences _preferences = await SharedPreferences.getInstance();
-          String utenteJson = _preferences.getString('utente') ?? '';
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          String utenteJson = preferences.getString('utente') ?? '';
           if (utenteJson.isNotEmpty) {
             Map<String, dynamic> utenteMap = json.decode(utenteJson);
             idUtente = utenteMap['ID'];
             GestioneAutorizzazioniService service = GestioneAutorizzazioni();
-            service.addAutorizzazione(isbn, idUtente);
+            final result = service.addAutorizzazione(isbn, idUtente, preferences);
+            result.then((value) {
+              modificaOK(context, 'Il libro è supportato e il codice coupon è valido.');
+            });
           }
           else{
             print("ERRORE: utente non trovato");
             mostraErrore(context, 'ERRORE: utente non trovato');
             
           }
-          
-          modificaOK(context, 'Il libro è supportato e il codice coupon è valido.');
 
         } else {
           print('Libro attualmente non supportato o codice coupon non valido.');

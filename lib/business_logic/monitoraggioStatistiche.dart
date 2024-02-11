@@ -78,16 +78,32 @@ class MonitoraggioStatistiche {
 
   double getPercentualeF1(){
     double tot = funz1+funz2+funz3;
-    double temp = funz1*100/tot;
+    double temp;
+
+    if (funz1 == 0.0 && funz2 == 0.0 && funz3 == 0.0){
+      temp = 1.0*100/3;
+    }
+    else{
+      temp = funz1*100/tot;
+    }
+
     int numeroDiCifreDecimali = 2;
     String numeroArrotondatoStringa = temp.toStringAsFixed(numeroDiCifreDecimali);
     double numeroArrotondato = double.parse(numeroArrotondatoStringa);
+    
     return numeroArrotondato;
   }
 
   double getPercentualeF2(){
     double tot = funz1+funz2+funz3;
-    double temp = funz2*100/tot;
+    double temp;
+    
+    if (funz1 == 0.0 && funz2 == 0.0 && funz3 == 0.0){
+      temp = 1.0*100/3;
+    }
+    else{
+      temp = funz2*100/tot;
+    }
     int numeroDiCifreDecimali = 2;
     String numeroArrotondatoStringa = temp.toStringAsFixed(numeroDiCifreDecimali);
     double numeroArrotondato = double.parse(numeroArrotondatoStringa);
@@ -96,7 +112,14 @@ class MonitoraggioStatistiche {
 
   double getPercentualeF3(){
     double tot = funz1+funz2+funz3;
-    double temp = funz3*100/tot;
+    double temp;
+    
+    if (funz1 == 0.0 && funz2 == 0.0 && funz3 == 0.0){
+      temp = 1.0*100/3;
+    }
+    else{
+      temp = funz3*100/tot;
+    }
     int numeroDiCifreDecimali = 2;
     String numeroArrotondatoStringa = temp.toStringAsFixed(numeroDiCifreDecimali);
     double numeroArrotondato = double.parse(numeroArrotondatoStringa);

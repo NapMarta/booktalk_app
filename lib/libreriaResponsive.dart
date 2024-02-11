@@ -31,16 +31,17 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
   //File ? _selectedImageAddLibro;
   //File ? _selectedImageOpera;
   late SharedPreferences _preferences;
-  Future<List<Libro>?> libreria = Future.value([]);
+  late Future<List<Libro>> libreria;
+  bool dataLoaded = false;
   int numLibri = 0;
 
   @override
   void initState() {
     super.initState();
-    _loadUserData();
+    loadUserData();
   }
 
-  Future<List<Libro>?> _getLibreriaFromPreferences() async {
+  Future<List<Libro>> getLibreriaFromPreferences() async {
     String libreriaJson = _preferences.getString('libreria') ?? '';
     List<Libro> libreria = [];
 
@@ -54,28 +55,16 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
   }
 
   // Funzione per caricare i dati dell'utente dalle SharedPreferences
-  Future<void> _loadUserData() async {
+  Future<void> loadUserData() async {
+
     print("Loading user data...");
     _preferences = await SharedPreferences.getInstance();
-    String utenteJson = _preferences.getString('utente') ?? '';
-    if (utenteJson.isNotEmpty) {
-      //Map<String, dynamic> utenteMap = json.decode(utenteJson);
-      /*LibreriaDao dao = LibreriaDao('http://130.61.22.178:9000');
-      int id = utenteMap['ID'];
-      print(id);
-      libreria = dao.getLibreriaUtente(id);
+    //String utenteJson = _preferences.getString('utente') ?? '';
 
-      libreria.then((value) {
-        print("LIBRERIA");
-        for (Libro l in value!){
-          print(l.toString());
-        }
-      });*/
+    libreria = getLibreriaFromPreferences();
+    libreria.then((value) => dataLoaded = true);
 
-      libreria = _getLibreriaFromPreferences();
-      
-      setState(() {});
-    }
+    setState(() {});
   }
 
   @override
@@ -157,6 +146,8 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
             child: 
             numLibri == 0
             ? Text("Non sono presenti libri")
+            : dataLoaded == false ?
+              Center(child: CircularProgressIndicator(color: Color(0xFF0097b2)))
             : CustomScrollView(
               controller: _scrollController,
               slivers: <Widget>[

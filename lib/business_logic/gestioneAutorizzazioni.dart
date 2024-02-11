@@ -15,7 +15,7 @@ class GestioneAutorizzazioni implements GestioneAutorizzazioniService{
 
 
   @override
-  Future<Map<String, dynamic>> addAutorizzazione(String isbn, int id) async {
+  Future<Map<String, dynamic>> addAutorizzazione(String isbn, int id, SharedPreferences preferences) async {
 
     try{
 
@@ -27,7 +27,7 @@ class GestioneAutorizzazioni implements GestioneAutorizzazioniService{
       DateTime dataScadenza = date.add(Duration(days: 365));
       final String formattedScadenza = dateFormatterData.format(dataScadenza);
 
-      print(formattedScadenza);
+      //print(formattedScadenza);
 
       Autorizzazione toInsert = Autorizzazione(
         tempoUtilizzato: formattedDate, 
@@ -38,10 +38,9 @@ class GestioneAutorizzazioni implements GestioneAutorizzazioniService{
         try {
           await dao.insertAutorizzazione(toInsert);
           await daoLib.updateLibreria(id);
-          SharedPreferences _preferences = await SharedPreferences.getInstance();
-          await _preferences.remove('libreria');
+          await preferences.remove('libreria');
           List<Map<String, dynamic>> libreriaJson = await daoLib.getLibreriaUtenteJson(id);
-          await _preferences.setString('libreria', json.encode(libreriaJson));
+          await preferences.setString('libreria', json.encode(libreriaJson));
           return {'success': 'Inserimento avvenuto con successo.'};
         }catch(e){
           return {'error': 'Aggiunta libro non riuscita.'};
@@ -54,6 +53,7 @@ class GestioneAutorizzazioni implements GestioneAutorizzazioniService{
 
   }
 
+  /*
   @override
   Future<bool> isAutorizzazioneScaduta(String isbn, int id) async {
     Autorizzazione? autorizzazione = await dao.getAutorizzazioneById(isbn, id);
@@ -71,5 +71,5 @@ class GestioneAutorizzazioni implements GestioneAutorizzazioniService{
       }
     }
     return false;
-  }
+  }*/
 }
