@@ -66,6 +66,8 @@ class Registrazione implements RegistrazioneService{
 
       var response = await utenteDao.insertUtente(utente);
 
+      utente = (await utenteDao.getUtenteByEmail(utente.email))!;
+
       if (response.containsKey('error')) {
         print(response);
         LibreriaDao dao = LibreriaDao(baseUrl);
