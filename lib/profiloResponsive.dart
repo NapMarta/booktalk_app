@@ -178,6 +178,26 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
                                 return Text('Error: ${snapshot.error}');
                               } else if (snapshot.hasData && snapshot.data != null) {
                                 return Container(
+                                    height: mediaQueryData.size.height * 0.20,
+                                    width: mediaQueryData.size.height * 0.20,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.black,
+                                    ),
+                                    child: ClipOval(
+                                      child: Material(
+                                        color: Colors.transparent,
+                                        child: IconButton(
+                                          icon: Image.memory(snapshot.data!),
+                                          iconSize: mediaQueryData.size.height * 0.2, // Imposta la dimensione dell'icona come la dimensione del container
+                                          onPressed: () {
+                                          },
+                                        ),
+                                      ),
+                                    ),                                    
+                                  );
+                                  /*
+                                Container(
                                   height: mediaQueryData.size.height * 0.20,
                                   decoration: BoxDecoration(
                                     color: Colors.black,
@@ -187,7 +207,7 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
                                         image: MemoryImage(snapshot.data!),
                                       ),
                                     ),
-                                  );
+                                  );*/
                               } else {
                                 return Center(child: Text('No image selected'));
                               }
@@ -209,12 +229,17 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
                                       shape: BoxShape.circle,
                                       color: Colors.black,
                                     ),
-                                    child: IconButton(
-                                      icon: Image.memory(snapshot.data!),
-                                      iconSize: mediaQueryData.size.height * 0.20, // Imposta la dimensione dell'icona come la dimensione del container
-                                      onPressed: () {
-                                      },
-                                    ),
+                                    child: ClipOval(
+                                      child: Material(
+                                        color: Colors.transparent,
+                                        child: IconButton(
+                                          icon: Image.memory(snapshot.data!),
+                                          iconSize: mediaQueryData.size.height * 0.2, // Imposta la dimensione dell'icona come la dimensione del container
+                                          onPressed: () {
+                                          },
+                                        ),
+                                      ),
+                                    ),                                    
                                   );
 
                                   
