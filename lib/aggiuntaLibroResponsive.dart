@@ -76,7 +76,7 @@ class _AggiuntaLibroResponsiveState extends State<AggiuntaLibroResponsive> {
       return "Il Cinque Maggio";
     }
     else{
-      return "assets/image_not_found.jpg";
+      return "";
     }
   }
 
