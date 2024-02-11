@@ -24,6 +24,7 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
   bool is3 = false;
   late SharedPreferences _preferences;
   String nome = "";
+  int id = 0;
 
   @override
   void initState() {
@@ -38,6 +39,7 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
     if (utenteJson.isNotEmpty) {
       Map<String, dynamic> utenteMap = json.decode(utenteJson);
       nome = utenteMap['NOME'] ?? '';
+      id = int.parse(utenteMap['id'].toString());
       setState(() {});
     }
   }
@@ -174,7 +176,7 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
                       topRight: Radius.circular(24.0),
                     ),
                   ),
-                  child: LibreriaResponsive(is2: is2, is3: is3),
+                  child: LibreriaResponsive(is2: is2, is3: is3, id: id),
                 ),
                 // collapsed
                 collapsed: Container(

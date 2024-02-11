@@ -7,6 +7,7 @@ import 'package:booktalk_app/caricamentoResponsive.dart';
 import 'package:booktalk_app/chatResponsive.dart';
 import 'package:booktalk_app/getISBN.dart';
 import 'package:booktalk_app/opereLetterarieResponsive.dart';
+import 'package:booktalk_app/storage/libreriaDAO.dart';
 import 'package:booktalk_app/storage/libro.dart';
 import 'package:booktalk_app/widget/ErrorAlertPageISBN.dart';
 import 'package:booktalk_app/widget/ExpandableFloatingActionButton.dart';
@@ -19,9 +20,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 class LibreriaResponsive extends StatefulWidget {
   final bool is2;
   final bool is3;
+  final int id;
 
   
-  const LibreriaResponsive({Key? key, required this.is2, required this.is3}) : super(key: key);
+  const LibreriaResponsive({Key? key, required this.is2, required this.is3, required this.id}) : super(key: key);
   
   @override
   _LibreriaResponsiveState createState() => _LibreriaResponsiveState();
@@ -30,10 +32,11 @@ class LibreriaResponsive extends StatefulWidget {
 class _LibreriaResponsiveState extends State<LibreriaResponsive> {
   //File ? _selectedImageAddLibro;
   //File ? _selectedImageOpera;
-  late SharedPreferences _preferences;
   late Future<List<Libro>> libreria;
   bool dataLoaded = false;
   int numLibri = 0;
+  LibreriaDao _libreriaDao = LibreriaDao('http://130.61.22.178:9000');
+
 
   @override
   void initState() {
@@ -42,11 +45,12 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
   }
 
   Future<List<Libro>> getLibreriaFromPreferences() async {
-    String libreriaJson = _preferences.getString('libreria') ?? '';
+    List<Map<String, dynamic>>? libreriaJson = await _libreriaDao.getLibreriaUtenteJson(widget.id);
+    String temp = json.encode(libreriaJson);
     List<Libro> libreria = [];
 
     if (libreriaJson.isNotEmpty) {
-      List<dynamic> libreriaList = json.decode(libreriaJson);
+      List<dynamic> libreriaList = json.decode(temp);
       libreria = libreriaList.map((libroData) => Libro.fromJson(libroData)).toList();
       numLibri = libreria.length;
     }
@@ -58,7 +62,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
   Future<void> loadUserData() async {
 
     print("Loading user data...");
-    _preferences = await SharedPreferences.getInstance();
+    //_preferences = await SharedPreferences.getInstance();
     //String utenteJson = _preferences.getString('utente') ?? '';
 
     libreria = getLibreriaFromPreferences();
