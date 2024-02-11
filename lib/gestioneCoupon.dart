@@ -111,8 +111,11 @@ Future verificaCoupon(String isbn, String coupon, BuildContext context) async {
           String utenteJson = preferences.getString('utente') ?? '';
           if (utenteJson.isNotEmpty) {
             Map<String, dynamic> utenteMap = json.decode(utenteJson);
-            idUtente = utenteMap['ID'];
+            idUtente = int.parse(utenteMap['ID'].toString());
             GestioneAutorizzazioniService service = GestioneAutorizzazioni();
+            while (idUtente == null){
+              print("idUtente is null");
+            }
             final result = service.addAutorizzazione(isbn, idUtente, preferences);
             result.then((value) {
               modificaOK(context, 'Il libro è supportato e il codice coupon è valido.');
