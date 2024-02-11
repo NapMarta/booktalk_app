@@ -25,6 +25,61 @@ class _AggiuntaLibroResponsiveState extends State<AggiuntaLibroResponsive> {
     super.initState();
   }
 
+  String loadCopertina (String isbn){
+    if (isbn == '9781070658773'){
+      return "assets/copertina1.jpg";
+    }
+    else if (isbn == '8806134965'){
+      return "assets/copertina2.jpg";
+    }
+    else if (isbn == '8886113277'){
+      return "assets/copertina3.jpg";
+    }
+    else if (isbn == '8879835629'){
+      return "assets/copertina4.jpg";
+    }
+    else if (isbn == '8811584043'){
+      return "assets/copertina5.jpg";
+    }
+    else if (isbn == '9788866565062'){
+      return "assets/copertina6.jpg";
+    }
+    else if (isbn == '9788817107488'){
+      return "assets/copertina5Maggio.jpg";
+    }
+    else{
+      return "assets/image_not_found.jpg";
+    }
+  }
+
+
+  String loadTitolo (String isbn){
+    if (isbn == '9781070658773'){
+      return "Aforismi, novelle e profezie";
+    }
+    else if (isbn == '8806134965'){
+      return "I libri della famiglia";
+    }
+    else if (isbn == '8886113277'){
+      return "La fabbrica";
+    }
+    else if (isbn == '8879835629'){
+      return "Novelle per un anno";
+    }
+    else if (isbn == '8811584043'){
+      return "Senso e Nuove Storielle Vane";
+    }
+    else if (isbn == '9788866565062'){
+      return "L'infinito";
+    }
+    else if (isbn == '9788817107488'){
+      return "Il Cinque Maggio";
+    }
+    else{
+      return "assets/image_not_found.jpg";
+    }
+  }
+
   
 
   @override
@@ -68,7 +123,7 @@ class _AggiuntaLibroResponsiveState extends State<AggiuntaLibroResponsive> {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(6.0),
                         child: Image.asset(
-                          "assets/libro1.jpg",
+                          loadCopertina(widget.isbn),
                           width: isTabletOrizzontale(mediaQueryData) ? 45 : 60,
                         ),
                       ),
@@ -76,7 +131,8 @@ class _AggiuntaLibroResponsiveState extends State<AggiuntaLibroResponsive> {
                         width: 30,
                       ),
                       Text(
-                        "Titolo libro",
+                        "Titolo",
+                        //loadTitolo(widget.isbn),
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,

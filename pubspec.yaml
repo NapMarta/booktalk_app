@@ -122,7 +122,15 @@ flutter:
     - assets/libro5.jpg
     - assets/libro6.jpg
     - assets/libro7.jpg
-    
+    - assets/copertina1.jpg
+    - assets/copertina2.jpg
+    - assets/copertina3.jpg
+    - assets/copertina4.jpg
+    - assets/copertina5.jpg
+    - assets/copertina6.jpg
+    - assets/copertina5Maggio.jpg
+    - assets/image_not_found.jpg
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
