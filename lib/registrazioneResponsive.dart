@@ -1,3 +1,4 @@
+import 'package:booktalk_app/widget/loading.dart';
 import 'package:booktalk_app/loginResponsive.dart';
 import 'package:booktalk_app/widget/PasswordField.dart';
 import 'package:booktalk_app/utils.dart';
@@ -169,8 +170,12 @@ class _RegistrazioneResponsiveState extends State<RegistrazioneResponsive> {
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.only(
-          left: textFieldPadding(mediaQueryData.size.width, mediaQueryData.size.height),
-          right: textFieldPadding(mediaQueryData.size.width, mediaQueryData.size.height),
+          left: isTabletVerticale(mediaQueryData) 
+                ? mediaQueryData.size.width * 0.15
+                : textFieldPadding(mediaQueryData.size.width, mediaQueryData.size.height),
+          right: isTabletVerticale(mediaQueryData) 
+                ? mediaQueryData.size.width * 0.15
+                : textFieldPadding(mediaQueryData.size.width, mediaQueryData.size.height),
           top: mediaQueryData.size.height * 0.02,
           bottom: mediaQueryData.size.height * 0.05,
         ),
@@ -291,7 +296,12 @@ class _RegistrazioneResponsiveState extends State<RegistrazioneResponsive> {
             SizedBox(height: 20,),
             ElevatedButton(
               onPressed: () async {
+                
                 if (_formKey.currentState!.validate()){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Loading(text: "Registrazione in corso...", header: "Registrazione")),
+                  );
                   final validationError = registrazione.validateParameters(
                     Utente(
                       nome: nomeController.text,
@@ -301,8 +311,9 @@ class _RegistrazioneResponsiveState extends State<RegistrazioneResponsive> {
                     ),
                     confermaPasswordController.text,
                   );
-
+                  
                   if (validationError.isNotEmpty) {
+                    Navigator.pop(context);
                     mostraErrore(context, validationError['error']);
                     print(validationError['error']);
                     return;
@@ -323,13 +334,14 @@ class _RegistrazioneResponsiveState extends State<RegistrazioneResponsive> {
                   if (risultato.containsKey('success')) {
                     // Se la registrazione è avvenuta con successo
                     registrazioneOK(context, risultato['success']);
-                    Navigator.of(context).push(
+                    Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
                           builder: (context) => LoginResponsive(),
                         ),
                     ); 
                   } else if (risultato.containsKey('error')) {
                     // Se c'è stato un errore durante la registrazione
+                    Navigator.pop(context);
                     mostraErrore(context, risultato['error']);
                   }
                   print(risultato);

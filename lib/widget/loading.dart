@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
     
 class Loading extends StatefulWidget {
   final String text;
+  final String header;  
 
-  const Loading({Key? key, required this.text}) : super(key: key);
+  const Loading({Key? key, required this.text, required this.header}) : super(key: key);
 
   @override
   _Loading createState() => _Loading();
@@ -45,7 +46,7 @@ class _Loading extends State<Loading> {
                 ),
                 
                 title: Text(
-                  "Login",
+                  widget.header,
                   style: TextStyle(
                     fontFamily: 'Roboto',
                     fontSize: 18,
