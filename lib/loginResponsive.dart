@@ -1,6 +1,6 @@
 import 'package:booktalk_app/business_logic/autenticazione.dart';
 import 'package:booktalk_app/business_logic/autenticazioneService.dart';
-import 'package:booktalk_app/loading.dart';
+import 'package:booktalk_app/widget/loading.dart';
 import 'package:booktalk_app/main.dart';
 import 'package:booktalk_app/widget/PasswordField.dart';
 import 'package:booktalk_app/homepageResponsive.dart';
@@ -225,7 +225,7 @@ class _LoginResponsiveState extends State<LoginResponsive> {
                     if (_formKey.currentState!.validate()) {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => Loading(text: "Autenticazione in corso...")),
+                        MaterialPageRoute(builder: (context) => Loading(text: "Autenticazione in corso...", header: "Login")),
                       );
 
                       final validationError = autenticazione.validateParameters(
