@@ -1,8 +1,8 @@
 import 'dart:ui';
 
-import 'package:booktalk_app/caricamentoResponsive.dart';
 import 'package:booktalk_app/gestioneCoupon.dart';
 import 'package:booktalk_app/homepageResponsive.dart';
+import 'package:booktalk_app/main.dart';
 import 'package:booktalk_app/utils.dart';
 import 'package:booktalk_app/widget/header.dart';
 import 'package:flutter/material.dart';
@@ -194,23 +194,23 @@ class _AggiuntaLibroResponsiveState extends State<AggiuntaLibroResponsive> {
                     ),
                     keyboardType: TextInputType.name,
                     autofocus: true,
-                    onFieldSubmitted: (value) {
-                      
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => CaricamentoResponsive(text: "Aggiornamento dei dati in corso...")
-                        ),
-                      );
-                      
-                      final result = verificaCoupon(widget.isbn, value, context);
-                      result.then((value) {
-                        Navigator.of(context).pop();
-                        Navigator.of(context).pushReplacement(       
+                    onFieldSubmitted: (value) async {                      
+                      await verificaCoupon("9788866565062", value, context);/*.then((value) {
+                        //Navigator.of(context).pop();
+                        Navigator.of(context).push(       
                           MaterialPageRoute(         
                             builder: (context) => HomepageResponsitive(),       
                             ),     
                           );
-                      });
+                      });*/
+                      Navigator.of(context).popUntil((route) => route.isFirst);
+
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => HomepageResponsitive(),
+                        ),
+                      ); 
+                      
                       /*
                       Navigator.push(
                         context,

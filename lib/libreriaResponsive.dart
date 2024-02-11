@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
@@ -40,13 +41,49 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
   @override
   void initState() {
     super.initState();
-    _loadUserData();
+    loadUserData();
+    _reloadPageAfterDelay();
   }
 
 
+  Future<List<Libro>> getLibreriaFromPreferences(SharedPreferences preferences) async {
+    String libreriaJson = preferences.getString('libreria') ?? '';
+    List<Libro> libreria = [];
+
+    if (libreriaJson.isNotEmpty) {
+      List<dynamic> libreriaList = json.decode(libreriaJson);
+      libreria = libreriaList.map((libroData) => Libro.fromJson(libroData)).toList();
+      numLibri = libreria.length;
+    }
+    return libreria;
+  }
 
   // Funzione per caricare i dati dell'utente dalle SharedPreferences
-  Future<void> _loadUserData() async {
+  Future<void> loadUserData() async {
+
+    print("Loading user data...");
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences = await SharedPreferences.getInstance();
+    //String utenteJson = _preferences.getString('utente') ?? '';
+
+    libreria = getLibreriaFromPreferences(preferences);
+    libreria.then((value) {
+      dataLoaded = true;
+      setState(() {});
+      });
+  }
+
+    void _reloadPageAfterDelay() {
+    const secondsToDelay = 5;
+    Timer(Duration(seconds: secondsToDelay), () {
+      loadUserData();
+      setState(() {}); // Ricarica la pagina aggiornando la UI
+    });
+    }
+
+
+  // Funzione per caricare i dati dell'utente dalle SharedPreferences
+  /*Future<void> _loadUserData() async {
     print("Loading user data...");
     SharedPreferences _preferences = await SharedPreferences.getInstance();
     String utenteJson = _preferences.getString('utente') ?? '';
@@ -54,12 +91,13 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
       Map<String, dynamic> utenteMap = json.decode(utenteJson);
       id = utenteMap['ID'];
       print(id);
-      libreria = _libreriaDao.getLibreriaUtente(id);
+      /*libreria = _libreriaDao.getLibreriaUtente(id);
       libreria.then((value) {dataLoaded = true;
-      numLibri = value.length;});
+      numLibri = value.length;});*/
+      
       setState(() {});
     }
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {

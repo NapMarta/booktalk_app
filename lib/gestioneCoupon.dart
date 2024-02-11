@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:booktalk_app/business_logic/gestioneAutorizzazioni.dart';
 import 'package:booktalk_app/business_logic/gestioneAutorizzazioniService.dart';
 import 'package:booktalk_app/caricamentoResponsive.dart';
-import 'package:booktalk_app/homepageResponsive.dart';
 import 'package:booktalk_app/storage/libro.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -82,7 +81,7 @@ void mostraErrore(BuildContext context, String messaggio) {
     return true;
   }
 
-Future verificaCoupon(String isbn, String coupon, BuildContext context) async {
+Future<bool> verificaCoupon(String isbn, String coupon, BuildContext context) async {
   WidgetsFlutterBinding.ensureInitialized();
 
   int idUtente = 0;
@@ -91,6 +90,12 @@ Future verificaCoupon(String isbn, String coupon, BuildContext context) async {
   //Prendere i parametri isbn e coupon da quelli che ha inserito l'utente
   //String isbn = '8806134965';
   //String coupon = 'A45DF3';
+
+  Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => CaricamentoResponsive(text: "Aggiornamento dei dati in corso...")
+                        ),
+                      );
 
   Future<bool> checkAutorizzazione = checkAutorizzazioneInLibreria(isbn);
   checkAutorizzazione.then((value) async {
@@ -113,32 +118,34 @@ Future verificaCoupon(String isbn, String coupon, BuildContext context) async {
             Map<String, dynamic> utenteMap = json.decode(utenteJson);
             idUtente = int.parse(utenteMap['ID'].toString());
             GestioneAutorizzazioniService service = GestioneAutorizzazioni();
-            while (idUtente == null){
-              print("idUtente is null");
-            }
-            final result = service.addAutorizzazione(isbn, idUtente, preferences);
-            result.then((value) {
-              modificaOK(context, 'Il libro è supportato e il codice coupon è valido.');
-            });
+            
+            await service.addAutorizzazione(isbn, idUtente, preferences);
+            modificaOK(context, 'Il libro è supportato e il codice coupon è valido.');
+            return true;
           }
           else{
             print("ERRORE: utente non trovato");
             mostraErrore(context, 'ERRORE: utente non trovato');
+            return false;
             
           }
 
         } else {
           print('Libro attualmente non supportato o codice coupon non valido.');
           mostraErrore(context, 'Libro attualmente non supportato o codice coupon non valido.');
+          return false;
         }
       } else {
         //throw Exception('Errore durante la richiesta HTTP');
         mostraErrore(context, 'ERRORE: impossibile inoltrare la richiesta');
+        return false;
       }
 
     }
     else{
       mostraErrore(context, 'Il libro è già presente nella tua libreria');
+      return false;
     }
   });
+  return false;
 }
