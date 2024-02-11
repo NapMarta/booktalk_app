@@ -131,8 +131,8 @@ class _AggiuntaLibroResponsiveState extends State<AggiuntaLibroResponsive> {
                         width: 30,
                       ),
                       Text(
-                        "Titolo",
-                        //loadTitolo(widget.isbn),
+                        //"Titolo",
+                        loadTitolo(widget.isbn),
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
