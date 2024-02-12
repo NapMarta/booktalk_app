@@ -41,8 +41,11 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
   @override
   void initState() {
     super.initState();
-    loadUserData();
-    _reloadPageAfterDelay();
+    const secondsToDelay = 3;
+    Timer(Duration(seconds: secondsToDelay), () {
+      loadUserData();
+    //_reloadPageAfterDelay();
+    });
   }
 
 
@@ -73,13 +76,13 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
       });
   }
 
-    void _reloadPageAfterDelay() {
+    /*void _reloadPageAfterDelay() {
     const secondsToDelay = 5;
     Timer(Duration(seconds: secondsToDelay), () {
       loadUserData();
       setState(() {}); // Ricarica la pagina aggiornando la UI
     });
-    }
+    }*/
 
 
   // Funzione per caricare i dati dell'utente dalle SharedPreferences
