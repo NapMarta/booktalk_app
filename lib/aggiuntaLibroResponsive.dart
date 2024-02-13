@@ -6,6 +6,35 @@ import 'package:booktalk_app/utils.dart';
 import 'package:booktalk_app/widget/header.dart';
 import 'package:flutter/material.dart';
 
+/*
+void mostraErrore(BuildContext context, String messaggio) {
+  final snackBar = SnackBar(
+    content: Row(
+      children: [
+        Icon(
+          Icons.error_outline,
+          color: Colors.red, // Colore dell'icona
+        ),
+        SizedBox(width: 8), // Spazio tra l'icona e il testo
+        Expanded(
+          child: Text(
+            messaggio,
+            style: TextStyle(
+              color: Colors.red, // Colore del testo
+              fontWeight: FontWeight.bold, // Grassetto
+            ),
+          ),
+        ),
+      ],
+    ),
+    backgroundColor: Colors.white, // Colore di sfondo
+    duration: Duration(seconds: 3), // Durata del messaggio
+  );
+
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+}
+*/
+
 class AggiuntaLibroResponsive extends StatefulWidget {
   final String isbn;
   const AggiuntaLibroResponsive({
@@ -185,14 +214,19 @@ class _AggiuntaLibroResponsiveState extends State<AggiuntaLibroResponsive> {
                       verificaCoupon(widget.isbn, coupon, context)
                           .then((value) {
                         //Navigator.of(context).pop();
-                        //modificaOK(context, value);
-                        if (value == "OK") {
+                        if(value == "Il libro è supportato e il codice coupon è valido."){
+                          modificaOK(context, value);
+                        } else{
+                          mostraErrore(context, value);
+                        }
+                        
+                        /*if (value == "OK") {
                           modificaOK(context,
                               'Il libro è supportato e il codice coupon è valido.');
                         } else if (value == "No coupon") {
                           mostraErrore(context,
                               'Libro attualmente non supportato o codice coupon non valido.');
-                        }
+                        }*/
                         Navigator.of(context)
                             .popUntil((route) => route.isFirst);
                         Navigator.of(context).pushReplacement(
