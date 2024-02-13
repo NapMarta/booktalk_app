@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:booktalk_app/business_logic/registrazioneService.dart';
@@ -186,7 +187,10 @@ class Registrazione implements RegistrazioneService{
         utente.password= hashedPassword;
         await _preferences.remove('utente');
         await _preferences.setString('utente', json.encode(utente.toJson()));
-        print("success modifica");
+        const secondsToDelay = 5;
+        Timer(Duration(seconds: secondsToDelay), () {
+          print("success modifica");
+        });
         return {'success': 'Modifica della foto profilo avvenuta con successo.'};
       }
 
