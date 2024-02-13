@@ -453,8 +453,7 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
     Future<Uint8List> _imageBytes = _selectedImage.readAsBytes();
     _imageBytes.then((value) {
       utente.then((valueUtente) async {
-        valueUtente?.foto = value;
-        
+        valueUtente?.foto = value;        
         RegistrazioneService registrazione = Registrazione('http://130.61.22.178:9000');
         final risultato = await registrazione.modificaFotoUtente(valueUtente!);
         

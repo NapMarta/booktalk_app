@@ -81,7 +81,7 @@ class _HeaderState extends State<Header> {
                 if(Navigator.of(context).canPop()){ // controlla che c'è la pagina indietro
                    Navigator.of(context).pop(); // Torna indietro alla schermata precedente
                 }else{
-                  Navigator.of(context).push(
+                  Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (context) => HomepageResponsitive(),
                     ),
@@ -158,6 +158,7 @@ class _HeaderState extends State<Header> {
                             icon: Image.memory(snapshot.data!),
                             //iconSize: 2, // Modifica la dimensione dell'icona secondo le tue esigenze
                             onPressed: () {
+                              Navigator.of(context).pop();
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (context) => ProfiloResponsitive(),
