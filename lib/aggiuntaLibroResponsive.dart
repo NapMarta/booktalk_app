@@ -4,6 +4,7 @@ import 'package:booktalk_app/gestioneCoupon.dart';
 import 'package:booktalk_app/homepageResponsive.dart';
 import 'package:booktalk_app/main.dart';
 import 'package:booktalk_app/utils.dart';
+import 'package:booktalk_app/widget/ErrorAlertPageISBN.dart';
 import 'package:booktalk_app/widget/header.dart';
 import 'package:flutter/material.dart';
 
@@ -194,22 +195,44 @@ class _AggiuntaLibroResponsiveState extends State<AggiuntaLibroResponsive> {
                     ),
                     keyboardType: TextInputType.name,
                     autofocus: true,
-                    onFieldSubmitted: (value) async {                      
-                      await verificaCoupon("9788866565062", value, context);/*.then((value) {
+                    onFieldSubmitted: (coupon) async {                      
+                      //Future<String> s = 
+                      verificaCoupon(widget.isbn, coupon, context).then((value) {
                         //Navigator.of(context).pop();
-                        Navigator.of(context).push(       
+                        //modificaOK(context, value);
+                        if(value == "OK"){
+                          modificaOK(context, 'Il libro è supportato e il codice coupon è valido.');
+                        }
+                        Navigator.of(context).popUntil((route) => route.isFirst);
+                        Navigator.of(context).pushReplacement(       
                           MaterialPageRoute(         
                             builder: (context) => HomepageResponsitive(),       
                             ),     
                           );
-                      });*/
-                      Navigator.of(context).popUntil((route) => route.isFirst);
+                      });
+                      /*
+                      FutureBuilder<String>(
+                        future: verificaCoupon(widget.isbn, value, context),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            return CircularProgressIndicator();
+                          }else if(snapshot.connectionState == ConnectionState.done){
+                            modificaOK(context, snapshot.data!);
+                            return HomepageResponsitive();
+                            
+                            /*Navigator.of(context).popUntil((route) => route.isFirst);
 
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (context) => HomepageResponsitive(),
-                        ),
-                      ); 
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (context) => HomepageResponsitive(),
+                              ),
+                            ); */
+                          }else{
+                            return ErrorAlertPageIsbn(text: "Errore! Prova a reinserire l'ISBN.");
+                          }
+                        }, 
+                      );
+                      */
                       
                       /*
                       Navigator.push(

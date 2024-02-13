@@ -101,11 +101,11 @@ class _GetIsbnState extends State<GetIsbn> {
           if (isbn.data == null)
             return ErrorAlertPageIsbn(text: "Errore. ISBN non inserito");
           else{
-            //if(isbn.data == "8806134965" || isbn.data == "8886113277" || isbn.data == "9788866565062" || isbn.data == "9781070658773" || isbn.data == "8879835629" || isbn.data == "8811584043" || isbn.data == "9788817107488")
-              //return AggiuntaLibroResponsive(isbn: isbn.data as String);
-              return AggiuntaLibroResponsive(isbn: "9788866565062");
-            //else
-              //return ErrorAlertPageIsbn(text: "L'ISBN inserito non è valido.");
+            if(isbn.data == "8806134965" || isbn.data == "8886113277" || isbn.data == "9788866565062" || isbn.data == "9781070658773" || isbn.data == "8879835629" || isbn.data == "8811584043" || isbn.data == "9788817107488")
+              return AggiuntaLibroResponsive(isbn: isbn.data as String);
+              //return AggiuntaLibroResponsive(isbn: "9788866565062");
+            else
+              return ErrorAlertPageIsbn(text: "L'ISBN inserito non è valido.");
 
             /*
             LibroDao dao = LibroDao('http://130.61.22.178:9000');

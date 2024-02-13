@@ -81,71 +81,88 @@ void mostraErrore(BuildContext context, String messaggio) {
     return true;
   }
 
-Future<bool> verificaCoupon(String isbn, String coupon, BuildContext context) async {
+Future<String> verificaCoupon(String isbn, String coupon, BuildContext context) async {
   WidgetsFlutterBinding.ensureInitialized();
 
   int idUtente = 0;
+  String s = "OK";
   
 
   //Prendere i parametri isbn e coupon da quelli che ha inserito l'utente
   //String isbn = '8806134965';
   //String coupon = 'A45DF3';
-
+  
   Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => CaricamentoResponsive(text: "Aggiornamento dei dati in corso...")
-                        ),
-                      );
+    MaterialPageRoute(
+      builder: (context) => CaricamentoResponsive(text: "Aggiornamento dei dati in corso...")
+    ),
+  );
 
   Future<bool> checkAutorizzazione = checkAutorizzazioneInLibreria(isbn);
-  checkAutorizzazione.then((value) async {
+  checkAutorizzazione.then((value) {
     if(value){
       final url = 'http://130.61.22.178:9000/verificaCoupon';
 
-      final response = await http.post(Uri.parse(url),
-          headers: {'Content-Type': 'application/json'},
-          body: jsonEncode({'isbn': isbn, 'coupon': coupon}));
-
-      if (response.statusCode == 200) {
+      http.post(Uri.parse(url),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'isbn': isbn, 'coupon': coupon})).then((response) async {
+            if (response.statusCode == 200) {
         
-        final data = jsonDecode(response.body);
-        if (data['result']) {
-          print('Il libro è supportato e il codice coupon è valido.');
+              final data = jsonDecode(response.body);
+              if (data['result']) {
+                print('Il libro è supportato e il codice coupon è valido.');
+                //s = "Il libro è supportato e il codice coupon è valido.";
+                //modificaOK(context, 'Il libro è supportato e il codice coupon è valido.');
 
-          SharedPreferences preferences = await SharedPreferences.getInstance();
-          String utenteJson = preferences.getString('utente') ?? '';
-          if (utenteJson.isNotEmpty) {
-            Map<String, dynamic> utenteMap = json.decode(utenteJson);
-            idUtente = int.parse(utenteMap['ID'].toString());
-            GestioneAutorizzazioniService service = GestioneAutorizzazioni();
-            
-            await service.addAutorizzazione(isbn, idUtente, preferences);
-            modificaOK(context, 'Il libro è supportato e il codice coupon è valido.');
-            return true;
+                SharedPreferences preferences = await SharedPreferences.getInstance();
+                String utenteJson = preferences.getString('utente') ?? '';
+                if (utenteJson.isNotEmpty) {
+                  Map<String, dynamic> utenteMap = json.decode(utenteJson);
+                  idUtente = int.parse(utenteMap['ID'].toString());
+                  GestioneAutorizzazioniService service = GestioneAutorizzazioni();
+                  
+
+                  service.addAutorizzazione(isbn, idUtente, preferences).then((value) {
+                    print("Tutto ok");
+                    return 'Il libro è supportato e il codice coupon è valido.';
+                  });
+                  
+                  
+                } else {
+                  s = "ERRORE: impossibile inoltrare la richiesta!";
+                  print("ERRORE: utente non trovato");
+                  mostraErrore(context, 'ERRORE: utente non trovato');
+                  print("no utente");
+                  //return 'ERRORE: utente non trovato';
+                  
+                }
+
+              } else {
+                s = "Libro attualmente non supportato o codice coupon non valido.";
+                print('Libro attualmente non supportato o codice coupon non valido.');
+                mostraErrore(context, 'Libro attualmente non supportato o codice coupon non valido.');
+                print("no codice");
+                //return "Libro attualmente non supportato o codice coupon non valido.";
+              }
+            } else {
+              s = "ERRORE: impossibile inoltrare la richiesta!";
+              //throw Exception('Errore durante la richiesta HTTP');
+              mostraErrore(context, 'ERRORE: impossibile inoltrare la richiesta');
+              print("richiesta1");
+              //return 'ERRORE: impossibile inoltrare la richiesta';
+            }
           }
-          else{
-            print("ERRORE: utente non trovato");
-            mostraErrore(context, 'ERRORE: utente non trovato');
-            return false;
-            
-          }
+        );
 
-        } else {
-          print('Libro attualmente non supportato o codice coupon non valido.');
-          mostraErrore(context, 'Libro attualmente non supportato o codice coupon non valido.');
-          return false;
-        }
-      } else {
-        //throw Exception('Errore durante la richiesta HTTP');
-        mostraErrore(context, 'ERRORE: impossibile inoltrare la richiesta');
-        return false;
-      }
+      
 
-    }
-    else{
+    } else {
+      s = "Il libro è già presente nella tua libreria!";
       mostraErrore(context, 'Il libro è già presente nella tua libreria');
-      return false;
+      print("libro già presente");
+      //return 'Il libro è già presente nella tua libreria';
     }
   });
-  return false;
+  print("richiesta2");
+  return s;
 }
