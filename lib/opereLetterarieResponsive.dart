@@ -180,7 +180,7 @@ class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
     //await chatPDF.uploadPDF("Infinito/1.pdf");
 
     // ANALISI DELL'OPERA
-    analisi = await chatPDF.askChatPDF2("Fammi una analisi");
+    analisi = await chatPDF.askChatPDF2("Fammi un riassunto");
     print(analisi);
   
   if(((analisi.contains("L'infinito") || analisi.contains("\"L'infinito\"")) && widget.libro.isbn == '9788866565062') || ((analisi.contains("A Zacinto") || analisi.contains("\"A Zacinto\"") || analisi.contains("Alla sera") || analisi.contains("\"Alla sera\"")) && widget.libro.isbn == '9788728429044') ){
@@ -313,7 +313,7 @@ class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
                     FutureBuilder(
                       future: loadPdf(), 
                       builder: (context, snapshot) {
-                      if (isOperainLibro){
+                      //if (isOperainLibro){
 
                         if (snapshot.connectionState == ConnectionState.done) {
                             return Column(
@@ -409,12 +409,13 @@ class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
                         }else {
                           return Text('Errore: ${snapshot.error}');
                         } 
-                      }
+                      
+                      /*}
                       else{
                         return Column(
                           children: []
                         );
-                      }
+                      }*/
                       }
                     ),
 
