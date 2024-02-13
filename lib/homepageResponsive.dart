@@ -9,7 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'dart:async' show Future, Timer;
+import 'dart:async' show Future;
 
 class HomepageResponsitive extends StatefulWidget {
   const HomepageResponsitive({Key? key}) : super(key: key);
