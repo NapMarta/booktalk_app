@@ -404,11 +404,11 @@ class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
                               ],
                             );
                           //}
-                        } else if (snapshot.hasError) {
-                          return Text('Errore: ${snapshot.error}');
-                        } else {
+                        } else if(snapshot.connectionState == ConnectionState.waiting){
                           return CircularProgressIndicator(color: Color(0xFF0097b2),);
-                        }
+                        }else {
+                          return Text('Errore: ${snapshot.error}');
+                        } 
                       }
                       else{
                         return Column(
