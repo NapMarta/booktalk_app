@@ -92,7 +92,7 @@ class Registrazione implements RegistrazioneService{
 
       if (response.containsKey('error')) {
         print(response);
-        return response;
+        return {'error': 'Errore durante la modifica.'};
 
       } else {
         var bytes = utf8.encode(utente.password);
@@ -110,6 +110,7 @@ class Registrazione implements RegistrazioneService{
       return {'error': 'Errore durante la modifica.'};
     }
   }
+
 
   @override
   Future<Map<String, dynamic>> modificaProfiloUtente(Utente utente, bool password) async {
@@ -164,7 +165,38 @@ class Registrazione implements RegistrazioneService{
       return {'error': 'Errore durante la modifica.'};
     }
   }
-  
+
+@override
+  Future<Map<String, dynamic>> modificaFotoUtente(Utente utente) async {
+
+    SharedPreferences _preferences = await SharedPreferences.getInstance();
+
+    try{
+
+      final response = await utenteDao.updateUtenteNoEncode(utente);
+
+      if (response.containsKey('error')) {
+        print(response);
+        return {'error': 'Errore durante la modifica della foto profilo.'};
+
+      } else {
+        var bytes = utf8.encode(utente.password);
+        var hashed = sha256.convert(bytes);
+        String hashedPassword = hashed.toString();
+        utente.password= hashedPassword;
+        await _preferences.remove('utente');
+        await _preferences.setString('utente', json.encode(utente.toJson()));
+        print("success modifica");
+        return {'success': 'Modifica della foto profilo avvenuta con successo.'};
+      }
+
+    } catch (e) {
+
+      print('Errore durante la modifica: $e');
+      return {'error': 'Errore durante la modifica della foto profilo.'};
+      
+    }
+  }
   @override
   Map<String, dynamic> validateParametersModifica(Utente utente, String nome, String cognome, String passwordAttuale, String nuovaPassword) {
     

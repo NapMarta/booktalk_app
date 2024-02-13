@@ -280,6 +280,32 @@ class UtenteDao {
     }
   }
 
+  Future<Map<String, dynamic>> updateFotoUtente(Utente utente) async {
+    try {
+      // Hash the new password before sending it
+
+      final response = await http.put(
+        Uri.parse('$baseUrl/updateFotoUtente'),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({   
+          'foto': utente.foto,
+          'id': utente.id
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        return json.decode(response.body);
+      } else {
+        print('Errore nella chiamata API updateFotoUtente: ${response.statusCode}');
+        print('Dettagli errore: ${response.body}');
+        return {'error': 'Errore nella chiamata API'};
+      }
+    } catch (e) {
+      print('Errore durante la chiamata API updateFotoUtente: $e');
+      return {'error': 'Errore durante la chiamata API'};
+    }
+  }
+
   Future<Map<String, dynamic>> updateProfiloUtente(Utente utente, bool password) async {
 
     try {

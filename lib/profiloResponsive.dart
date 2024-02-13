@@ -456,7 +456,7 @@ class _ProfiloResponsitiveState extends State<ProfiloResponsitive> {
         valueUtente?.foto = value;
         
         RegistrazioneService registrazione = Registrazione('http://130.61.22.178:9000');
-        final risultato = await registrazione.modificaUtenteNoPassword(valueUtente!);
+        final risultato = await registrazione.modificaFotoUtente(valueUtente!);
         if (risultato.containsKey('success')) {
           // Se la modifica è avvenuta con successo
           modificaOK(context, risultato['success']);
