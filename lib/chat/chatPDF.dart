@@ -67,26 +67,8 @@ class ChatPDF {
     );
 
     if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      var sentences = data['chatpdf_response'].split('. ');
-  
-      if (sentences.isNotEmpty && sentences[0].startsWith('Mi dispiace')) {
-        sentences.removeAt(0);
-        sentences.removeAt(1);
-      }
-
-
-      sentences = sentences.join('. ');
-      sentences.replaceAll('Certo', '');
-      sentences.replaceAll('Certo, ', '');
-      sentences.replaceAll('Certamente, ', '');
-      sentences.replaceAll('Certamente', '');
-      sentences.replaceAll('Certamente! ', '');
-      sentences.replaceAll('PDF', 'opera');
-      sentences.replaceAll('PDF.', 'opera');
-      sentences.replaceAll('nel PDF.', 'nell\'opera.');
-      
-      return sentences;
+      final data = jsonDecode(response.body);      
+      return data;
       //return data['chatpdf_response'];
     } else {
       return 'Caricamento fallito';
