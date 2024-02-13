@@ -144,28 +144,36 @@ class _HeaderState extends State<Header> {
                     } else if (snapshot.hasError) {
                       return Text('Error: ${snapshot.error}');
                     } else if (snapshot.hasData && snapshot.data != null) {
-                      return Container(
+                      return  Container(
+                        width: 50,
+                        height: 50,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: Colors.black,
                         ),
                         //padding: EdgeInsets.only(top:0, bottom: 0),
-                        child:ClipOval(
-                          child: Material(
-                            color: Colors.transparent,
+                        child: ClipOval(
+                          child: FittedBox(
+                            fit: BoxFit.contain,
                             child: IconButton(
-                            //padding: EdgeInsets.only(top:0, bottom: 0),
-                            icon: Image.memory(snapshot.data!),
-                            //iconSize: 2, // Modifica la dimensione dell'icona secondo le tue esigenze
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => ProfiloResponsitive(),
-                                ),
-                              );
-                            },
-                          ),
+                              //padding: EdgeInsets.only(top:0, bottom: 0),
+                              icon: Image.memory(
+                                snapshot.data!,
+                                fit: BoxFit.cover,
+                                width: 50,
+                                height: 50,
+                              ),
+                              
+                              //iconSize: 2, // Modifica la dimensione dell'icona secondo le tue esigenze
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => ProfiloResponsitive(),
+                                  ),
+                                );
+                              },
+                            ),
                           ),
                         ),
                       );
