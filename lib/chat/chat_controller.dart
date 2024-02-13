@@ -162,6 +162,8 @@ class ChatController extends ChangeNotifier {
               ),
             ];
             isFirstResponse = false;
+            domande = [];
+            numDomanda = 0;
             isSecondResponse = true;
             isProcessing= false;
             notifyListeners();
@@ -240,12 +242,14 @@ class ChatController extends ChangeNotifier {
           chatList = [
             ...chatList,
             Chat(
-              message: "Fammi la domanda che vuoi",
+              message: "Quante domande vuoi ricevere per la tua ripetizione?",
               type: ChatMessageType.received,
               time: DateTime.now(),
             ),
           ];
           notifyListeners();
+          isSecondResponse = true;
+          messaggioRipetizione = false;
           isProcessing = false;
           return;
         }
@@ -266,7 +270,7 @@ class ChatController extends ChangeNotifier {
         risposta.then((value) {
           value = value.replaceAll('PDF', 'capitolo');
           chatList.removeLast();
-          if (value.startsWith("Mi dispiace") && numDomanda<domandeTot){
+          if (value.startsWith("Mi dispiace") && numDomanda<=domandeTot){
             value= "Prova a scrivere una risposta più completa in modo che possa correggerti.\nPer conoscere la risposta esatta digita 'RISPOSTA'";
             numDomanda--;
           }
@@ -299,7 +303,7 @@ class ChatController extends ChangeNotifier {
               chatList = [
                   ...chatList,
                   Chat(
-                    message: "Hai terminato la ripetizione, hai qualche altra domanda da pormi?",
+                    message: "Hai terminato la ripetizione, vuoi ricevere altre domande per ripetere questo capitolo?",
                     type: ChatMessageType.received,
                     time: DateTime.now(),
                   ),
