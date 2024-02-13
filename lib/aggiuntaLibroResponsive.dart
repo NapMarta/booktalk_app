@@ -10,8 +10,10 @@ import 'package:flutter/material.dart';
 
 class AggiuntaLibroResponsive extends StatefulWidget {
   final String isbn;
-  const AggiuntaLibroResponsive({Key? key, required this.isbn,})
-      : super(key: key);
+  const AggiuntaLibroResponsive({
+    Key? key,
+    required this.isbn,
+  }) : super(key: key);
 
   @override
   _AggiuntaLibroResponsiveState createState() =>
@@ -19,69 +21,50 @@ class AggiuntaLibroResponsive extends StatefulWidget {
 }
 
 class _AggiuntaLibroResponsiveState extends State<AggiuntaLibroResponsive> {
-  
-
   @override
   void initState() {
     super.initState();
   }
 
-  String loadCopertina (String isbn){
-    if (isbn == '9781070658773'){
+  String loadCopertina(String isbn) {
+    if (isbn == '9781070658773') {
       return "assets/copertina1.jpg";
-    }
-    else if (isbn == '8806134965'){
+    } else if (isbn == '8806134965') {
       return "assets/copertina2.jpg";
-    }
-    else if (isbn == '8886113277'){
+    } else if (isbn == '8886113277') {
       return "assets/copertina3.jpg";
-    }
-    else if (isbn == '8879835629'){
+    } else if (isbn == '8879835629') {
       return "assets/copertina4.jpg";
-    }
-    else if (isbn == '8811584043'){
+    } else if (isbn == '8811584043') {
       return "assets/copertina5.jpg";
-    }
-    else if (isbn == '9788866565062'){
+    } else if (isbn == '9788866565062') {
       return "assets/copertina6.jpg";
-    }
-    else if (isbn == '9788817107488'){
+    } else if (isbn == '9788817107488') {
       return "assets/copertina5Maggio.jpg";
-    }
-    else{
+    } else {
       return "assets/image_not_found.jpg";
     }
   }
 
-
-  String loadTitolo (String isbn){
-    if (isbn == '9781070658773'){
+  String loadTitolo(String isbn) {
+    if (isbn == '9781070658773') {
       return "Aforismi, novelle e profezie";
-    }
-    else if (isbn == '8806134965'){
+    } else if (isbn == '8806134965') {
       return "I libri della famiglia";
-    }
-    else if (isbn == '8886113277'){
+    } else if (isbn == '8886113277') {
       return "La fabbrica";
-    }
-    else if (isbn == '8879835629'){
+    } else if (isbn == '8879835629') {
       return "Novelle per un anno";
-    }
-    else if (isbn == '8811584043'){
+    } else if (isbn == '8811584043') {
       return "Senso e Nuove Storielle Vane";
-    }
-    else if (isbn == '9788866565062'){
+    } else if (isbn == '9788866565062') {
       return "L'infinito";
-    }
-    else if (isbn == '9788817107488'){
+    } else if (isbn == '9788817107488') {
       return "Il Cinque Maggio";
-    }
-    else{
+    } else {
       return "";
     }
   }
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -195,20 +178,26 @@ class _AggiuntaLibroResponsiveState extends State<AggiuntaLibroResponsive> {
                     ),
                     keyboardType: TextInputType.name,
                     autofocus: true,
-                    onFieldSubmitted: (coupon) async {                      
-                      //Future<String> s = 
-                      verificaCoupon(widget.isbn, coupon, context).then((value) {
+                    onFieldSubmitted: (coupon) async {
+                      //Future<String> s =
+                      verificaCoupon(widget.isbn, coupon, context)
+                          .then((value) {
                         //Navigator.of(context).pop();
                         //modificaOK(context, value);
-                        if(value == "OK"){
-                          modificaOK(context, 'Il libro è supportato e il codice coupon è valido.');
+                        if (value == "OK") {
+                          modificaOK(context,
+                              'Il libro è supportato e il codice coupon è valido.');
+                        } else if (value == "No coupon") {
+                          mostraErrore(context,
+                              'Libro attualmente non supportato o codice coupon non valido.');
                         }
-                        Navigator.of(context).popUntil((route) => route.isFirst);
-                        Navigator.of(context).pushReplacement(       
-                          MaterialPageRoute(         
-                            builder: (context) => HomepageResponsitive(),       
-                            ),     
-                          );
+                        Navigator.of(context)
+                            .popUntil((route) => route.isFirst);
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => HomepageResponsitive(),
+                          ),
+                        );
                       });
                       /*
                       FutureBuilder<String>(
@@ -233,7 +222,7 @@ class _AggiuntaLibroResponsiveState extends State<AggiuntaLibroResponsive> {
                         }, 
                       );
                       */
-                      
+
                       /*
                       Navigator.push(
                         context,
