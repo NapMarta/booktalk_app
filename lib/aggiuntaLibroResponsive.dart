@@ -39,6 +39,8 @@ class _AggiuntaLibroResponsiveState extends State<AggiuntaLibroResponsive> {
       return "assets/copertina6.jpg";
     } else if (isbn == '9788817107488') {
       return "assets/copertina5Maggio.jpg";
+    } else if (isbn == '9788728429044'){
+      return "assets/copertina8.jpeg";
     } else {
       return "assets/image_not_found.jpg";
     }
@@ -59,6 +61,8 @@ class _AggiuntaLibroResponsiveState extends State<AggiuntaLibroResponsive> {
       return "L'infinito";
     } else if (isbn == '9788817107488') {
       return "Il Cinque Maggio";
+    } else if (isbn == '9788728429044'){
+      return "Sonetti";
     } else {
       return "";
     }

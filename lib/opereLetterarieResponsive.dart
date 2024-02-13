@@ -183,7 +183,7 @@ class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
     analisi = await chatPDF.askChatPDF2("Fammi un riassunto approfondito o un'analisi dell'opera contenuta in questo PDF");
     print(analisi);
   
-  if((analisi.contains("L'infinito") && widget.libro.isbn == '9788866565062') || (analisi.contains("cinque maggio") && widget.libro.isbn == '9788817107488') ){
+  if((analisi.contains("L'infinito") && widget.libro.isbn == '9788866565062') || ((analisi.contains("A Zacinto") || analisi.contains("Alla sera")) && widget.libro.isbn == '9788728429044') ){
 
     print("L'opera letteraria è nel libro");
     
