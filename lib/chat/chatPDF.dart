@@ -24,7 +24,7 @@ class ChatPDF {
     }
   }
 
-   Future<bool> uploadPDFOpera() async {
+  Future<bool> uploadPDFOpera() async {
     
     final apiEndpoint = 'http://130.61.22.178:9000/uploadPDF/./output.pdf';
     final response = await http.post(      
@@ -68,8 +68,8 @@ class ChatPDF {
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);      
-      return data;
-      //return data['chatpdf_response'];
+      //return data;
+      return data['chatpdf_response'];
     } else {
       return 'Caricamento fallito';
     }

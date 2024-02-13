@@ -337,7 +337,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
       // Ritarda la navigazione per evitare il blocco dell'interfaccia utente
       Future.delayed(Duration(seconds: 2), () {
         //Navigator.pop(context);
-        Navigator.of(context).push(
+        Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) => OpereLetterarieResponsive(
               selectedImageOpera: value,

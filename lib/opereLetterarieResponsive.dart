@@ -181,44 +181,46 @@ class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> {
 
     // ANALISI DELL'OPERA
     analisi = await chatPDF.askChatPDF2("Fammi un riassunto");
+    
+    print("ISBN " + widget.libro.isbn);
     print(analisi);
   
   if(((analisi.contains("L'infinito") || analisi.contains("\"L'infinito\"")) && widget.libro.isbn == '9788866565062') || ((analisi.contains("A Zacinto") || analisi.contains("\"A Zacinto\"") || analisi.contains("Alla sera") || analisi.contains("\"Alla sera\"")) && widget.libro.isbn == '9788728429044') ){
-    List<String> sentences = analisi.split('. ');
+    /* List<String> sentences = analisi.split('. ');
     if (analisi.isNotEmpty && analisi[0].startsWith('Mi dispiace')) {
         sentences.removeAt(0);
         sentences.remove(1);
     }
-    analisi = sentences.join('. ');
-    analisi.replaceAll('Certo', '');
+    analisi = sentences.join('. '); */
+    /* analisi.replaceAll('Certo', '');
     analisi.replaceAll('Certo, ', '');
     analisi.replaceAll('Certamente, ', '');
     analisi.replaceAll('Certamente', '');
     analisi.replaceAll('Certamente! ', '');
     analisi.replaceAll('PDF', 'opera');
     analisi.replaceAll('PDF.', 'opera');
-    analisi.replaceAll('nel PDF.', 'nell\'opera.');
+    analisi.replaceAll('nel PDF.', 'nell\'opera.'); */
 
     print("L'opera letteraria è nel libro");
     
     //INFO AUTORE
     autore = await chatPDF.askChatPDF2("Dammi informazioni sull'autore");
     print(autore);
-    sentences = autore.split('. ');
+    /* sentences = autore.split('. ');
 
     if (autore.isNotEmpty && autore[0].startsWith('Mi dispiace')) {
         sentences.removeAt(0);
         sentences.remove(1);
     }
-    autore = sentences.join('. ');
-    autore.replaceAll('Certo', '');
+    autore = sentences.join('. '); */
+    /* autore.replaceAll('Certo', '');
     autore.replaceAll('Certo, ', '');
     autore.replaceAll('Certamente, ', '');
     autore.replaceAll('Certamente', '');
     autore.replaceAll('Certamente! ', '');
     autore.replaceAll('PDF', 'opera');
     autore.replaceAll('PDF.', 'opera');
-    autore.replaceAll('nel PDF.', 'nell\'opera.');
+    autore.replaceAll('nel PDF.', 'nell\'opera.'); */
     
     isOperainLibro = true;
     return true;
