@@ -52,8 +52,11 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
     // varaiabile per lo slide-up
     //final panelController = PanelController();
     //var slide = _WidgetSlideUpState(mediaQueryData.size.width, mediaQueryData.size.height, panelController);
-
-    return SafeArea(
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
+      },
+    child: SafeArea(
       // settaggio dei bordi da considerare del telefono
       left: true,
       right: true,
@@ -200,6 +203,7 @@ class _HomepageResponsitiveState extends State<HomepageResponsitive> {
           ),
         ),
       ),
+    ),
     );
   }
 
