@@ -7,6 +7,7 @@ import 'dart:ui';
 import 'package:booktalk_app/caricamentoResponsive.dart';
 import 'package:booktalk_app/chatResponsive.dart';
 import 'package:booktalk_app/getISBN.dart';
+import 'package:booktalk_app/opera.dart';
 import 'package:booktalk_app/opereLetterarieResponsive.dart';
 import 'package:booktalk_app/storage/libreriaDAO.dart';
 import 'package:booktalk_app/storage/libro.dart';
@@ -327,6 +328,25 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
       _selectedImageOpera = File(image!.path);
     });*/
 
+    /*
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => CaricamentoResponsive(text: "Caricamento in corso..."),
+      )
+    );*/
+
+    final _selectedImageOpera = File(image!.path);
+    setState(() {
+      
+    });
+
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) => Opera(selectedImageOpera: _selectedImageOpera, libro: libro),
+      ),
+    );
+
+    /*
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => CaricamentoResponsive(text: "Caricamento in corso..."),
@@ -358,7 +378,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
       });
     });
 
-    
+    */
   }
 
 
