@@ -72,7 +72,7 @@ class _EspressioniResponsiveState extends State<EspressioniResponsive> {
                                 ? "Equazione"
                                 : (index == widget.step.length - 1)
                                     ? "Risultato"
-                                    : "Step ${index + 2}",
+                                    : "Step ${index}",
                             style: TextStyle(
                               color: Color(0xFFf0bc5e),
                               fontSize: 12,
