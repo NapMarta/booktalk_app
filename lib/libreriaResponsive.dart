@@ -279,7 +279,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
     // Simulate an operation that could be blocking
     await Future.delayed(Duration(seconds: 2));
     // Execute the file creation operation on a separate thread
-    return File(imagePath);
+    return await File(imagePath);
   }
 
   Future<void> getImageFromCameraISBN() async {
@@ -327,20 +327,24 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
     /*setState(() {
       _selectedImageOpera = File(image!.path);
     });*/
-
     /*
+    loadSelectedImage(image.path).then((File value) {
+    });*/
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => CaricamentoResponsive(text: "Caricamento in corso..."),
       )
-    );*/
+    );
 
-    final _selectedImageOpera = File(image!.path);
+    print("aaa");
+    final _selectedImageOpera = await File(image!.path);
     setState(() {
       
     });
 
-    Navigator.of(context).pushReplacement(
+    print("bbb");
+    Navigator.of(context).pop();
+    Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => Opera(selectedImageOpera: _selectedImageOpera, libro: libro),
       ),

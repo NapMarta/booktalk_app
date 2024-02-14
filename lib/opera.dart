@@ -5,6 +5,8 @@ import 'package:booktalk_app/caricamentoResponsive.dart';
 import 'package:booktalk_app/opereLetterarieResponsive.dart';
 import 'package:booktalk_app/storage/libro.dart';
 import 'package:booktalk_app/widget/ErrorAlertPage.dart';
+import 'package:booktalk_app/widget/ErrorAlertPageISBN.dart';
+import 'package:booktalk_app/widget/ErrorAlertPageOpera.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:image/image.dart' as Img;
@@ -52,7 +54,7 @@ Future<List<String>> loadPdf(File selectedImageOpera, Libro libro) async {
   );*/
   //mostraErrore(context, "Errore. L'opera scannerizzata non è contenuta nel libro selezionato");
   //isOperainLibro = false;
-  return list;
+    return [];
   }
 
   // CONVERSIONE in PDF
@@ -75,7 +77,7 @@ Future<List<String>> loadPdf(File selectedImageOpera, Libro libro) async {
         );*/
         //mostraErrore(context, "Errore. L'opera scannerizzata non è contenuta nel libro selezionato");
         //isOperainLibro=false;
-        return list;
+        return [];
     }
   } catch (e) {
     print('Error: $e');
@@ -86,7 +88,7 @@ Future<List<String>> loadPdf(File selectedImageOpera, Libro libro) async {
     );*/
     //mostraErrore(context, "Errore. L'opera scannerizzata non è contenuta nel libro selezionato");
     //isOperainLibro = false;
-    return list;
+    return [];
   }
 
   //CARICAMENTO PDF
@@ -150,7 +152,7 @@ if(((analisi.contains("L'infinito") || analisi.contains("\"L'infinito\"")) && li
   );*/
   //mostraErrore(context, "Errore. L'opera scannerizzata non è contenuta nel libro selezionato");
   //isOperainLibro=false;
-  return list;
+  return [];
 }
 
 
@@ -180,7 +182,7 @@ class _OperaState extends State<Opera> {
             Navigator.of(context).pop;
               return MaterialApp(
               title: 'Opera letteraria ed analisi',
-              home: ErrorAlertPage(
+              home: ErrorAlertPageIsbn(
                 text:
                     'Errore! L\'opera non è presente nel libro selezionato!',
               ),
