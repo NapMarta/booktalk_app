@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
 
+import 'package:booktalk_app/caricamenntoImage.dart';
 import 'package:booktalk_app/caricamentoResponsive.dart';
 import 'package:booktalk_app/chatResponsive.dart';
 import 'package:booktalk_app/getISBN.dart';
@@ -31,7 +32,7 @@ class LibreriaResponsive extends StatefulWidget {
 
 class _LibreriaResponsiveState extends State<LibreriaResponsive> {
   //File ? _selectedImageAddLibro;
-  //File ? _selectedImageOpera;
+  File ? _selectedImageOpera;
   late Future<List<Libro>> libreria;
   bool dataLoaded = false;
   int numLibri = 0;
@@ -217,6 +218,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
                                           onTap: () {
                                             if(widget.is2){
                                               getImageFromCameraOpera(libri[index]);
+                                              
                                             }
                                             else if(widget.is3){
                                               Navigator.of(context).push(
@@ -323,13 +325,24 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
   Future getImageFromCameraOpera(Libro libro) async {
     final image = await ImagePicker().pickImage(source: ImageSource.camera);
 
-    if(image == null) return;
+    if(image == null){
+      return;
+    } else {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => CaricamentoImage(image: File(image.path), libro: libro, text: "Analisi dell'opera in corso..."),
+        )
+      );
+    }
+
+
     /*setState(() {
       _selectedImageOpera = File(image!.path);
     });*/
     /*
     loadSelectedImage(image.path).then((File value) {
     });*/
+    /*
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => CaricamentoResponsive(text: "Caricamento in corso..."),
@@ -337,18 +350,18 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
     );
 
     print("aaa");
-    final _selectedImageOpera = await File(image!.path);
+    final _selectedImageOpera = await File(image.path);
     setState(() {
       
     });
 
     print("bbb");
-    Navigator.of(context).pop();
+    //Navigator.of(context).pop();
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => Opera(selectedImageOpera: _selectedImageOpera, libro: libro),
       ),
-    );
+    );*/
 
     /*
     Navigator.of(context).push(
@@ -508,6 +521,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
                                 onTap: () { 
                                   // seconda funzionalità
                                   getImageFromCameraOpera(libro);
+                                  
                                 },
                                 child: Container(
                                   //width: (width*0.5)/2,
