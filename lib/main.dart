@@ -161,7 +161,7 @@ class BookTalkApp extends StatelessWidget {
                 // ------ Pulsante "Registrati" ------
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).push(
+                    Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
                         builder: (context) => RegistrazioneResponsive(),
                       ),
@@ -196,7 +196,7 @@ class BookTalkApp extends StatelessWidget {
                 // ------ Pulsante "Accedi" ------
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).push(
+                    Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
                         builder: (context) => LoginResponsive(),
                       ),

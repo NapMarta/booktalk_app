@@ -78,7 +78,14 @@ class _HeaderState extends State<Header> {
             child:IconButton(
               icon: Icon(Icons.arrow_back_ios_new_rounded, color: Color(0xFF0097b2),), // Icona personalizzata
               onPressed: () {
-                if(Navigator.of(context).canPop()){ // controlla che c'è la pagina indietro
+                if (widget.isProfilo){
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (context) => HomepageResponsitive(),
+                    ),
+                  );
+                }
+                else if(Navigator.of(context).canPop()){ // controlla che c'è la pagina indietro
                    Navigator.of(context).pop(); // Torna indietro alla schermata precedente
                 }else{
                   Navigator.of(context).pushReplacement(
