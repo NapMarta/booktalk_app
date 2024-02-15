@@ -219,7 +219,7 @@ class ChatController extends ChangeNotifier {
         }
       }
       else{
-        if (richiesta == "non lo so" || richiesta == "RISPOSTA"){
+        if (richiesta == "non lo so" || richiesta == "RISPOSTA" || richiesta == "Risposta" || richiesta == "risposta" || richiesta == "boh" || richiesta == "bho" || richiesta == "Boh" || richiesta == "Bho" || richiesta == "non mi ricordo" || richiesta == "Non lo so"){
           if (numDomanda -1 < domande.length)
             richiesta = domande[numDomanda-1];
           else
@@ -238,7 +238,7 @@ class ChatController extends ChangeNotifier {
           isProcessing = false;
           return;
         }
-        else if (richiesta == "si" && messaggioRipetizione){
+        else if ((richiesta == "si" || richiesta == "Si" || richiesta == "Sì" || richiesta == "sì" || richiesta == "SI")&& messaggioRipetizione){
           chatList = [
             ...chatList,
             Chat(
