@@ -415,8 +415,10 @@ class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> w
                           //width: mediaQueryData.size.width * 0.8,
                           color: Colors.grey, // Colore della linea grigia
                         ),
+
                       ],
                     ),
+                    SizedBox(height: 30,),
                   ],
                 ),
               ),
