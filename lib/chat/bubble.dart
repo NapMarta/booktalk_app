@@ -47,13 +47,18 @@ class Bubble extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: crossAlignmentOnType,
                 children: [
-                  chat.message == "Sto elaborando la risposta..."
+                  chat.message == "..."
                     ? DefaultTextStyle(
-                      style: TextStyle(color: textColorOnType),
-                      child: AnimatedTextKit(
-                        animatedTexts:[
-                          TyperAnimatedText(chat.message),
-                        ]))
+                        style: TextStyle(color: textColorOnType),
+                        child: AnimatedTextKit(
+                          animatedTexts:[
+                            TyperAnimatedText(
+                              chat.message,
+                              speed: Duration(milliseconds: 100), // Modifica il valore per rallentare o accelerare l'animazione
+                            ),
+                          ],
+                        ),
+                      )
                     : Text(
                       chat.message,
                       style: TextStyle(color: textColorOnType),
