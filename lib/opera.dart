@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:booktalk_app/caricamentoResponsive.dart';
@@ -167,9 +166,9 @@ if(((analisi.contains("L'infinito") || analisi.contains("\"L'infinito\"")) && li
 
 
 class Opera extends StatefulWidget {
-  final File? selectedImageOpera;
+  //final File? selectedImageOpera;
   final Libro libro;
-  const Opera({Key? key, this.selectedImageOpera, required this.libro}) : super(key: key);
+  const Opera({Key? key,  required this.libro}) : super(key: key);
 
   @override
   _OperaState createState() => _OperaState();
