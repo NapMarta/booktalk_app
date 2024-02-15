@@ -270,7 +270,7 @@ class ChatController extends ChangeNotifier {
         risposta.then((value) {
           value = value.replaceAll('PDF', 'capitolo');
           chatList.removeLast();
-          if (value.startsWith("Mi dispiace") && numDomanda<=domandeTot){
+          if (value.startsWith("Mi dispiace") && numDomanda < domandeTot){
             value= "Prova a scrivere una risposta più completa in modo che possa correggerti.\nPer conoscere la risposta esatta digita 'RISPOSTA'";
             numDomanda--;
           }
