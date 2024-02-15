@@ -376,8 +376,11 @@ Widget _NumberCardWidget(int index, Uint8List copertina, var mediaQueryData) {
             ),
             ClipRRect(
               borderRadius: BorderRadius.circular(6.0),
-              child: Image.memory(copertina,
+              child: Image.memory(
+                copertina,
                 width: isTablet(mediaQueryData) ? 100 : 80,
+                height: isTablet(mediaQueryData) ? 150 : 130,
+                fit: BoxFit.fill,
               ),
             ),
           ],
