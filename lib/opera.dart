@@ -4,23 +4,31 @@ import 'dart:typed_data';
 import 'package:booktalk_app/caricamentoResponsive.dart';
 import 'package:booktalk_app/opereLetterarieResponsive.dart';
 import 'package:booktalk_app/storage/libro.dart';
-import 'package:booktalk_app/widget/ErrorAlertPage.dart';
 import 'package:booktalk_app/widget/ErrorAlertPageISBN.dart';
-import 'package:booktalk_app/widget/ErrorAlertPageOpera.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:image/image.dart' as Img;
 import 'package:http/http.dart' as http;
 import 'package:booktalk_app/chat/chatPDF.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 
-Future<List<String>> loadPdf(File selectedImageOpera, Libro libro) async {
+Future<List<String>> loadPdf(Libro libro) async {
 
   // ESTRAZIONE TESTO DA IMMAGINE
   final apiUrl = Uri.parse('http://130.61.22.178:9000/text_detection');
-  Img.Image image = Img.decodeImage(await selectedImageOpera.readAsBytes())!;
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+  String? imageString = preferences.getString('imageOpera');
+
+  if (imageString == null) {
+    return [];
+  }
+
+  Uint8List bytes = base64Decode(imageString);
+  Img.Image image = Img.decodeImage(bytes)!;
   Uint8List imageBytes = Uint8List.fromList(Img.encodePng(image));
+
   String extractedText = "";
   ChatPDF chatPDF = ChatPDF();
   List<String> list = [];
@@ -159,9 +167,9 @@ if(((analisi.contains("L'infinito") || analisi.contains("\"L'infinito\"")) && li
 
 
 class Opera extends StatefulWidget {
-  final File selectedImageOpera;
+  final File? selectedImageOpera;
   final Libro libro;
-  const Opera({Key? key, required this.selectedImageOpera, required this.libro}) : super(key: key);
+  const Opera({Key? key, this.selectedImageOpera, required this.libro}) : super(key: key);
 
   @override
   _OperaState createState() => _OperaState();
@@ -171,7 +179,7 @@ class _OperaState extends State<Opera> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<String>>(
-      future: loadPdf(widget.selectedImageOpera, widget.libro), 
+      future: loadPdf(widget.libro), 
       builder: (context, snapshot) {
       //if (isOperainLibro){
 

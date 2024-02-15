@@ -8,9 +8,7 @@ import 'package:booktalk_app/caricamenntoImage.dart';
 import 'package:booktalk_app/caricamentoResponsive.dart';
 import 'package:booktalk_app/chatResponsive.dart';
 import 'package:booktalk_app/getISBN.dart';
-import 'package:booktalk_app/opera.dart';
-import 'package:booktalk_app/opereLetterarieResponsive.dart';
-import 'package:booktalk_app/storage/libreriaDAO.dart';
+//import 'package:booktalk_app/storage/libreriaDAO.dart';
 import 'package:booktalk_app/storage/libro.dart';
 import 'package:booktalk_app/widget/ErrorAlertPageISBN.dart';
 import 'package:booktalk_app/widget/ExpandableFloatingActionButton.dart';
@@ -32,12 +30,12 @@ class LibreriaResponsive extends StatefulWidget {
 
 class _LibreriaResponsiveState extends State<LibreriaResponsive> {
   //File ? _selectedImageAddLibro;
-  File ? _selectedImageOpera;
+  //File ? _selectedImageOpera;
   late Future<List<Libro>> libreria;
   bool dataLoaded = false;
   int numLibri = 0;
   late int id;
-  LibreriaDao _libreriaDao = LibreriaDao('http://130.61.22.178:9000');
+  //LibreriaDao _libreriaDao = LibreriaDao('http://130.61.22.178:9000');
 
 
   @override
@@ -319,22 +317,32 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
     });
   }
 
-  
 
+  Future<void> getImageFromCameraOpera(Libro libro) async {
 
-  Future getImageFromCameraOpera(Libro libro) async {
+    Navigator.of(context).push(
+        MaterialPageRoute(
+          //builder: (context) => CaricamentoImage(image: File(image.path), libro: libro, text: "Analisi dell'opera in corso..."),
+          builder: (context) => CaricamentoImage(
+            libro: libro,
+            text: "Analisi dell'opera in corso...",
+          ),
+        ),
+      );
+
     final image = await ImagePicker().pickImage(source: ImageSource.camera);
 
-    if(image == null){
+    if (image == null) {
       return;
     } else {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => CaricamentoImage(image: File(image.path), libro: libro, text: "Analisi dell'opera in corso..."),
-        )
-      );
-    }
+      File _selectedImage = File(image.path);
+      Uint8List _imageBytes = await _selectedImage.readAsBytes();
 
+      SharedPreferences _preferences = await SharedPreferences.getInstance();
+      await _preferences.setString('imageOpera', base64Encode(_imageBytes)); 
+
+  }
+}
 
     /*setState(() {
       _selectedImageOpera = File(image!.path);
@@ -396,7 +404,6 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
     });
 
     */
-  }
 
 
 

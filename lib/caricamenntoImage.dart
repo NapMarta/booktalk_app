@@ -7,10 +7,10 @@ import 'package:flutter/material.dart';
 
 class CaricamentoImage extends StatefulWidget {
   final String text;
-  final File image;
+  final File? image;
   final Libro libro;
 
-  const CaricamentoImage({Key? key, required this.text, required this.image, required this.libro}) : super(key: key);
+  const CaricamentoImage({Key? key, required this.text, this.image, required this.libro}) : super(key: key);
 
   @override
   _CaricamentoImageState createState() => _CaricamentoImageState();
@@ -71,7 +71,7 @@ class _CaricamentoImageState extends State<CaricamentoImage> {
         } else if (snapshot.hasError) {
           return Center(child: Text('Errore durante il caricamento'));
         } else {
-          return Opera(selectedImageOpera: widget.image, libro: widget.libro);
+          return Opera(libro: widget.libro);
         }
       },
     );
@@ -79,7 +79,7 @@ class _CaricamentoImageState extends State<CaricamentoImage> {
 
   Future<void> _processImage() async {
     // Simula un'elaborazione asincrona dell'immagine
-    await Future.delayed(Duration(seconds: 3));
+    //await Future.delayed(Duration(seconds: 3));
     // Esegui qui eventuali operazioni sull'immagine, ad esempio caricamento su server
   }
 }

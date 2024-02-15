@@ -4,7 +4,8 @@
     <application
         android:label="BookTalk"
         android:name="${applicationName}"
-        android:icon="@mipmap/booktalk">
+        android:icon="@mipmap/booktalk"
+        android:enableOnBackInvokedCallback="true">
         <activity
             android:name=".MainActivity"
             android:exported="true"

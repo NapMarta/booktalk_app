@@ -1,16 +1,13 @@
-import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:booktalk_app/business_logic/monitoraggioStatistiche.dart';
-import 'package:booktalk_app/chat/chatPDF.dart';
 import 'package:booktalk_app/storage/libro.dart';
 import 'package:booktalk_app/utils.dart';
 //import 'package:booktalk_app/widget/ErrorAlertPageOpera.dart';
 import 'package:booktalk_app/widget/header.dart';
 import 'package:flutter/material.dart';
-import 'package:image/image.dart' as Img;
-import 'package:http/http.dart' as http;
+//import 'package:image/image.dart' as Img;
+//import 'package:http/http.dart' as http;
 
 
     
