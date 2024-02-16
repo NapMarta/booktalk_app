@@ -166,7 +166,7 @@ class _OpereLetterarieResponsiveState extends State<OpereLetterarieResponsive> w
                     ),*/
                     
                     Text(
-                      "L\'opera selezionata è contenuta nel seguente libro", 
+                      "L\'opera è contenuta nel seguente libro", 
                       style: TextStyle(fontSize: 18, 
                                         fontWeight: FontWeight.bold,), 
                       textAlign: TextAlign.center,
