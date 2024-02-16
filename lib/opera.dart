@@ -182,7 +182,12 @@ class _OperaState extends State<Opera> {
       builder: (context, snapshot) {
       //if (isOperainLibro){
 
-        if (snapshot.connectionState == ConnectionState.done) {
+        if(snapshot.connectionState == ConnectionState.waiting){
+
+            return CaricamentoResponsive(text: "Analisi dell'opera in corso...");
+
+        } else if (snapshot.connectionState == ConnectionState.done) {
+
           List<String> list = snapshot.data as List<String>;
 
           if(list.isEmpty){
@@ -194,11 +199,23 @@ class _OperaState extends State<Opera> {
                     'Errore! L\'opera non è presente nel libro selezionato!',
               ),
             );
+
           }else {
+
               return OpereLetterarieResponsive(lista: list, libro: widget.libro);
+
             }
-          } else {
-            return CaricamentoResponsive(text: "Analisi dell'opera in corso...");
+          }else{
+
+            Navigator.of(context).pop;
+              return MaterialApp(
+              title: 'Opera letteraria ed analisi',
+              home: ErrorAlertPageIsbn(
+                text:
+                    'Errore! L\'opera non è presente nel libro selezionato!',
+              ),
+            );
+            
           }
         
       }

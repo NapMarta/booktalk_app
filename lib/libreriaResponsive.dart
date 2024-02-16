@@ -339,6 +339,12 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
         ),
       );*/
 
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => CaricamentoResponsive(text: "Caricamento in corso..."),
+        )
+      );
+
     final image = await ImagePicker().pickImage(source: ImageSource.camera);
 
     if (image == null) {
@@ -346,13 +352,6 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
     } else {
       File _selectedImage = File(image.path);
 
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => CaricamentoResponsive(text: "Caricamento in corso..."),
-        )
-      );
-
-      
       load(_selectedImage).then((value){
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
