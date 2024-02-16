@@ -8,6 +8,7 @@ import 'package:booktalk_app/caricamenntoImage.dart';
 import 'package:booktalk_app/caricamentoResponsive.dart';
 import 'package:booktalk_app/chatResponsive.dart';
 import 'package:booktalk_app/getISBN.dart';
+import 'package:booktalk_app/opera.dart';
 //import 'package:booktalk_app/storage/libreriaDAO.dart';
 import 'package:booktalk_app/storage/libro.dart';
 import 'package:booktalk_app/widget/ErrorAlertPageISBN.dart';
@@ -317,18 +318,26 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
     });
   }
 
+  Future load(final _selectedImage) async {
+    Uint8List _imageBytes = await _selectedImage.readAsBytes();
+
+    SharedPreferences _preferences = await SharedPreferences.getInstance();
+    await _preferences.setString('imageOpera', base64Encode(_imageBytes)); 
+  }
+
 
   Future<void> getImageFromCameraOpera(Libro libro) async {
 
+    /*
     Navigator.of(context).push(
         MaterialPageRoute(
           //builder: (context) => CaricamentoImage(image: File(image.path), libro: libro, text: "Analisi dell'opera in corso..."),
           builder: (context) => CaricamentoImage(
             libro: libro,
-            text: "Analisi dell'opera in corso...",
+            text: "...",
           ),
         ),
-      );
+      );*/
 
     final image = await ImagePicker().pickImage(source: ImageSource.camera);
 
@@ -336,10 +345,21 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
       return;
     } else {
       File _selectedImage = File(image.path);
-      Uint8List _imageBytes = await _selectedImage.readAsBytes();
 
-      SharedPreferences _preferences = await SharedPreferences.getInstance();
-      await _preferences.setString('imageOpera', base64Encode(_imageBytes)); 
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => CaricamentoResponsive(text: "Caricamento in corso..."),
+        )
+      );
+
+      
+      load(_selectedImage).then((value){
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => Opera(libro: libro),
+          ),
+        );
+      });
 
   }
 }
