@@ -219,7 +219,7 @@ class ChatController extends ChangeNotifier {
         }
       }
       else{
-        if (richiesta == "non lo so" || richiesta == "RISPOSTA" || richiesta == "Risposta" || richiesta == "risposta" || richiesta == "boh" || richiesta == "bho" || richiesta == "Boh" || richiesta == "Bho" || richiesta == "non mi ricordo" || richiesta == "Non lo so"){
+        if (richiesta.contains("non lo so")|| richiesta.contains("RISPOSTA") || richiesta.contains("Risposta") || richiesta.contains("risposta") || richiesta.contains("boh") || richiesta.contains("bho") || richiesta.contains("Boh") || richiesta.contains("Bho") || richiesta.contains("non mi ricordo") || richiesta.contains("Non lo so")){
           if (numDomanda -1 < domande.length)
             richiesta = domande[numDomanda-1];
           else
