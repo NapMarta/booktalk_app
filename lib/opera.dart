@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:booktalk_app/caricamentoResponsive.dart';
@@ -17,14 +18,19 @@ Future<List<String>> loadPdf(Libro libro) async {
 
   // ESTRAZIONE TESTO DA IMMAGINE
   final apiUrl = Uri.parse('http://130.61.22.178:9000/text_detection');
-  SharedPreferences preferences = await SharedPreferences.getInstance();
-  String? imageString = preferences.getString('imageOpera');
+  const secondsToDelay = 3;
+  late String? imageString;
+  late SharedPreferences preferences;
+  Timer(Duration(seconds: secondsToDelay), () async {
+    preferences = await SharedPreferences.getInstance();
+    imageString = preferences.getString('imageOpera');
+  });
 
   if (imageString == null) {
-    return [];
+      return [];
   }
 
-  Uint8List bytes = base64Decode(imageString);
+  Uint8List bytes = base64Decode(imageString!);
   Img.Image image = Img.decodeImage(bytes)!;
   Uint8List imageBytes = Uint8List.fromList(Img.encodePng(image));
 
