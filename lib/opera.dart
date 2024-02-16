@@ -9,18 +9,13 @@ import 'dart:convert';
 import 'package:image/image.dart' as Img;
 import 'package:http/http.dart' as http;
 import 'package:booktalk_app/chat/chatPDF.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 Future<List<String>> loadPdf(Libro libro, String imageString) async {
   final apiUrl = Uri.parse('http://130.61.22.178:9000/text_detection');
   //const secondsToDelay = 3;
 
   //await Future.delayed(Duration(seconds: secondsToDelay));
-
-  if (imageString == null) {
-    return [];
-  }
-
+  
   Uint8List bytes = base64Decode(imageString);
   Img.Image image = Img.decodeImage(bytes)!;
   Uint8List imageBytes = Uint8List.fromList(Img.encodePng(image));

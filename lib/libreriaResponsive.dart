@@ -327,26 +327,29 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
 
 
   Future<void> getImageFromCameraOpera(Libro libro, BuildContext context) async {
-  Navigator.of(context).push(
-    MaterialPageRoute(
-      builder: (context) => CaricamentoResponsive(text: "Caricamento in corso..."),
-    ),
-  );
 
-  final image = await ImagePicker().pickImage(source: ImageSource.camera);
-
-  if (image == null) {
-    return;
-  } else {
-    String imageString = base64Encode(File(image.path).readAsBytesSync()); // Converti l'immagine in una stringa base64
-
-    Navigator.of(context).pushReplacement(
+    Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => Opera(libro: libro, imageString: imageString),
+        builder: (context) => CaricamentoResponsive(text: "Caricamento in corso..."),
       ),
     );
+
+    Future<XFile?> image = ImagePicker().pickImage(source: ImageSource.camera);
+
+    image.then((value){
+      if (value == null) {
+        return;
+      } else {
+        String imageString = base64Encode(File(value.path).readAsBytesSync());
+
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => Opera(libro: libro, imageString: imageString),
+          ),
+        );
+      }
+    });
   }
-}
     /*setState(() {
       _selectedImageOpera = File(image!.path);
     });*/
