@@ -41,6 +41,7 @@ Future<List<String>> loadPdf(Libro libro) async {
         filename: 'temp.png',
       ));
     final response = await http.Response.fromStream(await request.send());
+    await preferences.remove('imageOpera');
 
     if (response.statusCode == 200) {
       //final Map<String, dynamic> data = json.decode(response.body);
@@ -191,6 +192,7 @@ class _OperaState extends State<Opera> {
           List<String> list = snapshot.data as List<String>;
 
           if(list.isEmpty){
+
             Navigator.of(context).pop;
               return MaterialApp(
               title: 'Opera letteraria ed analisi',
@@ -215,7 +217,7 @@ class _OperaState extends State<Opera> {
                     'Errore! L\'opera non è presente nel libro selezionato!',
               ),
             );
-            
+
           }
         
       }
