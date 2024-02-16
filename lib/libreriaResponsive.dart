@@ -4,7 +4,6 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
 
-import 'package:booktalk_app/caricamenntoImage.dart';
 import 'package:booktalk_app/caricamentoResponsive.dart';
 import 'package:booktalk_app/chatResponsive.dart';
 import 'package:booktalk_app/getISBN.dart';
@@ -351,15 +350,12 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
       return;
     } else {
       File _selectedImage = File(image.path);
-
-      load(_selectedImage).then((value){
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => Opera(libro: libro),
-          ),
-        );
-      });
-
+      await load(_selectedImage);
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => Opera(libro: libro),
+        ),
+      );
   }
 }
 
