@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
 
+import 'package:booktalk_app/caricamenntoImage.dart';
 import 'package:booktalk_app/caricamentoResponsive.dart';
 import 'package:booktalk_app/chatResponsive.dart';
 import 'package:booktalk_app/getISBN.dart';
@@ -215,7 +216,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
                                         return GestureDetector(
                                           onTap: () {
                                             if(widget.is2){
-                                              getImageFromCameraOpera(libri[index]);
+                                              getImageFromCameraOpera(libri[index], context);
                                               
                                             }
                                             else if(widget.is3){
@@ -325,40 +326,27 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
   }
 
 
-  Future<void> getImageFromCameraOpera(Libro libro) async {
+  Future<void> getImageFromCameraOpera(Libro libro, BuildContext context) async {
+  Navigator.of(context).push(
+    MaterialPageRoute(
+      builder: (context) => CaricamentoResponsive(text: "Caricamento in corso..."),
+    ),
+  );
 
-    /*
-    Navigator.of(context).push(
-        MaterialPageRoute(
-          //builder: (context) => CaricamentoImage(image: File(image.path), libro: libro, text: "Analisi dell'opera in corso..."),
-          builder: (context) => CaricamentoImage(
-            libro: libro,
-            text: "...",
-          ),
-        ),
-      );*/
+  final image = await ImagePicker().pickImage(source: ImageSource.camera);
 
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => CaricamentoResponsive(text: "Caricamento in corso..."),
-        )
-      );
+  if (image == null) {
+    return;
+  } else {
+    String imageString = base64Encode(File(image.path).readAsBytesSync()); // Converti l'immagine in una stringa base64
 
-    final image = await ImagePicker().pickImage(source: ImageSource.camera);
-
-    if (image == null) {
-      return;
-    } else {
-      File _selectedImage = File(image.path);
-      await load(_selectedImage);
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => Opera(libro: libro),
-        ),
-      );
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) => Opera(libro: libro, imageString: imageString),
+      ),
+    );
   }
 }
-
     /*setState(() {
       _selectedImageOpera = File(image!.path);
     });*/
@@ -542,7 +530,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
                               child: GestureDetector(
                                 onTap: () { 
                                   // seconda funzionalità
-                                  getImageFromCameraOpera(libro);
+                                  getImageFromCameraOpera(libro, context);
                                   
                                 },
                                 child: Container(
