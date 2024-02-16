@@ -11,9 +11,10 @@ import 'package:image/image.dart' as Img;
 import 'package:http/http.dart' as http;
 import 'package:booktalk_app/chat/chatPDF.dart';
 
-Img.Image decodeAndEncodeImage(Uint8List bytes) {
+Uint8List decodeAndEncodeImage(Uint8List bytes) {
   Img.Image image = Img.decodeImage(bytes)!;
-  return image;
+  Uint8List imageBytes = Uint8List.fromList(Img.encodePng(image));
+  return imageBytes;
 }
 
 Future<List<String>> loadPdf(Libro libro, String imageString) async {
@@ -23,8 +24,9 @@ Future<List<String>> loadPdf(Libro libro, String imageString) async {
   //await Future.delayed(Duration(seconds: secondsToDelay));
 
   Uint8List bytes = base64Decode(imageString);
-  Img.Image image = await compute(decodeAndEncodeImage, bytes);
-  Uint8List imageBytes = Uint8List.fromList(Img.encodePng(image));
+  //Img.Image image = await compute(decodeAndEncodeImage, bytes);
+  //Uint8List imageBytes = Uint8List.fromList(Img.encodePng(image));
+  Uint8List imageBytes = await compute(decodeAndEncodeImage, bytes);
 
   String extractedText = "";
   ChatPDF chatPDF = ChatPDF();
