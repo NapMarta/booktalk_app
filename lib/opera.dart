@@ -19,9 +19,9 @@ Uint8List decodeAndEncodeImage(Uint8List bytes) {
 
 Future<List<String>> loadPdf(Libro libro, String imageString) async {
   final apiUrl = Uri.parse('http://130.61.22.178:9000/text_detection');
-  //const secondsToDelay = 3;
+  const secondsToDelay = 3;
 
-  //await Future.delayed(Duration(seconds: secondsToDelay));
+  await Future.delayed(Duration(seconds: secondsToDelay));
 
   Uint8List bytes = base64Decode(imageString);
   //Img.Image image = await compute(decodeAndEncodeImage, bytes);
