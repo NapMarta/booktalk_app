@@ -64,7 +64,11 @@ class _AllertConfermaState extends State<AllertConferma> {
                 onPressed: () {
                   autenticazione.logout();
                   // Handle logout action
-                  Navigator.of(context).push(
+                  
+                  while (Navigator.of(context).canPop()){
+                    Navigator.of(context).pop();
+                  }
+                  Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                     builder: (context) => BookTalkApp(),
                     ),
