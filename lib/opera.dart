@@ -74,10 +74,22 @@ Future<List<String>> loadPdf(Libro libro, String imageString) async {
   await chatPDF.uploadPDFOpera();
 
   analisi = await chatPDF.askChatPDF2("Fammi un riassunto");
+  analisi.replaceAll("Certamente!","");
+  analisi.replaceAll("Certamente","");
+  analisi.replaceAll("Tuttavia,","");
+  analisi.replaceAll("Tuttavia","");
+  analisi.replaceAll("PDF,","opera");
+  analisi.replaceAll("nel PDF,","nell'opera");
   list.add(analisi);
 
   if(((analisi.contains("L'infinito") || analisi.contains("\"L'infinito\"")) && libro.isbn == '9788866565062') || ((analisi.contains("A Zacinto") || analisi.contains("\"A Zacinto\"") || analisi.contains("Alla sera") || analisi.contains("\"Alla sera\"")) && libro.isbn == '9788728429044') ){
     autore = await chatPDF.askChatPDF2("Dammi informazioni sull'autore");
+    autore.replaceAll("Certamente!","");
+    autore.replaceAll("Certamente","");
+    autore.replaceAll("Tuttavia,","");
+    autore.replaceAll("Tuttavia","");
+    autore.replaceAll("PDF,","opera");
+    autore.replaceAll("nel PDF,","nell'opera");
     list.add(autore);
     return list;
   }
