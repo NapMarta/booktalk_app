@@ -78,10 +78,11 @@ class GetExpression extends StatefulWidget {
 }
 
 class _GetExpression extends State<GetExpression> {
-  MonitoraggioStatistiche monitoraggioStatistiche = MonitoraggioStatistiche.instance;
+  MonitoraggioStatistiche monitoraggioStatistiche =
+      MonitoraggioStatistiche.instance;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     monitoraggioStatistiche.incrementaFunz1();
   }
@@ -114,7 +115,8 @@ class _GetExpression extends State<GetExpression> {
               return EspressioniResponsive(step: data);
             }
           } else {
-            return CaricamentoResponsive(text: "Calcolo dell'equanzione inserita in corso...");
+            return CaricamentoResponsive(
+                text: "Calcolo dell'equazione inserita in corso...");
           }
         });
   }
