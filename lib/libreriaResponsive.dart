@@ -17,13 +17,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-    
+
 class LibreriaResponsive extends StatefulWidget {
   final bool is2;
   final bool is3;
-  
-  const LibreriaResponsive({Key? key, required this.is2, required this.is3}) : super(key: key);
-  
+
+  const LibreriaResponsive({Key? key, required this.is2, required this.is3})
+      : super(key: key);
+
   @override
   _LibreriaResponsiveState createState() => _LibreriaResponsiveState();
 }
@@ -37,25 +38,25 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
   late int id;
   //LibreriaDao _libreriaDao = LibreriaDao('http://130.61.22.178:9000');
 
-
   @override
   void initState() {
     super.initState();
     const secondsToDelay = 3;
     Timer(Duration(seconds: secondsToDelay), () {
       loadUserData();
-    //_reloadPageAfterDelay();
+      //_reloadPageAfterDelay();
     });
   }
 
-
-  Future<List<Libro>> getLibreriaFromPreferences(SharedPreferences preferences) async {
+  Future<List<Libro>> getLibreriaFromPreferences(
+      SharedPreferences preferences) async {
     String libreriaJson = preferences.getString('libreria') ?? '';
     List<Libro> libreria = [];
 
     if (libreriaJson.isNotEmpty) {
       List<dynamic> libreriaList = json.decode(libreriaJson);
-      libreria = libreriaList.map((libroData) => Libro.fromJson(libroData)).toList();
+      libreria =
+          libreriaList.map((libroData) => Libro.fromJson(libroData)).toList();
       numLibri = libreria.length;
     }
     return libreria;
@@ -63,7 +64,6 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
 
   // Funzione per caricare i dati dell'utente dalle SharedPreferences
   Future<void> loadUserData() async {
-
     print("Loading user data...");
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences = await SharedPreferences.getInstance();
@@ -73,17 +73,16 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
     libreria.then((value) {
       dataLoaded = true;
       setState(() {});
-      });
+    });
   }
 
-    /*void _reloadPageAfterDelay() {
+  /*void _reloadPageAfterDelay() {
     const secondsToDelay = 5;
     Timer(Duration(seconds: secondsToDelay), () {
       loadUserData();
       setState(() {}); // Ricarica la pagina aggiornando la UI
     });
     }*/
-
 
   // Funzione per caricare i dati dell'utente dalle SharedPreferences
   /*Future<void> _loadUserData() async {
@@ -112,7 +111,9 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
 
       // HEADER
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(isTabletOrizzontale(mediaQueryData) ? mediaQueryData.size.height * 0.1 : mediaQueryData.size.height * 0.07),
+        preferredSize: Size.fromHeight(isTabletOrizzontale(mediaQueryData)
+            ? mediaQueryData.size.height * 0.1
+            : mediaQueryData.size.height * 0.07),
         child: Container(
           decoration: BoxDecoration(
             color: Color(0xFF0097b2),
@@ -145,119 +146,154 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
 
       body: Column(
         children: [
-
-          SizedBox(height: isTablet(mediaQueryData) ? mediaQueryData.size.height * 0.02 : mediaQueryData.size.height * 0.02,),
+          SizedBox(
+            height: isTablet(mediaQueryData)
+                ? mediaQueryData.size.height * 0.02
+                : mediaQueryData.size.height * 0.02,
+          ),
 
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              if (widget.is2) 
-                Image.asset("assets/2.jpeg", height: 40,) 
-                else if(widget.is3) 
-                  Image.asset("assets/funzionalità3.jpg", height: 40,),
-
-              if(widget.is2 || widget.is3)
-                SizedBox(width: 20,),
-
-              Text( (widget.is2 || widget.is3) 
-                  ? "Seleziona un libro" 
-                  : "",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,), 
+              if (widget.is2)
+                Image.asset(
+                  "assets/2.jpeg",
+                  height: 40,
+                )
+              else if (widget.is3)
+                Image.asset(
+                  "assets/funzionalità3.jpg",
+                  height: 40,
+                ),
+              if (widget.is2 || widget.is3)
+                SizedBox(
+                  width: 20,
+                ),
+              Text(
+                (widget.is2 || widget.is3) ? "Seleziona un libro" : "",
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
                 textAlign: TextAlign.center,
               ),
             ],
           ),
 
-          SizedBox(height: (widget.is2 || widget.is3) 
-                            ? isTablet(mediaQueryData) 
-                              ? mediaQueryData.size.height * 0.02 
-                              : mediaQueryData.size.height * 0.02
-                            : 0),
-
+          SizedBox(
+              height: (widget.is2 || widget.is3)
+                  ? isTablet(mediaQueryData)
+                      ? mediaQueryData.size.height * 0.02
+                      : mediaQueryData.size.height * 0.02
+                  : 0),
 
           // ----------- LISTA A GRIGLIA -----------
           Expanded(
-            child: 
-            dataLoaded == false ?
-              Center(child: CircularProgressIndicator(color: Color(0xFF0097b2)))
-            : numLibri == 0
-            ? Text("Non sono presenti libri")
-            : CustomScrollView(
-              controller: _scrollController,
-              slivers: <Widget>[
-                SliverPadding(
-                  padding: EdgeInsets.only(bottom: 60.0), 
-                  sliver: SliverGrid(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: isTabletOrizzontale(mediaQueryData) ? 5 : isTabletVerticale(mediaQueryData) ? 4 : 3,
-                      crossAxisSpacing: isTabletOrizzontale(mediaQueryData) ? 23 : 20,
-                      mainAxisSpacing: 50,
-                      childAspectRatio: 3 / (isTabletOrizzontale(mediaQueryData) ? 2 : 3),
-                    ),
-                    delegate: SliverChildBuilderDelegate(
-                      (BuildContext context, int index) {
-                        
-                          return FutureBuilder<List<Libro>?>(
-                              future: libreria,
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState == ConnectionState.waiting) {
-                                  return CircularProgressIndicator();
-                                } else if (snapshot.hasError) {
-                                  return Text('Error: ${snapshot.error}');
-                                } else if (snapshot.data == null) {
-                                  return Text('Libreria non trovata');
-                                } else {
-                                  List<Libro> libri = snapshot.data!;
-                                  if (libri.isNotEmpty) {
-                                    if (libri[index].copertina != null) {
-                                      Uint8List imageBytes = Uint8List.fromList(libri[index].copertina!);
-                                        return GestureDetector(
-                                          onTap: () {
-                                            if(widget.is2){
-                                              getImageFromCameraOpera(libri[index], context);
-                                              
-                                            }
-                                            else if(widget.is3){
-                                              Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                  builder: (context) => ChatResponsive(libro: libri[index]),
-                                                ),
-                                              );
-                                            }else{
-                                              _showDialog(context, libri[index], imageBytes, mediaQueryData);
-                                            }
-                                          
-                                          },
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(10.0),
-                                              //border: Border.all(width: 1.0, color: Colors.grey), 
-                                            ),
-                                            child: ClipRRect(
-                                              borderRadius: BorderRadius.circular(8.0),
-                                              child: Image.memory(imageBytes),
-                                              ),
-                                          ),
-                                        );
+            child: dataLoaded == false
+                ? Center(
+                    child: CircularProgressIndicator(color: Color(0xFF0097b2)))
+                : numLibri == 0
+                    ? Text("Non sono presenti libri")
+                    : CustomScrollView(
+                        controller: _scrollController,
+                        slivers: <Widget>[
+                          SliverPadding(
+                            padding: EdgeInsets.only(bottom: 60.0),
+                            sliver: SliverGrid(
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount:
+                                    isTabletOrizzontale(mediaQueryData)
+                                        ? 5
+                                        : isTabletVerticale(mediaQueryData)
+                                            ? 4
+                                            : 3,
+                                crossAxisSpacing:
+                                    isTabletOrizzontale(mediaQueryData)
+                                        ? 23
+                                        : 20,
+                                mainAxisSpacing: 50,
+                                childAspectRatio: 3 /
+                                    (isTabletOrizzontale(mediaQueryData)
+                                        ? 2
+                                        : 3),
+                              ),
+                              delegate: SliverChildBuilderDelegate(
+                                (BuildContext context, int index) {
+                                  return FutureBuilder<List<Libro>?>(
+                                    future: libreria,
+                                    builder: (context, snapshot) {
+                                      if (snapshot.connectionState ==
+                                          ConnectionState.waiting) {
+                                        return CircularProgressIndicator();
+                                      } else if (snapshot.hasError) {
+                                        return Text('Error: ${snapshot.error}');
+                                      } else if (snapshot.data == null) {
+                                        return Text('Libreria non trovata');
                                       } else {
-                                        return Text('COPERTINA non disponibile');
+                                        List<Libro> libri = snapshot.data!;
+                                        if (libri.isNotEmpty) {
+                                          if (libri[index].copertina != null) {
+                                            Uint8List imageBytes =
+                                                Uint8List.fromList(
+                                                    libri[index].copertina!);
+                                            return GestureDetector(
+                                              onTap: () {
+                                                if (widget.is2) {
+                                                  getImageFromCameraOpera(
+                                                      libri[index], context);
+                                                } else if (widget.is3) {
+                                                  Navigator.of(context).push(
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ChatResponsive(
+                                                              libro:
+                                                                  libri[index]),
+                                                    ),
+                                                  );
+                                                } else {
+                                                  _showDialog(
+                                                      context,
+                                                      libri[index],
+                                                      imageBytes,
+                                                      mediaQueryData);
+                                                }
+                                              },
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0),
+                                                  //border: Border.all(width: 1.0, color: Colors.grey),
+                                                ),
+                                                child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                  child:
+                                                      Image.memory(imageBytes),
+                                                ),
+                                              ),
+                                            );
+                                          } else {
+                                            return Text(
+                                                'COPERTINA non disponibile');
+                                          }
+                                        } else {
+                                          return Text("");
+                                        }
                                       }
-                                  } else {
-                                    return Text("");
-                                  }
-                                }
-                              },
-                          );            
-                      },
-                      childCount: numLibri,
-                    ),                  
-                  ),
-                ),
-              ],
-            ),
+                                    },
+                                  );
+                                },
+                                childCount: numLibri,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
           ),
-          
         ],
       ),
 
@@ -285,15 +321,13 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
   Future<void> getImageFromCameraISBN() async {
     final image = await ImagePicker().pickImage(source: ImageSource.camera);
 
-    if(image == null) return;
+    if (image == null) return;
 
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => CaricamentoResponsive(text: "Ricerca dell'ISBN in corso..."),
-      )
-    );
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) =>
+          CaricamentoResponsive(text: "Ricerca dell'ISBN in corso..."),
+    ));
 
-    
     loadSelectedImage(image.path).then((File value) {
       // Ritarda la navigazione per evitare il blocco dell'interfaccia utente
       Future.delayed(Duration(seconds: 2), () {
@@ -310,7 +344,8 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
         //Navigator.pop(context);
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (context) => ErrorAlertPageIsbn(text: "Errore nella ricerca dell'ISBN!"),
+            builder: (context) =>
+                ErrorAlertPageIsbn(text: "Errore nella ricerca dell'ISBN!"),
           ),
         );
       });
@@ -321,24 +356,23 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
     Uint8List _imageBytes = await _selectedImage.readAsBytes();
 
     SharedPreferences _preferences = await SharedPreferences.getInstance();
-    await _preferences.setString('imageOpera', base64Encode(_imageBytes)); 
+    await _preferences.setString('imageOpera', base64Encode(_imageBytes));
   }
 
-
-  Future<void> getImageFromCameraOpera(Libro libro, BuildContext context) async {
-
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => CaricamentoResponsive(text: "Caricamento in corso..."),
-      ),
-    );
-
+  Future<void> getImageFromCameraOpera(
+      Libro libro, BuildContext context) async {
     Future<XFile?> image = ImagePicker().pickImage(source: ImageSource.camera);
 
-    image.then((value){
+    image.then((value) {
       if (value == null) {
         return;
       } else {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) =>
+                CaricamentoResponsive(text: "Caricamento in corso..."),
+          ),
+        );
         String imageString = base64Encode(File(value.path).readAsBytesSync());
 
         Navigator.of(context).pushReplacement(
@@ -349,13 +383,13 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
       }
     });
   }
-    /*setState(() {
+  /*setState(() {
       _selectedImageOpera = File(image!.path);
     });*/
-    /*
+  /*
     loadSelectedImage(image.path).then((File value) {
     });*/
-    /*
+  /*
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => CaricamentoResponsive(text: "Caricamento in corso..."),
@@ -376,7 +410,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
       ),
     );*/
 
-    /*
+  /*
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => CaricamentoResponsive(text: "Caricamento in corso..."),
@@ -410,10 +444,8 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
 
     */
 
-
-
-  void _showDialog(BuildContext context, Libro libro, Uint8List copertina, var mediaQueryData) {
-
+  void _showDialog(BuildContext context, Libro libro, Uint8List copertina,
+      var mediaQueryData) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -426,21 +458,24 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
                 color: Color.fromARGB(255, 255, 255, 255),
                 borderRadius: BorderRadius.circular(25.0),
               ),
-              width: isTabletOrizzontale(mediaQueryData) 
-                    ? mediaQueryData.size.width * 0.5  
-                    : isTabletVerticale(mediaQueryData)
+              width: isTabletOrizzontale(mediaQueryData)
+                  ? mediaQueryData.size.width * 0.5
+                  : isTabletVerticale(mediaQueryData)
                       ? mediaQueryData.size.width * 0.6
                       : mediaQueryData.size.width * 0.65,
-              height: isTabletOrizzontale(mediaQueryData) ? mediaQueryData.size.height * 0.65 : mediaQueryData.size.height * 0.45,
+              height: isTabletOrizzontale(mediaQueryData)
+                  ? mediaQueryData.size.height * 0.65
+                  : mediaQueryData.size.height * 0.45,
               alignment: Alignment.center,
               padding: EdgeInsets.all(0),
-
               child: Column(
                 children: [
                   Hero(
                     tag: "book_cover",
-                    child: Padding(padding: const EdgeInsets.all(15), // Aggiunge spazio attorno all'immagine
-                        child: Image.memory(
+                    child: Padding(
+                      padding: const EdgeInsets.all(
+                          15), // Aggiunge spazio attorno all'immagine
+                      child: Image.memory(
                         copertina,
                         width: 80,
                       ),
@@ -449,13 +484,11 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
 
                   Text(
                     libro.titolo,
-                    style: TextStyle(fontSize: 18,  fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                   ),
-                    
-                  
-                  
-                  SizedBox(height: mediaQueryData.size.height*0.05),
+
+                  SizedBox(height: mediaQueryData.size.height * 0.05),
 
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -464,17 +497,15 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
                       SizedBox(
                         width: mediaQueryData.size.width * 0.1,
                       ),
-
                       Text(
                         "Autori: ",
-                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 12, fontWeight: FontWeight.bold),
                         textAlign: TextAlign.center,
                       ),
-
                       SizedBox(
                         width: 20,
                       ),
-
                       Text(
                         libro.autori,
                         style: TextStyle(fontSize: 12),
@@ -483,9 +514,7 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
                     ],
                   ),
 
-                  
-                  
-                  SizedBox(height: mediaQueryData.size.height*0.03),
+                  SizedBox(height: mediaQueryData.size.height * 0.03),
 
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -494,17 +523,15 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
                       SizedBox(
                         width: mediaQueryData.size.width * 0.1,
                       ),
-
                       Text(
                         "Edizione: ",
-                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 12, fontWeight: FontWeight.bold),
                         textAlign: TextAlign.center,
                       ),
-
                       SizedBox(
                         width: 20,
                       ),
-
                       Text(
                         libro.edizione,
                         style: TextStyle(fontSize: 12),
@@ -512,36 +539,35 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
                       ),
                     ],
                   ),
-                  //SizedBox(height: 25.0),    
+                  //SizedBox(height: 25.0),
 
                   Expanded(
                     child: Align(
                       alignment: FractionalOffset.bottomCenter,
                       child: IntrinsicWidth(
+                        stepWidth: isTabletOrizzontale(mediaQueryData)
+                            ? mediaQueryData.size.width * 0.5 + 30
+                            : isTabletVerticale(mediaQueryData)
+                                ? mediaQueryData.size.width * 0.6 + 35
+                                : mediaQueryData.size.width * 0.65 + 35,
 
-                        stepWidth: isTabletOrizzontale(mediaQueryData) ? mediaQueryData.size.width * 0.5 +30 
-                                  : isTabletVerticale(mediaQueryData)
-                                    ? mediaQueryData.size.width * 0.6 + 35
-                                    : mediaQueryData.size.width * 0.65 + 35,
-                        
                         //stepWidth: isTablet(mediaQueryData) ? (mediaQueryData.size.width*0.5)+30 : (mediaQueryData.size.width*0.5)+35 ,
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: <Widget>[
-                            Expanded(                              
+                            Expanded(
                               child: GestureDetector(
-                                onTap: () { 
+                                onTap: () {
                                   // seconda funzionalità
                                   getImageFromCameraOpera(libro, context);
-                                  
                                 },
                                 child: Container(
                                   //width: (width*0.5)/2,
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.only(
-                                        bottomLeft: Radius.circular(25)),
-                                    border: Border.all(width: 1.0, color: Colors.grey)
-                                  ),
+                                      borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(25)),
+                                      border: Border.all(
+                                          width: 1.0, color: Colors.grey)),
                                   height: 50,
                                   child: Center(
                                     child: Padding(
@@ -554,32 +580,37 @@ class _LibreriaResponsiveState extends State<LibreriaResponsive> {
                             ),
                             Expanded(
                               child: GestureDetector(
-                                onTap: () { 
+                                onTap: () {
                                   // terza funzionalità
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      builder: (context) => ChatResponsive(libro: libro),
+                                      builder: (context) =>
+                                          ChatResponsive(libro: libro),
                                     ),
                                   );
                                 },
                                 child: Container(
                                   //width: (width*0.5)/2,
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.only(bottomRight: Radius.circular(25),),
-                                    border: Border.all(width: 1.0, color: Colors.grey),
+                                    borderRadius: BorderRadius.only(
+                                      bottomRight: Radius.circular(25),
+                                    ),
+                                    border: Border.all(
+                                        width: 1.0, color: Colors.grey),
                                   ),
                                   height: 50,
                                   child: Center(
                                     child: Padding(
                                       padding: EdgeInsets.all(6.0),
-                                      child: Image.asset("assets/funzionalità3.jpg"),
+                                      child: Image.asset(
+                                          "assets/funzionalità3.jpg"),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
                           ],
-                        ),        
+                        ),
                       ),
                     ),
                   ),
