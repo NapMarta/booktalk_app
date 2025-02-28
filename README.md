@@ -11,8 +11,7 @@ BookTalk è un'applicazione Flutter progettata per aiutare gli utenti a esplorar
 * **Opere letterarie e analisi**: Esplora libri attraverso la scansione del testo e ottieni informazioni dettagliate sull'autore e sull'opera.
 * **Supporto al Learning**: Seleziona un libro dalla tua libreria, specifica un capitolo e avvia una conversazione per discutere e ripetere argomenti specifici.
 
-![GIFBookTalk](booktalk.gif)
-
+<img src="booktalk.gif" style="width: 80%; ">
 
 ## Come iniziare
 1. Installa l'applicazione sul tuo dispositivo Android.
